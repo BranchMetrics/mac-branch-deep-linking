@@ -1,6 +1,6 @@
 /**
  @file          BNCTestCase.Test.m
- @package       Branch-SDK
+ @package       Branch-SDK-Tests
  @brief         Test cases for the underlying Branch test class.
 
  @author        Edward Smith

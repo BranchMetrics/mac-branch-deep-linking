@@ -1,10 +1,12 @@
-//
-//  Branch_SDK_Mac.h
-//  Branch-SDK-Mac
-//
-//  Created by Edward on 5/11/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          BranchFramework.h
+ @package       Branch-SDK
+ @brief         Branch framework header.
+
+ @author        Edward Smith
+ @date          May 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #if __has_feature(modules)
 @import Foundation;
@@ -12,14 +14,7 @@
 #import <Foundation/Foundation.h>
 #endif
 
-//#import <Cocoa/Cocoa.h>
+FOUNDATION_EXPORT double BranchVersionNumber;
+FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 
-//! Project version number for Branch_SDK_Mac.
-FOUNDATION_EXPORT double Branch_SDK_MacVersionNumber;
-
-//! Project version string for Branch_SDK_Mac.
-FOUNDATION_EXPORT const unsigned char Branch_SDK_MacVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Branch_SDK_Mac/PublicHeader.h>
-
-
+#import <Branch/Branch.h>

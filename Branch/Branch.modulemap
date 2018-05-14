@@ -1,6 +1,6 @@
 /**
- @file          module.modulemap
- @package       Branch
+ @file          Branch.modulemap
+ @package       Branch-SDK
  @brief         The Branch SDK module map file.
 
  @author        Edward Smith

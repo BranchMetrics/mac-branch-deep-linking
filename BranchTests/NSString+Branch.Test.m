@@ -1,6 +1,6 @@
 /**
  @file          NSString+Branch.Test.m
- @package       Branch-SDK
+ @package       Branch-SDK-Tests
  @brief         Tests for NSString+Branch.
 
  @author        Edward Smith

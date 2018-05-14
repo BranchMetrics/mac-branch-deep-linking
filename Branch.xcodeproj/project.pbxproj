@@ -26,6 +26,9 @@
 		4D99773C20AA09B300A63EE1 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */; };
 		4DC2232420AA19A2005C57D0 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; };
 		4DC2232620AA1AA0005C57D0 /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4DC2232920AA262D005C57D0 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DC2232720AA262D005C57D0 /* Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DC2232A20AA262D005C57D0 /* Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* Branch.m */; };
+		4DC2232C20AA3E27005C57D0 /* Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232B20AA3E27005C57D0 /* Branch.Test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Branch.Test.m"; sourceTree = "<group>"; };
 		4DC2232120AA10EC005C57D0 /* Branch.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = Branch.modulemap; sourceTree = "<group>"; };
 		4DC2232320AA19A2005C57D0 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = "BranchTests/Vendor/OCMock-3-4-1/OSX/OCMock.framework"; sourceTree = "<group>"; };
+		4DC2232720AA262D005C57D0 /* Branch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
+		4DC2232820AA262D005C57D0 /* Branch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Branch.m; sourceTree = "<group>"; };
+		4DC2232B20AA3E27005C57D0 /* Branch.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Branch.Test.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +131,13 @@
 				4D99772320AA099D00A63EE1 /* BNCLog.m */,
 				4D99772520AA099D00A63EE1 /* BNCThreads.h */,
 				4D99772120AA099D00A63EE1 /* BNCThreads.m */,
+				4DC2232720AA262D005C57D0 /* Branch.h */,
+				4DC2232820AA262D005C57D0 /* Branch.m */,
+				4DC2232120AA10EC005C57D0 /* Branch.modulemap */,
 				4D54C07820A6560400C76496 /* BranchFramework.h */,
 				4D54C07920A6560400C76496 /* Info.plist */,
 				4D99772220AA099D00A63EE1 /* NSString+Branch.h */,
 				4D99772420AA099D00A63EE1 /* NSString+Branch.m */,
-				4DC2232120AA10EC005C57D0 /* Branch.modulemap */,
 			);
 			path = Branch;
 			sourceTree = "<group>";
@@ -144,6 +152,7 @@
 				4D99773120AA09B300A63EE1 /* BNCTestCase.strings */,
 				4D99772F20AA09B300A63EE1 /* BNCTestCase.Test.m */,
 				4D99773320AA09B300A63EE1 /* BNCThreads.Test.m */,
+				4DC2232B20AA3E27005C57D0 /* Branch.Test.m */,
 				4D54C08520A6560400C76496 /* Info.plist */,
 				4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */,
 			);
@@ -167,6 +176,7 @@
 			files = (
 				4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */,
 				4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */,
+				4DC2232920AA262D005C57D0 /* Branch.h in Headers */,
 				4D54C08620A6560400C76496 /* BranchFramework.h in Headers */,
 				4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */,
 				4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */,
@@ -276,6 +286,7 @@
 			files = (
 				4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */,
 				4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */,
+				4DC2232A20AA262D005C57D0 /* Branch.m in Sources */,
 				4D99772B20AA099D00A63EE1 /* BNCLog.m in Sources */,
 				4D99772920AA099D00A63EE1 /* BNCThreads.m in Sources */,
 			);
@@ -286,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D99773620AA09B300A63EE1 /* BNCTestCase.Test.m in Sources */,
+				4DC2232C20AA3E27005C57D0 /* Branch.Test.m in Sources */,
 				4D99773A20AA09B300A63EE1 /* BNCThreads.Test.m in Sources */,
 				4D99773720AA09B300A63EE1 /* BNCTestCase.m in Sources */,
 				4D99773C20AA09B300A63EE1 /* NSString+Branch.Test.m in Sources */,
@@ -339,7 +351,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3.1.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -357,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -400,7 +412,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3.1.2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -412,7 +424,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -438,7 +450,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branch-SDK-Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 			};
@@ -462,7 +474,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branch-SDK-Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 			};
