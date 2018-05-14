@@ -8,8 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		4D54C07F20A6560400C76496 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D54C07520A6560400C76496 /* Branch.framework */; };
-		4D54C08420A6560400C76496 /* Branch_SDK_MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D54C08320A6560400C76496 /* Branch_SDK_MacTests.m */; };
 		4D54C08620A6560400C76496 /* BranchFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D54C07820A6560400C76496 /* BranchFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; };
+		4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99771F20AA099D00A63EE1 /* BNCDebug.m */; };
+		4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; };
+		4D99772920AA099D00A63EE1 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772120AA099D00A63EE1 /* BNCThreads.m */; };
+		4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772220AA099D00A63EE1 /* NSString+Branch.h */; };
+		4D99772B20AA099D00A63EE1 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772320AA099D00A63EE1 /* BNCLog.m */; };
+		4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772420AA099D00A63EE1 /* NSString+Branch.m */; };
+		4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; };
+		4D99773620AA09B300A63EE1 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772F20AA09B300A63EE1 /* BNCTestCase.Test.m */; };
+		4D99773720AA09B300A63EE1 /* BNCTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773020AA09B300A63EE1 /* BNCTestCase.m */; };
+		4D99773820AA09B300A63EE1 /* BNCTestCase.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D99773120AA09B300A63EE1 /* BNCTestCase.strings */; };
+		4D99773920AA09B300A63EE1 /* BNCLog.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773220AA09B300A63EE1 /* BNCLog.Test.m */; };
+		4D99773A20AA09B300A63EE1 /* BNCThreads.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773320AA09B300A63EE1 /* BNCThreads.Test.m */; };
+		4D99773B20AA09B300A63EE1 /* BNCDebug.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773420AA09B300A63EE1 /* BNCDebug.Test.m */; };
+		4D99773C20AA09B300A63EE1 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */; };
+		4DC2232420AA19A2005C57D0 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; };
+		4DC2232620AA1AA0005C57D0 /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,13 +38,43 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4DC2232520AA1A89005C57D0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4DC2232620AA1AA0005C57D0 /* OCMock.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4D54C07520A6560400C76496 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D54C07820A6560400C76496 /* BranchFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchFramework.h; sourceTree = "<group>"; };
 		4D54C07920A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D54C07E20A6560400C76496 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D54C08320A6560400C76496 /* Branch_SDK_MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Branch_SDK_MacTests.m; sourceTree = "<group>"; };
 		4D54C08520A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D99771E20AA099D00A63EE1 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
+		4D99771F20AA099D00A63EE1 /* BNCDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCDebug.m; sourceTree = "<group>"; };
+		4D99772020AA099D00A63EE1 /* BNCDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCDebug.h; sourceTree = "<group>"; };
+		4D99772120AA099D00A63EE1 /* BNCThreads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCThreads.m; sourceTree = "<group>"; };
+		4D99772220AA099D00A63EE1 /* NSString+Branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Branch.h"; sourceTree = "<group>"; };
+		4D99772320AA099D00A63EE1 /* BNCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.m; sourceTree = "<group>"; };
+		4D99772420AA099D00A63EE1 /* NSString+Branch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Branch.m"; sourceTree = "<group>"; };
+		4D99772520AA099D00A63EE1 /* BNCThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCThreads.h; sourceTree = "<group>"; };
+		4D99772E20AA09B300A63EE1 /* BNCTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCTestCase.h; sourceTree = "<group>"; };
+		4D99772F20AA09B300A63EE1 /* BNCTestCase.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCTestCase.Test.m; sourceTree = "<group>"; };
+		4D99773020AA09B300A63EE1 /* BNCTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCTestCase.m; sourceTree = "<group>"; };
+		4D99773120AA09B300A63EE1 /* BNCTestCase.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BNCTestCase.strings; sourceTree = "<group>"; };
+		4D99773220AA09B300A63EE1 /* BNCLog.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.Test.m; sourceTree = "<group>"; };
+		4D99773320AA09B300A63EE1 /* BNCThreads.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCThreads.Test.m; sourceTree = "<group>"; };
+		4D99773420AA09B300A63EE1 /* BNCDebug.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCDebug.Test.m; sourceTree = "<group>"; };
+		4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Branch.Test.m"; sourceTree = "<group>"; };
+		4DC2232120AA10EC005C57D0 /* Branch.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = Branch.modulemap; sourceTree = "<group>"; };
+		4DC2232320AA19A2005C57D0 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = "BranchTests/Vendor/OCMock-3-4-1/OSX/OCMock.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC2232420AA19A2005C57D0 /* OCMock.framework in Frameworks */,
 				4D54C07F20A6560400C76496 /* Branch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,6 +103,7 @@
 				4D54C07720A6560400C76496 /* Branch */,
 				4D54C08220A6560400C76496 /* BranchTests */,
 				4D54C07620A6560400C76496 /* Products */,
+				4DC2232220AA19A2005C57D0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,8 +119,17 @@
 		4D54C07720A6560400C76496 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
+				4D99772020AA099D00A63EE1 /* BNCDebug.h */,
+				4D99771F20AA099D00A63EE1 /* BNCDebug.m */,
+				4D99771E20AA099D00A63EE1 /* BNCLog.h */,
+				4D99772320AA099D00A63EE1 /* BNCLog.m */,
+				4D99772520AA099D00A63EE1 /* BNCThreads.h */,
+				4D99772120AA099D00A63EE1 /* BNCThreads.m */,
 				4D54C07820A6560400C76496 /* BranchFramework.h */,
 				4D54C07920A6560400C76496 /* Info.plist */,
+				4D99772220AA099D00A63EE1 /* NSString+Branch.h */,
+				4D99772420AA099D00A63EE1 /* NSString+Branch.m */,
+				4DC2232120AA10EC005C57D0 /* Branch.modulemap */,
 			);
 			path = Branch;
 			sourceTree = "<group>";
@@ -80,10 +137,25 @@
 		4D54C08220A6560400C76496 /* BranchTests */ = {
 			isa = PBXGroup;
 			children = (
-				4D54C08320A6560400C76496 /* Branch_SDK_MacTests.m */,
+				4D99773420AA09B300A63EE1 /* BNCDebug.Test.m */,
+				4D99773220AA09B300A63EE1 /* BNCLog.Test.m */,
+				4D99772E20AA09B300A63EE1 /* BNCTestCase.h */,
+				4D99773020AA09B300A63EE1 /* BNCTestCase.m */,
+				4D99773120AA09B300A63EE1 /* BNCTestCase.strings */,
+				4D99772F20AA09B300A63EE1 /* BNCTestCase.Test.m */,
+				4D99773320AA09B300A63EE1 /* BNCThreads.Test.m */,
 				4D54C08520A6560400C76496 /* Info.plist */,
+				4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */,
 			);
 			path = BranchTests;
+			sourceTree = "<group>";
+		};
+		4DC2232220AA19A2005C57D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DC2232320AA19A2005C57D0 /* OCMock.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,7 +165,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */,
+				4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */,
 				4D54C08620A6560400C76496 /* BranchFramework.h in Headers */,
+				4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */,
+				4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +201,7 @@
 				4D54C07A20A6560400C76496 /* Sources */,
 				4D54C07B20A6560400C76496 /* Frameworks */,
 				4D54C07C20A6560400C76496 /* Resources */,
+				4DC2232520AA1A89005C57D0 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -186,6 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D99773820AA09B300A63EE1 /* BNCTestCase.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +274,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */,
+				4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */,
+				4D99772B20AA099D00A63EE1 /* BNCLog.m in Sources */,
+				4D99772920AA099D00A63EE1 /* BNCThreads.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +285,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D54C08420A6560400C76496 /* Branch_SDK_MacTests.m in Sources */,
+				4D99773620AA09B300A63EE1 /* BNCTestCase.Test.m in Sources */,
+				4D99773A20AA09B300A63EE1 /* BNCThreads.Test.m in Sources */,
+				4D99773720AA09B300A63EE1 /* BNCTestCase.m in Sources */,
+				4D99773C20AA09B300A63EE1 /* NSString+Branch.Test.m in Sources */,
+				4D99773B20AA09B300A63EE1 /* BNCDebug.Test.m in Sources */,
+				4D99773920AA09B300A63EE1 /* BNCLog.Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +437,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = Branch/BranchFramework.h;
+				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branch-SDK-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -374,7 +461,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = Branch/BranchFramework.h;
+				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branch-SDK-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -387,6 +474,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BranchTests/Vendor/OCMock-3-4-1/OSX",
+				);
 				INFOPLIST_FILE = BranchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branch-SDK-MacTests";
@@ -400,6 +491,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BranchTests/Vendor/OCMock-3-4-1/OSX",
+				);
 				INFOPLIST_FILE = BranchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branch-SDK-MacTests";

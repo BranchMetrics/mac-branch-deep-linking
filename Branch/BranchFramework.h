@@ -6,7 +6,13 @@
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#if __has_feature(modules)
+@import Foundation;
+#else
+#import <Foundation/Foundation.h>
+#endif
+
+//#import <Cocoa/Cocoa.h>
 
 //! Project version number for Branch_SDK_Mac.
 FOUNDATION_EXPORT double Branch_SDK_MacVersionNumber;
