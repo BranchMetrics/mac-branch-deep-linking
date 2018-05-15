@@ -55,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D08A82B20AA7844009BF226 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4D54C07520A6560400C76496 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D54C07820A6560400C76496 /* BranchFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchFramework.h; sourceTree = "<group>"; };
 		4D54C07920A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +107,7 @@
 		4D54C06B20A6560400C76496 = {
 			isa = PBXGroup;
 			children = (
+				4D08A82B20AA7844009BF226 /* README.md */,
 				4D54C07720A6560400C76496 /* Branch */,
 				4D54C08220A6560400C76496 /* BranchTests */,
 				4D54C07620A6560400C76496 /* Products */,
