@@ -8,15 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		4D54C07F20A6560400C76496 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D54C07520A6560400C76496 /* Branch.framework */; };
-		4D54C08620A6560400C76496 /* BranchFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D54C07820A6560400C76496 /* BranchFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; };
+		4D54C08620A6560400C76496 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D54C07820A6560400C76496 /* Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99771F20AA099D00A63EE1 /* BNCDebug.m */; };
-		4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; };
+		4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772920AA099D00A63EE1 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772120AA099D00A63EE1 /* BNCThreads.m */; };
 		4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772220AA099D00A63EE1 /* NSString+Branch.h */; };
 		4D99772B20AA099D00A63EE1 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772320AA099D00A63EE1 /* BNCLog.m */; };
 		4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772420AA099D00A63EE1 /* NSString+Branch.m */; };
-		4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; };
+		4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99773620AA09B300A63EE1 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772F20AA09B300A63EE1 /* BNCTestCase.Test.m */; };
 		4D99773720AA09B300A63EE1 /* BNCTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773020AA09B300A63EE1 /* BNCTestCase.m */; };
 		4D99773820AA09B300A63EE1 /* BNCTestCase.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D99773120AA09B300A63EE1 /* BNCTestCase.strings */; };
@@ -26,8 +26,8 @@
 		4D99773C20AA09B300A63EE1 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */; };
 		4DC2232420AA19A2005C57D0 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; };
 		4DC2232620AA1AA0005C57D0 /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4DC2232920AA262D005C57D0 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DC2232720AA262D005C57D0 /* Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4DC2232A20AA262D005C57D0 /* Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* Branch.m */; };
+		4DC2232920AA262D005C57D0 /* BranchMain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DC2232720AA262D005C57D0 /* BranchMain.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DC2232A20AA262D005C57D0 /* BranchMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMain.m */; };
 		4DC2232C20AA3E27005C57D0 /* Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232B20AA3E27005C57D0 /* Branch.Test.m */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +57,7 @@
 /* Begin PBXFileReference section */
 		4D08A82B20AA7844009BF226 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4D54C07520A6560400C76496 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D54C07820A6560400C76496 /* BranchFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchFramework.h; sourceTree = "<group>"; };
+		4D54C07820A6560400C76496 /* Branch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
 		4D54C07920A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D54C07E20A6560400C76496 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D54C08520A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,8 +79,8 @@
 		4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Branch.Test.m"; sourceTree = "<group>"; };
 		4DC2232120AA10EC005C57D0 /* Branch.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = Branch.modulemap; sourceTree = "<group>"; };
 		4DC2232320AA19A2005C57D0 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = "BranchTests/Vendor/OCMock-3-4-1/OSX/OCMock.framework"; sourceTree = "<group>"; };
-		4DC2232720AA262D005C57D0 /* Branch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
-		4DC2232820AA262D005C57D0 /* Branch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Branch.m; sourceTree = "<group>"; };
+		4DC2232720AA262D005C57D0 /* BranchMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchMain.h; sourceTree = "<group>"; };
+		4DC2232820AA262D005C57D0 /* BranchMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchMain.m; sourceTree = "<group>"; };
 		4DC2232B20AA3E27005C57D0 /* Branch.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Branch.Test.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,10 +133,10 @@
 				4D99772320AA099D00A63EE1 /* BNCLog.m */,
 				4D99772520AA099D00A63EE1 /* BNCThreads.h */,
 				4D99772120AA099D00A63EE1 /* BNCThreads.m */,
-				4DC2232720AA262D005C57D0 /* Branch.h */,
-				4DC2232820AA262D005C57D0 /* Branch.m */,
+				4D54C07820A6560400C76496 /* Branch.h */,
 				4DC2232120AA10EC005C57D0 /* Branch.modulemap */,
-				4D54C07820A6560400C76496 /* BranchFramework.h */,
+				4DC2232720AA262D005C57D0 /* BranchMain.h */,
+				4DC2232820AA262D005C57D0 /* BranchMain.m */,
 				4D54C07920A6560400C76496 /* Info.plist */,
 				4D99772220AA099D00A63EE1 /* NSString+Branch.h */,
 				4D99772420AA099D00A63EE1 /* NSString+Branch.m */,
@@ -178,8 +178,8 @@
 			files = (
 				4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */,
 				4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */,
-				4DC2232920AA262D005C57D0 /* Branch.h in Headers */,
-				4D54C08620A6560400C76496 /* BranchFramework.h in Headers */,
+				4DC2232920AA262D005C57D0 /* BranchMain.h in Headers */,
+				4D54C08620A6560400C76496 /* Branch.h in Headers */,
 				4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */,
 				4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */,
 			);
@@ -195,7 +195,6 @@
 				4D54C07020A6560400C76496 /* Sources */,
 				4D54C07120A6560400C76496 /* Frameworks */,
 				4D54C07220A6560400C76496 /* Headers */,
-				4D54C07320A6560400C76496 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -264,13 +263,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4D54C07320A6560400C76496 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4D54C07C20A6560400C76496 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -288,7 +280,7 @@
 			files = (
 				4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */,
 				4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */,
-				4DC2232A20AA262D005C57D0 /* Branch.m in Sources */,
+				4DC2232A20AA262D005C57D0 /* BranchMain.m in Sources */,
 				4D99772B20AA099D00A63EE1 /* BNCLog.m in Sources */,
 				4D99772920AA099D00A63EE1 /* BNCThreads.m in Sources */,
 			);

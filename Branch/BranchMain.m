@@ -1,5 +1,5 @@
 /**
- @file          Branch.m
+ @file          BranchMain.m
  @package       Branch-SDK
  @brief         The main Branch class.
 
@@ -8,7 +8,8 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "Branch.h"
+#import "BranchMain.h"
+#import "BNCLog.h"
 #import <AppKit/AppKit.h>
 
 #pragma mark BranchConfiguration
@@ -28,6 +29,7 @@
     static Branch*sharedInstance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^ {
+        BNCLogSetDisplayLevel(BNCLogLevelAll);  // eDebug
         sharedInstance = [[Branch alloc] init];
     });
     return sharedInstance;
@@ -36,16 +38,24 @@
 - (void) startWithConfiguration:(BranchConfiguration*)configuration {
     self.configuration = configuration;
     [[NSNotificationCenter defaultCenter]
-        addObserver:self selector:@selector(applicationDidFinishLaunchingNotification:)
+        addObserver:self
+        selector:@selector(applicationDidFinishLaunchingNotification:)
         name:NSApplicationDidFinishLaunchingNotification
         object:nil];
     [[NSNotificationCenter defaultCenter]
-        addObserver:self selector:@selector(applicationWillBecomeActiveNotification:)
+        addObserver:self
+        selector:@selector(applicationWillBecomeActiveNotification:)
         name:NSApplicationWillBecomeActiveNotification
         object:nil];
     [[NSNotificationCenter defaultCenter]
-        addObserver:self selector:@selector(applicationWillResignActiveNotification:)
-        name:NSApplicationWillResignActiveNotification
+        addObserver:self
+        selector:@selector(applicationDidResignActiveNotification:)
+        name:NSApplicationDidResignActiveNotification
+        object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(notificationObserver:)
+        name:nil
         object:nil];
 }
 
@@ -68,12 +78,24 @@
 #pragma mark - Application State Changes
 
 - (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
+    BNCLogMethodName();
+    BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
 }
 
 - (void)applicationWillBecomeActiveNotification:(NSNotification*)notification {
+    BNCLogMethodName();
 }
 
-- (void)applicationWillResignActiveNotification:(NSNotification*)notification {
+- (void)applicationDidResignActiveNotification:(NSNotification*)notification {
+    BNCLogMethodName();
+}
+
+- (void) notificationObserver:(NSNotification*)notification {
+    BNCLogDebugSDK(@"Notification '%@'.", notification.name);
+}
+
+- (void) openURLs:(NSArray<NSURL*>*)urls {
+    BNCLogMethodName();
 }
 
 @end
