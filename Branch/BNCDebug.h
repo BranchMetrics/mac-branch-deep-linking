@@ -9,7 +9,7 @@
 */
 
 /**
-    @discusion
+    @discussion
 
     # BNCDebug
 
@@ -49,7 +49,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 ///@functiongroup Debugging Functions
 

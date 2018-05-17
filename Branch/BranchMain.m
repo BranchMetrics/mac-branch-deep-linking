@@ -57,6 +57,18 @@
         selector:@selector(notificationObserver:)
         name:nil
         object:nil];
+    [[NSAppleEventManager sharedAppleEventManager]
+        setEventHandler:self
+        andSelector:@selector(urlAppleEvent:withReplyEvent:)
+        forEventClass:kInternetEventClass
+        andEventID:kAEGetURL];
+}
+
+- (void)urlAppleEvent:(NSAppleEventDescriptor *)event
+        withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+    NSAppleEventDescriptor*descriptor = [event paramDescriptorForKeyword:keyDirectObject];
+    NSURL *url = [NSURL URLWithString:descriptor.stringValue];
+    BNCLogDebugSDK(@"Apple event URL: %@.", url);
 }
 
 - (void) dealloc {
@@ -73,6 +85,10 @@
     NSString*_Nullable string =
         [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     return string?:@"";
+}
+
+- (BOOL) openBranchURL:(NSURL*)url {
+    return NO;
 }
 
 #pragma mark - Application State Changes
@@ -92,10 +108,6 @@
 
 - (void) notificationObserver:(NSNotification*)notification {
     BNCLogDebugSDK(@"Notification '%@'.", notification.name);
-}
-
-- (void) openURLs:(NSArray<NSURL*>*)urls {
-    BNCLogMethodName();
 }
 
 @end

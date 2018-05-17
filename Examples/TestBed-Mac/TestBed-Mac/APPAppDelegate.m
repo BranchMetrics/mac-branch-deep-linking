@@ -42,6 +42,7 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     return YES;
 }
 
+#if 0
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {
     BNCPerformBlockOnMainThreadAsync(^{
         BNCLogMethodName();
@@ -52,5 +53,6 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
         [alert runModal];
     });
 }
+#endif
 
 @end

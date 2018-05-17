@@ -9,7 +9,7 @@
 */
 
 #import "BNCTestCase.h"
-#import "BranchFramework.h"
+#import "Branch.h"
 
 @interface BranchTest : BNCTestCase
 @end

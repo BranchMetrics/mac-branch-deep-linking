@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*)kitDisplayVersion;
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
-- (void) openURLs:(NSArray<NSURL*>*)urls;
+- (BOOL) openBranchURL:(NSURL*)url;
 
 //@property (nonatomic, weak) id<BranchDelegate> delegate;
 @end
