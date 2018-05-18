@@ -19,11 +19,7 @@
     Use this class to localize the few user-facing string resources the Branch SDK has.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
+#import "BranchHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

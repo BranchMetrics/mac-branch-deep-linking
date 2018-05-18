@@ -1,5 +1,5 @@
 /**
- @file          BNCError.m
+ @file          BranchError.m
  @package       Branch-SDK
  @brief         Branch errors.
 
@@ -8,7 +8,7 @@
  @copyright     Copyright © 2014 Branch. All rights reserved.
 */
 
-#import "BNCError.h"
+#import "BranchError.h"
 #import "BNCLocalization.h"
 
 NSString * const BNCErrorDomain = @"io.branch.sdk.error";

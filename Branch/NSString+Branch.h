@@ -8,11 +8,7 @@
  @copyright     Copyright © 2017 Branch. All rights reserved.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
+#import "BranchHeader.h"
 
 @interface NSString (Branch)
 

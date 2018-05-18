@@ -1,5 +1,5 @@
 /**
- @file          BranchMain.m
+ @file          BranchClass.m
  @package       Branch-SDK
  @brief         The main Branch class.
 
@@ -8,9 +8,9 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "BranchMain.h"
+#import "BranchClass.h"
 #import "BNCLog.h"
-#import <AppKit/AppKit.h>
+#import "BNCNetworkAPIService.h"
 
 #pragma mark BranchConfiguration
 
@@ -20,7 +20,8 @@
 #pragma mark - Branch
 
 @interface Branch ()
-@property (nonatomic, strong) BranchConfiguration*configuration;
+@property (atomic, strong) BranchConfiguration* configuration;
+@property (atomic, strong) BNCNetworkAPIService* networkAPIService;
 @end
 
 @implementation Branch
@@ -37,6 +38,8 @@
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration {
     self.configuration = configuration;
+    self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
+
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(applicationDidFinishLaunchingNotification:)
@@ -69,10 +72,14 @@
     NSAppleEventDescriptor*descriptor = [event paramDescriptorForKeyword:keyDirectObject];
     NSURL *url = [NSURL URLWithString:descriptor.stringValue];
     BNCLogDebugSDK(@"Apple event URL: %@.", url);
+    [self openURL:url];
 }
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSAppleEventManager sharedAppleEventManager]
+        removeEventHandlerForEventClass:kInternetEventClass
+        andEventID:kAEGetURL];
 }
 
 + (NSString *)bundleIdentifier {
@@ -87,8 +94,17 @@
     return string?:@"";
 }
 
-- (BOOL) openBranchURL:(NSURL*)url {
-    return NO;
+- (BOOL) openURL:(NSURL*)url {
+    [self.networkAPIService openURL:url];
+    return YES;
+}
+
+- (void) startNewSession {
+    [self.networkAPIService openURL:nil];
+}
+
+- (void) endSession {
+    [self.networkAPIService sendClose];
 }
 
 #pragma mark - Application State Changes
@@ -100,14 +116,16 @@
 
 - (void)applicationWillBecomeActiveNotification:(NSNotification*)notification {
     BNCLogMethodName();
+    [[Branch sharedInstance]  startNewSession];
 }
 
 - (void)applicationDidResignActiveNotification:(NSNotification*)notification {
     BNCLogMethodName();
+    [[Branch sharedInstance] endSession];
 }
 
 - (void) notificationObserver:(NSNotification*)notification {
-    BNCLogDebugSDK(@"Notification '%@'.", notification.name);
+    //BNCLogDebugSDK(@"Notification '%@'.", notification.name);
 }
 
 @end

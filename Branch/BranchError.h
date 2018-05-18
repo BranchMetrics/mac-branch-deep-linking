@@ -1,5 +1,5 @@
 /**
- @file          BNCError.h
+ @file          BranchError.h
  @package       Branch-SDK
  @brief         Branch errors.
 
@@ -8,11 +8,7 @@
  @copyright     Copyright © 2014 Branch. All rights reserved.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
+#import "BranchHeader.h"
 
 FOUNDATION_EXPORT NSString *_Nonnull const BNCErrorDomain;
 

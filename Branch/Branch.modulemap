@@ -9,7 +9,7 @@
 */
 
 framework module Branch {
-   umbrella header "BranchFramework.h"
+   umbrella header "Branch.h"
 
    export *
    module * { export * }

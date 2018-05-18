@@ -1,22 +1,26 @@
 /**
- @file          BranchFramework.h
+ @file          Branch.h
  @package       Branch-SDK
- @brief         Branch framework header.
+ @brief         The Branch framework header.
 
  @author        Edward Smith
  @date          May 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
+#import <Branch/BranchHeader.h>
 
 FOUNDATION_EXPORT double BranchVersionNumber;
 FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 
-#import <Branch/BranchMain.h>
+#import <Branch/BranchClass.h>
+#import <Branch/BranchCommerce.h>
+#import <Branch/BranchError.h>
+#import <Branch/BranchEvent.h>
+#import <Branch/BranchLinkProperties.h>
+#import <Branch/BranchSession.h>
+#import <Branch/BranchUniversalObject.h>
+
 #import <Branch/BNCDebug.h>
 #import <Branch/BNCLog.h>
+#import <Branch/BNCThreads.h>

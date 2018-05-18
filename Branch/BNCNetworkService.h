@@ -8,7 +8,7 @@
  @copyright     Copyright © 2017 Branch. All rights reserved.
 */
 
-@import Foundation;
+#import "BranchHeader.h"
 
 #pragma mark BNCNetworkOperation
 

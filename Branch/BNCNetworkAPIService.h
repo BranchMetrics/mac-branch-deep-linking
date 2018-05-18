@@ -8,12 +8,15 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import <Foundation/Foundation.h>
+#import "BranchHeader.h"
+@class BranchConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BNCNetworkAPIService : NSObject
-- (void) openWithURL:(NSURL*_Nullable)url;
+- (instancetype) initWithConfiguration:(BranchConfiguration*)configuration;
+- (void) openURL:(NSURL*_Nullable)url;
+- (void) sendClose;
 @end
 
 NS_ASSUME_NONNULL_END

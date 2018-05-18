@@ -9,8 +9,8 @@
 #import "APPAppDelegate.h"
 #import "APPViewController.h"
 #import <Branch/Branch.h>
-#import <Branch/BNCLog.h>
-#import <Branch/BNCThreads.h>
+
+#include "Branch/BNCLog.h"
 
 @interface APPAppDelegate ()
 @property (strong, nonatomic) APPViewController*viewController;

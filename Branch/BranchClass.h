@@ -1,5 +1,5 @@
 /**
- @file          BranchMain.h
+ @file          BranchClass.h
  @package       Branch-SDK
  @brief         The main Branch class.
 
@@ -8,22 +8,27 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import <Foundation/Foundation.h>
+#import "BranchHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BranchConfiguration : NSObject
-@property (nonatomic, strong) NSString*_Nullable key;
-@property (nonatomic, copy) void (^_Nullable linkCallback)(void);
+@property (atomic, strong) NSString*_Nullable key;
+@property (nonatomic, copy) void (^_Nullable deeplinkCallback)(void);
 @end
 
 @interface Branch : NSObject
 + (instancetype) sharedInstance;
-+ (NSString*)bundleIdentifier;
-+ (NSString*)kitDisplayVersion;
++ (NSString*) bundleIdentifier;
++ (NSString*) kitDisplayVersion;
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
-- (BOOL) openBranchURL:(NSURL*)url;
+
+- (void) startNewSession;
+- (void) endSession;
+
+/// Returns YES if it's liekly to be handled be Branch.
+- (BOOL) openURL:(NSURL*)url;
 
 //@property (nonatomic, weak) id<BranchDelegate> delegate;
 @end

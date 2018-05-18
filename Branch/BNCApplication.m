@@ -48,16 +48,22 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     application->_displayVersionString = info[@"CFBundleShortVersionString"];
     application->_versionString = info[@"CFBundleVersion"];
 
-    application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDate];
-    application->_currentBuildDate = [BNCApplication currentBuildDate];
+    // TODO: Fix these:
+    application->_firstInstallBuildDate = nil; // [BNCApplication firstInstallBuildDate];
+    application->_currentBuildDate = nil; // [BNCApplication currentBuildDate];
 
-    application->_firstInstallDate = [BNCApplication firstInstallDate];
-    application->_currentInstallDate = [BNCApplication currentInstallDate];
+    application->_firstInstallDate = nil; // [BNCApplication firstInstallDate];
+    application->_currentInstallDate = nil; // [BNCApplication currentInstallDate];
 
-    application->_updateState = [BNCApplication updateStateForApplication:application];
+    application->_updateState = BNCApplicationUpdateStateInstall; // [BNCApplication updateStateForApplication:application];
 
     application->_extensionType =
         [[NSBundle mainBundle].infoDictionary[@"NSExtension"][@"NSExtensionPointIdentifier"] copy];
+
+    if ([[[NSBundle mainBundle] executablePath] containsString:@".appex/"]) {
+        application->_isApplicationExtension = YES;
+    }
+
     NSString*package = info[@"CFBundlePackageType"];
     if ([package isEqualToString:@"APPL"] && !application->_extensionType.length) {
         application->_extensionType = @"application";

@@ -8,11 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
+#import "BranchHeader.h"
 
 typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
     BNCApplicationUpdateStateInstall       = 0,    // Application was recently installed.
@@ -67,11 +63,16 @@ typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
 /// The update state off the application.
 @property (atomic, readonly) BNCApplicationUpdateState updateState;
 
-/// The app extension type or app.
-@property (atomic, readonly) NSString*_Nullable extensionType;
-
-/// YES if running as an application
+/// YES if running as an application.
 @property (atomic, readonly) BOOL isApplication;
 
+/// YES if running as an application extension.
+@property (atomic, readonly) BOOL isApplicationExtension;
+
+/// The app extension type or 'application'.
+@property (atomic, readonly) NSString*_Nullable extensionType;
+
+
+/// The default URL scheme for the app as found in the app's Info.plist.
 @property (atomic, readonly) NSString*_Nullable defaultURLScheme;
 @end

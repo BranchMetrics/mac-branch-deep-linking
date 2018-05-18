@@ -14,7 +14,6 @@
 extern "C" {
 #endif
 
-
 ///@functiongroup Branch Logging Functions
 
 #pragma mark Log Initialization
@@ -233,7 +232,6 @@ extern void BNCLogFlushMessages(void);
 ///Write the name of the current function to the log.
 #define BNCLogFunctionName() \
     BNCLogDebug(@"Function '%s'.", __FUNCTION__)
-
 
 #ifdef __cplusplus
 }

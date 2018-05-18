@@ -12,58 +12,28 @@
 #import "BNCSettings.h"
 #import "BNCApplication.h"
 #import "BNCNetworkService.h"
-
-#pragma mark BNCWireFormat
-
-NSDate* BNCDateFromWireFormat(id object) {
-    NSDate *date = nil;
-    if ([object respondsToSelector:@selector(doubleValue)]) {
-        NSTimeInterval t = [object doubleValue];
-        date = [NSDate dateWithTimeIntervalSince1970:t/1000.0];
-    }
-    return date;
-}
-
-NSNumber* BNCWireFormatFromDate(NSDate *date) {
-    NSNumber *number = nil;
-    NSTimeInterval t = [date timeIntervalSince1970];
-    if (date && t != 0.0 ) {
-        number = [NSNumber numberWithLongLong:(long long)(t*1000.0)];
-    }
-    return number;
-}
-
-NSNumber* BNCWireFormatFromBool(BOOL b) {
-    return (b) ? (__bridge NSNumber*) kCFBooleanTrue : nil;
-}
-
-NSNumber* BNCWireFormatFromInteger(NSInteger i) {
-    return (i == 0) ? nil : [NSNumber numberWithInteger:i];
-}
-
-NSString* BNCStringFromWireFormat(id object) {
-    if ([object isKindOfClass:NSString.class])
-        return object;
-    else
-    if ([object respondsToSelector:@selector(stringValue)])
-        return [object stringValue];
-    else
-    if ([object respondsToSelector:@selector(description)])
-        return [object description];
-    return nil;
-}
-
-NSString* BNCWireFormatFromString(NSString *string) {
-    return string;
-}
+#import "BNCDevice.h"
+#import "BNCWireFormat.h"
+#import "BNCThreads.h"
+#import "BranchSession.h"
+#import "BranchClass.h"
 
 #pragma mark - BNCAPIService
 
 @interface BNCNetworkAPIService ()
 @property (atomic, strong) BNCNetworkService *networkService;
+@property (atomic, strong) BranchConfiguration *configuration;
 @end
 
 @implementation BNCNetworkAPIService
+
+- (instancetype) initWithConfiguration:(BranchConfiguration *)configuration {
+    self = [super init];
+    if (!self) return self;
+    self.configuration = configuration;
+    self.networkService = [[BNCNetworkService alloc] init];
+    return self;
+}
 
 /*
 - (void)makeRequest:(BNCServerInterface *)serverInterface key:(NSString *)key callback:(BNCServerCallback)callback {
@@ -129,11 +99,33 @@ NSString* BNCWireFormatFromString(NSString *string) {
     return [NSURL URLWithString:string];
 }
 
-- (void) appendDeviceNetworkParametersToDictionary:(NSMutableDictionary*)dictionary {
+- (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary {
+    if (!dictionary) return;
+    NSDictionary* device = [BNCDevice currentDevice].v2dictionary;
+    [dictionary addEntriesFromDictionary:device];
+
+    NSMutableDictionary *fullParamDict = [[NSMutableDictionary alloc] init];
+    [fullParamDict bnc_safeAddEntriesFromDictionary:params];
+    fullParamDict[@"sdk"] = [NSString stringWithFormat:@"ios%@", BNC_SDK_VERSION];
+
+    fullParamDict[@"ios_extension"] = BNCWireFormatFromBool(application.isApplicationExtension);
+    fullParamDict[@"retryNumber"] = @(retryNumber);
+    fullParamDict[@"branch_key"] = key;
+
+    NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
+    [metadata bnc_safeAddEntriesFromDictionary:self.preferenceHelper.requestMetadataDictionary];
+    [metadata bnc_safeAddEntriesFromDictionary:fullParamDict[BRANCH_REQUEST_KEY_STATE]];
+    if (metadata.count) {
+        fullParamDict[BRANCH_REQUEST_KEY_STATE] = metadata;
+    }
+    // we only send instrumentation info in the POST body request
+    if (self.preferenceHelper.instrumentationDictionary.count && [reqType isEqualToString:@"POST"]) {
+        fullParamDict[BRANCH_REQUEST_KEY_INSTRUMENTATION] = self.preferenceHelper.instrumentationDictionary;
+    }
 
 }
 
-- (void) openWithURL:(NSURL*)url {
+- (void) openURL:(NSURL*)url {
     BNCSettings*settings = [BNCSettings sharedInstance];
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
@@ -162,9 +154,6 @@ NSString* BNCWireFormatFromString(NSString *string) {
         }
     }
 
-    //[self safeSetValue:preferenceHelper.spotlightIdentifier forKey:BRANCH_REQUEST_KEY_SPOTLIGHT_IDENTIFIER onDict:params];
-    //dictionary[@"spotlight_identifier"] = ???
-
     dictionary[@"limit_facebook_tracking"] = BNCWireFormatFromBool(settings.limitFacebookTracking);
     dictionary[@"lastest_update_time"] = BNCWireFormatFromDate(application.currentBuildDate);
     dictionary[@"previous_update_time"] = BNCWireFormatFromDate(application.previousAppBuildDate);
@@ -172,14 +161,47 @@ NSString* BNCWireFormatFromString(NSString *string) {
     dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
     dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
 
-    [self appendDeviceNetworkParametersToDictionary:dictionary];
+    [self appendCommonV1APIParametersToDictionary:dictionary];
 
+    __weak __typeof(self) weakSelf = self;
     [[self.networkService postOperationWithURL:[self URLForAPIService:@"open"]
         JSONData:dictionary
         completion:^(BNCNetworkOperation *operation) {
-
+            __strong __typeof(self) strongSelf = weakSelf;
+            [strongSelf openResponseWithOperation:operation];
         }]
     start];
+}
+
+- (void) openResponseWithOperation:(BNCNetworkOperation*)operation {
+    if (!operation.error)
+        [operation deserializeJSONResponseData];
+    if (operation.error) {
+        BNCPerformBlockOnMainThreadAsync(^{
+            [self startSession:nil withError:operation.error];
+        });
+    }
+
+    NSDictionary*data = (NSDictionary*) operation.responseData;
+    BranchSession*session = [BranchSession sessionWithDictionary:data];
+    BranchLinkProperties*linkProperties = [BranchLinkProperties linkPropertiesWithDictionary:data];
+    BranchUniversalObject*object = [BranchUniversalObject objectWithDictionary:data];
+
+    session.linkProperties = linkProperties;
+    session.linkContent = object;
+
+    BNCSettings*settings = [BNCSettings sharedInstance];
+    settings.deviceFingerprintID = session.deviceFingerprintID;
+    settings.developerIdentityForUser = session.developerIdentityForUser;
+    if (session.identityID) settings.identityID = session.identityID;
+
+    //  preferenceHelper.previousAppBuildDate = [BNCApplication currentApplication].currentBuildDate;
+}
+
+- (void) startSession:(BranchSession*)session withError:(NSError*)error {
+}
+
+- (void) sendClose {
 }
 
 @end

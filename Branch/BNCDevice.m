@@ -19,7 +19,6 @@
 #import "BNCDevice.h"
 #import "BNCLog.h"
 
-#import <AppKit/Appkit.h>
 #import <sys/sysctl.h>
 #import <net/if.h>
 #import <ifaddrs.h>
@@ -498,8 +497,8 @@ exit:
 - (NSDictionary*) v2dictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
 
-    #define BNCFieldDefinesDictionaryFromSelf
-    #include "BNCFieldDefines.h"
+    #define BNCWireFormatDictionaryFromSelf
+    #include "BNCWireFormat.h"
 
     addString(systemName,           os);
     addString(systemVersion,        os_version);
@@ -517,8 +516,6 @@ exit:
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
-
-    #include "BNCFieldDefines.h"
 
     if (!self.adTrackingIsEnabled)
         dictionary[@"limit_ad_tracking"] = CFBridgingRelease(kCFBooleanTrue);

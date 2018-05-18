@@ -40,11 +40,7 @@
        ptr_refs -m 0x0000000116e13920
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
+#import "BranchHeader.h"
 
 #ifdef __cplusplus
 extern "C" {

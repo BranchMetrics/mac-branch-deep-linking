@@ -1,5 +1,5 @@
 /**
- @file          BNCError.Test.m
+ @file          BranchError.Test.m
  @package       Branch-SDK
  @brief         Branch error tests.
 
@@ -9,14 +9,14 @@
 */
 
 #import "BNCTestCase.h"
-#import "BNCError.h"
+#import "BranchError.h"
 #import "BNCLocalization.h"
 #import "BNCDevice.h"
 
-@interface BNCErrorTest : BNCTestCase
+@interface BranchErrorTest : BNCTestCase
 @end
 
-@implementation BNCErrorTest
+@implementation BranchErrorTest
 
 - (void) testErrorBasic {
 
@@ -56,7 +56,7 @@
     XCTAssert([error.localizedDescription isEqualToString:
         @"The underlying network service does not conform to the BNCNetworkOperationProtocol."]);
     XCTAssert([error.localizedFailureReason isEqualToString:
-        @"Network operation of class 'BNCErrorTest' does not conform to the BNCNetworkOperationProtocol."]);
+        @"Network operation of class 'BranchErrorTest' does not conform to the BNCNetworkOperationProtocol."]);
 }
 
 @end
