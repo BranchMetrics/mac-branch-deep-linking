@@ -12,6 +12,8 @@
 #import "BranchCommerce.h"
 #import "BranchUniversalObject.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 ///@group Branch Event Logging
 
 typedef NSString*const BranchStandardEvent NS_STRING_ENUM;
@@ -74,3 +76,5 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 - (NSDictionary*_Nonnull) dictionary;   //!< Returns a dictionary representation of the event.
 - (NSString* _Nonnull) description;     //!< Returns a string description of the event.
 @end
+
+NS_ASSUME_NONNULL_END

@@ -51,37 +51,39 @@ NSInteger BNCIntegerFromWireFormat(id object) {
 }
 
 NSString* BNCStringFromWireFormat(id object) {
+    NSString *string = nil;
     if ([object isKindOfClass:NSString.class])
-        return object;
+        string = object;
     else
     if ([object respondsToSelector:@selector(stringValue)])
-        return [object stringValue];
+        string = [object stringValue];
     else
     if ([object respondsToSelector:@selector(description)])
-        return [object description];
-    return nil;
+        string = [object description];
+    else
+        return nil;
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return string;
 }
 
 NSString* BNCWireFormatFromString(NSString *string) {
-    return string;
+    if (string.length > 0) return string;
+    return nil;
 }
 
 NSDecimalNumber* BNCDecimalFromWireFormat(id object) {
     NSString *string = BNCStringFromWireFormat(object);
-    if (string)
-        return [NSDecimalNumber decimalNumberWithString:string];
+    if (string) return [NSDecimalNumber decimalNumberWithString:string];
     return nil;
 }
 
 NSDecimalNumber* BNCWireFormatFromDecimal(NSDecimalNumber* decimal) {
-    if (decimal && [decimal compare:[NSDecimalNumber zero]] != NSOrderedSame)
-        return decimal;
+    if (decimal && [decimal compare:[NSDecimalNumber zero]] != NSOrderedSame) return decimal;
     return nil;
 }
 
 double BNCDoubleFromWireFormat(id object) {
-    if ([object respondsToSelector:@selector(doubleValue)])
-        return [object doubleValue];
+    if ([object respondsToSelector:@selector(doubleValue)]) return [object doubleValue];
     return 0.0;
 }
 
@@ -112,9 +114,7 @@ NSDictionary* BNCWireFormatFromDictionary(NSDictionary*dictionary) {
 }
 
 NSMutableDictionary* BNCDictionaryFromWireFormat(id object) {
-    if ([object isKindOfClass:NSDictionary.class]) {
-        return [object mutableCopy];
-    }
+    if ([object isKindOfClass:NSDictionary.class]) return [object mutableCopy];
     return nil;
 }
 

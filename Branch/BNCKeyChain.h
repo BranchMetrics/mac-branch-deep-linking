@@ -10,6 +10,8 @@
 
 #import "BranchHeader.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface BNCKeyChain : NSObject
 
 /**
@@ -55,3 +57,5 @@
                              key:(NSString*_Nonnull)key
                 cloudAccessGroup:(NSString*_Nullable)accessGroup;
 @end
+
+NS_ASSUME_NONNULL_END

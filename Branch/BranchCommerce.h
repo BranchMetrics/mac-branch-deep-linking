@@ -10,6 +10,8 @@
 
 #import "BranchHeader.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark BNCProductCategory
 
 typedef NSString*const BNCProductCategory NS_STRING_ENUM;
@@ -36,7 +38,7 @@ FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategorySportingGoods;
 FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategoryToysGames;
 FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategoryVehiclesParts;
 
-NSArray<BNCProductCategory>*_Nonnull BNCProductCategoryAllCategories(void);
+NSArray<BNCProductCategory>* BNCProductCategoryAllCategories(void);
 
 #pragma mark - BNCCurrency
 
@@ -235,4 +237,6 @@ FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyYER;
 FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyZAR;
 FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyZMW;
 
-NSArray<BNCCurrency>*_Nonnull BNCCurrencyAllCurrencies(void);
+NSArray<BNCCurrency>* BNCCurrencyAllCurrencies(void);
+
+NS_ASSUME_NONNULL_END

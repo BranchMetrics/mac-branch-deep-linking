@@ -9,12 +9,13 @@
 */
 
 #import "BranchHeader.h"
+#import "BranchDelegate.h"
+@class BranchSession;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BranchConfiguration : NSObject
 @property (atomic, strong) NSString*_Nullable key;
-@property (nonatomic, copy) void (^_Nullable deeplinkCallback)(void);
 @end
 
 @interface Branch : NSObject
@@ -24,13 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
 
+/// Returns YES if it's liekly to be handled be Branch.
+- (BOOL) openURL:(NSURL*)url;
 - (void) startNewSession;
 - (void) endSession;
 
-/// Returns YES if it's liekly to be handled be Branch.
-- (BOOL) openURL:(NSURL*)url;
-
-//@property (nonatomic, weak) id<BranchDelegate> delegate;
+@property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
+@property (atomic, strong) NSMutableDictionary* requestMetadataDictionary;
+@property (atomic, weak) id<BranchDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END

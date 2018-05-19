@@ -202,6 +202,7 @@
         NSError *error = nil;
         data = [NSJSONSerialization dataWithJSONObject:dictionaryOrArray options:0 error:&error];
         if (error) BNCLogError(@"Can't convert to JSON: %@.", error);
+        BNCLogDebug(@"POST\n URL: %@\nBody: %@.", URL, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     }
     BNCNetworkOperation *operation =
         [[BNCNetworkService shared]
@@ -238,7 +239,7 @@
 
 #pragma mark - The gorey details
 
-- (NSError*) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
+- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
     @synchronized (self) {
         _pinnedPublicKeys = [NSMutableArray array];
         for (id secKey in publicKeys) {

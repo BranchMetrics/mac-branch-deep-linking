@@ -11,6 +11,8 @@
 #import "BranchHeader.h"
 #import "BranchCommerce.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark BranchContentIndexMode
 
 typedef NS_ENUM(NSInteger, BranchContentIndexMode) {
@@ -150,4 +152,8 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
     BOOL automaticallyListOnSpotlight;
 
 - (NSString*_Nonnull) description;
+
 @end
+
+NS_ASSUME_NONNULL_END
+

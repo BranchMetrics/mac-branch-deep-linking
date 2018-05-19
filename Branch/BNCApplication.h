@@ -10,6 +10,8 @@
 
 #import "BranchHeader.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
     BNCApplicationUpdateStateInstall       = 0,    // Application was recently installed.
     BNCApplicationUpdateStateNonUpdate     = 1,    // Application was neither newly installed nor updated.
@@ -72,7 +74,8 @@ typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
 /// The app extension type or 'application'.
 @property (atomic, readonly) NSString*_Nullable extensionType;
 
-
 /// The default URL scheme for the app as found in the app's Info.plist.
 @property (atomic, readonly) NSString*_Nullable defaultURLScheme;
 @end
+
+NS_ASSUME_NONNULL_END

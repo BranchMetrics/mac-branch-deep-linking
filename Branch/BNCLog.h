@@ -57,7 +57,7 @@ extern NSString *_Nonnull BNCLogStringFromLogLevel(BNCLogLevel level);
 * @param string A string indicating the log level.
 * @return Returns The log level corresponding to the string.
 */
-extern BNCLogLevel BNCLogLevelFromString(NSString*_Null_unspecified string);
+extern BNCLogLevel BNCLogLevelFromString(NSString*_Nullable string);
 
 
 #pragma mark - Programmatic Breakpoints
@@ -76,7 +76,7 @@ extern void BNCLogSetBreakPointsEnabled(BOOL enabled);
 typedef void (*BNCLogClientInitializeFunctionPtr)(void);
 
 ///@param clientInitializationFunction The client function that should be called before logging starts.
-extern BNCLogClientInitializeFunctionPtr _Null_unspecified
+extern BNCLogClientInitializeFunctionPtr _Nullable
     BNCLogSetClientInitializeFunction(BNCLogClientInitializeFunctionPtr _Nullable clientInitializationFunction);
 
 
@@ -102,15 +102,15 @@ extern BNCLogOutputFunctionPtr _Nullable BNCLogOutputFunction(void);
 extern void BNCLogCloseLogFile(void);
 
 ///@param URL Sets the log output function to a function that writes messages to the file at URL.
-extern void BNCLogSetOutputToURL(NSURL *_Nullable URL);
+extern void BNCLogSetOutputToURL(NSURL*_Nullable URL);
 
 ///@param URL Sets the log output function to a function that writes messages to the file at URL.
 ///@param maxRecords Wraps the file at `maxRecords` records.
-extern void BNCLogSetOutputToURLRecordWrap(NSURL *_Nullable URL, long maxRecords);
+extern void BNCLogSetOutputToURLRecordWrap(NSURL*_Nullable URL, long maxRecords);
 
 ///@param URL Sets the log output function to a function that writes messages to the file at URL.
 ///@param maxBytes Wraps the file at `maxBytes` bytes.  Must be an even number of bytes.
-extern void BNCLogSetOutputToURLByteWrap(NSURL *_Nullable URL, long maxBytes);
+extern void BNCLogSetOutputToURLByteWrap(NSURL*_Nullable URL, long maxBytes);
 
 typedef void (*BNCLogFlushFunctionPtr)(void);
 
@@ -129,18 +129,18 @@ extern BNCLogFlushFunctionPtr _Nullable BNCLogFlushFunction(void);
 /// The main logging function used in the variadic logging defines.
 extern void BNCLogWriteMessageFormat(
     BNCLogLevel logLevel,
-    const char *_Nullable sourceFileName,
+    const char*_Nullable sourceFileName,
     int32_t sourceLineNumber,
-    NSString* _Nullable messageFormat,
+    NSString*_Nullable messageFormat,
     ...
 ) NS_FORMAT_FUNCTION(4,5);
 
 /// Swift-friendly wrapper for BNCLogWriteMessageFormat
 extern void BNCLogWriteMessage(
     BNCLogLevel logLevel,
-    NSString *_Nonnull sourceFileName,
+    NSString*_Nonnull sourceFileName,
     int32_t sourceLineNumber,
-    NSString *_Nonnull message
+    NSString*_Nonnull message
 );
 
 /// This function synchronizes all outstanding log messages and writes them to the logging function

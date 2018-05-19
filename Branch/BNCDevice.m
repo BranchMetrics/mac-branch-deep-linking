@@ -25,6 +25,7 @@
 #import <arpa/inet.h>
 #import <netinet/in.h>
 #import <sys/utsname.h>
+#import <CommonCrypto/CommonCrypto.h>
 
 // Forward declare this for older versions of iOS
 @interface NSLocale (BranchAvailability)
@@ -159,7 +160,28 @@ exit:
     return modelName;
 }
 
-+ (NSString*)country {
++ (NSString*) systemName {
+    #if TARGET_OS_OSX
+    return @"macOS";
+    #elif TARGET_OS_IOS
+    return @"iOS";
+    #elif TARGET_OS_TV
+    return @"tvOS";
+    #elif TARGET_OS_WATCH
+    return @"watchOS";
+    #endif
+    return @"Unknown";
+}
+
++ (BOOL) isSimulator {
+    #if TARGET_OS_SIMULATOR
+    return YES;
+    #else
+    return NO;
+    #endif
+}
+
++ (NSString*) country {
 
     NSString *country = nil;
     #define returnIfValidCountry() \
@@ -258,21 +280,13 @@ exit:
     return version;
 }
 
-+ (NSString*) userAgentString {
-    return @"";
-}
-
 + (NSData*) macAddress {
-    // Generating and hashing a MAC address:
-    //
-    // https://developer.apple.com/library/content/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateLocally.html#//apple_ref/doc/uid/TP40010573-CH1-SW14
-
     kern_return_t             kernResult;
     mach_port_t               master_port;
-    CFMutableDictionaryRef    matchingDict;
     io_iterator_t             iterator;
     io_object_t               service;
     CFDataRef                 macAddress = nil;
+    CFMutableDictionaryRef    matchingDict = nil;
 
     kernResult = IOMasterPort(MACH_PORT_NULL, &master_port);
     if (kernResult != KERN_SUCCESS) {
@@ -283,46 +297,73 @@ exit:
     matchingDict = IOBSDNameMatching(master_port, 0, "en0");
     if (!matchingDict) {
         BNCLogDebugSDK(@"IOBSDNameMatching returned empty dictionary.");
-        return nil;
+        goto exit;
     }
 
+    // Note: IOServiceGetMatchingServices releases matchingDict.
     kernResult = IOServiceGetMatchingServices(master_port, matchingDict, &iterator);
     if (kernResult != KERN_SUCCESS) {
         BNCLogDebugSDK(@"IOServiceGetMatchingServices returned %d.", kernResult);
-        return nil;
+        goto exit;
     }
 
     while((service = IOIteratorNext(iterator)) != 0) {
         io_object_t parentService;
-
-        kernResult = IORegistryEntryGetParentEntry(service, kIOServicePlane,
-                &parentService);
+        kernResult = IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService);
         if (kernResult == KERN_SUCCESS) {
             if (macAddress) CFRelease(macAddress);
-
-            macAddress = (CFDataRef) IORegistryEntryCreateCFProperty(parentService,
-                    CFSTR("IOMACAddress"), kCFAllocatorDefault, 0);
+            macAddress = (CFDataRef) IORegistryEntryCreateCFProperty(
+                parentService,
+                CFSTR("IOMACAddress"),
+                kCFAllocatorDefault,
+                0
+            );
             IOObjectRelease(parentService);
         } else {
             BNCLogDebugSDK(@"IORegistryEntryGetParentEntry returned %d.", kernResult);
         }
-
         IOObjectRelease(service);
     }
     IOObjectRelease(iterator);
 
+exit:
+    //if (matchingDict) CFRelease(matchingDict);  // Already released by IOServiceGetMatchingServices
     return (__bridge_transfer NSData*) macAddress;
 }
 
 + (NSString*) hardwareID {
     NSData*data = [self macAddress];
     if (!data || data.length != 6) return nil;
-    const unsigned char *b = data.bytes;
-    NSString*string = [NSString stringWithFormat:@"%x:%x:%x:%x:%x:%x", b[0], b[1], b[2], b[3], b[4], b[5]];
-    return string;
+
+    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+    CC_SHA1(data.bytes, (const unsigned int) data.length, digest);
+
+    NSMutableString* string = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
+        [string appendFormat:@"%02x", digest[i]];
+
+    // We started with 6 bytes, SHA1 is 20 bytes, UUID is 128-bits = 16 bytes.  Truncate last four bytes to make UUID:
+
+    if (string.length < 32) return nil; // What?
+    NSString*result = [NSString stringWithFormat:@"%@-%@-%@-%@-%@",
+        [string substringWithRange:NSMakeRange(0, 8)],
+        [string substringWithRange:NSMakeRange(8, 4)],
+        [string substringWithRange:NSMakeRange(12, 4)],
+        [string substringWithRange:NSMakeRange(16, 4)],
+        [string substringWithRange:NSMakeRange(20, 12)]];
+
+    return result;
 }
 
-/*
+#if TARGET_OS_OSX
+
++ (NSString*) userAgentString {
+    // TODO: Fill out with real string.
+    return @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1 Safari/605.1.15";
+}
+
+#else
+
 + (NSString*) userAgentString {
 
     static NSString* brn_browserUserAgentString = nil;
@@ -407,7 +448,8 @@ exit:
 
     return browserUserAgent();
 }
-*/
+
+#endif
 
 + (void) updateScreenAttributesWithDevice:(BNCDevice*)device {
     if (!device) return;
@@ -415,7 +457,7 @@ exit:
     CGSize size = [[attributes valueForKey:NSDeviceSize] sizeValue];
     CGSize resolution = [[attributes valueForKey:NSDeviceResolution] sizeValue];
     device->_screenSize = size;
-    device->_screenScale = resolution.width;
+    device->_screenDPI = resolution.width;
 }
 
 + (instancetype) createCurrentDevice {
@@ -427,10 +469,11 @@ exit:
         device->_hardwareID = [[NSUUID UUID] UUIDString];
         device->_hardwareIDType = @"random";
     } else
-        device->_hardwareIDType = @"idfv";
+        device->_hardwareIDType = @"vendor_id";
     device->_brandName = @"Apple";
     device->_modelName = [self modelName];
-    device->_systemName = @"macOS";
+    device->_systemName = [self systemName];
+    device->_isSimulator = [self isSimulator];
     NSOperatingSystemVersion version = [[NSProcessInfo processInfo] operatingSystemVersion];
     device->_systemVersion =
         [NSString stringWithFormat:@"%ld.%ld.%ld",
@@ -453,10 +496,10 @@ exit:
         }
         if ([sharedManager respondsToSelector:advertisingIdentifierSelector]) {
             NSUUID *uuid = [sharedManager performSelector:advertisingIdentifierSelector];
-            device->_adID = [uuid UUIDString];
+            device->_advertisingID = [uuid UUIDString];
             // limit ad tracking is enabled. iOS 10+
-            if ([device->_adID isEqualToString:@"00000000-0000-0000-0000-000000000000"]) {
-                device->_adID = nil;
+            if ([device->_advertisingID isEqualToString:@"00000000-0000-0000-0000-000000000000"]) {
+                device->_advertisingID = nil;
             }
         }
 
@@ -466,35 +509,44 @@ exit:
     device->_country = [self country];
     device->_language = [self language];
     device->_browserUserAgent = [self userAgentString];
-
     device->_deviceIsUnidentified =
-        ([device->_hardwareIDType isEqualToString:@"random"] && device->_adID == nil);
+        ([device->_hardwareIDType isEqualToString:@"random"] && device->_advertisingID == nil);
 
     return device;
 }
 
 #pragma mark - Instance Methods
 
-//- (NSString *)vendorID {
-//    @synchronized (self) {
-//        if (_vendorID) return _vendorID;
-//        /*
-//         * https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
-//         * BNCSystemObserver.getVendorId is based on UIDevice.identifierForVendor. Note from the
-//         * docs above:
-//         *
-//         * If the value is nil, wait and get the value again later. This happens, for example,
-//         * after the device has been restarted but before the user has unlocked the device.
-//         *
-//         * It's not clear if that specific example scenario would apply to opening Branch links,
-//         * but this lazy initialization is probably safer.
-//         */
-//        _vendorID = [BNCSystemObserver getVendorId].copy;
-//        return _vendorID;
-//    }
-//}
+#if TARGET_OS_OSX
 
-- (NSDictionary*) v2dictionary {
+- (NSString *)vendorID {
+    return nil;
+}
+
+#else
+
+- (NSString *)vendorID {
+    /*
+     * https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
+     *
+     * If the value is nil, wait and get the value again later. This happens, for example,
+     * after the device has been restarted but before the user has unlocked the device.
+     *
+     * It's not clear if that specific example scenario would apply to opening Branch links,
+     * but this lazy initialization is probably safer.
+     */
+    @synchronized (self) {
+        static NSString* _vendorID = nil;
+        if (!_vendorID) {
+            _vendorID = [[UIDevice currentDevice] identifierForVendor];
+        }
+        return [_vendorID copy];
+    }
+}
+
+#endif
+
+- (NSMutableDictionary*) v2dictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
 
     #define BNCWireFormatDictionaryFromSelf
@@ -502,39 +554,27 @@ exit:
 
     addString(systemName,           os);
     addString(systemVersion,        os_version);
-//  addString(extensionType,        environment);
-//  addString(vendorID,             idfv);
-    addString(adID,                 idfa);
+    addString(hardwareID,           hardware_id);
+    addString(hardwareIDType,       hardware_id_type);
+    addString(vendorID,             idfv);
+    addString(advertisingID,        idfa);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);
-//  addString(applicationVersion,   app_version);
     addString(modelName,            model);
-    addDouble(screenScale,          screen_dpi);
+    addDouble(screenDPI,            screen_dpi);
     addDouble(screenSize.height,    screen_height);
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
 
     if (!self.adTrackingIsEnabled)
-        dictionary[@"limit_ad_tracking"] = CFBridgingRelease(kCFBooleanTrue);
-/*
-    NSString *s = nil;
-    BNCPreferenceHelper *preferences = [BNCPreferenceHelper preferenceHelper];
+        dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
 
-    s = preferences.userIdentity;
-    if (s.length) dictionary[@"developer_identity"] = s;
+    if (self.hardwareID.length > 0 && ![self.hardwareIDType isEqualToString:@"random"])
+        dictionary[@"is_hardware_id_real"] = BNCWireFormatFromBool(YES);
 
-    s = preferences.deviceFingerprintID;
-    if (s.length) dictionary[@"device_fingerprint_id"] = s;
-
-    if (preferences.limitFacebookTracking)
-        dictionary[@"limit_facebook_tracking"] = CFBridgingRelease(kCFBooleanTrue);
-
-    dictionary[@"sdk"] = @"ios";
-    dictionary[@"sdk_version"] = BNC_SDK_VERSION;
-*/
     return dictionary;
 }
 
@@ -545,7 +585,7 @@ exit:
             if (interface.addressType == BNCNetworkAddressTypeIPv4)
                 return interface.address;
         }
-        return nil;
+        return @"";
     }
 }
 

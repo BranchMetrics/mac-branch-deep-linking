@@ -15,6 +15,7 @@ FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 
 #import <Branch/BranchClass.h>
 #import <Branch/BranchCommerce.h>
+#import <Branch/BranchDelegate.h>
 #import <Branch/BranchError.h>
 #import <Branch/BranchEvent.h>
 #import <Branch/BranchLinkProperties.h>

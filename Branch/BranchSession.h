@@ -22,12 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString*_Nullable sessionID;
 @property (nonatomic, assign) BOOL isFirstSession;
 @property (nonatomic, assign) BOOL isBranchURL;
-@property (nonatomic, strong) NSURL*_Nullable url;
+@property (nonatomic, strong) NSURL*_Nullable referringURL;
 @property (nonatomic, strong) NSString*_Nullable identityID;
 @property (nonatomic, strong) NSString*_Nullable developerIdentityForUser;
 @property (nonatomic, strong) NSString*_Nullable deviceFingerprintID;
 @property (nonatomic, strong) BranchUniversalObject*_Nullable linkContent;
 @property (nonatomic, strong) BranchLinkProperties*_Nullable linkProperties;
+@property (nonatomic, strong) NSDictionary*_Nullable data;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,6 +11,7 @@
 #import "BranchClass.h"
 #import "BNCLog.h"
 #import "BNCNetworkAPIService.h"
+#import "BNCSettings.h"
 
 #pragma mark BranchConfiguration
 
@@ -22,6 +23,7 @@
 @interface Branch ()
 @property (atomic, strong) BranchConfiguration* configuration;
 @property (atomic, strong) BNCNetworkAPIService* networkAPIService;
+@property (atomic, strong) BNCSettings* settings;
 @end
 
 @implementation Branch
@@ -36,9 +38,22 @@
     return sharedInstance;
 }
 
++ (NSString *)bundleIdentifier {
+    NSString*_Nullable string =
+        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:(NSString*)kCFBundleIdentifierKey];
+    return string?:@"";
+}
+
++ (NSString *)kitDisplayVersion {
+    NSString*_Nullable string =
+        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    return string?:@"";
+}
+
 - (void) startWithConfiguration:(BranchConfiguration*)configuration {
     self.configuration = configuration;
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
+    self.settings = [BNCSettings sharedInstance];
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -82,18 +97,6 @@
         andEventID:kAEGetURL];
 }
 
-+ (NSString *)bundleIdentifier {
-    NSString*_Nullable string =
-        [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleIdentifierKey];
-    return string?:@"";
-}
-
-+ (NSString *)kitDisplayVersion {
-    NSString*_Nullable string =
-        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    return string?:@"";
-}
-
 - (BOOL) openURL:(NSURL*)url {
     [self.networkAPIService openURL:url];
     return YES;
@@ -105,6 +108,14 @@
 
 - (void) endSession {
     [self.networkAPIService sendClose];
+}
+
+- (NSMutableDictionary*) requestMetadataDictionary {
+    return self.settings.requestMetadataDictionary;
+}
+
+- (void) setRequestMetadataDictionary:(NSMutableDictionary *)requestMetadataDictionary {
+    self.settings.requestMetadataDictionary = requestMetadataDictionary;
 }
 
 #pragma mark - Application State Changes

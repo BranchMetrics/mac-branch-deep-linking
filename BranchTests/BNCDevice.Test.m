@@ -20,7 +20,7 @@
     BNCDevice *device = [BNCDevice currentDevice];
     XCTAssertTrue(device.hardwareID.length > 0);
     XCTAssertTrue(
-        [device.hardwareIDType isEqualToString:@"idfv"] ||
+        [device.hardwareIDType isEqualToString:@"vendor_id"] ||
         [device.hardwareIDType isEqualToString:@"random"]
     );
     XCTAssertFalse(device.deviceIsUnidentified);
@@ -36,12 +36,12 @@
         device.screenSize.height > 0 &&
         device.screenSize.width > 0
     );
-    XCTAssertTrue(device.screenScale >= 72.0 && device.screenScale <= 216.0);
+    XCTAssertTrue(device.screenDPI >= 72.0 && device.screenDPI <= 216.0);
     XCTAssertFalse(device.adTrackingIsEnabled);
-    XCTAssertTrue(device.adID == nil);
+    XCTAssertTrue(device.advertisingID == nil);
     XCTAssertTrue([device.country isEqualToString:@"US"]);
     XCTAssertTrue([device.language isEqualToString:@"en"]);
-    XCTAssertTrue([device.browserUserAgent isEqualToString:@""]);
+    XCTAssertTrue(device.browserUserAgent.length > 0);
     XCTAssertTrue(BNCTestStringMatchesRegex(device.localIPAddress, @"^\\d*\\.\\d*\\.\\d*\\.\\d*$"));
 }
 

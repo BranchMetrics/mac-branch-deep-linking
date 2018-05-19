@@ -10,6 +10,8 @@
 
 #import "BranchHeader.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 ///@group Blocks and Threads
 #pragma mark - Blocks and Threads
 
@@ -44,3 +46,6 @@ static inline void BNCSleepForTimeInterval(NSTimeInterval seconds) {
     sleepTime.tv_nsec = (__typeof(sleepTime.tv_nsec)) nanoPart;
     nanosleep(&sleepTime, NULL);
 }
+
+NS_ASSUME_NONNULL_END
+

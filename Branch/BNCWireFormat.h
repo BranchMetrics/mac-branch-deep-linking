@@ -10,27 +10,29 @@
 
 #import "BranchHeader.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark BNCWireFormat
 
-extern NSNumber* BNCWireFormatFromDate(NSDate *date);
-extern NSNumber* BNCWireFormatFromBool(BOOL b);
-extern NSString* BNCWireFormatFromString(NSString*string);
-extern NSDecimalNumber* BNCWireFormatFromDecimal(NSDecimalNumber*decimal);
-extern NSNumber* BNCWireFormatFromDouble(double d);
-extern NSNumber* BNCWireFormatFromInteger(NSInteger i);
-extern NSArray<NSString*>* BNCWireFormatFromStringArray(NSArray<NSString*>* object);
-extern NSDictionary* BNCWireFormatFromDictionary(NSDictionary* object);
-extern NSString* BNCWireFormatFromURL(NSURL* url);
+extern NSNumber*_Nullable BNCWireFormatFromDate(NSDate *date);
+extern NSNumber*_Nullable BNCWireFormatFromBool(BOOL b);
+extern NSString*_Nullable BNCWireFormatFromString(NSString*string);
+extern NSDecimalNumber*_Nullable BNCWireFormatFromDecimal(NSDecimalNumber*decimal);
+extern NSNumber*_Nullable BNCWireFormatFromDouble(double d);
+extern NSNumber*_Nullable BNCWireFormatFromInteger(NSInteger i);
+extern NSArray<NSString*>*_Nullable BNCWireFormatFromStringArray(NSArray<NSString*>* object);
+extern NSDictionary*_Nullable BNCWireFormatFromDictionary(NSDictionary* object);
+extern NSString*_Nullable BNCWireFormatFromURL(NSURL* url);
 
-extern NSDate*   BNCDateFromWireFormat(id object);
-extern BOOL      BNCBoolFromWireFormat(id object);
-extern NSString* BNCStringFromWireFormat(id object);
-extern NSDecimalNumber* BNCDecimalFromWireFormat(id object);
+extern NSDate*_Nullable   BNCDateFromWireFormat(id object);
+extern BOOL               BNCBoolFromWireFormat(id object);
+extern NSString*_Nullable BNCStringFromWireFormat(id object);
+extern NSDecimalNumber*_Nullable BNCDecimalFromWireFormat(id object);
 extern double    BNCDoubleFromWireFormat(id object);
 extern NSInteger BNCIntegerFromWireFormat(id object);
-extern NSMutableArray<NSString*>* BNCStringArrayFromWireFormat(id object);
-extern NSMutableDictionary* BNCDictionaryFromWireFormat(id object);
-extern NSURL* BNCURLFromWireFormat(id object);
+extern NSMutableArray<NSString*>*_Nullable BNCStringArrayFromWireFormat(id object);
+extern NSMutableDictionary*_Nullable BNCDictionaryFromWireFormat(id object);
+extern NSURL*_Nullable BNCURLFromWireFormat(id object);
 
 #undef addString
 #undef addDate
@@ -128,3 +130,5 @@ extern NSURL* BNCURLFromWireFormat(id object);
     #undef BNCWireFormatDictionaryFromSelf
     
 #endif
+
+NS_ASSUME_NONNULL_END

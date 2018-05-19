@@ -10,7 +10,9 @@
 
 #import "BranchHeader.h"
 
-FOUNDATION_EXPORT NSString *_Nonnull const BNCErrorDomain;
+NS_ASSUME_NONNULL_BEGIN
+
+FOUNDATION_EXPORT NSString*const BNCErrorDomain;
 
 typedef NS_ENUM(NSInteger, BNCErrorCode) {
     BNCInitError                    = 1000,
@@ -33,10 +35,12 @@ typedef NS_ENUM(NSInteger, BNCErrorCode) {
 };
 
 @interface NSError (Branch)
-+ (NSError*_Nonnull) branchErrorWithCode:(BNCErrorCode)errorCode;
-+ (NSError*_Nonnull) branchErrorWithCode:(BNCErrorCode)errorCode error:(NSError*_Nullable)error;
-+ (NSError*_Nonnull) branchErrorWithCode:(BNCErrorCode)errorCode localizedMessage:(NSString*_Nullable)message;
++ (NSError*) branchErrorWithCode:(BNCErrorCode)errorCode;
++ (NSError*) branchErrorWithCode:(BNCErrorCode)errorCode error:(NSError*_Nullable)error;
++ (NSError*) branchErrorWithCode:(BNCErrorCode)errorCode localizedMessage:(NSString*_Nullable)message;
 @end
 
 void BNCForceNSErrorCategoryToLoad(void)
     __attribute__((constructor));
+
+NS_ASSUME_NONNULL_END

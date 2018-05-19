@@ -55,7 +55,7 @@ static int bnc_LogDescriptor = -1;
 void BNCLogFunctionOutputToStdOut(
         NSDate*_Nonnull timestamp,
         BNCLogLevel level,
-        NSString *_Nullable message
+        NSString*_Nullable message
     ) {
     NSData *data = [message dataUsingEncoding:NSNEXTSTEPStringEncoding];
     if (!data) data = [@"<nil>" dataUsingEncoding:NSNEXTSTEPStringEncoding];
@@ -70,7 +70,7 @@ void BNCLogFunctionOutputToStdOut(
 void BNCLogFunctionOutputToStdErr(
         NSDate*_Nonnull timestamp,
         BNCLogLevel level,
-        NSString *_Nullable message
+        NSString*_Nullable message
     ) {
     NSData *data = [message dataUsingEncoding:NSNEXTSTEPStringEncoding];
     if (!data) data = [@"<nil>" dataUsingEncoding:NSNEXTSTEPStringEncoding];
@@ -85,7 +85,7 @@ void BNCLogFunctionOutputToStdErr(
 void BNCLogFunctionOutputToFileDescriptor(
         NSDate*_Nonnull timestamp,
         BNCLogLevel level,
-        NSString *_Nullable message
+        NSString*_Nullable message
     ) {
     // Pad length to even characters
     if (!message) message = @"";
@@ -111,7 +111,7 @@ void BNCLogFlushFileDescriptor() {
     }
 }
 
-void BNCLogSetOutputToURL_Interal(NSURL *_Nullable url) {
+void BNCLogSetOutputToURL_Interal(NSURL*_Nullable url) {
     if (url == nil) return;
     bnc_LogDescriptor = open(
         url.path.UTF8String,
@@ -128,7 +128,7 @@ void BNCLogSetOutputToURL_Interal(NSURL *_Nullable url) {
     bnc_LogFlushFunction = BNCLogFlushFileDescriptor;
 }
 
-void BNCLogSetOutputToURL(NSURL *_Nullable url) {
+void BNCLogSetOutputToURL(NSURL*_Nullable url) {
     dispatch_sync(bnc_LogQueue, ^{
         if (bnc_LogFlushFunction)
             bnc_LogFlushFunction();
@@ -268,17 +268,17 @@ BOOL BNCLogRecordWrapOpenURL(NSURL *url, long maxRecords, long recordSize) {
     return result;
 }
 
-void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRecords, long recordSize) {
+void BNCLogSetOutputToURLRecordWrapSize(NSURL*_Nullable url, long maxRecords, long recordSize) {
     BNCLogRecordWrapOpenURL(url, maxRecords, recordSize);
 }
 
-void BNCLogSetOutputToURLRecordWrap(NSURL *_Nullable url, long maxRecords) {
+void BNCLogSetOutputToURLRecordWrap(NSURL*_Nullable url, long maxRecords) {
     BNCLogSetOutputToURLRecordWrapSize(url, maxRecords, 1024);
 }
 
 #pragma mark - Byte Wrap Output File Functions
 
-void BNCLogByteWrapWrite(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString *_Nullable message) {
+void BNCLogByteWrapWrite(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Nullable message) {
 
     NSString * string = [NSString stringWithFormat:@"%@ %ld %@\n",
         [bnc_LogDateFormatter stringFromDate:timestamp], (long) level, message];
@@ -453,7 +453,7 @@ BOOL BNCLogByteWrapOpenURL_Internal(NSURL *url, long maxBytes) {
     return YES;
 }
 
-void BNCLogSetOutputToURLByteWrap(NSURL *_Nullable URL, long maxBytes) {
+void BNCLogSetOutputToURLByteWrap(NSURL*_Nullable URL, long maxBytes) {
     __block BOOL result = NO;
     dispatch_sync(bnc_LogQueue, ^{
         if (bnc_LogFlushFunction)
@@ -519,7 +519,7 @@ BNCLogLevel BNCLogLevelFromString(NSString*string) {
 
 static _Atomic(BNCLogClientInitializeFunctionPtr) bnc_LogClientInitializeFunctionPtr = (BNCLogClientInitializeFunctionPtr) 0;
 
-extern BNCLogClientInitializeFunctionPtr _Null_unspecified BNCLogSetClientInitializeFunction(
+extern BNCLogClientInitializeFunctionPtr _Nullable BNCLogSetClientInitializeFunction(
         BNCLogClientInitializeFunctionPtr _Nullable clientInitializationFunction
     ) {
     BNCLogClientInitializeFunctionPtr lastPtr =
@@ -592,9 +592,9 @@ void BNCLogSetFlushFunction(BNCLogFlushFunctionPtr flushFunction) {
 
 void BNCLogWriteMessageFormat(
         BNCLogLevel logLevel,
-        const char *_Nullable file,
+        const char*_Nullable file,
         int32_t lineNumber,
-        NSString *_Nullable message,
+        NSString*_Nullable message,
         ...
     ) {
     BNCLogInitializeClient_Internal();
@@ -641,9 +641,9 @@ void BNCLogWriteMessageFormat(
 
 void BNCLogWriteMessage(
         BNCLogLevel logLevel,
-        NSString *_Nonnull file,
+        NSString*_Nonnull file,
         int32_t lineNumber,
-        NSString *_Nonnull message
+        NSString*_Nonnull message
     ) {
     BNCLogWriteMessageFormat(logLevel, file.UTF8String, lineNumber, @"%@", message);
 }

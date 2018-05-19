@@ -9,6 +9,7 @@
 */
 
 #import "BranchSession.h"
+#import "BNCLog.h"
 
 @implementation BranchSession
 
@@ -19,12 +20,23 @@
     #include "BNCWireFormat.h"
 
     addString(sessionID,            session_id);
-    addBoolean(isFirstSession,      +is_first_session);
-    addBoolean(isBranchURL,         +clicked_branch_link);
     addString(developerIdentityForUser, identity);
     addString(deviceFingerprintID,  device_fingerprint_id);
-    addURL(url,                     link);
     addString(identityID,           identity_id)
+
+    NSString*dataString = dictionary[@"data"];
+    if (dataString) {
+        NSData*dataData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+        if (dataData) {
+            NSError*error = nil;
+            object.data = [NSJSONSerialization JSONObjectWithData:dataData options:0 error:&error];
+            if (error) BNCLogError(@"Can't decode data: %@", error);
+            NSDictionary*dictionary = object.data;
+            addBoolean(isFirstSession,      +is_first_session);
+            addBoolean(isBranchURL,         +clicked_branch_link);
+            addURL(referringURL,            ~referring_link);
+        }
+    }
 
     return object;
 }
@@ -40,7 +52,6 @@
     addBoolean(isBranchURL,         +clicked_branch_link);
     addString(developerIdentityForUser, identity);
     addString(deviceFingerprintID,  device_fingerprint_id);
-    addURL(url,                     link);
     addString(identityID,           identity_id)
 
     return dictionary;

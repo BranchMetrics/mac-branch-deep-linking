@@ -33,6 +33,10 @@
     #import <UIKit/UIKit.h>
     #endif
 
+#else
+
+    #error Unknown compile target.
+
 #endif
 
 #endif // BranchHeader_h
