@@ -24,5 +24,3 @@ key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N
 525024923253494062
 
 https://developer.apple.com/library/content/technotes/tn1103/_index.html
-
-

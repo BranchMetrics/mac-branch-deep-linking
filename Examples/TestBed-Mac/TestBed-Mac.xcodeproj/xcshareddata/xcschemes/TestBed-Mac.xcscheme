@@ -59,7 +59,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D27FF9320B2B7B9002C7EB0"
+               BlueprintIdentifier = "4D0F56A920B33C97003D6607"
                BuildableName = "TestBed-MacTests.xctest"
                BlueprintName = "TestBed-MacTests"
                ReferencedContainer = "container:TestBed-Mac.xcodeproj">
