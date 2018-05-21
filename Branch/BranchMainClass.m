@@ -1,5 +1,5 @@
 /**
- @file          BranchClass.m
+ @file          BranchMainClass.m
  @package       Branch-SDK
  @brief         The main Branch class.
 
@@ -8,7 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "BranchClass.h"
+#import "BranchMainClass.h"
 #import "BNCLog.h"
 #import "BNCNetworkAPIService.h"
 #import "BNCSettings.h"

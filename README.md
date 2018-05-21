@@ -11,7 +11,7 @@ The Branch SDK for Mac OS X
 * [x] Open / Install network called correctly
 * [x] Open / Install with deep link data
 * [ ] Deferred deep linking
-* [ ] 
+* [ ] Send event
 ```
 
 ## Notes

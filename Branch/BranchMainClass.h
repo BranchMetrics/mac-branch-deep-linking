@@ -1,5 +1,5 @@
 /**
- @file          BranchClass.h
+ @file          BranchMainClass.h
  @package       Branch-SDK
  @brief         The main Branch class.
 

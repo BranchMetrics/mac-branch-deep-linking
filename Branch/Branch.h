@@ -13,7 +13,7 @@
 FOUNDATION_EXPORT double BranchVersionNumber;
 FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 
-#import <Branch/BranchClass.h>
+#import <Branch/BranchMainClass.h>
 #import <Branch/BranchCommerce.h>
 #import <Branch/BranchDelegate.h>
 #import <Branch/BranchError.h>

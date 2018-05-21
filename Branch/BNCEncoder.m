@@ -16,7 +16,12 @@
 
 + (NSError*_Nullable) decodeInstance:(id)instance
         withCoder:(NSCoder*)coder
-        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvars {
+        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvarsArray {
+
+    NSSet*ignoreIvars = nil;
+    if (ignoreIvarsArray)
+        ignoreIvars = [NSSet setWithArray:ignoreIvarsArray];
+
     uint count = 0;
     Class class = object_getClass(instance);
     Ivar *ivars = class_copyIvarList(class, &count);
@@ -76,7 +81,12 @@
 
 + (NSError*_Nullable) encodeInstance:(id)instance
         withCoder:(NSCoder*)coder
-        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvars {
+        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvarsArray {
+
+    NSSet*ignoreIvars = nil;
+    if (ignoreIvarsArray)
+        ignoreIvars = [NSSet setWithArray:ignoreIvarsArray];
+
     uint count = 0;
     Class class = object_getClass(instance);
     Ivar *ivars = class_copyIvarList(class, &count);

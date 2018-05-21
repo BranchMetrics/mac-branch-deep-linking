@@ -52,7 +52,7 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
 }
 
 - (void)awaitExpectations {
-    [self waitForExpectationsWithTimeout:5 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
         self.hasExceededExpectations = YES;
     }];
 }

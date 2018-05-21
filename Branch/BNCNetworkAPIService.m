@@ -16,7 +16,7 @@
 #import "BNCWireFormat.h"
 #import "BNCThreads.h"
 #import "BranchSession.h"
-#import "BranchClass.h"
+#import "BranchMainClass.h"
 #import "BNCLog.h"
 #import "BranchDelegate.h"
 
