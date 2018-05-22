@@ -16,40 +16,39 @@
 @class BNCSettingsProxy;
 
 @interface BNCSettings () {
-    @public
-    dispatch_queue_t  _saveQueue;
+    dispatch_queue_t _saveQueue;
     dispatch_source_t _saveTimer;
     __weak BNCSettingsProxy* _proxy;
-
     NSMutableDictionary<NSString*, NSString*>* _requestMetadataDictionary;
     NSMutableDictionary<NSString*, NSString*>* _instrumentationDictionary;
 }
 @end
 
-@interface BNCSettingsProxy : NSProxy
-@property (atomic, strong) BNCSettings*settings;
+@interface BNCSettingsProxy : NSProxy {
+    @public
+    BNCSettings*_settings;
+}
 @end
 
 @implementation BNCSettingsProxy
 
 - (id) initWithSettings:(BNCSettings*)settings {
-    self.settings = settings;
-    settings->_proxy = self;
+    self->_settings = settings;
     return self;
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation setTarget:self.settings];
+    [invocation setTarget:self->_settings];
     [invocation invoke];
     NSString* selectorName = NSStringFromSelector(invocation.selector);
     if ([selectorName hasPrefix:@"set"] &&
         ![selectorName isEqualToString:@"setNeedsSave"]) {
-        [self.settings setNeedsSave];
+        [self->_settings setNeedsSave];
     }
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector_ {
-    return [self.settings methodSignatureForSelector:selector_];
+    return [self->_settings methodSignatureForSelector:selector_];
 }
 
 @end
@@ -59,25 +58,43 @@
 @implementation BNCSettings
 
 + (instancetype) sharedInstance {
-    static BNCSettings*sharedInstance = nil;
+    // TODO: There's a weird ARC retain count problem here where the proxy is released at the end.
+    // It's duct tape fixed by having sharedInstance have references to both the proxy and object.
+    // It will be nice to really fix this.
+    static __strong BNCSettings*sharedInstance = nil;
+    static __strong BNCSettingsProxy*sharedInstanceProxy = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^ {
-        sharedInstance = [self loadSettings];
+        BNCSettings* settings = [self loadSettings];
+        if (settings) {
+            sharedInstanceProxy = (id) settings;
+            sharedInstance = ((BNCSettingsProxy*)sharedInstanceProxy)->_settings;
+        }
     });
-    return sharedInstance;
+    return (BNCSettings*)sharedInstanceProxy;
 }
+
+BNCSettings*bnc_settings = nil;
 
 + (instancetype) loadSettings {
     BNCSettings* settings = nil;
     NSData*data = [BNCPersistence loadDataNamed:@"io.branch.sdk.settings"];
-    if (data) settings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    if ([settings isKindOfClass:BNCSettingsProxy.class]) {
+    settings = (data) ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : [[BNCSettings alloc] init];
+    Class foundClass = [settings class];
+    Class proxyClass = NSClassFromString(@"BNCSettingsProxy");
+    Class settingsClass = NSClassFromString(@"BNCSettings");
+    if ((__bridge void*) foundClass == (__bridge void*) proxyClass) {
+        bnc_settings = settings;
+        return bnc_settings;
     }
-    else if ([settings isKindOfClass:BNCSettings.class])
-        settings = (BNCSettings*) settings->_proxy;
     else
-        settings = [[BNCSettings alloc] init];
-    return settings;
+    if ((__bridge void*) foundClass == (__bridge void*) settingsClass) {
+        bnc_settings = (id) settings->_proxy;
+        return bnc_settings;
+    } else {
+        bnc_settings = [[BNCSettings alloc] init];
+        return bnc_settings;
+    }
 }
 
 + (BOOL) supportsSecureCoding {
@@ -88,7 +105,15 @@
     self = [super init];
     if (!self) return self;
     BNCSettingsProxy*proxy = [[BNCSettingsProxy alloc] initWithSettings:self];
+    self->_proxy = proxy;
     return (BNCSettings*) proxy;
+}
+
+- (void) dealloc {
+    if (_saveTimer) {
+        dispatch_source_cancel(_saveTimer);
+        _saveTimer = nil;
+    }
 }
 
 + (NSArray<NSString*>*) ignoreMembers {
@@ -97,7 +122,8 @@
 
 - (instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
     self = [self init];
-    BNCSettings*settings = ((BNCSettingsProxy*)self).settings;
+    if (!self) return self;
+    BNCSettings*settings = ((BNCSettingsProxy*)self)->_settings;
     [BNCEncoder decodeInstance:settings withCoder:aDecoder ignoring:settings.class.ignoreMembers];
     return self;
 }

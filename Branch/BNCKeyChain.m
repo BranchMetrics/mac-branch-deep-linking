@@ -40,6 +40,17 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
 
 @implementation BNCKeyChain
 
+// https://stackoverflow.com/questions/11726672/access-app-identifier-prefix-programmatically
+NSString*bnc_securityAccessGroup = nil;
+
++ (void) setSecurityAccessGroup:(NSString*)securityAccessGroup {
+    if (securityAccessGroup) bnc_securityAccessGroup = securityAccessGroup;
+}
+
++ (NSString*) securityAccessGroup {
+    return bnc_securityAccessGroup;
+}
+
 + (NSError*) errorWithKey:(NSString*)key OSStatus:(OSStatus)status {
     // Security errors are defined in Security/SecBase.h
     if (status == errSecSuccess) return nil;

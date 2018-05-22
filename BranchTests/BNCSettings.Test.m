@@ -10,6 +10,7 @@
 
 #import "BNCTestCase.h"
 #import "BNCSettings.h"
+#import <objc/runtime.h>
 
 @interface BNCSettingsTest : BNCTestCase
 @end
@@ -61,15 +62,40 @@
     __block XCTestExpectation*expectation = [self expectationWithDescription:@"testSettingsDetectRace"];
     BNCSettings*s = [[BNCSettings alloc] init];
     s.settingsSavedBlock = ^ (BNCSettings*_Nonnull settings, NSError*error) {
-        BNCSleepForTimeInterval(2.0);
-        [expectation fulfill];
-        expectation = nil;
         count++;
+        if (count > 1) {
+            [expectation fulfill];
+            expectation = nil;
+        } else {
+            BNCSleepForTimeInterval(0.5);
+        }
     };
-    BNCSleepForTimeInterval(1.5);
+    BNCSleepForTimeInterval(1.1);
     s.limitFacebookTracking = YES;
-    [self awaitExpectations];
+    [self waitForExpectationsWithTimeout:10.0 handler:nil];
     XCTAssertTrue(count > 1);
+}
+
+- (void) testProxy {
+    BNCSettings*settings = [[BNCSettings alloc] init];
+    Class proxyClass = NSClassFromString(@"BNCSettingsProxy");
+    XCTAssertTrue((__bridge void*) settings.class == (__bridge void*) proxyClass);
+
+    Ivar realSettingsIvar = class_getInstanceVariable(proxyClass, "_settings");
+    BNCSettings*realSettings = object_getIvar(settings, realSettingsIvar);
+    XCTAssertNotNil(realSettings);
+    XCTAssertTrue((__bridge void*) realSettings.class == (__bridge void*) BNCSettings.class);
+}
+
+- (void) testSharedInstance {
+    BNCSettings*settings = [BNCSettings sharedInstance];
+    XCTAssertTrue([settings isKindOfClass:[BNCSettings class]]);
+    XCTAssertTrue([settings isProxy]);
+    Class settingsClass = [settings class];
+    Class proxyClass = NSClassFromString(@"BNCSettingsProxy");
+    XCTAssertTrue((__bridge void*) settingsClass == (__bridge void*) proxyClass);
+    NSString*fpid = settings.deviceFingerprintID; // Make sure that
+    XCTAssertTrue(fpid == nil || fpid != nil);
 }
 
 @end

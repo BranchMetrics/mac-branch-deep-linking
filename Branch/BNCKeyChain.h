@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
                       forService:(NSString*_Nonnull)service
                              key:(NSString*_Nonnull)key
                 cloudAccessGroup:(NSString*_Nullable)accessGroup;
+
++ (NSString*_Nullable) securityAccessGroup;
 @end
 
 NS_ASSUME_NONNULL_END
