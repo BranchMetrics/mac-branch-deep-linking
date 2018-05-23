@@ -51,7 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys;
 
 /// An array of host domains that we will allow with a self-signed SSL cert.
-@property (strong, null_resettable) NSMutableSet<NSString*>* anySSLCertHosts;
+@property (atomic, strong, null_resettable) NSMutableSet<NSString*>* anySSLCertHosts;
+@property (atomic, assign) NSInteger maxConcurrentOperationCount;
 @end
 
 NS_ASSUME_NONNULL_END

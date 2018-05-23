@@ -26,13 +26,6 @@
 			remoteGlobalIDString = 4D54C07520A6560400C76496;
 			remoteInfo = Branch;
 		};
-		2B3C070420AB722200F38167 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4D54C07E20A6560400C76496;
-			remoteInfo = BranchTests;
-		};
 		2B3C071520ABB8B700F38167 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
@@ -46,6 +39,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
+		};
+		4DED372520B5D96500A0750E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DED371F20B5D96500A0750E /* BranchTests.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DB027EF20B5D0BD00D5F19A;
+			remoteInfo = BranchTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -79,6 +79,8 @@
 		4D0F56AA20B33C97003D6607 /* TestBed-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-MacTests.m"; sourceTree = "<group>"; };
 		4D0F56AE20B33C97003D6607 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DED371F20B5D96500A0750E /* BranchTests.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BranchTests.xcodeproj; path = ../../BranchTests.xcodeproj; sourceTree = "<group>"; };
+		4DED372C20B6221100A0750E /* TestBed-Mac.provisionprofile */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestBed-Mac.provisionprofile"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			children = (
 				2B3C071820ABE0F400F38167 /* README.md */,
 				2B3C06FD20AB722200F38167 /* Branch.xcodeproj */,
+				4DED371F20B5D96500A0750E /* BranchTests.xcodeproj */,
 				2B3C06EA20AB704600F38167 /* TestBed-Mac */,
 				4D0F56AB20B33C97003D6607 /* TestBed-MacTests */,
 				2B3C06E920AB704600F38167 /* Products */,
@@ -134,6 +137,7 @@
 				2B3C06F420AB704800F38167 /* main.m */,
 				2B3C06F020AB704800F38167 /* MainMenu.xib */,
 				2B3C070A20AB809E00F38167 /* TestBed-Mac.entitlements */,
+				4DED372C20B6221100A0750E /* TestBed-Mac.provisionprofile */,
 			);
 			path = "TestBed-Mac";
 			sourceTree = "<group>";
@@ -142,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				2B3C070320AB722200F38167 /* Branch.framework */,
-				2B3C070520AB722200F38167 /* BranchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,6 +164,14 @@
 				4D0F56AE20B33C97003D6607 /* Info.plist */,
 			);
 			path = "TestBed-MacTests";
+			sourceTree = "<group>";
+		};
+		4DED372020B5D96500A0750E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DED372620B5D96500A0750E /* BranchTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +227,9 @@
 					2B3C06E720AB704600F38167 = {
 						CreatedOnToolsVersion = 9.3.1;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 1;
 							};
@@ -243,6 +257,10 @@
 					ProductGroup = 2B3C06FE20AB722200F38167 /* Products */;
 					ProjectRef = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
 				},
+				{
+					ProductGroup = 4DED372020B5D96500A0750E /* Products */;
+					ProjectRef = 4DED371F20B5D96500A0750E /* BranchTests.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -260,11 +278,11 @@
 			remoteRef = 2B3C070220AB722200F38167 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2B3C070520AB722200F38167 /* BranchTests.xctest */ = {
+		4DED372620B5D96500A0750E /* BranchTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = BranchTests.xctest;
-			remoteRef = 2B3C070420AB722200F38167 /* PBXContainerItemProxy */;
+			remoteRef = 4DED372520B5D96500A0750E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -367,7 +385,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -386,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -425,7 +443,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -438,7 +456,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -449,16 +467,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "TestBed-Mac/TestBed-Mac.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				INFOPLIST_FILE = "TestBed-Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = "blue.shimmering.TestBed-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b4f406d4-ebaa-49c3-8474-2b8c4ae22c74";
+				PROVISIONING_PROFILE_SPECIFIER = TestBedMac;
 			};
 			name = Debug;
 		};
@@ -467,16 +487,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "TestBed-Mac/TestBed-Mac.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				INFOPLIST_FILE = "TestBed-Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = "blue.shimmering.TestBed-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b4f406d4-ebaa-49c3-8474-2b8c4ae22c74";
+				PROVISIONING_PROFILE_SPECIFIER = TestBedMac;
 			};
 			name = Release;
 		};

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark BranchContentIndexMode
 
 typedef NS_ENUM(NSInteger, BranchContentIndexMode) {
-    BranchContentIndexModePublic,
+    BranchContentIndexModePublic = 0,
     BranchContentIndexModePrivate
 };
 

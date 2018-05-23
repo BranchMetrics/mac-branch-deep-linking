@@ -10,5 +10,9 @@
 
 @interface APPViewController : NSViewController
 + (APPViewController*) loadController;
+@property (weak) IBOutlet NSTextField *stateField;
+@property (weak) IBOutlet NSTextField *urlField;
+@property (weak) IBOutlet NSTextField *errorField;
+@property (weak) IBOutlet NSTextField *dataField;
 @property (nonatomic, strong) IBOutlet NSWindow* window;
 @end

@@ -18,7 +18,7 @@
 @interface BNCSettings () {
     dispatch_queue_t _saveQueue;
     dispatch_source_t _saveTimer;
-    __weak BNCSettingsProxy* _proxy;
+    __strong BNCSettingsProxy* _proxy;
     NSMutableDictionary<NSString*, NSString*>* _requestMetadataDictionary;
     NSMutableDictionary<NSString*, NSString*>* _instrumentationDictionary;
 }
@@ -38,12 +38,14 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation setTarget:self->_settings];
-    [invocation invoke];
-    NSString* selectorName = NSStringFromSelector(invocation.selector);
-    if ([selectorName hasPrefix:@"set"] &&
-        ![selectorName isEqualToString:@"setNeedsSave"]) {
-        [self->_settings setNeedsSave];
+    @synchronized(self->_settings) {
+        [invocation setTarget:self->_settings];
+        [invocation invoke];
+        NSString* selectorName = NSStringFromSelector(invocation.selector);
+        if ([selectorName hasPrefix:@"set"] &&
+            ![selectorName isEqualToString:@"setNeedsSave"]) {
+            [self->_settings setNeedsSave];
+        }
     }
 }
 
@@ -74,27 +76,26 @@
     return (BNCSettings*)sharedInstanceProxy;
 }
 
-BNCSettings*bnc_settings = nil;
-
 + (instancetype) loadSettings {
-    BNCSettings* settings = nil;
+    BNCSettingsProxy*result = nil;
     NSData*data = [BNCPersistence loadDataNamed:@"io.branch.sdk.settings"];
-    settings = (data) ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : [[BNCSettings alloc] init];
+    BNCSettings* settings =
+        (data) ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : [[BNCSettings alloc] init];
     Class foundClass = [settings class];
-    Class proxyClass = NSClassFromString(@"BNCSettingsProxy");
-    Class settingsClass = NSClassFromString(@"BNCSettings");
+    Class proxyClass = [BNCSettingsProxy class];
+    Class settingsClass = [BNCSettings class];
     if ((__bridge void*) foundClass == (__bridge void*) proxyClass) {
-        bnc_settings = settings;
-        return bnc_settings;
+        result = (id) settings;
     }
     else
     if ((__bridge void*) foundClass == (__bridge void*) settingsClass) {
-        bnc_settings = (id) settings->_proxy;
-        return bnc_settings;
+        result = [[BNCSettingsProxy alloc] initWithSettings:settings];
     } else {
-        bnc_settings = [[BNCSettings alloc] init];
-        return bnc_settings;
+        settings = [[BNCSettings alloc] init];
+        result = [[BNCSettingsProxy alloc] initWithSettings:settings];
     }
+    BNCLogAssert(result && result->_settings);
+    return (id) result;
 }
 
 + (BOOL) supportsSecureCoding {

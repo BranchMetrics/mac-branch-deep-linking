@@ -35,6 +35,7 @@
     if (!self) return self;
     self.configuration = configuration;
     self.networkService = [[BNCNetworkService alloc] init];
+    self.networkService.maxConcurrentOperationCount = 1;
     self.settings = [BNCSettings sharedInstance];
     return self;
 }

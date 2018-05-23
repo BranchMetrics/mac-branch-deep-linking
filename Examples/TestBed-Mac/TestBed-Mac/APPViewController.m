@@ -9,8 +9,6 @@
 #import "APPViewController.h"
 
 @interface APPViewController ()
-@property (strong) IBOutlet NSTextField *urlField;
-@property (strong) IBOutlet NSTextField *deepLinkDataField;
 @end
 
 @implementation APPViewController

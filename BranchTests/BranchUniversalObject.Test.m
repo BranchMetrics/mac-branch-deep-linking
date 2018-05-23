@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "BNCTestCase.h"
-#import "BranchUniversalObject.h"
 #import "NSString+Branch.h"
 #import "Branch.h"
 

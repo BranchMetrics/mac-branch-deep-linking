@@ -25,7 +25,19 @@
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
-        selector:@selector(openedURLNotification:)
+        selector:@selector(branchWillStartSession:)
+        name:BranchWillStartSessionNotification
+        object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchDidStartSession:)
+        name:BranchDidStartSessionNotification
+        object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchOpenedURLNotification:)
         name:BranchDidOpenURLWithSessionNotification
         object:nil];
 }
@@ -48,14 +60,27 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     return YES;
 }
 
-- (void) openedURLNotification:(NSNotification*)notification {
+#pragma mark - Branch Notifications
+
+- (void) branchWillStartSession:(NSNotification*)notification {
+    [self.viewController.window makeKeyAndOrderFront:self];
+    self.viewController.stateField.stringValue = notification.name;
+    self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
+    self.viewController.errorField.stringValue = @"< No Error >";
+    self.viewController.dataField.stringValue  = @"< No Data >";
+}
+
+- (void) branchDidStartSession:(NSNotification*)notification {
+    self.viewController.stateField.stringValue = notification.name;
+    self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
+    self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";
     BranchSession*session = notification.userInfo[BranchSessionKey];
-    NSString*message = session.data[@"message"];
-    NSAlert* alert = [[NSAlert alloc] init];
-    alert.alertStyle = NSAlertStyleInformational;
-    alert.messageText = @"Opened URL";
-    alert.informativeText = message;
-    [alert runModal];
+    NSString*data = (session && session.data) ? session.data.description : @"< No Data >";
+    self.viewController.dataField.stringValue  = data;
+}
+
+- (void) branchOpenedURLNotification:(NSNotification*)notification {
+    self.viewController.stateField.stringValue = notification.name;
 }
 
 #if 0

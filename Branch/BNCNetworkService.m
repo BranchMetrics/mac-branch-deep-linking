@@ -148,6 +148,14 @@
     return self;
 }
 
+- (void) setMaxConcurrentOperationCount:(NSInteger)count {
+    self.serviceQueue.maxConcurrentOperationCount = count;
+}
+
+- (NSInteger) maxConcurrentOperationCount {
+    return self.serviceQueue.maxConcurrentOperationCount;
+}
+
 - (NSMutableSet<NSString*>*) anySSLCertHosts {
     @synchronized(self) {
         if (!_anySSLCertHosts) _anySSLCertHosts = [NSMutableSet new];
