@@ -1,11 +1,10 @@
-//
 /**
  @file          BNCPersistence.m
  @package       Branch
- @brief         < A brief description of the file function. >
+ @brief         Persists a smallish (< 1mb?) set of data between app runs.
 
  @author        Edward
- @date          2018
+ @date          May 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 

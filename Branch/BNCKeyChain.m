@@ -40,15 +40,12 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
 
 @implementation BNCKeyChain
 
-// https://stackoverflow.com/questions/11726672/access-app-identifier-prefix-programmatically
-NSString*bnc_securityAccessGroup = nil;
-
-+ (void) setSecurityAccessGroup:(NSString*)securityAccessGroup {
-    if (securityAccessGroup) bnc_securityAccessGroup = securityAccessGroup;
-}
-
-+ (NSString*) securityAccessGroup {
-    return bnc_securityAccessGroup;
+- (instancetype) initWithSecurityAccessGroup:(NSString *)securityGroup {
+    self = [super init];
+    if (!self) return self;
+    BNCLogAssert(securityGroup);
+    _securityAccessGroup = [securityGroup copy];
+    return self;
 }
 
 + (NSError*) errorWithKey:(NSString*)key OSStatus:(OSStatus)status {
@@ -75,41 +72,37 @@ NSString*bnc_securityAccessGroup = nil;
     return error;
 }
 
-+ (NSArray*) retieveAllValuesWithError:(NSError**)error {
+- (NSArray<NSString*>*_Nullable) retrieveKeysWithService:(NSString*)service
+                                                   error:(NSError*_Nullable __autoreleasing *_Nullable)error {
     if (error) *error = nil;
+    if (service == nil) {
+        if (error) *error = [self.class errorWithKey:nil OSStatus:errSecParam];
+        return nil;
+    }
     NSDictionary* dictionary = @{
         (__bridge id)kSecClass:                 (__bridge id)kSecClassGenericPassword,
-        (__bridge id)kSecReturnData:            (__bridge id)kCFBooleanTrue,
+        (__bridge id)kSecReturnAttributes:      (__bridge id)kCFBooleanTrue,
         (__bridge id)kSecAttrSynchronizable:    (__bridge id)kSecAttrSynchronizableAny,
-        (__bridge id)kSecMatchLimit:            (__bridge id)kSecMatchLimitAll
+        (__bridge id)kSecMatchLimit:            (__bridge id)kSecMatchLimitAll,
+        (__bridge id)kSecAttrAccessGroup:       self->_securityAccessGroup,
+        (__bridge id)kSecAttrService:           service,
     };
     CFTypeRef valueData = NULL;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)dictionary, &valueData);
     if (status == errSecItemNotFound) status = 0;
-    if (status) {
-        NSError *localError = [self errorWithKey:@"<all>" OSStatus:status];
+    if (status != errSecSuccess) {
+        NSError *localError = [self.class errorWithKey:@"<all>" OSStatus:status];
         BNCLogDebugSDK(@"Can't retrieve key: %@.", localError);
         if (error) *error = localError;
         if (valueData) CFRelease(valueData);
         return nil;
     }
-    NSMutableArray *array = nil;
+    NSMutableArray *array = [NSMutableArray new];
     if ([((__bridge NSArray*)valueData) isKindOfClass:[NSArray class]]) {
         NSArray *dataArray = (__bridge NSArray*) valueData;
-        array = [NSMutableArray new];
-        for (NSData* data in dataArray) {
-            id value = nil;
-            @try {
-                value = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            }
-            @catch (id) {
-                value = nil;
-            }
-            if (value)
-                [array addObject:value];
-            else
-            if (data)
-                [array addObject:data];
+        for (NSDictionary*dataDictionary in dataArray) {
+            NSString*key = dataDictionary[(NSString*)kSecAttrAccount];
+            if (key) [array addObject:key];
         }
     }
     if (valueData)
@@ -117,10 +110,10 @@ NSString*bnc_securityAccessGroup = nil;
     return array;
 }
 
-+ (id) retrieveValueForService:(NSString*)service key:(NSString*)key error:(NSError**)error {
+- (id) retrieveValueForService:(NSString*)service key:(NSString*)key error:(NSError**)error {
     if (error) *error = nil;
     if (service == nil || key == nil) {
-        NSError *localError = [self errorWithKey:key OSStatus:errSecParam];
+        NSError *localError = [self.class errorWithKey:key OSStatus:errSecParam];
         if (error) *error = localError;
         return nil;
     }
@@ -129,6 +122,7 @@ NSString*bnc_securityAccessGroup = nil;
         (__bridge id)kSecClass:                 (__bridge id)kSecClassGenericPassword,
         (__bridge id)kSecAttrService:           service,
         (__bridge id)kSecAttrAccount:           key,
+        (__bridge id)kSecAttrAccessGroup:       self->_securityAccessGroup,
         (__bridge id)kSecReturnData:            (__bridge id)kCFBooleanTrue,
         (__bridge id)kSecMatchLimit:            (__bridge id)kSecMatchLimitOne,
         (__bridge id)kSecAttrSynchronizable:    (__bridge id)kSecAttrSynchronizableAny
@@ -136,7 +130,7 @@ NSString*bnc_securityAccessGroup = nil;
     CFDataRef valueData = NULL;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)dictionary, (CFTypeRef *)&valueData);
     if (status) {
-        NSError *localError = [self errorWithKey:key OSStatus:status];
+        NSError *localError = [self.class errorWithKey:key OSStatus:status];
         BNCLogDebugSDK(@"Can't retrieve key: %@.", localError);
         if (error) *error = localError;
         if (valueData) CFRelease(valueData);
@@ -149,7 +143,7 @@ NSString*bnc_securityAccessGroup = nil;
         }
         @catch (id) {
             value = nil;
-            NSError *localError = [self errorWithKey:key OSStatus:errSecDecode];
+            NSError *localError = [self.class errorWithKey:key OSStatus:errSecDecode];
             if (error) *error = localError;
         }
         CFRelease(valueData);
@@ -157,13 +151,12 @@ NSString*bnc_securityAccessGroup = nil;
     return value;
 }
 
-+ (NSError*) storeValue:(id)value
+- (NSError*) storeValue:(id)value
              forService:(NSString*)service
-                    key:(NSString*)key
-       cloudAccessGroup:(NSString*)accessGroup {
+                    key:(NSString*)key {
 
     if (value == nil || service == nil || key == nil)
-        return [self errorWithKey:key OSStatus:errSecParam];
+        return [self.class errorWithKey:key OSStatus:errSecParam];
 
     NSData* valueData = nil;
     @try {
@@ -181,37 +174,33 @@ NSString*bnc_securityAccessGroup = nil;
         (__bridge id)kSecClass:                 (__bridge id)kSecClassGenericPassword,
         (__bridge id)kSecAttrService:           service,
         (__bridge id)kSecAttrAccount:           key,
+        (__bridge id)kSecAttrAccessGroup:       self->_securityAccessGroup,
         (__bridge id)kSecAttrSynchronizable:    (__bridge id)kSecAttrSynchronizableAny
     }];
     OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dictionary);
     if (status != errSecSuccess && status != errSecItemNotFound) {
-        NSError *error = [self errorWithKey:key OSStatus:status];
+        NSError *error = [self.class errorWithKey:key OSStatus:status];
         BNCLogDebugSDK(@"Can't clear to store key: %@.", error);
     }
-
-    dictionary[(__bridge id)kSecValueData] = valueData;
-    dictionary[(__bridge id)kSecAttrIsInvisible] = (__bridge id)kCFBooleanTrue;
-    dictionary[(__bridge id)kSecAttrAccessible] = (__bridge id)kSecAttrAccessibleAfterFirstUnlock;
-
-    if (accessGroup.length) {
-        dictionary[(__bridge id)kSecAttrAccessGroup] = accessGroup;
-        dictionary[(__bridge id)kSecAttrSynchronizable] = (__bridge id) kCFBooleanTrue;
-    } else {
-        dictionary[(__bridge id)kSecAttrSynchronizable] = (__bridge id) kCFBooleanFalse;
-    }
+    dictionary[(__bridge id)kSecValueData]          = valueData;
+    dictionary[(__bridge id)kSecAttrIsInvisible]    = (__bridge id)kCFBooleanTrue;
+    dictionary[(__bridge id)kSecAttrSynchronizable] = (__bridge id)kCFBooleanTrue;
+    dictionary[(__bridge id)kSecAttrAccessible]     = (__bridge id)kSecAttrAccessibleAfterFirstUnlock;
+    
     status = SecItemAdd((__bridge CFDictionaryRef)dictionary, NULL);
-    if (status) {
-        NSError *error = [self errorWithKey:key OSStatus:status];
+    if (status != errSecSuccess) {
+        NSError *error = [self.class errorWithKey:key OSStatus:status];
         BNCLogDebugSDK(@"Can't store key: %@.", error);
         return error;
     }
     return nil;
 }
 
-+ (NSError*) removeValuesForService:(NSString*)service key:(NSString*)key {
+- (NSError*) removeValuesForService:(NSString*)service key:(NSString*)key {
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithDictionary:@{
         (__bridge id)kSecClass:                 (__bridge id)kSecClassGenericPassword,
-        (__bridge id)kSecAttrSynchronizable:    (__bridge id)kSecAttrSynchronizableAny
+        (__bridge id)kSecAttrSynchronizable:    (__bridge id)kSecAttrSynchronizableAny,
+        (__bridge id)kSecAttrAccessGroup:       self->_securityAccessGroup,
     }];
     if (service) dictionary[(__bridge id)kSecAttrService] = service;
     if (key) dictionary[(__bridge id)kSecAttrAccount] = key;
@@ -219,7 +208,7 @@ NSString*bnc_securityAccessGroup = nil;
     OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dictionary);
     if (status == errSecItemNotFound) status = errSecSuccess;
     if (status) {
-        NSError *error = [self errorWithKey:key OSStatus:status];
+        NSError *error = [self.class errorWithKey:key OSStatus:status];
         BNCLogDebugSDK(@"Can't remove key: %@.", error);
         return error;
     }

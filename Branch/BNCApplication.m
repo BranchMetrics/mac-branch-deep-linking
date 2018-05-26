@@ -13,6 +13,21 @@
 #import "BNCKeyChain.h"
 #import "BNCSettings.h"
 
+#pragma mark Dynamically loaded function declarations
+
+typedef struct __SecTask * SecTaskRef;
+extern CFDictionaryRef SecTaskCopyValuesForEntitlements(
+        SecTaskRef task,
+        CFArrayRef entitlements,
+        CFErrorRef  _Nullable *error
+    )
+    __attribute__((weak_import));
+
+extern SecTaskRef SecTaskCreateFromSelf(CFAllocatorRef allocator)
+    __attribute__((weak_import));
+
+#pragma mark - Key Names
+
 static NSString*const kBranchKeychainService          = @"BranchKeychainService";
 static NSString*const kBranchKeychainDevicesKey       = @"BranchKeychainDevices";
 static NSString*const kBranchKeychainFirstBuildKey    = @"BranchKeychainFirstBuild";
@@ -39,31 +54,55 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     application->_bundleID = [NSBundle mainBundle].bundleIdentifier;
     application->_displayName = info[@"CFBundleDisplayName"];
     application->_shortDisplayName = info[@"CFBundleName"];
-    application->_teamID = info[@"AppIdentifierPrefix"];
-    if ([application->_teamID hasSuffix:@"."]) {
-        NSInteger l = application->_teamID.length - 1;
-        application->_teamID = [application->_teamID substringToIndex:l];
+    if (application->_shortDisplayName.length == 0)
+        application->_shortDisplayName = application->_displayName;
+    if (application->_displayName.length == 0) {
+        application->_displayName = application->_shortDisplayName;
     }
-
     application->_displayVersionString = info[@"CFBundleShortVersionString"];
     application->_versionString = info[@"CFBundleVersion"];
 
+    // Get the entitlements:
+    NSDictionary *entitlements = [self entitlementsDictionary];
+    application->_applicationID = entitlements[@"application-identifier"];
+    application->_pushNotificationEnvironment = entitlements[@"aps-environment"];
+    application->_keychainAccessGroups = entitlements[@"keychain-access-groups"];
+    application->_associatedDomains = entitlements[@"com.apple.developer.associated-domains"];
+    application->_teamID = entitlements[@"com.apple.developer.team-identifier"];
+    if (application->_teamID.length == 0 && application->_applicationID) {
+        // Some simulator apps aren't signed the same way?
+        NSRange range = [application->_applicationID rangeOfString:@"."];
+        if (range.location != NSNotFound) {
+            application->_teamID = [application->_applicationID substringWithRange:NSMakeRange(0, range.location)];
+        }
+    }
+    if (application->_applicationID.length == 0 &&
+        application->_teamID.length > 0 &&
+        application->_bundleID.length > 0) {
+        application->_applicationID = [NSString stringWithFormat:@"%@.%@", application->_teamID, application->_bundleID];
+    }
+
     // TODO: Fix these:
-    application->_firstInstallBuildDate = nil; // [BNCApplication firstInstallBuildDate];
-    application->_currentBuildDate = nil; // [BNCApplication currentBuildDate];
-
-    application->_firstInstallDate = nil; // [BNCApplication firstInstallDate];
-    application->_currentInstallDate = nil; // [BNCApplication currentInstallDate];
-
-    application->_updateState = BNCApplicationUpdateStateInstall; // [BNCApplication updateStateForApplication:application];
+    #if 0
+    application->_firstInstallBuildDate = nil;
+    application->_currentBuildDate = nil;
+    application->_firstInstallDate = nil;
+    application->_currentInstallDate = nil;
+    application->_updateState = BNCApplicationUpdateStateInstall;
+    #else
+    BNCKeyChain *keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:application->_applicationID];
+    application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDateWithKeychain:keychain];
+    application->_currentBuildDate      = [BNCApplication currentBuildDate];
+    application->_firstInstallDate      = [BNCApplication firstInstallDateWithKeychain:keychain];
+    application->_currentInstallDate    = [BNCApplication currentInstallDate];
+    application->_updateState           = [BNCApplication updateStateForApplication:application];
+    #endif
 
     application->_extensionType =
         [[NSBundle mainBundle].infoDictionary[@"NSExtension"][@"NSExtensionPointIdentifier"] copy];
-
     if ([[[NSBundle mainBundle] executablePath] containsString:@".appex/"]) {
         application->_isApplicationExtension = YES;
     }
-
     NSString*package = info[@"CFBundlePackageType"];
     if ([package isEqualToString:@"APPL"] && !application->_extensionType.length) {
         application->_extensionType = @"application";
@@ -76,22 +115,13 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
 }
 
 + (NSDate*) currentBuildDate {
-    NSURL *appURL = nil;
-    NSURL *bundleURL = [NSBundle mainBundle].bundleURL;
-    NSDictionary *info = [NSBundle mainBundle].infoDictionary;
-    NSString *appName = info[(__bridge NSString*)kCFBundleExecutableKey];
-    if (appName.length > 0 && bundleURL) {
-        appURL = [bundleURL URLByAppendingPathComponent:appName];
-    } else {
-        NSString *path = [[NSProcessInfo processInfo].arguments firstObject];
-        if (path) appURL = [NSURL fileURLWithPath:path];
-    }
-    if (appURL == nil)
+    NSString*appPath = [[NSBundle mainBundle] executablePath];
+    if (!appPath) {
+        BNCLogError(@"Can't find bundle executable path.");
         return nil;
-
-    NSError *error = nil;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSDictionary *attributes = [fileManager attributesOfItemAtPath:appURL.path error:&error];
+    }
+    NSError*error = nil;
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:appPath error:&error];
     if (error) {
         BNCLogError(@"Can't get build date: %@.", error);
         return nil;
@@ -103,20 +133,19 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     return buildDate;
 }
 
-+ (NSDate*) firstInstallBuildDate {
++ (NSDate*) firstInstallBuildDateWithKeychain:(BNCKeyChain*)keychain {
     NSError *error = nil;
     NSDate *firstBuildDate =
-        [BNCKeyChain retrieveValueForService:kBranchKeychainService
+        [keychain retrieveValueForService:kBranchKeychainService
             key:kBranchKeychainFirstBuildKey
             error:&error];
     if (firstBuildDate)
         return firstBuildDate;
 
     firstBuildDate = [self currentBuildDate];
-    error = [BNCKeyChain storeValue:firstBuildDate
+    error = [keychain storeValue:firstBuildDate
         forService:kBranchKeychainService
-        key:kBranchKeychainFirstBuildKey
-        cloudAccessGroup:nil];
+        key:kBranchKeychainFirstBuildKey];
 
     return firstBuildDate;
 }
@@ -138,29 +167,31 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     return installDate;
 }
 
-+ (NSDate*) firstInstallDate {
++ (NSDate*) firstInstallDateWithKeychain:(BNCKeyChain*)keychain {
     NSError *error = nil;
     NSDate* firstInstallDate =
-        [BNCKeyChain retrieveValueForService:kBranchKeychainService
+        [keychain retrieveValueForService:kBranchKeychainService
             key:kBranchKeychainFirstInstalldKey
             error:&error];
     if (firstInstallDate)
         return firstInstallDate;
 
     firstInstallDate = [self currentInstallDate];
-    error = [BNCKeyChain storeValue:firstInstallDate
+    error = [keychain storeValue:firstInstallDate
         forService:kBranchKeychainService
-        key:kBranchKeychainFirstInstalldKey
-        cloudAccessGroup:nil];
+        key:kBranchKeychainFirstInstalldKey];
 
     return firstInstallDate;
 }
 
-- (NSDictionary*) deviceKeyIdentityValueDictionary {
+// TODO: Add this back at some point.
+/// Returns a dictionary of device / identity pairs.
+//@property (atomic, readonly) NSDictionary<NSString*, NSString*>*_Nonnull deviceKeyIdentityValueDictionary;
+- (NSDictionary*) deviceKeyIdentityValueDictionary:(BNCKeyChain*)keychain {
     @synchronized (self.class) {
         NSError *error = nil;
         NSDictionary *deviceDictionary =
-            [BNCKeyChain retrieveValueForService:kBranchKeychainService
+            [keychain retrieveValueForService:kBranchKeychainService
                 key:kBranchKeychainDevicesKey
                 error:&error];
         if (error) BNCLogWarning(@"While retrieving deviceKeyIdentityValueDictionary: %@.", error);
@@ -221,6 +252,33 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
         }
     }
     return nil;
+}
+
++ (NSDictionary*) entitlementsDictionary {
+    if (SecTaskCreateFromSelf == NULL || SecTaskCopyValuesForEntitlements == NULL)
+        return nil;
+
+    NSArray *entitlementKeys = @[
+        @"application-identifier",
+        @"com.apple.developer.team-identifier",
+        @"com.apple.developer.associated-domains",
+        @"keychain-access-groups",
+        @"aps-environment"
+    ];
+
+    SecTaskRef myself = SecTaskCreateFromSelf(NULL);
+    if (!myself) return nil;
+
+    CFErrorRef errorRef = NULL;
+    NSDictionary *entitlements = (__bridge_transfer NSDictionary *)
+        (SecTaskCopyValuesForEntitlements(myself, (__bridge CFArrayRef)entitlementKeys, &errorRef));
+    if (errorRef) {
+        BNCLogError(@"Can't retrieve entitlements: %@.", errorRef);
+        CFRelease(errorRef);
+    }
+    CFRelease(myself);
+
+    return entitlements;
 }
 
 @end

@@ -10,7 +10,7 @@
 
 #import "BNCTestCase.h"
 #import "BNCKeyChain.h"
-#import "BNCApplication.h"
+#import "BNCApplication+BNCTest.h"
 #import "BNCDevice.h"
 
 @interface BNCKeyChainTest : BNCTestCase
@@ -20,66 +20,83 @@
 
 - (void)testKeyChain {
     NSError *error = nil;
-    NSString *value = nil;
-    NSArray *array = nil;
+    NSString*value = nil;
+    NSArray *array, *array1, *array2;
     NSString*const kServiceName = @"Service";
+    NSString*const kServiceName2 = @"Service2";
     double systemVersion = [BNCDevice currentDevice].systemVersion.doubleValue;
+    NSString*systemName  = [BNCDevice currentDevice].systemName;
+
+    // Find a signed bundle:
+
+    NSDictionary*dictionary = [BNCApplication entitlementsDictionary];
+    NSString*teamID = dictionary[@"com.apple.developer.team-identifier"];
+    XCTAssertTrue(teamID.length > 0);
+    NSString*bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    XCTAssertTrue(bundleID.length > 0);
+
+    if (teamID.length == 0 || bundleID.length == 0) {
+        XCTAssertTrue(bundleID.length > 0 && teamID.length > 0);
+        return;
+    }
+    NSString*securityGroup = [NSString stringWithFormat:@"%@.%@", teamID, bundleID];
+    BNCKeyChain*keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:securityGroup];
 
     // Remove and validate gone:
 
-    error = [BNCKeyChain removeValuesForService:nil key:nil];
-    if (systemVersion >= 10.0 && systemVersion < 11.0)
+    error = [keychain removeValuesForService:kServiceName key:nil];
+    if (![systemName isEqualToString:@"macOS"] && systemVersion >= 10.0 && systemVersion < 11.0)
         { XCTAssertTrue(error == nil || error.code == -34018); }
     else
         { XCTAssertTrue(error == nil); }
 
-    array = [BNCKeyChain retieveAllValuesWithError:&error];
-    XCTAssertTrue(array == nil && error == errSecSuccess);
+    array = [keychain retrieveKeysWithService:kServiceName error:&error];
+    XCTAssertTrue(array.count == 0 && error == errSecSuccess);
 
     // Check some keys:
 
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key1" error:&error];
+    value = [keychain retrieveValueForService:kServiceName key:@"key1" error:&error];
     XCTAssertTrue(value == nil && error.code == errSecItemNotFound);
 
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key2" error:&error];
+    value = [keychain retrieveValueForService:kServiceName key:@"key2" error:&error];
     XCTAssertTrue(value == nil && error.code == errSecItemNotFound);
 
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key3" error:&error];
-    XCTAssertTrue(value == nil && error.code == errSecItemNotFound);
-
-    if (![BNCApplication currentApplication].isApplication) {
-        NSLog(@"No host application for keychain testing!");
-        return;
-    }
-    
     // Test that local storage works:
 
-    error = [BNCKeyChain storeValue:@"1xyz123" forService:kServiceName key:@"key1" cloudAccessGroup:nil];
+    error = [keychain storeValue:@"1xyz123" forService:kServiceName key:@"key1"];
     XCTAssertTrue(error == nil);
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key1" error:&error];
+    value = [keychain retrieveValueForService:kServiceName key:@"key1" error:&error];
     XCTAssertTrue(error == nil && [value isEqualToString:@"1xyz123"]);
 
-    error = [BNCKeyChain storeValue:@"2xyz123" forService:kServiceName key:@"key2" cloudAccessGroup:nil];
+    error = [keychain storeValue:@"2xyz123" forService:kServiceName key:@"key2"];
     XCTAssertTrue(error == nil);
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key2" error:&error];
+    value = [keychain retrieveValueForService:kServiceName key:@"key2" error:&error];
     XCTAssertTrue(error == nil && [value isEqualToString:@"2xyz123"]);
+
+    error = [keychain storeValue:@"3xyz123" forService:kServiceName2 key:@"key3"];
+    XCTAssertTrue(error == nil);
+    value = [keychain retrieveValueForService:kServiceName2 key:@"key3" error:&error];
+    XCTAssertTrue(error == nil && [value isEqualToString:@"3xyz123"]);
 
     // Remove by service:
 
-    error = [BNCKeyChain removeValuesForService:kServiceName key:nil];
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key1" error:&error];
+    error = [keychain removeValuesForService:kServiceName key:nil];
+    value = [keychain retrieveValueForService:kServiceName key:@"key1" error:&error];
     XCTAssertTrue(value == nil && error.code == errSecItemNotFound);
 
-    value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key2" error:&error];
+    value = [keychain retrieveValueForService:kServiceName key:@"key2" error:&error];
     XCTAssertTrue(value == nil && error.code == errSecItemNotFound);
 
-    value = [BNCKeyChain retrieveValueForService:@"Service2" key:@"skey2" error:&error];
+    value = [keychain retrieveValueForService:kServiceName2 key:@"key3" error:&error];
     XCTAssertTrue(error == nil && [value isEqualToString:@"3xyz123"]);
 
-    // Check all values:
+    // Check service2 values:
 
-    array = [BNCKeyChain retieveAllValuesWithError:&error];
-    XCTAssertTrue([array isEqualToArray:@[ @"3xyz123" ]] && error == errSecSuccess);
+    error = [keychain storeValue:@"4xyz123" forService:kServiceName2 key:@"key4"];
+    XCTAssertTrue(error == nil);
+    array1 = [keychain retrieveKeysWithService:kServiceName2 error:&error];
+    array2 = @[ @"key3", @"key4" ];
+    XCTAssertTrue([array1 isEqualToArray:array2] && error == errSecSuccess);
 }
 
 @end

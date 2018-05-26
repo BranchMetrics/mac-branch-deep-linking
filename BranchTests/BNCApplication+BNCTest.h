@@ -17,4 +17,6 @@
         firstInstallDate:(NSDate*)firstInstallDate
         lastUpdateDate:(NSDate*)lastUpdateDate;
 
++ (NSDictionary*) entitlementsDictionary;
+
 @end

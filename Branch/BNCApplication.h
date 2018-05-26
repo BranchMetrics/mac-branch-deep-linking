@@ -59,9 +59,6 @@ typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
 /// The date this app was first installed on this device.
 @property (atomic, readonly) NSDate*_Nullable firstInstallDate;
 
-/// Returns a dictionary of device / identity pairs.
-@property (atomic, readonly) NSDictionary<NSString*, NSString*>*_Nonnull deviceKeyIdentityValueDictionary;
-
 /// The update state off the application.
 @property (atomic, readonly) BNCApplicationUpdateState updateState;
 
@@ -76,6 +73,18 @@ typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
 
 /// The default URL scheme for the app as found in the app's Info.plist.
 @property (atomic, readonly) NSString*_Nullable defaultURLScheme;
+
+/// The unique application identifier. Typically this is `teamID.bundleID`: XYZ123.com.company.app.
+@property (atomic, readonly) NSString*_Nullable applicationID;
+
+/// The push notification environment. Usually `development` or `production` or `nil`.
+@property (atomic, readonly) NSString*_Nullable pushNotificationEnvironment;
+
+/// The keychain access groups from the entitlements.
+@property (atomic, readonly) NSArray<NSString*>*_Nullable keychainAccessGroups;
+
+/// The associated domains from the entitlements.
+@property (atomic, readonly) NSArray<NSString*>*_Nullable associatedDomains;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,0 +1,9 @@
+//@file          Branch.xcconfig
+//@package       Branch
+//@brief         An xcconfig file to 
+//
+//@author        Edward
+//@date          2018
+//@copyright     Copyright © 2018 Branch. All rights reserved.
+
+BranchTestHost  = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac

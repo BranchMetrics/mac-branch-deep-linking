@@ -1,7 +1,7 @@
 /**
  @file          BranchSession.h
  @package       Branch-SDK
- @brief         Session parameters.
+ @brief         Attributes of the current Branch session.
 
  @author        Edward Smith
  @date          May 2018

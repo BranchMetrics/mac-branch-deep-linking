@@ -1,7 +1,7 @@
 /**
  @file          BranchSession.m
  @package       Branch
- @brief         < A brief description of the file function. >
+ @brief         Attributes of the current Branch session.
 
  @author        Edward
  @date          2018

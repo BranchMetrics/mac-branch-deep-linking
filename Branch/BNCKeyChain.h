@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BNCKeyChain : NSObject
 
+- (instancetype) init __attribute__((unavailable("init is not available.")));
+
+- (instancetype) initWithSecurityAccessGroup:(NSString*)securityGroup NS_DESIGNATED_INITIALIZER;
+
 /**
  @brief Remove a value for a service and key. Optionally removes all keys and values for a service.
 
@@ -21,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param key         The key to remove the value from. If `nil` is passed, all keys and values are removed for that service.
  @return            Returns an `NSError` if an error occurs.
 */
-+ (NSError*_Nullable) removeValuesForService:(NSString*_Nullable)service
+- (NSError*_Nullable) removeValuesForService:(NSString*)service
                                          key:(NSString*_Nullable)key;
 
 /**
@@ -32,32 +36,33 @@ NS_ASSUME_NONNULL_BEGIN
  @param error       If an error occurs, and `error` is a pointer to an error pointer, the error is returned here.
  @return            Returns the value stored under `service` and `key`, or `nil` if none found.
 */
-+ (id _Nullable) retrieveValueForService:(NSString*_Nonnull)service
-                                     key:(NSString*_Nonnull)key
+- (id _Nullable) retrieveValueForService:(NSString*)service
+                                     key:(NSString*)key
                                    error:(NSError*_Nullable __autoreleasing *_Nullable)error;
 
 /**
- @brief Returns an array of all items found in the keychain.
+ @brief Returns an array of all keys found for a service in the keychain.
 
+ @param service     The service name.
  @param error       If an error occurs, the error is returned in `error` if it is not `NULL`.
  @return            Returns an array of the items stored in the keychain or `nil`.
 */
-+ (NSArray*_Nullable) retieveAllValuesWithError:(NSError*_Nullable __autoreleasing *_Nullable)error;
+- (NSArray<NSString*>*_Nullable) retrieveKeysWithService:(NSString*)service
+                                                   error:(NSError*_Nullable __autoreleasing *_Nullable)error;
 
 /**
  @brief Stores an item in the keychain.
 
+ @param value       The value to store.
  @param service     The service name to store the item under.
  @param key         The key to store the item under.
- @param accessGroup The iCloud security access group for sharing the item. Specify `nil` if item should not be shared.
  @return            Returns an error if an error occurs.
  */
-+ (NSError*_Nullable) storeValue:(id _Nonnull)value
-                      forService:(NSString*_Nonnull)service
-                             key:(NSString*_Nonnull)key
-                cloudAccessGroup:(NSString*_Nullable)accessGroup;
+- (NSError*_Nullable) storeValue:(id)value
+                      forService:(NSString*)service
+                             key:(NSString*)key;
 
-+ (NSString*_Nullable) securityAccessGroup;
+@property (atomic, copy, readonly) NSString* securityAccessGroup;
 @end
 
 NS_ASSUME_NONNULL_END

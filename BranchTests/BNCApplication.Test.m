@@ -15,33 +15,49 @@
 
 @implementation BNCApplicationTest
 
+- (void)testIsApplication {
+    XCTAssertTrue([BNCApplication currentApplication].isApplication);
+}
+
 - (void)testApplication {
     // Test general info:
-
-    if (![BNCApplication currentApplication].isApplication) {
-        NSLog(@"No host application for BNCApplication testing!");
+    BNCApplication *application = [BNCApplication currentApplication];
+    if (!application.isApplication) {
         return;
     }
+    NSDictionary*info = [NSBundle mainBundle].infoDictionary;
+    XCTAssertEqualObjects(application.bundleID,                     info[@"CFBundleIdentifier"]);
+    XCTAssertEqualObjects(application.displayName,                  info[@"CFBundleName"]);
+    XCTAssertEqualObjects(application.shortDisplayName,             info[@"CFBundleName"]);
+    XCTAssertEqualObjects(application.displayVersionString,         info[@"CFBundleShortVersionString"]);
+    XCTAssertEqualObjects(application.versionString,                info[@"CFBundleVersion"]);
 
-    BNCApplication *application = [BNCApplication currentApplication];
-    XCTAssertEqualObjects(application.bundleID,                     @"io.branch.sdk.Branch-TestBed");
-    XCTAssertEqualObjects(application.displayName,                  @"Branch-TestBed");
-    XCTAssertEqualObjects(application.shortDisplayName,             @"Branch-TestBed");
-    XCTAssertEqualObjects(application.displayVersionString,         @"1.1");
-    XCTAssertEqualObjects(application.versionString,                @"1");
+    XCTAssert(application.teamID.length > 0);
+    XCTAssert([application.extensionType isEqualToString:@"application"]);
+    XCTAssert(application.defaultURLScheme.length > 0);
+    XCTAssert(application.applicationID.length > 0);
+    XCTAssert(application.pushNotificationEnvironment == nil);
+    XCTAssert(application.keychainAccessGroups.count > 0);
+
+    #if TARGET_OS_IPHONE
+    XCTAssert(application.associatedDomains.count > 0);
+    #elif TARGET_OS_OSX
+    XCTAssert(application.associatedDomains.count == 0);
+    #endif
 }
 
 - (void) testAppDates {
-    // App dates. Not a great test but tests basic function:
-
-    if (![BNCApplication currentApplication].isApplication) {
-        NSLog(@"No host application for BNCApplication testing!");
+    BNCApplication *application = [BNCApplication currentApplication];
+    if (!application.isApplication) {
         return;
     }
 
+    //
+    // App dates. Not a great test but tests basic function:
+    //
+
     NSTimeInterval const kOneYearAgo = -365.0 * 24.0 * 60.0 * 60.0;
 
-    BNCApplication *application = [BNCApplication currentApplication];
     XCTAssertTrue(application.firstInstallDate && [application.firstInstallDate timeIntervalSinceNow] > kOneYearAgo);
     XCTAssertTrue(application.firstInstallBuildDate && [application.firstInstallBuildDate timeIntervalSinceNow] > kOneYearAgo);
     XCTAssertTrue(application.currentInstallDate && [application.currentInstallDate timeIntervalSinceNow] > kOneYearAgo);
@@ -52,14 +68,17 @@
     NSString*const kBranchKeychainFirstBuildKey    = @"BranchKeychainFirstBuild";
     NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstInstall";
 
+    NSString*securityGroup = application.applicationID;
+    BNCKeyChain*keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:securityGroup];
+
     NSDate * firstBuildDate =
-        [BNCKeyChain retrieveValueForService:kBranchKeychainService
+        [keychain retrieveValueForService:kBranchKeychainService
             key:kBranchKeychainFirstBuildKey
             error:nil];
     XCTAssertEqualObjects(application.firstInstallBuildDate, firstBuildDate);
 
     NSDate * firstInstallDate =
-        [BNCKeyChain retrieveValueForService:kBranchKeychainService
+        [keychain retrieveValueForService:kBranchKeychainService
             key:kBranchKeychainFirstInstalldKey
             error:nil];
     XCTAssertEqualObjects(application.firstInstallDate, firstInstallDate);
