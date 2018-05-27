@@ -19,8 +19,9 @@
 #import "BranchMainClass.h"
 #import "BNCLog.h"
 #import "BranchDelegate.h"
+#import "BranchEvent.h"
 
-#pragma mark - BNCAPIService
+#pragma mark BNCAPIService
 
 @interface BNCNetworkAPIService ()
 @property (atomic, strong) BNCNetworkService *networkService;
@@ -71,6 +72,16 @@
     if (self.settings.instrumentationDictionary.count && addInstrumentation) {
         dictionary[@"instrumentation"] = self.settings.instrumentationDictionary;
     }
+}
+
+- (void) postOperationForAPIServiceName:(NSString*)serviceName
+        dictionary:(NSDictionary*)dictionary
+        completion:(void (^_Nullable)(BNCNetworkOperation*operation))completion {
+    NSURL*apiURL = [self URLForAPIService:serviceName];
+    [[self.networkService postOperationWithURL:apiURL
+        JSONData:dictionary
+        completion:completion]
+            start];
 }
 
 #pragma mark - openURL

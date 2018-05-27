@@ -59,4 +59,17 @@
     XCTAssertTrue(delta < -0.125 && delta > -0.200);
 }
 
+- (void) testPerforms {
+    NSDate*date = [NSDate date];
+    XCTestExpectation*expectation =
+        [self expectationWithDescription:@"BNCPerformBlockOnMainThreadSync"];
+    BNCAfterSecondsPerformBlockOnMainThread(1.0, ^ {
+        XCTAssertTrue([NSThread isMainThread]);
+        [expectation fulfill];
+    });
+    [self awaitExpectations];
+    NSTimeInterval t = [date timeIntervalSinceNow];
+    XCTAssert(t >= -1.5 && t < -1.0);
+}
+
 @end

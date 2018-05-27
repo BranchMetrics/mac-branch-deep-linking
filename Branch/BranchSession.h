@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BranchSession : NSObject
 
 + (instancetype) sessionWithDictionary:(NSDictionary*)dictionary;
-- (NSDictionary*) dictionary;
 
 @property (nonatomic, strong) NSString*_Nullable sessionID;
 @property (nonatomic, assign) BOOL isFirstSession;

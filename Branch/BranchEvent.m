@@ -9,7 +9,9 @@
 */
 
 #import "BranchEvent.h"
+#import "BranchMainClass.h"
 #import "BNCLog.h"
+#import "BNCNetworkAPIService.h" // TODO
 
 #pragma mark BranchStandardEvents
 
@@ -76,9 +78,7 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
 + (instancetype) customEventWithName:(NSString*)name
                          contentItem:(BranchUniversalObject*)contentItem {
     BranchEvent *e = [[BranchEvent alloc] initWithName:name];
-    if (contentItem) {
-        e.contentItems = (NSMutableArray*) @[ contentItem ];
-    }
+    if (contentItem) e.contentItems = (NSMutableArray*) @[ contentItem ];
     return e;
 }
 
@@ -148,8 +148,11 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
     ];
 }
 
-- (void) logEvent {
+- (BOOL) isStandardEvent {
+    return ([self.class.standardEvents containsObject:self.eventName]);
+}
 
+- (void) logEvent {
     if (![_eventName isKindOfClass:[NSString class]] || _eventName.length == 0) {
         BNCLogError(@"Invalid event type '%@' or empty string.", NSStringFromClass(_eventName.class));
         return;
@@ -177,22 +180,12 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
         eventDictionary[@"content_items"] = contentItemDictionaries;
     }
 
-/*  TODO: Send the event to the server.
+    NSString*apiService = self.isStandardEvent ? @"v2/event/standard" : @"v2/event/custom";
 
-    BNCPreferenceHelper *preferenceHelper = [BNCPreferenceHelper preferenceHelper];
-    NSString *serverURL =
-        ([self.class.standardEvents containsObject:self.eventName])
-        ? [NSString stringWithFormat:@"%@/%@", preferenceHelper.branchAPIURL, @"v2/event/standard"]
-        : [NSString stringWithFormat:@"%@/%@", preferenceHelper.branchAPIURL, @"v2/event/custom"];
-
-    BranchEventRequest *request =
-		[[BranchEventRequest alloc]
-			initWithServerURL:[NSURL URLWithString:serverURL]
-			eventDictionary:eventDictionary
-			completion:nil];
-
-    [[Branch getInstance] sendServerRequestWithoutSession:request];
-*/
+    [[Branch sharedInstance].networkService
+        postOperationForAPIServiceName:apiService
+        dictionary:eventDictionary
+        completion:nil];
 }
 
 - (NSString*_Nonnull) description {

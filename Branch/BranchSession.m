@@ -41,20 +41,4 @@
     return object;
 }
 
-- (NSDictionary*) dictionary {
-    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-
-    #define BNCWireFormatDictionaryFromSelf
-    #include "BNCWireFormat.h"
-
-    addString(sessionID,            session_id);
-    addBoolean(isFirstSession,      +is_first_session);
-    addBoolean(isBranchURL,         +clicked_branch_link);
-    addString(developerIdentityForUser, identity);
-    addString(deviceFingerprintID,  device_fingerprint_id);
-    addString(identityID,           identity_id)
-
-    return dictionary;
-}
-
 @end

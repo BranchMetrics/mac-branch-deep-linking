@@ -12,18 +12,11 @@
 
 @implementation BranchLinkProperties
 
-- (NSMutableDictionary *)controlParams {
-    if (!_controlParams) {
-        _controlParams = [[NSMutableDictionary alloc] init];
+- (NSMutableDictionary*)controlParams {
+    @synchronized(self) {
+        if (!_controlParams) _controlParams = [[NSMutableDictionary alloc] init];
+        return _controlParams;
     }
-    return _controlParams;
-}
-
-- (void)addControlParam:(NSString *)controlParam withValue:(NSString *)value {
-    if (!controlParam) return;
-    NSMutableDictionary *temp = [self.controlParams mutableCopy];
-    temp[controlParam] = value;
-    _controlParams = [temp copy];
 }
 
 + (instancetype)linkPropertiesWithDictionary:(NSDictionary *)dictionary {
@@ -38,7 +31,7 @@
     addString(channel, ~channel);
     addString(stage, ~stage);
     addString(campaign, ~campaign);
-    addInteger(matchDuration, ~duration);
+    addInteger(matchDuration, ~duration);   // TODO: encodes as $match_duration in iOS
 
     NSMutableDictionary *controlParams = [[NSMutableDictionary alloc] init];
     for (NSString*key in dictionary.allKeys) {
@@ -64,7 +57,7 @@
     addString(stage, ~stage);
     addString(campaign, ~campaign);
     addInteger(matchDuration, ~duration);
-    #include "BNCWireFormat.h"
+
     [dictionary addEntriesFromDictionary:self.controlParams];
 
     return dictionary;

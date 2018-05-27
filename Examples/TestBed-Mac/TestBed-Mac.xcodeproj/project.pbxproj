@@ -16,8 +16,7 @@
 		2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C070E20AB8E9400F38167 /* APPViewController.xib */; };
 		2B3C071720ABB8F200F38167 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
 		4D0F56AD20B33C97003D6607 /* TestBed-MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */; };
-		4DDC6FEC20B6387600A50F39 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4DDC6FF320B8A34300A50F39 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D38924120BB06640013B811 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +41,13 @@
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
 		};
+		4DC2DD1320BA0D9300291738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D159DCA20B62D7D005A9850;
+			remoteInfo = BranchTests;
+		};
 		4DDC6FE720B62F4700A50F39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
@@ -58,7 +64,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4DDC6FF320B8A34300A50F39 /* BranchTests.xctest in CopyFiles */,
+				4D38924120BB06640013B811 /* BranchTests.xctest in CopyFiles */,
 				2B3C070920AB725400F38167 /* Branch.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,7 +75,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4DDC6FEC20B6387600A50F39 /* BranchTests.xctest in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +97,6 @@
 		4D0F56AA20B33C97003D6607 /* TestBed-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-MacTests.m"; sourceTree = "<group>"; };
 		4D0F56AE20B33C97003D6607 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4DDC6FE920B6311500A50F39 /* TestBed-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "TestBed-Mac.xcconfig"; sourceTree = "<group>"; };
 		4DED372C20B6221100A0750E /* TestBed-Mac.provisionprofile */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestBed-Mac.provisionprofile"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -119,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				2B3C071820ABE0F400F38167 /* README.md */,
-				4DDC6FE920B6311500A50F39 /* TestBed-Mac.xcconfig */,
 				2B3C06FD20AB722200F38167 /* Branch.xcodeproj */,
 				2B3C06EA20AB704600F38167 /* TestBed-Mac */,
 				4D0F56AB20B33C97003D6607 /* TestBed-MacTests */,
@@ -214,6 +217,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4DC2DD1420BA0D9300291738 /* PBXTargetDependency */,
 				4D0F56B020B33C97003D6607 /* PBXTargetDependency */,
 			);
 			name = "TestBed-MacTests";
@@ -315,9 +319,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B3C06ED20AB704600F38167 /* APPAppDelegate.m in Sources */,
 				2B3C070F20AB8E9400F38167 /* APPViewController.m in Sources */,
 				2B3C06F520AB704800F38167 /* main.m in Sources */,
-				2B3C06ED20AB704600F38167 /* APPAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +345,11 @@
 			isa = PBXTargetDependency;
 			target = 2B3C06E720AB704600F38167 /* TestBed-Mac */;
 			targetProxy = 4D0F56AF20B33C97003D6607 /* PBXContainerItemProxy */;
+		};
+		4DC2DD1420BA0D9300291738 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BranchTests;
+			targetProxy = 4DC2DD1320BA0D9300291738 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

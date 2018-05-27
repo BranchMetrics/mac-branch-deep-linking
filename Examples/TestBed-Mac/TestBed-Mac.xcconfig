@@ -1,9 +1,0 @@
-//
-//  TestBed-Mac.xcconfig
-//  TestBed-Mac
-//
-//  Created by Edward on 5/23/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
-
-Branch_Test_Host = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac

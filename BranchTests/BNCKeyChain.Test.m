@@ -31,9 +31,7 @@
 
     NSDictionary*dictionary = [BNCApplication entitlementsDictionary];
     NSString*teamID = dictionary[@"com.apple.developer.team-identifier"];
-    XCTAssertTrue(teamID.length > 0);
     NSString*bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
-    XCTAssertTrue(bundleID.length > 0);
 
     if (teamID.length == 0 || bundleID.length == 0) {
         XCTAssertTrue(bundleID.length > 0 && teamID.length > 0);

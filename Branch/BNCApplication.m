@@ -82,21 +82,14 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
         application->_applicationID = [NSString stringWithFormat:@"%@.%@", application->_teamID, application->_bundleID];
     }
 
-    // TODO: Fix these:
-    #if 0
-    application->_firstInstallBuildDate = nil;
-    application->_currentBuildDate = nil;
-    application->_firstInstallDate = nil;
-    application->_currentInstallDate = nil;
-    application->_updateState = BNCApplicationUpdateStateInstall;
-    #else
     BNCKeyChain *keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:application->_applicationID];
-    application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDateWithKeychain:keychain];
+    if (keychain) {
+        application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDateWithKeychain:keychain];
+        application->_firstInstallDate      = [BNCApplication firstInstallDateWithKeychain:keychain];
+    }
     application->_currentBuildDate      = [BNCApplication currentBuildDate];
-    application->_firstInstallDate      = [BNCApplication firstInstallDateWithKeychain:keychain];
     application->_currentInstallDate    = [BNCApplication currentInstallDate];
     application->_updateState           = [BNCApplication updateStateForApplication:application];
-    #endif
 
     application->_extensionType =
         [[NSBundle mainBundle].infoDictionary[@"NSExtension"][@"NSExtensionPointIdentifier"] copy];

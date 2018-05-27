@@ -60,6 +60,7 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 - (instancetype _Nonnull) init __attribute((unavailable));
 + (instancetype _Nonnull) new __attribute((unavailable));
 
+@property (nonatomic, strong, readonly) NSString*               eventName;
 @property (nonatomic, strong) NSString*_Nullable                transactionID;
 @property (nonatomic, strong) BNCCurrency _Nullable             currency;
 @property (nonatomic, strong) NSDecimalNumber*_Nullable         revenue;
@@ -75,6 +76,8 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 - (void) logEvent;                      //!< Logs the event on the Branch server.
 - (NSDictionary*_Nonnull) dictionary;   //!< Returns a dictionary representation of the event.
 - (NSString* _Nonnull) description;     //!< Returns a string description of the event.
+- (BOOL) isStandardEvent;
++ (NSArray<BranchStandardEvent>*) standardEvents;   //!< All standard events.
 @end
 
 NS_ASSUME_NONNULL_END

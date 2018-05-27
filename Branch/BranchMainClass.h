@@ -10,7 +10,7 @@
 
 #import "BranchHeader.h"
 #import "BranchDelegate.h"
-@class BranchSession;
+@class BranchSession, BNCNetworkAPIService;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
 
-/// Returns YES if it's liekly to be handled be Branch.
+/// Returns YES if it's a Branch URL.
 - (BOOL) openURL:(NSURL*)url;
 - (void) startNewSession;
 - (void) endSession;
@@ -33,6 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
 @property (atomic, strong) NSMutableDictionary* requestMetadataDictionary;
 @property (atomic, weak) id<BranchDelegate> delegate;
+
+// Move to category
+@property (atomic, strong, readonly) BNCNetworkAPIService* networkService;
 @end
 
 NS_ASSUME_NONNULL_END

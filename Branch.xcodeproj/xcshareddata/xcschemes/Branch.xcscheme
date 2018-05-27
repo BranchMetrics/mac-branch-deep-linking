@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Branch.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
+               BuildableName = "BranchTests.xctest"
+               BlueprintName = "BranchTests"
+               ReferencedContainer = "container:Branch.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -35,7 +49,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D54C07D20A6560400C76496"
+               BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
                BuildableName = "BranchTests.xctest"
                BlueprintName = "BranchTests"
                ReferencedContainer = "container:Branch.xcodeproj">

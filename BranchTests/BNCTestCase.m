@@ -81,15 +81,33 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
 
 - (NSMutableDictionary*) mutableDictionaryFromBundleJSONWithKey:(NSString*)key {
     NSString *jsonString = [self stringFromBundleWithKey:key];
-    XCTAssertTrue(jsonString, @"Can't load '%@' resource from bundle JSON!", key);
-
+    XCTAssertNotNil(jsonString, @"Can't load '%@' resource from bundle JSON!", key);
+    if (!jsonString) return nil;
+    
     NSError *error = nil;
     NSDictionary *dictionary =
         [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
             options:0 error:&error];
     XCTAssertNil(error);
     XCTAssert(dictionary);
+    if (!dictionary) return nil;
     NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:dictionary];
+    return mutableDictionary;
+}
+
+- (NSMutableDictionary*) mutableDictionaryFromBundleJSON2WithKey:(NSString*)key {
+    NSError*error = nil;
+    NSBundle*bundle = [NSBundle bundleForClass:self.class];
+    NSURL*url = [bundle URLForResource:@"BNCTestCase" withExtension:@"json"];
+    NSData*data = [NSData dataWithContentsOfURL:url options:0 error:&error];
+    XCTAssert(error == nil && data != nil, @"Can't bundle test JSON!");
+    if (error || !data) return nil;
+
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    XCTAssert(error == nil && dictionary);
+    if (!dictionary) return nil;
+    NSDictionary *result = dictionary[key];
+    NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:result];
     return mutableDictionary;
 }
 

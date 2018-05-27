@@ -44,8 +44,11 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
     self = [super init];
     if (!self) return self;
     BNCLogAssert(securityGroup);
-    _securityAccessGroup = [securityGroup copy];
-    return self;
+    if (securityGroup.length) {
+        _securityAccessGroup = [securityGroup copy];
+        return self;
+    }
+    return nil;
 }
 
 + (NSError*) errorWithKey:(NSString*)key OSStatus:(OSStatus)status {

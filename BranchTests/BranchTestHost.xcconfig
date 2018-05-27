@@ -1,6 +1,6 @@
-//@file          Branch.xcconfig
+//@file          BranchTests.xcconfig
 //@package       Branch
-//@brief         An xcconfig file to 
+//@brief         An xcconfig file for configuring the Branch framework TEST_HOST.
 //
 //@author        Edward
 //@date          2018

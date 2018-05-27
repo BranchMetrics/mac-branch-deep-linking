@@ -22,7 +22,7 @@ The Branch SDK for Mac OS X
 1.  Set `Branch_Test_Host` = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac
 2.  Add `$(BranchTestHost)` to the BranchTest.xctest target `TEST_HOST` build variable.
 3.  Add `$(BranchTestHost)` to the BranchTest.xctest target `BUNDLE_LOADER` build variable.
-4.  Add `BranchTests.xctest` to the app's copy files build phase.
+4.  Add `BranchTests.xctest` to the host app's copy files build phase.
  
 ### Random
 

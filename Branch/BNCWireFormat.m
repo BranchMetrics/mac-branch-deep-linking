@@ -114,7 +114,17 @@ NSDictionary* BNCWireFormatFromDictionary(NSDictionary*dictionary) {
 }
 
 NSMutableDictionary* BNCDictionaryFromWireFormat(id object) {
-    if ([object isKindOfClass:NSDictionary.class]) return [object mutableCopy];
+    if ([object isKindOfClass:NSDictionary.class])
+        return [object mutableCopy];
+    else
+    if ([object isKindOfClass:NSString.class]) {
+        NSData*data = [object dataUsingEncoding:NSUTF8StringEncoding];
+        if (!data) return nil;
+        NSError*error = nil;
+        NSMutableDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:data
+            options:NSJSONReadingMutableContainers error:&error];
+        if (!error && [dictionary isKindOfClass:NSMutableDictionary.class]) return dictionary;
+    }
     return nil;
 }
 

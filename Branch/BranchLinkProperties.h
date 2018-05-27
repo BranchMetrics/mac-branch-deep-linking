@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BranchLinkProperties : NSObject
 
++ (instancetype)linkPropertiesWithDictionary:(NSDictionary*)dictionary;
+- (NSDictionary*) dictionary;
+
 @property (nonatomic, strong) NSArray<NSString*>*_Nullable  tags;
 @property (nonatomic, strong) NSString*_Nullable feature;
 @property (nonatomic, strong) NSString*_Nullable alias;
@@ -21,13 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString*_Nullable stage;
 @property (nonatomic, strong) NSString*_Nullable campaign;
 @property (nonatomic, assign) NSUInteger matchDuration;
-@property (nonatomic, strong) NSMutableDictionary* controlParams;
-
-+ (instancetype)linkPropertiesWithDictionary:(NSDictionary*)dictionary;
-- (NSDictionary*) dictionary;
-- (void)addControlParam:(NSString *)controlParam withValue:(NSString*)value;
-- (NSString*)description;
-
+@property (nonatomic, strong, null_resettable) NSMutableDictionary* controlParams;
 @end
 
 NS_ASSUME_NONNULL_END
