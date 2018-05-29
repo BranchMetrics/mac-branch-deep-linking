@@ -11,12 +11,13 @@
 		2B3C06EF20AB704800F38167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C06EE20AB704800F38167 /* Assets.xcassets */; };
 		2B3C06F220AB704800F38167 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C06F020AB704800F38167 /* MainMenu.xib */; };
 		2B3C06F520AB704800F38167 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C06F420AB704800F38167 /* main.m */; };
-		2B3C070920AB725400F38167 /* Branch.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2B3C070F20AB8E9400F38167 /* APPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C070D20AB8E9400F38167 /* APPViewController.m */; };
 		2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C070E20AB8E9400F38167 /* APPViewController.xib */; };
-		2B3C071720ABB8F200F38167 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
 		4D0F56AD20B33C97003D6607 /* TestBed-MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */; };
-		4D38924120BB06640013B811 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D39087320BDB78300E28074 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D39087820BDBA4D00E28074 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4DD347A220BCFA1D003891F1 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
+		4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,26 +28,40 @@
 			remoteGlobalIDString = 4D54C07520A6560400C76496;
 			remoteInfo = Branch;
 		};
-		2B3C071520ABB8B700F38167 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D54C07420A6560400C76496;
-			remoteInfo = Branch;
-		};
-		4D0F56AF20B33C97003D6607 /* PBXContainerItemProxy */ = {
+		4D39086120BDA1EF00E28074 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06E020AB704600F38167 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
 		};
-		4DC2DD1320BA0D9300291738 /* PBXContainerItemProxy */ = {
+		4D39086E20BDB41100E28074 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 4D159DCA20B62D7D005A9850;
 			remoteInfo = BranchTests;
+		};
+		4D39087020BDB74B00E28074 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D54C07420A6560400C76496;
+			remoteInfo = Branch;
+		};
+		4D39087620BDBA3A00E28074 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D159DCA20B62D7D005A9850;
+			remoteInfo = BranchTests;
+		};
+		4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D54C07420A6560400C76496;
+			remoteInfo = Branch;
 		};
 		4DDC6FE720B62F4700A50F39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -60,21 +75,22 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		2B3C06FC20AB720900F38167 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4D38924120BB06640013B811 /* BranchTests.xctest in CopyFiles */,
-				2B3C070920AB725400F38167 /* Branch.framework in CopyFiles */,
+				4D39087820BDBA4D00E28074 /* BranchTests.xctest in CopyFiles */,
+				4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4DDC6FEB20B6387000A50F39 /* CopyFiles */ = {
+		4D39087220BDB77400E28074 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4D39087320BDB78300E28074 /* BranchTests.xctest in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B3C071720ABB8F200F38167 /* Branch.framework in Frameworks */,
+				4DD347A220BCFA1D003891F1 /* Branch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +214,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				2B3C071620ABB8B700F38167 /* PBXTargetDependency */,
+				4DD347A520BCFA5C003891F1 /* PBXTargetDependency */,
+				4D39087720BDBA3A00E28074 /* PBXTargetDependency */,
 			);
 			name = "TestBed-Mac";
 			productName = "TestBed-Mac";
@@ -212,13 +229,14 @@
 				4D0F56A620B33C97003D6607 /* Sources */,
 				4D0F56A720B33C97003D6607 /* Frameworks */,
 				4D0F56A820B33C97003D6607 /* Resources */,
-				4DDC6FEB20B6387000A50F39 /* CopyFiles */,
+				4D39087220BDB77400E28074 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4DC2DD1420BA0D9300291738 /* PBXTargetDependency */,
-				4D0F56B020B33C97003D6607 /* PBXTargetDependency */,
+				4D39087120BDB74B00E28074 /* PBXTargetDependency */,
+				4D39086220BDA1EF00E28074 /* PBXTargetDependency */,
+				4D39086F20BDB41100E28074 /* PBXTargetDependency */,
 			);
 			name = "TestBed-MacTests";
 			productName = "TestBed-MacTests";
@@ -336,20 +354,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2B3C071620ABB8B700F38167 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Branch;
-			targetProxy = 2B3C071520ABB8B700F38167 /* PBXContainerItemProxy */;
-		};
-		4D0F56B020B33C97003D6607 /* PBXTargetDependency */ = {
+		4D39086220BDA1EF00E28074 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2B3C06E720AB704600F38167 /* TestBed-Mac */;
-			targetProxy = 4D0F56AF20B33C97003D6607 /* PBXContainerItemProxy */;
+			targetProxy = 4D39086120BDA1EF00E28074 /* PBXContainerItemProxy */;
 		};
-		4DC2DD1420BA0D9300291738 /* PBXTargetDependency */ = {
+		4D39086F20BDB41100E28074 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = BranchTests;
-			targetProxy = 4DC2DD1320BA0D9300291738 /* PBXContainerItemProxy */;
+			targetProxy = 4D39086E20BDB41100E28074 /* PBXContainerItemProxy */;
+		};
+		4D39087120BDB74B00E28074 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Branch;
+			targetProxy = 4D39087020BDB74B00E28074 /* PBXContainerItemProxy */;
+		};
+		4D39087720BDBA3A00E28074 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BranchTests;
+			targetProxy = 4D39087620BDBA3A00E28074 /* PBXContainerItemProxy */;
+		};
+		4DD347A520BCFA5C003891F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Branch;
+			targetProxy = 4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -556,6 +584,105 @@
 			};
 			name = Release;
 		};
+		4D39086420BDA37800E28074 /* BranchTestHost */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = BranchTestHost;
+		};
+		4D39086520BDA37800E28074 /* BranchTestHost */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "TestBed-Mac/TestBed-Mac.entitlements";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				INFOPLIST_FILE = "TestBed-Mac/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "blue.shimmering.TestBed-Mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b4f406d4-ebaa-49c3-8474-2b8c4ae22c74";
+				PROVISIONING_PROFILE_SPECIFIER = TestBedMac;
+			};
+			name = BranchTestHost;
+		};
+		4D39086620BDA37800E28074 /* BranchTestHost */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				INFOPLIST_FILE = "TestBed-MacTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.mac.TestBed-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac";
+			};
+			name = BranchTestHost;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -563,6 +690,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B3C06F720AB704800F38167 /* Debug */,
+				4D39086420BDA37800E28074 /* BranchTestHost */,
 				2B3C06F820AB704800F38167 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -572,6 +700,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B3C06FA20AB704800F38167 /* Debug */,
+				4D39086520BDA37800E28074 /* BranchTestHost */,
 				2B3C06FB20AB704800F38167 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -581,6 +710,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D0F56B120B33C97003D6607 /* Debug */,
+				4D39086620BDA37800E28074 /* BranchTestHost */,
 				4D0F56B220B33C97003D6607 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

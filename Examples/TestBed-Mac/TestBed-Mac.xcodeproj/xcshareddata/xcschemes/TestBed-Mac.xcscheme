@@ -35,20 +35,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
-               BuildableName = "BranchTests.xctest"
-               BlueprintName = "BranchTests"
-               ReferencedContainer = "container:../../Branch.xcodeproj">
+               BlueprintIdentifier = "4D0F56A920B33C97003D6607"
+               BuildableName = "TestBed-MacTests.xctest"
+               BlueprintName = "TestBed-MacTests"
+               ReferencedContainer = "container:TestBed-Mac.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D0F56A920B33C97003D6607"
-               BuildableName = "TestBed-MacTests.xctest"
-               BlueprintName = "TestBed-MacTests"
-               ReferencedContainer = "container:TestBed-Mac.xcodeproj">
+               BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
+               BuildableName = "BranchTests.xctest"
+               BlueprintName = "BranchTests"
+               ReferencedContainer = "container:../../Branch.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

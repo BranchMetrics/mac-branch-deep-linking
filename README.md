@@ -19,10 +19,15 @@ The Branch SDK for Mac OS X
 
 ### Running framework unit tests with a TEST_HOST  of the parent application.
 
+In the Branch project:
 1.  Set `Branch_Test_Host` = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac
 2.  Add `$(BranchTestHost)` to the BranchTest.xctest target `TEST_HOST` build variable.
 3.  Add `$(BranchTestHost)` to the BranchTest.xctest target `BUNDLE_LOADER` build variable.
+
+In the TestBed-Mac project:
 4.  Add `BranchTests.xctest` to the host app's copy files build phase.
+5.  Add `BranchTests.xctest` to the host app's target dependency.
+6. Set the test build configuration to `BranchTestHost`.
  
 ### Random
 
