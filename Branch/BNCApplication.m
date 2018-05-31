@@ -82,10 +82,12 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
         application->_applicationID = [NSString stringWithFormat:@"%@.%@", application->_teamID, application->_bundleID];
     }
 
-    BNCKeyChain *keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:application->_applicationID];
-    if (keychain) {
-        application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDateWithKeychain:keychain];
-        application->_firstInstallDate      = [BNCApplication firstInstallDateWithKeychain:keychain];
+    if (application->_applicationID.length) {
+        BNCKeyChain *keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:application->_applicationID];
+        if (keychain) {
+            application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDateWithKeychain:keychain];
+            application->_firstInstallDate      = [BNCApplication firstInstallDateWithKeychain:keychain];
+        }
     }
     application->_currentBuildDate      = [BNCApplication currentBuildDate];
     application->_currentInstallDate    = [BNCApplication currentInstallDate];
