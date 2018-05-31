@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString*_Nullable identityID;
 @property (nonatomic, strong) NSString*_Nullable developerIdentityForUser;
 @property (nonatomic, strong) NSString*_Nullable deviceFingerprintID;
+@property (nonatomic, strong) NSString*_Nullable linkCreationURL;
 @property (nonatomic, strong) BranchUniversalObject*_Nullable linkContent;
 @property (nonatomic, strong) BranchLinkProperties*_Nullable linkProperties;
 @property (nonatomic, strong) NSDictionary*_Nullable data;

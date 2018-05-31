@@ -27,8 +27,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Returns YES if it's a Branch URL.
 - (BOOL) openURL:(NSURL*)url;
-- (void) startNewSession;
-- (void) endSession;
+
+/**
+ Set the user's identity to an ID used by your system, so that it is identifiable by you elsewhere. Receive
+ a completion callback, notifying you whether it succeeded or failed.
+
+ @param   userId    The ID Branch should use to identify this user.
+ @param   callback  The callback to be called once the request has completed (success or failure).
+
+ @warning If you use the same ID between users on different sessions / devices, their actions will be merged.
+ @warning This request is not removed from the queue upon failure -- it will be retried until it succeeds.
+          The callback will only ever be called once, though.
+ @warning You should call `logout` before calling `setIdentity:` a second time.
+ */
+- (void)setIdentity:(NSString*)userId withCallback:(void (^_Nullable)(NSDictionary*_Nullable, NSError*_Nullable))callback;
+
+/**
+ Indicates whether or not this user has a custom identity specified for them. Note that this is *independent of installs*. If you call setIdentity, this device
+ will have that identity associated with this user until `logout` is called. This includes persisting through uninstalls, as we track device id.
+ */
+- (BOOL)isUserIdentified;
+
+/**
+ Clear all of the current user's session items.
+
+ @warning If the request to logout fails, the items will not be cleared.
+ */
+- (void)logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback;
 
 @property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
 @property (atomic, strong) NSMutableDictionary* requestMetadataDictionary;

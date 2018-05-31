@@ -20,8 +20,15 @@
 #import "BNCLog.h"
 #import "BranchDelegate.h"
 #import "BranchEvent.h"
+#import "BranchError.h"
+#import "BNCLocalization.h"
 
-#pragma mark BNCAPIService
+#pragma mark BNCNetworkAPIOperation
+
+@implementation BNCNetworkAPIOperation
+@end
+
+#pragma mark - BNCAPIService
 
 @interface BNCNetworkAPIService ()
 @property (atomic, strong) BNCNetworkService *networkService;
@@ -50,15 +57,15 @@
     return [NSURL URLWithString:string];
 }
 
-- (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary
-        addInstrumentation:(BOOL)addInstrumentation {
+- (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary {
     if (!dictionary) return;
     NSMutableDictionary* device = [BNCDevice currentDevice].v2dictionary;
     device[@"os"] = @"iOS";
     [dictionary addEntriesFromDictionary:device];
 
     dictionary[@"sdk"] = [NSString stringWithFormat:@"ios%@", Branch.kitDisplayVersion];
-    dictionary[@"ios_extension"] = BNCWireFormatFromBool([BNCApplication currentApplication].isApplicationExtension);
+    dictionary[@"ios_extension"] =
+        BNCWireFormatFromBool([BNCApplication currentApplication].isApplicationExtension);
     // dictionary[@"retryNumber"] = @(retryNumber);  // TODO: Move to request header.
     dictionary[@"branch_key"] = self.configuration.key;
 
@@ -69,19 +76,129 @@
     if (metadata.count) {
         dictionary[@"metadata"] = metadata;
     }
-    if (self.settings.instrumentationDictionary.count && addInstrumentation) {
+    if (self.settings.instrumentationDictionary.count/* && addInstrumentation*/) {
         dictionary[@"instrumentation"] = self.settings.instrumentationDictionary;
     }
 }
 
+- (void) collectInstrumentationMetricsWithOperation:(BNCNetworkOperation*)operation {
+    // multiplying by negative because startTime happened in the past
+    NSTimeInterval elapsedTime = [operation.dateStart timeIntervalSinceNow] * -1000.0;
+    NSString *lastRoundTripTime = [[NSNumber numberWithDouble:floor(elapsedTime)] stringValue];
+    NSString *path = [operation.request.URL path];
+    NSString *brttKey = [NSString stringWithFormat:@"%@-brtt", path];
+    self.settings.instrumentationDictionary[brttKey] = lastRoundTripTime;
+}
+
 - (void) postOperationForAPIServiceName:(NSString*)serviceName
         dictionary:(NSDictionary*)dictionary
-        completion:(void (^_Nullable)(BNCNetworkOperation*operation))completion {
+        completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion {
     NSURL*apiURL = [self URLForAPIService:serviceName];
     [[self.networkService postOperationWithURL:apiURL
         JSONData:dictionary
-        completion:completion]
+        completion:^ (BNCNetworkOperation*operation) {
+            BNCNetworkAPIOperation*apiOperation = [self apiOperationWithNetworkOperation:operation];
+            if (completion) completion(apiOperation);
+        }]
             start];
+}
+
+- (BNCNetworkAPIOperation*) apiOperationWithNetworkOperation:(BNCNetworkOperation*)operation {
+    BNCNetworkAPIOperation*apiOperation = [[BNCNetworkAPIOperation alloc] init];
+    apiOperation.operation = operation;
+    [self collectInstrumentationMetricsWithOperation:operation];
+    NSError*error = [self errorWithOperation:operation];
+    if (error) {
+        apiOperation.error = error;
+        return apiOperation;
+    }
+    [operation deserializeJSONResponseData];
+    if (operation.error) {
+        apiOperation.error = error;
+        return apiOperation;
+    }
+    if (![operation.responseData isKindOfClass:NSDictionary.class]) {
+        apiOperation.error = [NSError branchErrorWithCode:BNCServerProblemError];
+        return apiOperation;
+    }
+    NSDictionary*dictionary = (NSDictionary*)operation.responseData;
+    BranchSession*session = [BranchSession sessionWithDictionary:dictionary];
+    apiOperation.session = session;
+
+    if (session.linkCreationURL.length) self.settings.linkCreationURL = session.linkCreationURL;
+    if (session.deviceFingerprintID.length) self.settings.deviceFingerprintID = session.deviceFingerprintID;
+    if (session.developerIdentityForUser.length) self.settings.developerIdentityForUser = session.developerIdentityForUser;
+    if (session.sessionID.length) self.settings.sessionID = session.sessionID;
+    if (session.identityID) self.settings.identityID = session.identityID;
+
+    return apiOperation;
+}
+
+- (NSError*) errorWithOperation:(BNCNetworkOperation*)operation {
+    NSError *underlyingError = operation.error;
+    NSInteger status = operation.HTTPStatusCode;
+/*
+    TODO: Handle retries.
+
+    // If the phone is in a poor network condition,
+    // iOS will return statuses such as -1001, -1003, -1200, -9806
+    // indicating various parts of the HTTP post failed.
+    // We should retry in those conditions in addition to the case where the server returns a 500
+
+    BOOL isRetryableStatusCode = status >= 500 || status < 0;
+
+    // Retry the request if appropriate
+    if (retryNumber < self.preferenceHelper.retryCount && isRetryableStatusCode) {
+        dispatch_time_t dispatchTime =
+            dispatch_time(DISPATCH_TIME_NOW, self.preferenceHelper.retryInterval * NSEC_PER_SEC);
+        dispatch_after(dispatchTime, dispatch_get_main_queue(), ^{
+            BNCLogDebug(@"Retrying request with url %@", request.URL.relativePath);
+            // Create the next request
+            NSURLRequest *retryRequest = retryHandler(retryNumber);
+            [self genericHTTPRequest:retryRequest
+                         retryNumber:(retryNumber + 1)
+                            callback:callback retryHandler:retryHandler];
+        });
+
+        // Do not continue on if retrying, else the callback will be called incorrectly
+        return;
+    }
+*/
+    NSError *branchError = nil;
+
+    // Wrap up bad statuses w/ specific error messages
+    if (status >= 500) {
+        branchError = [NSError branchErrorWithCode:BNCServerProblemError error:underlyingError];
+    }
+    else if (status == 409) {
+        branchError = [NSError branchErrorWithCode:BNCDuplicateResourceError error:underlyingError];
+    }
+    else if (status >= 400) {
+
+        [operation deserializeJSONResponseData];
+        NSDictionary*dictionary = nil;
+        if ([operation.responseData isKindOfClass:NSDictionary.class])
+            dictionary = (id) operation.responseData;
+
+        NSString *errorString = dictionary[@"error"];
+        if (![errorString isKindOfClass:[NSString class]])
+            errorString = nil;
+        if (!errorString)
+            errorString = underlyingError.localizedDescription;
+        if (!errorString)
+            errorString = BNCLocalizedString(@"The request was invalid.");
+        branchError = [NSError branchErrorWithCode:BNCBadRequestError localizedMessage:errorString];
+    }
+    else if (underlyingError) {
+        branchError = [NSError branchErrorWithCode:BNCServerProblemError error:underlyingError];
+    }
+
+    if (branchError) {
+        BNCLogError(@"An error prevented request to %@ from completing: %@",
+            operation.request.URL.absoluteString, branchError);
+    }
+
+    return branchError;
 }
 
 #pragma mark - openURL
@@ -120,7 +237,7 @@
     dictionary[@"latest_install_time"] = BNCWireFormatFromDate(application.currentInstallDate);
     dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
     dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
-    [self appendV1APIParametersWithDictionary:dictionary addInstrumentation:YES];
+    [self appendV1APIParametersWithDictionary:dictionary];
     NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
 
     BNCPerformBlockOnMainThreadSync(^ {
@@ -128,18 +245,15 @@
     });
 
     __weak __typeof(self) weakSelf = self;
-    [[self.networkService postOperationWithURL:[self URLForAPIService:service]
-        JSONData:dictionary
-        completion:^(BNCNetworkOperation *operation) {
+    [self postOperationForAPIServiceName:service
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation *operation) {
             __strong __typeof(self) strongSelf = weakSelf;
             [strongSelf openResponseWithOperation:operation url:url];
-        }]
-            start];
+        }];
 }
 
-- (void) openResponseWithOperation:(BNCNetworkOperation*)operation url:(NSURL*)URL {
-    if (!operation.error)
-        [operation deserializeJSONResponseData];
+- (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
     if (operation.error) {
         BNCPerformBlockOnMainThreadSync(^{
             [self notifyDidStartSession:nil withURL:URL error:operation.error];
@@ -147,19 +261,11 @@
         return;
     }
 
-    NSDictionary*response = (NSDictionary*) operation.responseData;
-    BranchSession*session = [BranchSession sessionWithDictionary:response];
+    BranchSession*session = operation.session;
     BranchLinkProperties*linkProperties = [BranchLinkProperties linkPropertiesWithDictionary:session.data];
     session.linkProperties = linkProperties;
     BranchUniversalObject*object = [BranchUniversalObject objectWithDictionary:session.data];
     session.linkContent = object;
-
-    NSString*linkCreationURL = BNCStringFromWireFormat(response[@"link"]);
-    if (linkCreationURL.length) self.settings.linkCreationURL = linkCreationURL;
-    self.settings.deviceFingerprintID = session.deviceFingerprintID;
-    self.settings.developerIdentityForUser = session.developerIdentityForUser;
-    self.settings.sessionID = session.sessionID;
-    if (session.identityID) self.settings.identityID = session.identityID;
 
 //  TODO: Send intrumentation.
 //  preferenceHelper.previousAppBuildDate = [BNCApplication currentApplication].currentBuildDate;
@@ -228,20 +334,6 @@
         postNotificationName:BranchDidOpenURLWithSessionNotification
         object:branch
         userInfo:userInfo];
-}
-
-#pragma mark - Close
-
-- (void) sendClose {
-    NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
-    dictionary[@"identity_id"] = self.settings.identityID;
-    dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
-    [self appendV1APIParametersWithDictionary:dictionary addInstrumentation:YES];
-    [[self.networkService postOperationWithURL:[self URLForAPIService:@"v1/close"]
-        JSONData:dictionary
-        completion:nil]
-            start];
 }
 
 @end

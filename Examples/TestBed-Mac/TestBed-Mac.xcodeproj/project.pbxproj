@@ -16,6 +16,8 @@
 		4D0F56AD20B33C97003D6607 /* TestBed-MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */; };
 		4D39087320BDB78300E28074 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D39087820BDBA4D00E28074 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D39087F20BF378C00E28074 /* APPActionItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D39087E20BF378C00E28074 /* APPActionItemView.xib */; };
+		4D85A9F920BF61D500E61F6E /* APPActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D85A9F820BF61D500E61F6E /* APPActionItemView.m */; };
 		4DD347A220BCFA1D003891F1 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
 		4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -113,6 +115,9 @@
 		4D0F56AA20B33C97003D6607 /* TestBed-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-MacTests.m"; sourceTree = "<group>"; };
 		4D0F56AE20B33C97003D6607 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D39087E20BF378C00E28074 /* APPActionItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APPActionItemView.xib; sourceTree = "<group>"; };
+		4D85A9F720BF61D500E61F6E /* APPActionItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPActionItemView.h; sourceTree = "<group>"; };
+		4D85A9F820BF61D500E61F6E /* APPActionItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPActionItemView.m; sourceTree = "<group>"; };
 		4DED372C20B6221100A0750E /* TestBed-Mac.provisionprofile */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestBed-Mac.provisionprofile"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -159,6 +164,9 @@
 		2B3C06EA20AB704600F38167 /* TestBed-Mac */ = {
 			isa = PBXGroup;
 			children = (
+				4D85A9F720BF61D500E61F6E /* APPActionItemView.h */,
+				4D85A9F820BF61D500E61F6E /* APPActionItemView.m */,
+				4D39087E20BF378C00E28074 /* APPActionItemView.xib */,
 				2B3C06EB20AB704600F38167 /* APPAppDelegate.h */,
 				2B3C06EC20AB704600F38167 /* APPAppDelegate.m */,
 				2B3C070C20AB8E9400F38167 /* APPViewController.h */,
@@ -317,6 +325,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D39087F20BF378C00E28074 /* APPActionItemView.xib in Resources */,
 				2B3C06EF20AB704800F38167 /* Assets.xcassets in Resources */,
 				2B3C06F220AB704800F38167 /* MainMenu.xib in Resources */,
 				2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */,
@@ -339,6 +348,7 @@
 			files = (
 				2B3C06ED20AB704600F38167 /* APPAppDelegate.m in Sources */,
 				2B3C070F20AB8E9400F38167 /* APPViewController.m in Sources */,
+				4D85A9F920BF61D500E61F6E /* APPActionItemView.m in Sources */,
 				2B3C06F520AB704800F38167 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -496,7 +506,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -635,7 +645,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;

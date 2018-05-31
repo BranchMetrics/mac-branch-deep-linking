@@ -22,8 +22,9 @@
     addString(sessionID,            session_id);
     addString(developerIdentityForUser, identity);
     addString(deviceFingerprintID,  device_fingerprint_id);
-    addString(identityID,           identity_id)
-
+    addString(identityID,           identity_id);
+    addString(linkCreationURL,      link);
+    
     NSString*dataString = dictionary[@"data"];
     if (dataString) {
         NSData*dataData = [dataString dataUsingEncoding:NSUTF8StringEncoding];

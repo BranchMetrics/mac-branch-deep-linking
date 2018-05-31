@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, BNCErrorCode) {
 + (NSError*) branchErrorWithCode:(BNCErrorCode)errorCode localizedMessage:(NSString*_Nullable)message;
 @end
 
-void BNCForceNSErrorCategoryToLoad(void)
+FOUNDATION_EXPORT void BNCForceNSErrorCategoryToLoad(void)
     __attribute__((constructor));
 
 NS_ASSUME_NONNULL_END

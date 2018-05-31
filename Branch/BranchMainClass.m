@@ -12,6 +12,8 @@
 #import "BNCLog.h"
 #import "BNCNetworkAPIService.h"
 #import "BNCSettings.h"
+#import "BNCThreads.h"
+#import "BNCWireFormat.h"
 
 #pragma mark BranchConfiguration
 
@@ -21,6 +23,9 @@
 #pragma mark - Branch
 
 @interface Branch ()
+- (void) startNewSession;
+- (void) endSession;
+
 @property (atomic, strong) BranchConfiguration* configuration;
 @property (atomic, strong) BNCNetworkAPIService* networkAPIService;
 @property (atomic, strong) BNCSettings* settings;
@@ -102,12 +107,73 @@
     return YES;
 }
 
+- (void)setIdentity:(NSString*)userID
+       withCallback:(void (^_Nullable)(NSDictionary*_Nullable, NSError*_Nullable))callback {
+    if (!userID || [self.settings.developerIdentityForUser isEqualToString:userID]) {
+        if (callback) {
+        // callback([self getFirstReferringParams], nil);
+        }
+        return;
+    }
+    // [self initSessionIfNeededAndNotInProgress];
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    dictionary[@"identity"] = userID;
+    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"session_id"] = self.settings.sessionID;
+    dictionary[@"identity_id"] = self.settings.identityID;
+    //[self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
+            if (operation.error) {
+                BNCPerformBlockOnMainThreadSync(^{
+        //            [self notifyDidStartSession:nil withURL:URL error:operation.error];
+                });
+                return;
+            }
+
+        }];
+}
+
+- (BOOL)isUserIdentified {
+    return self.settings.developerIdentityForUser != nil;
+}
+
+#pragma mark - Logout
+
+- (void)logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback {
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"session_id"] = self.settings.sessionID;
+    dictionary[@"identity_id"] = self.settings.identityID;
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService postOperationForAPIServiceName:@"v1/logout"
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
+            NSError* error = [self logoutResponseWithOperation:operation];
+            BNCPerformBlockOnMainThreadSync(^{
+                if (callback) callback(error);
+            });
+        }];
+}
+
+- (NSError*) logoutResponseWithOperation:(BNCNetworkAPIOperation*)operation {
+    if (operation.error) return operation.error;
+    self.settings.sessionID = operation.session.sessionID;
+    self.settings.identityID = operation.session.identityID;
+    self.settings.linkCreationURL = operation.session.linkCreationURL;
+    self.settings.developerIdentityForUser = nil;
+    //self.settings.installParams = nil;
+    //[self.settings clearUserCreditsAndCounts];
+    return nil;
+}
+
 - (void) startNewSession {
     [self.networkAPIService openURL:nil];
 }
 
 - (void) endSession {
-    [self.networkAPIService sendClose];
+    [self sendClose];
 }
 
 - (NSMutableDictionary*) requestMetadataDictionary {
@@ -116,6 +182,17 @@
 
 - (void) setRequestMetadataDictionary:(NSMutableDictionary *)requestMetadataDictionary {
     self.settings.requestMetadataDictionary = requestMetadataDictionary;
+}
+
+- (void) sendClose {
+    NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
+    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"session_id"] = self.settings.sessionID;
+    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
+        dictionary:dictionary
+        completion:nil];
 }
 
 #pragma mark - Application State Changes

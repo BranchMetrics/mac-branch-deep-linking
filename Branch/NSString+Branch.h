@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL) bnc_containsString:(NSString*_Nullable)string;
 @end
 
-void BNCForceNSStringCategoryToLoad(void)
+FOUNDATION_EXPORT void BNCForceNSStringCategoryToLoad(void)
     __attribute__((constructor));
 
 NS_ASSUME_NONNULL_END

@@ -14,25 +14,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BNCWireFormat
 
-extern NSNumber*_Nullable BNCWireFormatFromDate(NSDate *date);
-extern NSNumber*_Nullable BNCWireFormatFromBool(BOOL b);
-extern NSString*_Nullable BNCWireFormatFromString(NSString*string);
-extern NSDecimalNumber*_Nullable BNCWireFormatFromDecimal(NSDecimalNumber*decimal);
-extern NSNumber*_Nullable BNCWireFormatFromDouble(double d);
-extern NSNumber*_Nullable BNCWireFormatFromInteger(NSInteger i);
-extern NSArray<NSString*>*_Nullable BNCWireFormatFromStringArray(NSArray<NSString*>* object);
-extern NSDictionary*_Nullable BNCWireFormatFromDictionary(NSDictionary* object);
-extern NSString*_Nullable BNCWireFormatFromURL(NSURL* url);
+FOUNDATION_EXPORT NSNumber*_Nullable BNCWireFormatFromDate(NSDate *date);
+FOUNDATION_EXPORT NSNumber*_Nullable BNCWireFormatFromBool(BOOL b);
+FOUNDATION_EXPORT NSString*_Nullable BNCWireFormatFromString(NSString*string);
+FOUNDATION_EXPORT NSDecimalNumber*_Nullable BNCWireFormatFromDecimal(NSDecimalNumber*decimal);
+FOUNDATION_EXPORT NSNumber*_Nullable BNCWireFormatFromDouble(double d);
+FOUNDATION_EXPORT NSNumber*_Nullable BNCWireFormatFromInteger(NSInteger i);
+FOUNDATION_EXPORT NSArray<NSString*>*_Nullable BNCWireFormatFromStringArray(NSArray<NSString*>* object);
+FOUNDATION_EXPORT NSDictionary*_Nullable BNCWireFormatFromDictionary(NSDictionary* object);
+FOUNDATION_EXPORT NSString*_Nullable BNCWireFormatFromURL(NSURL* url);
 
-extern NSDate*_Nullable   BNCDateFromWireFormat(id object);
-extern BOOL               BNCBoolFromWireFormat(id object);
-extern NSString*_Nullable BNCStringFromWireFormat(id object);
-extern NSDecimalNumber*_Nullable BNCDecimalFromWireFormat(id object);
-extern double    BNCDoubleFromWireFormat(id object);
-extern NSInteger BNCIntegerFromWireFormat(id object);
-extern NSMutableArray<NSString*>*_Nullable BNCStringArrayFromWireFormat(id object);
-extern NSMutableDictionary*_Nullable BNCDictionaryFromWireFormat(id object);
-extern NSURL*_Nullable BNCURLFromWireFormat(id object);
+FOUNDATION_EXPORT NSDate*_Nullable   BNCDateFromWireFormat(id object);
+FOUNDATION_EXPORT BOOL               BNCBoolFromWireFormat(id object);
+FOUNDATION_EXPORT NSString*_Nullable BNCStringFromWireFormat(id object);
+FOUNDATION_EXPORT NSDecimalNumber*_Nullable BNCDecimalFromWireFormat(id object);
+FOUNDATION_EXPORT double             BNCDoubleFromWireFormat(id object);
+FOUNDATION_EXPORT NSInteger          BNCIntegerFromWireFormat(id object);
+FOUNDATION_EXPORT NSMutableArray<NSString*>*_Nullable BNCStringArrayFromWireFormat(id object);
+FOUNDATION_EXPORT NSMutableDictionary*_Nullable BNCDictionaryFromWireFormat(id object);
+FOUNDATION_EXPORT NSURL*_Nullable    BNCURLFromWireFormat(id object);
 
 #undef addString
 #undef addDate
@@ -46,9 +46,12 @@ extern NSURL*_Nullable BNCURLFromWireFormat(id object);
 #undef addDictionary
 #undef addURL
 
-/*
-#define BNCWireFormatObjectFromDictionary
-#define BNCWireFormatDictionaryFromSelf
+/**
+ @discussion
+    TODO: Have discusssion.
+
+    #define BNCWireFormatObjectFromDictionary
+    #define BNCWireFormatDictionaryFromSelf
 */
 
 #if defined(BNCWireFormatObjectFromDictionary) && defined(BNCWireFormatDictionaryFromSelf)

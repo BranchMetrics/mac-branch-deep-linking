@@ -11,10 +11,9 @@
 // TODO: Add documentation
 
 #import "BranchHeader.h"
+@class Branch, BranchSession;
 
 NS_ASSUME_NONNULL_BEGIN
-
-@class Branch, BranchSession;
 
 #pragma mark BranchDelegate Protocol
 

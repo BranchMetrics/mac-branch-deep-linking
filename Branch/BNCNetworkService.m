@@ -210,7 +210,6 @@
         NSError *error = nil;
         data = [NSJSONSerialization dataWithJSONObject:dictionaryOrArray options:0 error:&error];
         if (error) BNCLogError(@"Can't convert to JSON: %@.", error);
-        BNCLogDebug(@"POST\n URL: %@\nBody: %@.", URL, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     }
     BNCNetworkOperation *operation =
         [[BNCNetworkService shared]
@@ -219,6 +218,26 @@
             data:data
             completion:completion];
     return operation;
+}
+
+- (NSString*) formattedStringWithData:(NSData*)data {
+    NSString*responseString = nil;
+    @try {
+        NSDictionary*dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (dictionary) {
+            // (NSJSONWritingPrettyPrinted | NSJSONWritingSortedKeys) = 3
+            NSData*formattedData = [NSJSONSerialization dataWithJSONObject:dictionary options:3 error:nil];
+            if (formattedData)
+                responseString = [[NSString alloc] initWithData:formattedData encoding:NSUTF8StringEncoding];
+        }
+        if (!responseString)
+            responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if (!responseString)
+            responseString = data.description;
+    }
+    @catch(id error) {
+    }
+    return responseString;
 }
 
 - (void) startOperation:(BNCNetworkOperation*)operation {
@@ -232,20 +251,22 @@
                 operation.response = (NSHTTPURLResponse*) response;
                 operation.error = error;
                 operation.dateFinish = [NSDate date];
+                NSString*responseString = [self formattedStringWithData:data];
                 BNCLogDebug(@"Network finish operation %@ %1.3fs. Status %ld error %@.\n%@.",
                     operation.request.URL.absoluteString,
                     [operation.dateFinish timeIntervalSinceDate:operation.dateStart],
                     (long)operation.HTTPStatusCode,
                     operation.error,
-                    operation.stringFromResponseData);
+                    responseString);
                 if (operation.completionBlock)
                     operation.completionBlock(operation);
             }];
-    BNCLogDebug(@"Network start operation %@.", operation.request.URL);
+    NSString*requestString = [self formattedStringWithData:operation.request.HTTPBody];
+    BNCLogDebug(@"Network start %@ %@\n%@.", operation.request.HTTPMethod, operation.request.URL, requestString);
     [operation.sessionTask resume];
 }
 
-#pragma mark - The gorey details
+#pragma mark - The Transport Security
 
 - (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
     @synchronized (self) {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <collectionViewItem identifier="APPActionItemView" id="wSr-bH-mPR" customClass="APPActionItemView">
+            <customView key="view" id="GCl-Td-Ia6" customClass="APPActionItemSubview">
+                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QZa-ik-ezs">
+                        <rect key="frame" x="5" y="277" width="440" height="16"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Set Identity" id="sfX-xy-fpS">
+                            <font key="font" metaFont="systemBold" size="12"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4lO-Cb-XfD">
+                        <rect key="frame" x="5" y="7" width="440" height="266"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Set the current user's identity to a developer friendly value." id="lM1-Nm-c14">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="vyU-Fg-deR">
+                        <rect key="frame" x="0.0" y="-2" width="450" height="5"/>
+                    </box>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="vyU-Fg-deR" secondAttribute="trailing" id="1ua-jv-WrW"/>
+                    <constraint firstItem="vyU-Fg-deR" firstAttribute="leading" secondItem="GCl-Td-Ia6" secondAttribute="leading" id="Bk1-uy-60A"/>
+                    <constraint firstItem="4lO-Cb-XfD" firstAttribute="trailing" secondItem="QZa-ik-ezs" secondAttribute="trailing" id="C7q-IL-7KH"/>
+                    <constraint firstAttribute="bottom" secondItem="4lO-Cb-XfD" secondAttribute="bottom" constant="7" id="Dcz-n3-jzp"/>
+                    <constraint firstItem="QZa-ik-ezs" firstAttribute="top" secondItem="GCl-Td-Ia6" secondAttribute="top" constant="7" id="W16-oe-IEe"/>
+                    <constraint firstItem="4lO-Cb-XfD" firstAttribute="top" secondItem="QZa-ik-ezs" secondAttribute="bottom" constant="4" id="awx-Ks-0Iw"/>
+                    <constraint firstItem="4lO-Cb-XfD" firstAttribute="leading" secondItem="QZa-ik-ezs" secondAttribute="leading" id="bJU-OR-QWN"/>
+                    <constraint firstAttribute="trailing" secondItem="QZa-ik-ezs" secondAttribute="trailing" constant="7" id="f1s-2Q-ZkI"/>
+                    <constraint firstItem="QZa-ik-ezs" firstAttribute="leading" secondItem="GCl-Td-Ia6" secondAttribute="leading" constant="7" id="fJo-3c-PkL"/>
+                    <constraint firstAttribute="bottom" secondItem="vyU-Fg-deR" secondAttribute="bottom" id="r7C-5L-WkS"/>
+                </constraints>
+            </customView>
+            <connections>
+                <outlet property="detailTextField" destination="4lO-Cb-XfD" id="QV7-5Y-kiw"/>
+                <outlet property="textField" destination="QZa-ik-ezs" id="sEE-Yo-p6o"/>
+            </connections>
+        </collectionViewItem>
+    </objects>
+</document>
