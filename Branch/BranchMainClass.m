@@ -14,6 +14,9 @@
 #import "BNCSettings.h"
 #import "BNCThreads.h"
 #import "BNCWireFormat.h"
+#import "BNCApplication.h"
+#import "BranchError.h"
+#import "NSString+Branch.h"
 
 #pragma mark BranchConfiguration
 
@@ -25,9 +28,8 @@
 @interface Branch ()
 - (void) startNewSession;
 - (void) endSession;
-
+@property (readwrite) BNCNetworkAPIService* networkAPIService;
 @property (atomic, strong) BranchConfiguration* configuration;
-@property (atomic, strong) BNCNetworkAPIService* networkAPIService;
 @property (atomic, strong) BNCSettings* settings;
 @end
 
@@ -56,6 +58,10 @@
 }
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration {
+    // Put a reference somewhere to these so the linker knows to load the categories.
+    BNCForceNSErrorCategoryToLoad();
+    BNCForceNSStringCategoryToLoad();
+
     self.configuration = configuration;
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
     self.settings = [BNCSettings sharedInstance];
@@ -75,24 +81,18 @@
         selector:@selector(applicationDidResignActiveNotification:)
         name:NSApplicationDidResignActiveNotification
         object:nil];
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(notificationObserver:)
-        name:nil
-        object:nil];
     [[NSAppleEventManager sharedAppleEventManager]
         setEventHandler:self
         andSelector:@selector(urlAppleEvent:withReplyEvent:)
         forEventClass:kInternetEventClass
         andEventID:kAEGetURL];
-}
 
-- (void)urlAppleEvent:(NSAppleEventDescriptor *)event
-        withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
-    NSAppleEventDescriptor*descriptor = [event paramDescriptorForKeyword:keyDirectObject];
-    NSURL *url = [NSURL URLWithString:descriptor.stringValue];
-    BNCLogDebugSDK(@"Apple event URL: %@.", url);
-    [self openURL:url];
+    // TODO: This is for debugging only.  Remove it.
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(notificationObserver:)
+        name:nil
+        object:nil];
 }
 
 - (void) dealloc {
@@ -102,17 +102,178 @@
         andEventID:kAEGetURL];
 }
 
+#pragma mark - Application State Changes
+
+- (void)urlAppleEvent:(NSAppleEventDescriptor *)event
+        withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+    NSAppleEventDescriptor*descriptor = [event paramDescriptorForKeyword:keyDirectObject];
+    NSURL *url = [NSURL URLWithString:descriptor.stringValue];
+    BNCLogDebugSDK(@"Apple event URL: %@.", url);
+    [self openURL:url];
+}
+
+- (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
+    BNCLogMethodName();
+    BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
+}
+
+- (void)applicationWillBecomeActiveNotification:(NSNotification*)notification {
+    BNCLogMethodName();
+    [[Branch sharedInstance]  startNewSession];
+}
+
+- (void)applicationDidResignActiveNotification:(NSNotification*)notification {
+    BNCLogMethodName();
+    [[Branch sharedInstance] endSession];
+}
+
+- (void) notificationObserver:(NSNotification*)notification {
+    //BNCLogDebugSDK(@"Notification '%@'.", notification.name);
+}
+
+#pragma mark - Open
+
 - (BOOL) openURL:(NSURL*)url {
-    [self.networkAPIService openURL:url];
+    BNCApplication*application = [BNCApplication currentApplication];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+
+    dictionary[@"device_fingerprint_id"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
+    dictionary[@"identity_id"] = BNCWireFormatFromString(self.settings.identityID);
+    dictionary[@"ios_bundle_id"] = BNCWireFormatFromString(application.bundleID);
+    dictionary[@"ios_team_id"] = BNCWireFormatFromString(application.teamID);
+    dictionary[@"app_version"] = BNCWireFormatFromString(application.displayVersionString);
+    dictionary[@"uri_scheme"] = BNCWireFormatFromString(application.defaultURLScheme);
+    dictionary[@"facebook_app_link_checked"] = BNCWireFormatFromBool(NO);
+    dictionary[@"apple_ad_attribution_checked"] = BNCWireFormatFromBool(NO);
+
+    NSString*scheme = url.scheme;
+    if ([scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"]) {
+        dictionary[@"universal_link_url"] = url.absoluteString;
+    } else
+    if (scheme.length > 0) {
+        dictionary[@"external_intent_uri"] = url.absoluteString;
+        NSURLComponents*components = [NSURLComponents componentsWithString:url.absoluteString];
+        for (NSURLQueryItem*item in components.queryItems) {
+            if ([item.name isEqualToString:@"link_click_id"]) {
+                dictionary[@"link_identifier"] = item.value;
+                break;
+            }
+        }
+    }
+
+    dictionary[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
+    dictionary[@"lastest_update_time"] = BNCWireFormatFromDate(application.currentBuildDate);
+    dictionary[@"previous_update_time"] = BNCWireFormatFromDate(application.previousAppBuildDate);
+    dictionary[@"latest_install_time"] = BNCWireFormatFromDate(application.currentInstallDate);
+    dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
+    dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
+
+    BNCPerformBlockOnMainThreadSync(^ {
+        [self notifyWillStartSessionWithURL:url];
+    });
+
+    __weak __typeof(self) weakSelf = self;
+    [self.networkAPIService postOperationForAPIServiceName:service
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation *operation) {
+            __strong __typeof(self) strongSelf = weakSelf;
+            [strongSelf openResponseWithOperation:operation url:url];
+        }];
+
+    // TODO: Fix this to return probability of open URL in service:
     return YES;
 }
 
-- (void)setIdentity:(NSString*)userID
-       withCallback:(void (^_Nullable)(NSDictionary*_Nullable, NSError*_Nullable))callback {
+- (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
+    if (operation.error) {
+        BNCPerformBlockOnMainThreadSync(^{
+            [self notifyDidStartSession:nil withURL:URL error:operation.error];
+        });
+        return;
+    }
+
+    BranchSession*session = operation.session;
+    BranchLinkProperties*linkProperties = [BranchLinkProperties linkPropertiesWithDictionary:session.data];
+    session.linkProperties = linkProperties;
+    BranchUniversalObject*object = [BranchUniversalObject objectWithDictionary:session.data];
+    session.linkContent = object;
+
+//  TODO: Send intrumentation.
+//  preferenceHelper.previousAppBuildDate = [BNCApplication currentApplication].currentBuildDate;
+
+    BNCPerformBlockOnMainThreadSync(^ {
+        [self notifyDidStartSession:session withURL:URL error:nil];
+    });
+    if (session.referringURL) {
+        BNCPerformBlockOnMainThreadSync(^ {
+            [self notifyDidOpenURLWithSession:session];
+        });
+    }
+}
+
+- (void) notifyWillStartSessionWithURL:(NSURL*)URL {
+    BNCLogAssert([NSThread isMainThread]);
+    Branch*branch = [Branch sharedInstance];
+    if ([branch.delegate respondsToSelector:@selector(branch:willStartSessionWithURL:)]) {
+        [branch.delegate branch:branch willStartSessionWithURL:URL];
+    }
+    NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[BranchURLKey] = URL;
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:BranchWillStartSessionNotification
+        object:branch
+        userInfo:userInfo];
+}
+
+- (void) notifyDidStartSession:(BranchSession*)session withURL:(NSURL*)URL error:(NSError*)error {
+    BNCLogAssert([NSThread isMainThread] && (session || error));
+    Branch*branch = [Branch sharedInstance];
+
+    if (session == nil && error == nil) {
+        BNCLogError(@"Both session and error are nil!");
+        return;
+    }
+
+    if (error) {
+        if ([branch.delegate respondsToSelector:@selector(branch:failedToStartSessionWithURL:error:)])
+            [branch.delegate branch:branch failedToStartSessionWithURL:URL error:error];
+    } else {
+        if ([branch.delegate respondsToSelector:@selector(branch:didStartSession:)])
+            [branch.delegate branch:branch didStartSession:session];
+    }
+
+    NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[BranchURLKey] = URL;
+    userInfo[BranchSessionKey] = session;
+    userInfo[BranchErrorKey] = error;
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:BranchDidStartSessionNotification
+        object:branch
+        userInfo:userInfo];
+}
+
+- (void) notifyDidOpenURLWithSession:(BranchSession*)session {
+    BNCLogAssert([NSThread isMainThread]);
+    Branch*branch = [Branch sharedInstance];
+
+    if ([branch.delegate respondsToSelector:@selector(branch:didOpenURLWithSession:)])
+        [branch.delegate branch:branch didOpenURLWithSession:session];
+
+    NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[BranchSessionKey] = session;
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:BranchDidOpenURLWithSessionNotification
+        object:branch
+        userInfo:userInfo];
+}
+
+#pragma mark - Identity
+
+- (void)setIdentity:(NSString*)userID callback:(void (^_Nullable)(NSError*_Nullable))callback {
     if (!userID || [self.settings.developerIdentityForUser isEqualToString:userID]) {
-        if (callback) {
-        // callback([self getFirstReferringParams], nil);
-        }
+        if (callback) callback(nil);
         return;
     }
     // [self initSessionIfNeededAndNotInProgress];
@@ -121,21 +282,15 @@
     dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
     dictionary[@"session_id"] = self.settings.sessionID;
     dictionary[@"identity_id"] = self.settings.identityID;
-    //[self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
-            if (operation.error) {
-                BNCPerformBlockOnMainThreadSync(^{
-        //            [self notifyDidStartSession:nil withURL:URL error:operation.error];
-                });
-                return;
-            }
-
+            BNCPerformBlockOnMainThreadSync(^{ if (callback) callback(operation.error); });
         }];
 }
 
-- (BOOL)isUserIdentified {
+- (BOOL)userIsIdentified {
     return self.settings.developerIdentityForUser != nil;
 }
 
@@ -150,26 +305,17 @@
     [self.networkAPIService postOperationForAPIServiceName:@"v1/logout"
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
-            NSError* error = [self logoutResponseWithOperation:operation];
+            if (!operation.error)
+                self.settings.developerIdentityForUser = nil;
             BNCPerformBlockOnMainThreadSync(^{
-                if (callback) callback(error);
-            });
+            if (callback) callback(operation.error); });
         }];
 }
 
-- (NSError*) logoutResponseWithOperation:(BNCNetworkAPIOperation*)operation {
-    if (operation.error) return operation.error;
-    self.settings.sessionID = operation.session.sessionID;
-    self.settings.identityID = operation.session.identityID;
-    self.settings.linkCreationURL = operation.session.linkCreationURL;
-    self.settings.developerIdentityForUser = nil;
-    //self.settings.installParams = nil;
-    //[self.settings clearUserCreditsAndCounts];
-    return nil;
-}
+#pragma mark - Miscellaneous
 
 - (void) startNewSession {
-    [self.networkAPIService openURL:nil];
+    [self openURL:nil];
 }
 
 - (void) endSession {
@@ -193,27 +339,6 @@
     [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
         dictionary:dictionary
         completion:nil];
-}
-
-#pragma mark - Application State Changes
-
-- (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
-    BNCLogMethodName();
-    BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
-}
-
-- (void)applicationWillBecomeActiveNotification:(NSNotification*)notification {
-    BNCLogMethodName();
-    [[Branch sharedInstance]  startNewSession];
-}
-
-- (void)applicationDidResignActiveNotification:(NSNotification*)notification {
-    BNCLogMethodName();
-    [[Branch sharedInstance] endSession];
-}
-
-- (void) notificationObserver:(NSNotification*)notification {
-    //BNCLogDebugSDK(@"Notification '%@'.", notification.name);
 }
 
 @end

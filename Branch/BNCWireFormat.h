@@ -48,7 +48,7 @@ FOUNDATION_EXPORT NSURL*_Nullable    BNCURLFromWireFormat(id object);
 
 /**
  @discussion
-    TODO: Have discusssion.
+    TODO: Write discusssion.
 
     #define BNCWireFormatObjectFromDictionary
     #define BNCWireFormatDictionaryFromSelf

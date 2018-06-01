@@ -33,7 +33,8 @@
     XCTAssertEqualObjects(application.versionString,                info[@"CFBundleVersion"]);
 
     XCTAssert(application.teamID.length > 0);
-    XCTAssert([application.extensionType isEqualToString:@"application"]);
+    XCTAssert(application.extensionType == nil);
+    XCTAssert([application.branchExtensionType isEqualToString:@"FULL_APP"]);
     XCTAssert(application.defaultURLScheme.length > 0);
     XCTAssert(application.applicationID.length > 0);
     XCTAssert(application.pushNotificationEnvironment == nil);

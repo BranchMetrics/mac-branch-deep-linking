@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, BNCNetworkAddressType) {
             continue;
         }
 
-        // TODO: Check ifdata too.
+        // TODO: Check ifdata too. May indicate actual interface used.
         // struct if_data *ifdata = interface->ifa_data;
 
         const struct sockaddr_in *addr = (const struct sockaddr_in*)interface->ifa_addr;
@@ -553,7 +553,7 @@ exit:
 
 #endif
 
-- (NSMutableDictionary*) v2dictionary {
+- (NSMutableDictionary*) v1dictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
 
     #define BNCWireFormatDictionaryFromSelf
@@ -581,6 +581,39 @@ exit:
 
     if (self.hardwareID.length > 0 && ![self.hardwareIDType isEqualToString:@"random"])
         dictionary[@"is_hardware_id_real"] = BNCWireFormatFromBool(YES);
+
+    // TODO: change to actual os. Needs backend change.
+    dictionary[@"os"] = @"iOS";
+
+    return dictionary;
+}
+
+- (NSMutableDictionary*) v2dictionary {
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+
+    #define BNCWireFormatDictionaryFromSelf
+    #include "BNCWireFormat.h"
+
+    addString(systemName,           os);
+    addString(systemVersion,        os_version);
+    addString(hardwareID,           idfv);
+    addString(advertisingID,        idfa);
+    addString(browserUserAgent,     user_agent);
+    addString(country,              country);
+    addString(language,             language);
+    addString(brandName,            brand);
+    addString(modelName,            model);
+    addDouble(screenDPI,            screen_dpi);
+    addDouble(screenSize.height,    screen_height);
+    addDouble(screenSize.width,     screen_width);
+    addBoolean(deviceIsUnidentified, unidentified_device);
+    addString(localIPAddress,       local_ip);
+
+    if (!self.adTrackingIsEnabled)
+        dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
+
+    // TODO: change to actual os. Needs backend change.
+    dictionary[@"os"] = @"iOS";
 
     return dictionary;
 }

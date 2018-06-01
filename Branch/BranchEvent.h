@@ -73,7 +73,8 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 @property (nonatomic, copy) NSMutableArray<BranchUniversalObject*>*_Nonnull       contentItems;
 @property (nonatomic, copy) NSMutableDictionary<NSString*, NSString*> *_Nonnull   customData;
 
-- (void) logEvent;                      //!< Logs the event on the Branch server.
+///@param completion An optional completion block that reports an error, if any.
+- (void) logEventWithCompletion:(void (^_Nullable)(NSError*_Nullable error))completion;
 - (NSDictionary*_Nonnull) dictionary;   //!< Returns a dictionary representation of the event.
 - (NSString* _Nonnull) description;     //!< Returns a string description of the event.
 - (BOOL) isStandardEvent;

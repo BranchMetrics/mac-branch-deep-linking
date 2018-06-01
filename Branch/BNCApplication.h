@@ -68,8 +68,11 @@ typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
 /// YES if running as an application extension.
 @property (atomic, readonly) BOOL isApplicationExtension;
 
-/// The app extension type or 'application'.
+/// The app extension type or `nil` for a full application.
 @property (atomic, readonly) NSString*_Nullable extensionType;
+
+/// The Branch extension type.
+@property (atomic, readonly) NSString* branchExtensionType;
 
 /// The default URL scheme for the app as found in the app's Info.plist.
 @property (atomic, readonly) NSString*_Nullable defaultURLScheme;

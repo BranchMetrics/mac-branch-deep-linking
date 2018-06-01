@@ -27,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BNCNetworkAPIService : NSObject
 - (instancetype) initWithConfiguration:(BranchConfiguration*)configuration;
-- (void) openURL:(NSURL*_Nullable)url;
 
 - (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary;
+- (void) appendV2APIParametersWithDictionary:(NSMutableDictionary*)dictionary;
 
 /**
  @param  serviceName    The Branch end point name, like "v2/event" or "v1/open".

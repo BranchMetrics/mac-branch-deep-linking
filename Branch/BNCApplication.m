@@ -100,8 +100,13 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     }
     NSString*package = info[@"CFBundlePackageType"];
     if ([package isEqualToString:@"APPL"] && !application->_extensionType.length) {
-        application->_extensionType = @"application";
         application->_isApplication = YES;
+    }
+    if (application.isApplication)
+        application->_branchExtensionType = @"FULL_APP";
+    else
+    if ([application->_extensionType isEqualToString:@"com.apple.identitylookup.message-filter"]) {
+        application->_branchExtensionType = @"IMESSAGE_APP";
     }
 
     application->_defaultURLScheme = [self defaultURLScheme];

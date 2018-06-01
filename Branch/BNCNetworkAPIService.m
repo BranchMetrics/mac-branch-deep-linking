@@ -59,7 +59,7 @@
 
 - (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary {
     if (!dictionary) return;
-    NSMutableDictionary* device = [BNCDevice currentDevice].v2dictionary;
+    NSMutableDictionary* device = [BNCDevice currentDevice].v1dictionary;
     device[@"os"] = @"iOS";
     [dictionary addEntriesFromDictionary:device];
 
@@ -81,12 +81,36 @@
     }
 }
 
+- (void) appendV2APIParametersWithDictionary:(NSMutableDictionary*)dictionary {
+    BNCApplication*application = [BNCApplication currentApplication];
+
+    // Add user_data:
+    NSMutableDictionary*userData = [NSMutableDictionary new];
+    [userData addEntriesFromDictionary:[BNCDevice currentDevice].v2dictionary];
+    userData[@"app_version"] = application.displayVersionString;
+    userData[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    userData[@"environment"] = application.branchExtensionType;
+    userData[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
+    userData[@"sdk"] = @"ios";
+    userData[@"sdk_version"] = Branch.kitDisplayVersion;
+    //userData[@"environment"] = @"WHAT"; // TODO: remove.  Cause error on purpose.
+    dictionary[@"user_data"] = userData;
+
+    // Add instrumentation:
+    if (self.settings.instrumentationDictionary.count/* && addInstrumentation*/) {
+        dictionary[@"instrumentation"] = self.settings.instrumentationDictionary;
+    }
+
+    dictionary[@"branch_key"] = self.configuration.key;
+}
+
 - (void) collectInstrumentationMetricsWithOperation:(BNCNetworkOperation*)operation {
-    // multiplying by negative because startTime happened in the past
+    // Multiplying by negative because startTime happened in the past
     NSTimeInterval elapsedTime = [operation.dateStart timeIntervalSinceNow] * -1000.0;
     NSString *lastRoundTripTime = [[NSNumber numberWithDouble:floor(elapsedTime)] stringValue];
     NSString *path = [operation.request.URL path];
     NSString *brttKey = [NSString stringWithFormat:@"%@-brtt", path];
+    self.settings.instrumentationDictionary = nil;
     self.settings.instrumentationDictionary[brttKey] = lastRoundTripTime;
 }
 
@@ -118,7 +142,7 @@
         return apiOperation;
     }
     if (![operation.responseData isKindOfClass:NSDictionary.class]) {
-        apiOperation.error = [NSError branchErrorWithCode:BNCServerProblemError];
+        apiOperation.error = [NSError branchErrorWithCode:BNCBadRequestError];
         return apiOperation;
     }
     NSDictionary*dictionary = (NSDictionary*)operation.responseData;
@@ -175,14 +199,21 @@
     }
     else if (status >= 400) {
 
-        [operation deserializeJSONResponseData];
         NSDictionary*dictionary = nil;
+        [operation deserializeJSONResponseData];
         if ([operation.responseData isKindOfClass:NSDictionary.class])
             dictionary = (id) operation.responseData;
 
-        NSString *errorString = dictionary[@"error"];
-        if (![errorString isKindOfClass:[NSString class]])
-            errorString = nil;
+        NSString *errorString = nil;
+        NSString *s = dictionary[@"error"];
+        if ([s isKindOfClass:[NSString class]]) {
+            errorString = s;
+        }
+        if (!errorString) {
+            s = dictionary[@"error"][@"message"];
+            if ([s isKindOfClass:[NSString class]])
+                errorString = s;
+        }
         if (!errorString)
             errorString = underlyingError.localizedDescription;
         if (!errorString)
@@ -199,141 +230,6 @@
     }
 
     return branchError;
-}
-
-#pragma mark - openURL
-
-- (void) openURL:(NSURL*)url {
-    BNCApplication*application = [BNCApplication currentApplication];
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-
-    dictionary[@"device_fingerprint_id"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
-    dictionary[@"identity_id"] = BNCWireFormatFromString(self.settings.identityID);
-    dictionary[@"ios_bundle_id"] = BNCWireFormatFromString(application.bundleID);
-    dictionary[@"ios_team_id"] = BNCWireFormatFromString(application.teamID);
-    dictionary[@"app_version"] = BNCWireFormatFromString(application.displayVersionString);
-    dictionary[@"uri_scheme"] = BNCWireFormatFromString(application.defaultURLScheme);
-    dictionary[@"facebook_app_link_checked"] = BNCWireFormatFromBool(NO);
-    dictionary[@"apple_ad_attribution_checked"] = BNCWireFormatFromBool(NO);
-
-    NSString*scheme = url.scheme;
-    if ([scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"]) {
-        dictionary[@"universal_link_url"] = url.absoluteString;
-    } else
-    if (scheme.length > 0) {
-        dictionary[@"external_intent_uri"] = url.absoluteString;
-        NSURLComponents*components = [NSURLComponents componentsWithString:url.absoluteString];
-        for (NSURLQueryItem*item in components.queryItems) {
-            if ([item.name isEqualToString:@"link_click_id"]) {
-                dictionary[@"link_identifier"] = item.value;
-                break;
-            }
-        }
-    }
-
-    dictionary[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
-    dictionary[@"lastest_update_time"] = BNCWireFormatFromDate(application.currentBuildDate);
-    dictionary[@"previous_update_time"] = BNCWireFormatFromDate(application.previousAppBuildDate);
-    dictionary[@"latest_install_time"] = BNCWireFormatFromDate(application.currentInstallDate);
-    dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
-    dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
-    [self appendV1APIParametersWithDictionary:dictionary];
-    NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
-
-    BNCPerformBlockOnMainThreadSync(^ {
-        [self notifyWillStartSessionWithURL:url];
-    });
-
-    __weak __typeof(self) weakSelf = self;
-    [self postOperationForAPIServiceName:service
-        dictionary:dictionary
-        completion:^(BNCNetworkAPIOperation *operation) {
-            __strong __typeof(self) strongSelf = weakSelf;
-            [strongSelf openResponseWithOperation:operation url:url];
-        }];
-}
-
-- (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
-    if (operation.error) {
-        BNCPerformBlockOnMainThreadSync(^{
-            [self notifyDidStartSession:nil withURL:URL error:operation.error];
-        });
-        return;
-    }
-
-    BranchSession*session = operation.session;
-    BranchLinkProperties*linkProperties = [BranchLinkProperties linkPropertiesWithDictionary:session.data];
-    session.linkProperties = linkProperties;
-    BranchUniversalObject*object = [BranchUniversalObject objectWithDictionary:session.data];
-    session.linkContent = object;
-
-//  TODO: Send intrumentation.
-//  preferenceHelper.previousAppBuildDate = [BNCApplication currentApplication].currentBuildDate;
-
-    BNCPerformBlockOnMainThreadSync(^ {
-        [self notifyDidStartSession:session withURL:URL error:nil];
-    });
-    if (session.referringURL) {
-        BNCPerformBlockOnMainThreadSync(^ {
-            [self notifyDidOpenURLWithSession:session];
-        });
-    }
-}
-
-- (void) notifyWillStartSessionWithURL:(NSURL*)URL {
-    BNCLogAssert([NSThread isMainThread]);
-    Branch*branch = [Branch sharedInstance];
-    if ([branch.delegate respondsToSelector:@selector(branch:willStartSessionWithURL:)]) {
-        [branch.delegate branch:branch willStartSessionWithURL:URL];
-    }
-    NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
-    userInfo[BranchURLKey] = URL;
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:BranchWillStartSessionNotification
-        object:branch
-        userInfo:userInfo];
-}
-
-- (void) notifyDidStartSession:(BranchSession*)session withURL:(NSURL*)URL error:(NSError*)error {
-    BNCLogAssert([NSThread isMainThread] && (session || error));
-    Branch*branch = [Branch sharedInstance];
-
-    if (session == nil && error == nil) {
-        BNCLogError(@"Both session and error are nil!");
-        return;
-    }
-
-    if (error) {
-        if ([branch.delegate respondsToSelector:@selector(branch:failedToStartSessionWithURL:error:)])
-            [branch.delegate branch:branch failedToStartSessionWithURL:URL error:error];
-    } else {
-        if ([branch.delegate respondsToSelector:@selector(branch:didStartSession:)])
-            [branch.delegate branch:branch didStartSession:session];
-    }
-
-    NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
-    userInfo[BranchURLKey] = URL;
-    userInfo[BranchSessionKey] = session;
-    userInfo[BranchErrorKey] = error;
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:BranchDidStartSessionNotification
-        object:branch
-        userInfo:userInfo];
-}
-
-- (void) notifyDidOpenURLWithSession:(BranchSession*)session {
-    BNCLogAssert([NSThread isMainThread]);
-    Branch*branch = [Branch sharedInstance];
-
-    if ([branch.delegate respondsToSelector:@selector(branch:didOpenURLWithSession:)])
-        [branch.delegate branch:branch didOpenURLWithSession:session];
-
-    NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
-    userInfo[BranchSessionKey] = session;
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:BranchDidOpenURLWithSessionNotification
-        object:branch
-        userInfo:userInfo];
 }
 
 @end

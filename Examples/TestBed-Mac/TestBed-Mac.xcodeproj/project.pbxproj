@@ -15,7 +15,6 @@
 		2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C070E20AB8E9400F38167 /* APPViewController.xib */; };
 		4D0F56AD20B33C97003D6607 /* TestBed-MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */; };
 		4D39087320BDB78300E28074 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4D39087820BDBA4D00E28074 /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D39087F20BF378C00E28074 /* APPActionItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D39087E20BF378C00E28074 /* APPActionItemView.xib */; };
 		4D85A9F920BF61D500E61F6E /* APPActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D85A9F820BF61D500E61F6E /* APPActionItemView.m */; };
 		4DD347A220BCFA1D003891F1 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
@@ -51,13 +50,6 @@
 			remoteGlobalIDString = 4D54C07420A6560400C76496;
 			remoteInfo = Branch;
 		};
-		4D39087620BDBA3A00E28074 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D159DCA20B62D7D005A9850;
-			remoteInfo = BranchTests;
-		};
 		4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
@@ -81,7 +73,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4D39087820BDBA4D00E28074 /* BranchTests.xctest in CopyFiles */,
 				4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,7 +214,6 @@
 			);
 			dependencies = (
 				4DD347A520BCFA5C003891F1 /* PBXTargetDependency */,
-				4D39087720BDBA3A00E28074 /* PBXTargetDependency */,
 			);
 			name = "TestBed-Mac";
 			productName = "TestBed-Mac";
@@ -378,11 +368,6 @@
 			isa = PBXTargetDependency;
 			name = Branch;
 			targetProxy = 4D39087020BDB74B00E28074 /* PBXContainerItemProxy */;
-		};
-		4D39087720BDBA3A00E28074 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BranchTests;
-			targetProxy = 4D39087620BDBA3A00E28074 /* PBXContainerItemProxy */;
 		};
 		4DD347A520BCFA5C003891F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

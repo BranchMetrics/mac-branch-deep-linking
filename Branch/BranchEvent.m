@@ -11,7 +11,9 @@
 #import "BranchEvent.h"
 #import "BranchMainClass.h"
 #import "BNCLog.h"
-#import "BNCNetworkAPIService.h" // TODO
+#import "BNCNetworkAPIService.h"
+#import "BNCDevice.h"
+#import "BNCThreads.h"
 
 #pragma mark BranchStandardEvents
 
@@ -152,7 +154,7 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
     return ([self.class.standardEvents containsObject:self.eventName]);
 }
 
-- (void) logEvent {
+- (void) logEventWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
     if (![_eventName isKindOfClass:[NSString class]] || _eventName.length == 0) {
         BNCLogError(@"Invalid event type '%@' or empty string.", NSStringFromClass(_eventName.class));
         return;
@@ -180,12 +182,17 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
         eventDictionary[@"content_items"] = contentItemDictionaries;
     }
 
+    [[Branch sharedInstance].networkAPIService appendV2APIParametersWithDictionary:eventDictionary];
     NSString*apiService = self.isStandardEvent ? @"v2/event/standard" : @"v2/event/custom";
 
-    [[Branch sharedInstance].networkService
+    [[Branch sharedInstance].networkAPIService
         postOperationForAPIServiceName:apiService
         dictionary:eventDictionary
-        completion:nil];
+        completion:^ (BNCNetworkAPIOperation*operation) {
+            BNCPerformBlockOnMainThreadAsync(^{
+                if (completion) completion(operation.error);
+            });
+        }];
 }
 
 - (NSString*_Nonnull) description {

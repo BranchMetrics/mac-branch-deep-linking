@@ -25,8 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
 
-/// Returns YES if it's a Branch URL.
-- (BOOL) openURL:(NSURL*)url;
+/**
+ @param  url    The URL to open.
+ @return BOOL   Returns true if it is a Branch link and an attempt will be made to open the link.
+ */
+- (BOOL) openURL:(NSURL*_Nullable)url;
 
 /**
  Set the user's identity to an ID used by your system, so that it is identifiable by you elsewhere. Receive
@@ -40,13 +43,14 @@ NS_ASSUME_NONNULL_BEGIN
           The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
  */
-- (void)setIdentity:(NSString*)userId withCallback:(void (^_Nullable)(NSDictionary*_Nullable, NSError*_Nullable))callback;
+- (void)setIdentity:(NSString*)userId callback:(void (^_Nullable)(NSError*_Nullable))callback;
 
 /**
- Indicates whether or not this user has a custom identity specified for them. Note that this is *independent of installs*. If you call setIdentity, this device
- will have that identity associated with this user until `logout` is called. This includes persisting through uninstalls, as we track device id.
+ Indicates whether or not this user has a custom identity specified for them. Note that this is *independent
+ of installs*. If you call setIdentity, this device will have that identity associated with this user until
+ `logout` is called. This includes persisting through uninstalls, as we track device id.
  */
-- (BOOL)isUserIdentified;
+- (BOOL)userIsIdentified;
 
 /**
  Clear all of the current user's session items.
@@ -60,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, weak) id<BranchDelegate> delegate;
 
 // Move to category
-@property (atomic, strong, readonly) BNCNetworkAPIService* networkService;
+@property (atomic, strong, readonly) BNCNetworkAPIService* networkAPIService;
 @end
 
 NS_ASSUME_NONNULL_END

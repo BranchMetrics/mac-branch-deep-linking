@@ -139,7 +139,7 @@
     @synchronized (self) {
         if (_saveTimer) return;
 
-        NSTimeInterval kSaveTime = 1.0; // TODO: shorten
+        NSTimeInterval kSaveTime = 1.0; // TODO: shorten?
 
         if (!_saveQueue)
             _saveQueue = dispatch_queue_create("io.branch.sdk.settings", DISPATCH_QUEUE_SERIAL);

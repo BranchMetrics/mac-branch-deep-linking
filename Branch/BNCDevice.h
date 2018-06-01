@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BNCDevice : NSObject
 
 + (instancetype) currentDevice;
+- (NSMutableDictionary*) v1dictionary;
 - (NSMutableDictionary*) v2dictionary;
 
 @property (atomic, copy, readonly) NSString *hardwareID;

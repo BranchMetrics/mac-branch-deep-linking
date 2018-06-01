@@ -254,8 +254,15 @@
     event.eventDescription = @"Product Search";
     event.searchQuery = @"product name";
     event.customData[@"rating"] = @"5";
-    [event logEvent];
 
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
+    [event logEventWithCompletion:^(NSError * _Nullable error) {
+        XCTAssert(error == nil);
+        [expectation fulfill];
+    }];
+    [self awaitExpectations];
+
+    // Test that all events are in the array:
     XCTAssert([BranchEvent standardEvents].count == 16);
 }
 
