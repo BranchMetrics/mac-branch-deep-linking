@@ -142,3 +142,7 @@ NSURL* BNCURLFromWireFormat(id object) {
         return [NSURL URLWithString:object];
     return nil;
 }
+
+NSString*const BNCStringFromBool(BOOL b) {
+    return (b) ? @"true" : @"false";
+}

@@ -42,4 +42,21 @@
     return object;
 }
 
+#include "BNCWireFormat.h"
+
+- (NSString*) description {
+    return [NSString stringWithFormat:
+        @"<%@ 0x%p isFirst: %@ isBranchURL: %@ sessionID: %@ referring: %@ identity: %@ buo: %@ link: %@ items data: %@>",
+            NSStringFromClass(self.class),
+            (void*) self,
+            BNCStringFromBool(self.isFirstSession),
+            BNCStringFromBool(self.isBranchURL),
+            self.sessionID,
+            self.referringURL,
+            self.identityID,
+            self.linkContent,
+            self.linkProperties,
+            self.data];
+}
+
 @end

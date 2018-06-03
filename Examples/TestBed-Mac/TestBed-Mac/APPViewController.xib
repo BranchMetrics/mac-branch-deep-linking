@@ -51,7 +51,7 @@
                             </textField>
                             <textField horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="249" preferredMaxLayoutWidth="420" translatesAutoresizingMaskIntoConstraints="NO" id="L4q-ab-0dz">
                                 <rect key="frame" x="20" y="20" width="650" height="308"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" borderStyle="bezel" title="&lt; No Data &gt;" drawsBackground="YES" id="hzv-ur-CbZ">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="&lt; No Data &gt;" drawsBackground="YES" id="hzv-ur-CbZ">
                                     <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

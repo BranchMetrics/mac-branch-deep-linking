@@ -105,10 +105,12 @@
 #pragma mark - Application State Changes
 
 - (void)urlAppleEvent:(NSAppleEventDescriptor *)event
-        withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+       withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
     NSAppleEventDescriptor*descriptor = [event paramDescriptorForKeyword:keyDirectObject];
     NSURL *url = [NSURL URLWithString:descriptor.stringValue];
-    BNCLogDebugSDK(@"Apple event URL: %@.", url);
+    NSAppleEventDescriptor*source = [event attributeDescriptorForKeyword:keyOriginalAddressAttr];
+    NSString*sourceName = source.stringValue;
+    BNCLogDebugSDK(@"Apple url open event from '%@' URL: %@.", sourceName, url);
     [self openURL:url];
 }
 
@@ -133,7 +135,17 @@
 
 #pragma mark - Open
 
+- (BOOL) isBranchURL:(NSURL*)url {
+    NSString*scheme = [url scheme];
+    NSString*appScheme = [BNCApplication currentApplication].defaultURLScheme;
+    return (scheme && appScheme && [scheme isEqualToString:appScheme]);
+}
+
 - (BOOL) openURL:(NSURL*)url {
+    if (url != nil && ![self isBranchURL:url]) {
+        return NO;
+    }
+
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 
@@ -182,7 +194,6 @@
             [strongSelf openResponseWithOperation:operation url:url];
         }];
 
-    // TODO: Fix this to return probability of open URL in service:
     return YES;
 }
 

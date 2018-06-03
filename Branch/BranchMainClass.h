@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
 
+- (BOOL) isBranchURL:(NSURL*)url;
+
 /**
  @param  url    The URL to open.
  @return BOOL   Returns true if it is a Branch link and an attempt will be made to open the link.

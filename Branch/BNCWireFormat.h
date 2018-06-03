@@ -34,6 +34,8 @@ FOUNDATION_EXPORT NSMutableArray<NSString*>*_Nullable BNCStringArrayFromWireForm
 FOUNDATION_EXPORT NSMutableDictionary*_Nullable BNCDictionaryFromWireFormat(id object);
 FOUNDATION_EXPORT NSURL*_Nullable    BNCURLFromWireFormat(id object);
 
+FOUNDATION_EXPORT NSString*const     BNCStringFromBool(BOOL b);
+
 #undef addString
 #undef addDate
 #undef addDouble

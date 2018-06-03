@@ -50,7 +50,9 @@
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector_ {
-    return [self->_settings methodSignatureForSelector:selector_];
+    @synchronized(self->_settings) {
+        return [self->_settings methodSignatureForSelector:selector_];
+    }
 }
 
 @end
@@ -77,25 +79,27 @@
 }
 
 + (instancetype) loadSettings {
-    BNCSettingsProxy*result = nil;
-    NSData*data = [BNCPersistence loadDataNamed:@"io.branch.sdk.settings"];
-    BNCSettings* settings =
-        (data) ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : [[BNCSettings alloc] init];
-    Class foundClass = [settings class];
-    Class proxyClass = [BNCSettingsProxy class];
-    Class settingsClass = [BNCSettings class];
-    if ((__bridge void*) foundClass == (__bridge void*) proxyClass) {
-        result = (id) settings;
+    @synchronized(self) {
+        BNCSettingsProxy*result = nil;
+        NSData*data = [BNCPersistence loadDataNamed:@"io.branch.sdk.settings"];
+        BNCSettings* settings =
+            (data) ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : [[BNCSettings alloc] init];
+        Class foundClass = [settings class];
+        Class proxyClass = [BNCSettingsProxy class];
+        Class settingsClass = [BNCSettings class];
+        if ((__bridge void*) foundClass == (__bridge void*) proxyClass) {
+            result = (id) settings;
+        }
+        else
+        if ((__bridge void*) foundClass == (__bridge void*) settingsClass) {
+            result = [[BNCSettingsProxy alloc] initWithSettings:settings];
+        } else {
+            settings = [[BNCSettings alloc] init];
+            result = [[BNCSettingsProxy alloc] initWithSettings:settings];
+        }
+        BNCLogAssert(result && result->_settings);
+        return (id) result;
     }
-    else
-    if ((__bridge void*) foundClass == (__bridge void*) settingsClass) {
-        result = [[BNCSettingsProxy alloc] initWithSettings:settings];
-    } else {
-        settings = [[BNCSettings alloc] init];
-        result = [[BNCSettingsProxy alloc] initWithSettings:settings];
-    }
-    BNCLogAssert(result && result->_settings);
-    return (id) result;
 }
 
 + (BOOL) supportsSecureCoding {

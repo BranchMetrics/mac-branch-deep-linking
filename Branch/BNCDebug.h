@@ -38,6 +38,8 @@
     Search the heap for all references to the pointer 0x0000000116e13920:
 
        ptr_refs -m 0x0000000116e13920
+
+    @see Apple Tech Note / Questions TN2124, TN2239, TN2030, QA1887 for more info.
 */
 
 #import "BranchHeader.h"

@@ -9,9 +9,8 @@
 */
 
 #import "BNCApplication.h"
-#import "BNCLog.h"
 #import "BNCKeyChain.h"
-#import "BNCSettings.h"
+#import "BNCLog.h"
 
 #pragma mark Dynamically loaded function declarations
 
