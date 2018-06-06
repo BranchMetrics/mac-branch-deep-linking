@@ -12,6 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, BranchLinkType) {
+    BranchLinkTypeUnlimitedUse = 0,
+    BranchLinkTypeOneTimeUse = 1
+};
+
 @interface BranchLinkProperties : NSObject
 
 + (instancetype)linkPropertiesWithDictionary:(NSDictionary*)dictionary;
@@ -23,7 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString*_Nullable channel;
 @property (nonatomic, strong) NSString*_Nullable stage;
 @property (nonatomic, strong) NSString*_Nullable campaign;
-@property (nonatomic, assign) NSUInteger matchDuration;
+@property (nonatomic, assign) NSInteger matchDuration;
+@property (nonatomic, assign) BranchLinkType linkType;
 @property (nonatomic, strong, null_resettable) NSMutableDictionary* controlParams;
 @end
 

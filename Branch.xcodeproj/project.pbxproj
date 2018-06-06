@@ -32,9 +32,55 @@
 		4D27FF8C20B222C7002C7EB0 /* BNCPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D27FF8A20B222C7002C7EB0 /* BNCPersistence.m */; };
 		4D38923A20BA18A80013B811 /* BranchLinkProperties.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D38923920BA18A80013B811 /* BranchLinkProperties.Test.m */; };
 		4D38923D20BA24030013B811 /* BNCTestCase.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D38923C20BA24030013B811 /* BNCTestCase.json */; };
-		4D38923F20BA8AA30013B811 /* BranchEvent.Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189F20ADDCB600441881 /* BranchEvent.Test.swift */; };
 		4D3E50C620B916B400C7BF5B /* BranchCommerce.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3E50C520B916B400C7BF5B /* BranchCommerce.Test.m */; };
 		4D54C08620A6560400C76496 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D54C07820A6560400C76496 /* Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67473E20C74E81001639C5 /* BranchUniversalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189520ADDC4F00441881 /* BranchUniversalObject.m */; };
+		4D67473F20C74E81001639C5 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99771F20AA099D00A63EE1 /* BNCDebug.m */; };
+		4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818A420ADE1BB00441881 /* BranchCommerce.m */; };
+		4D67474120C74E81001639C5 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772420AA099D00A63EE1 /* NSString+Branch.m */; };
+		4D67474220C74E81001639C5 /* BranchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189420ADDC4F00441881 /* BranchEvent.m */; };
+		4D67474320C74E81001639C5 /* BNCApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C163D20ACBEF6002BF211 /* BNCApplication.m */; };
+		4D67474420C74E81001639C5 /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C164920ACCD7C002BF211 /* BNCKeyChain.m */; };
+		4D67474520C74E81001639C5 /* BNCNetworkAPIService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C163520ACB790002BF211 /* BNCNetworkAPIService.m */; };
+		4D67474620C74E81001639C5 /* BNCLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C164420ACCD7C002BF211 /* BNCLocalization.m */; };
+		4D67474720C74E81001639C5 /* BNCSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C163920ACB914002BF211 /* BNCSettings.m */; };
+		4D67474820C74E81001639C5 /* BranchDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818B920AF9EAF00441881 /* BranchDelegate.m */; };
+		4D67474920C74E81001639C5 /* Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818AB20AE19FD00441881 /* Branch.m */; };
+		4D67474A20C74E81001639C5 /* BranchError.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C164820ACCD7C002BF211 /* BranchError.m */; };
+		4D67474B20C74E81001639C5 /* BranchHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818AD20AE1A4C00441881 /* BranchHeader.m */; };
+		4D67474C20C74E81001639C5 /* BNCWireFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818A920ADF87800441881 /* BNCWireFormat.m */; };
+		4D67474D20C74E81001639C5 /* BranchLinkProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189320ADDC4F00441881 /* BranchLinkProperties.m */; };
+		4D67474E20C74E81001639C5 /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C164120ACC86E002BF211 /* BNCNetworkService.m */; };
+		4D67475020C74E81001639C5 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772320AA099D00A63EE1 /* BNCLog.m */; };
+		4D67475120C74E81001639C5 /* BNCPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D27FF8A20B222C7002C7EB0 /* BNCPersistence.m */; };
+		4D67475220C74E81001639C5 /* BNCDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165D20ACD625002BF211 /* BNCDevice.m */; };
+		4D67475320C74E81001639C5 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772120AA099D00A63EE1 /* BNCThreads.m */; };
+		4D67475420C74E81001639C5 /* BranchSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818B420AE23BC00441881 /* BranchSession.m */; };
+		4D67475520C74E81001639C5 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
+		4D67475820C74E81001639C5 /* NSString+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772220AA099D00A63EE1 /* NSString+Branch.h */; };
+		4D67475920C74E81001639C5 /* BNCNetworkAPIService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163420ACB790002BF211 /* BNCNetworkAPIService.h */; };
+		4D67475A20C74E81001639C5 /* BranchLinkProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189220ADDC4F00441881 /* BranchLinkProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67475B20C74E81001639C5 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67475C20C74E81001639C5 /* BranchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189120ADDC4F00441881 /* BranchEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67475D20C74E81001639C5 /* BranchMainClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DC2232720AA262D005C57D0 /* BranchMainClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67475E20C74E81001639C5 /* BNCPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D27FF8920B222C7002C7EB0 /* BNCPersistence.h */; };
+		4D67475F20C74E81001639C5 /* BNCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C165C20ACD625002BF211 /* BNCDevice.h */; };
+		4D67476020C74E81001639C5 /* BNCEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818BE20B025DA00441881 /* BNCEncoder.h */; };
+		4D67476120C74E81001639C5 /* BranchHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818A820ADE52B00441881 /* BranchHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476220C74E81001639C5 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D54C07820A6560400C76496 /* Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476320C74E81001639C5 /* BNCNetworkService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164020ACC86E002BF211 /* BNCNetworkService.h */; };
+		4D67476420C74E81001639C5 /* BNCWireFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C166020ACDB58002BF211 /* BNCWireFormat.h */; };
+		4D67476520C74E81001639C5 /* BranchCommerce.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818A520ADE1BB00441881 /* BranchCommerce.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476620C74E81001639C5 /* BNCKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164620ACCD7C002BF211 /* BNCKeyChain.h */; };
+		4D67476720C74E81001639C5 /* BNCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163C20ACBEF6002BF211 /* BNCApplication.h */; };
+		4D67476820C74E81001639C5 /* BranchError.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164720ACCD7C002BF211 /* BranchError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476920C74E81001639C5 /* BranchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818B820AF9EAF00441881 /* BranchDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476A20C74E81001639C5 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476B20C74E81001639C5 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476C20C74E81001639C5 /* BranchSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818B320AE23BC00441881 /* BranchSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476D20C74E81001639C5 /* BNCLocalization.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164520ACCD7C002BF211 /* BNCLocalization.h */; };
+		4D67476E20C74E81001639C5 /* BNCSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163820ACB914002BF211 /* BNCSettings.h */; };
+		4D67476F20C74E81001639C5 /* BranchUniversalObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189620ADDC5000441881 /* BranchUniversalObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99771F20AA099D00A63EE1 /* BNCDebug.m */; };
 		4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -83,16 +129,6 @@
 		4DF818C120B025DA00441881 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4D159DD120B62D7D005A9850 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D54C07420A6560400C76496;
-			remoteInfo = Branch;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		4D159DEB20B62E46005A9850 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -120,6 +156,7 @@
 		4D54C07820A6560400C76496 /* Branch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Branch.h; sourceTree = "<group>"; };
 		4D54C07920A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D54C08520A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D67477420C74E81001639C5 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D99771E20AA099D00A63EE1 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
 		4D99771F20AA099D00A63EE1 /* BNCDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCDebug.m; sourceTree = "<group>"; };
 		4D99772020AA099D00A63EE1 /* BNCDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCDebug.h; sourceTree = "<group>"; };
@@ -209,6 +246,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4D67475620C74E81001639C5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -228,6 +272,7 @@
 			children = (
 				4D54C07520A6560400C76496 /* Branch.framework */,
 				4D159DCB20B62D7D005A9850 /* BranchTests.xctest */,
+				4D67477420C74E81001639C5 /* Branch.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -367,6 +412,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4D67475720C74E81001639C5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D67475820C74E81001639C5 /* NSString+Branch.h in Headers */,
+				4D67475920C74E81001639C5 /* BNCNetworkAPIService.h in Headers */,
+				4D67475A20C74E81001639C5 /* BranchLinkProperties.h in Headers */,
+				4D67475B20C74E81001639C5 /* BNCDebug.h in Headers */,
+				4D67475C20C74E81001639C5 /* BranchEvent.h in Headers */,
+				4D67475D20C74E81001639C5 /* BranchMainClass.h in Headers */,
+				4D67475E20C74E81001639C5 /* BNCPersistence.h in Headers */,
+				4D67475F20C74E81001639C5 /* BNCDevice.h in Headers */,
+				4D67476020C74E81001639C5 /* BNCEncoder.h in Headers */,
+				4D67476120C74E81001639C5 /* BranchHeader.h in Headers */,
+				4D67476220C74E81001639C5 /* Branch.h in Headers */,
+				4D67476320C74E81001639C5 /* BNCNetworkService.h in Headers */,
+				4D67476420C74E81001639C5 /* BNCWireFormat.h in Headers */,
+				4D67476520C74E81001639C5 /* BranchCommerce.h in Headers */,
+				4D67476620C74E81001639C5 /* BNCKeyChain.h in Headers */,
+				4D67476720C74E81001639C5 /* BNCApplication.h in Headers */,
+				4D67476820C74E81001639C5 /* BranchError.h in Headers */,
+				4D67476920C74E81001639C5 /* BranchDelegate.h in Headers */,
+				4D67476A20C74E81001639C5 /* BNCThreads.h in Headers */,
+				4D67476B20C74E81001639C5 /* BNCLog.h in Headers */,
+				4D67476C20C74E81001639C5 /* BranchSession.h in Headers */,
+				4D67476D20C74E81001639C5 /* BNCLocalization.h in Headers */,
+				4D67476E20C74E81001639C5 /* BNCSettings.h in Headers */,
+				4D67476F20C74E81001639C5 /* BranchUniversalObject.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -382,7 +458,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4D159DD220B62D7D005A9850 /* PBXTargetDependency */,
 			);
 			name = BranchTests;
 			productName = BranchTests;
@@ -406,6 +481,23 @@
 			productReference = 4D54C07520A6560400C76496 /* Branch.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		4D67473C20C74E81001639C5 /* Branch-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D67477020C74E81001639C5 /* Build configuration list for PBXNativeTarget "Branch-tvOS" */;
+			buildPhases = (
+				4D67473D20C74E81001639C5 /* Sources */,
+				4D67475620C74E81001639C5 /* Frameworks */,
+				4D67475720C74E81001639C5 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Branch-tvOS";
+			productName = "Branch-SDK-Mac";
+			productReference = 4D67477420C74E81001639C5 /* Branch.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -424,6 +516,9 @@
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
 					};
+					4D67473C20C74E81001639C5 = {
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 4D54C06F20A6560400C76496 /* Build configuration list for PBXProject "Branch" */;
@@ -440,6 +535,7 @@
 			targets = (
 				4D54C07420A6560400C76496 /* Branch */,
 				4D159DCA20B62D7D005A9850 /* BranchTests */,
+				4D67473C20C74E81001639C5 /* Branch-tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -480,7 +576,6 @@
 				4D159DDC20B62DD5005A9850 /* BNCLocalization.Test.m in Sources */,
 				4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */,
 				4D159DE220B62DD5005A9850 /* BNCTestCase.Test.m in Sources */,
-				4D38923F20BA8AA30013B811 /* BranchEvent.Test.swift in Sources */,
 				4D159DDF20B62DD5005A9850 /* BNCSettings.Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,15 +611,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4D159DD220B62D7D005A9850 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4D54C07420A6560400C76496 /* Branch */;
-			targetProxy = 4D159DD120B62D7D005A9850 /* PBXContainerItemProxy */;
+		4D67473D20C74E81001639C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D67473E20C74E81001639C5 /* BranchUniversalObject.m in Sources */,
+				4D67473F20C74E81001639C5 /* BNCDebug.m in Sources */,
+				4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */,
+				4D67474120C74E81001639C5 /* NSString+Branch.m in Sources */,
+				4D67474220C74E81001639C5 /* BranchEvent.m in Sources */,
+				4D67474320C74E81001639C5 /* BNCApplication.m in Sources */,
+				4D67474420C74E81001639C5 /* BNCKeyChain.m in Sources */,
+				4D67474520C74E81001639C5 /* BNCNetworkAPIService.m in Sources */,
+				4D67474620C74E81001639C5 /* BNCLocalization.m in Sources */,
+				4D67474720C74E81001639C5 /* BNCSettings.m in Sources */,
+				4D67474820C74E81001639C5 /* BranchDelegate.m in Sources */,
+				4D67474920C74E81001639C5 /* Branch.m in Sources */,
+				4D67474A20C74E81001639C5 /* BranchError.m in Sources */,
+				4D67474B20C74E81001639C5 /* BranchHeader.m in Sources */,
+				4D67474C20C74E81001639C5 /* BNCWireFormat.m in Sources */,
+				4D67474D20C74E81001639C5 /* BranchLinkProperties.m in Sources */,
+				4D67474E20C74E81001639C5 /* BNCNetworkService.m in Sources */,
+				4D67475020C74E81001639C5 /* BNCLog.m in Sources */,
+				4D67475120C74E81001639C5 /* BNCPersistence.m in Sources */,
+				4D67475220C74E81001639C5 /* BNCDevice.m in Sources */,
+				4D67475320C74E81001639C5 /* BNCThreads.m in Sources */,
+				4D67475420C74E81001639C5 /* BranchSession.m in Sources */,
+				4D67475520C74E81001639C5 /* BNCEncoder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXTargetDependency section */
+/* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		4D159DD320B62D7D005A9850 /* Debug */ = {
@@ -573,6 +690,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -621,11 +739,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Branch/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				PRODUCT_NAME = Branch;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -634,7 +755,6 @@
 		4D38924420BB117E0013B811 /* BranchTestHost */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -650,8 +770,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SDKROOT = macosx;
 			};
 			name = BranchTestHost;
 		};
@@ -681,6 +800,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -729,11 +849,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Branch/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				PRODUCT_NAME = Branch;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -743,6 +866,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -785,11 +909,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Branch/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
+				PRODUCT_NAME = Branch;
+				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 4.0;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -798,7 +925,6 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -814,15 +940,13 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		4D54C08B20A6560400C76496 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -838,8 +962,67 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4D67477120C74E81001639C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Branch/Branch.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
+				SDKROOT = appletvos;
+			};
+			name = Debug;
+		};
+		4D67477220C74E81001639C5 /* BranchTestHost */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Branch/Branch.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
+				SDKROOT = appletvos;
+			};
+			name = BranchTestHost;
+		};
+		4D67477320C74E81001639C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = Branch/Branch.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
+				SDKROOT = appletvos;
 			};
 			name = Release;
 		};
@@ -872,6 +1055,16 @@
 				4D54C08A20A6560400C76496 /* Debug */,
 				4D38924420BB117E0013B811 /* BranchTestHost */,
 				4D54C08B20A6560400C76496 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D67477020C74E81001639C5 /* Build configuration list for PBXNativeTarget "Branch-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D67477120C74E81001639C5 /* Debug */,
+				4D67477220C74E81001639C5 /* BranchTestHost */,
+				4D67477320C74E81001639C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

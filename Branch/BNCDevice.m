@@ -280,6 +280,8 @@ exit:
     return version;
 }
 
+#if TARGET_OS_OSX
+
 + (NSData*) macAddress {
     kern_return_t             kernResult;
     mach_port_t               master_port;
@@ -342,7 +344,8 @@ exit:
     for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
         [string appendFormat:@"%02x", digest[i]];
 
-    // We started with 6 bytes, SHA1 is 20 bytes, UUID is 128-bits = 16 bytes.  Truncate last four bytes to make UUID:
+    // We started with 6 bytes, SHA1 is 20 bytes, UUID is 128-bits = 16 bytes.
+    // Truncate last four bytes to make UUID:
 
     if (string.length < 32) return nil; // What?
     NSString*result = [NSString stringWithFormat:@"%@-%@-%@-%@-%@",
@@ -355,7 +358,13 @@ exit:
     return result;
 }
 
-#if TARGET_OS_OSX
+#else
+
++ (NSString*) hardwareID {
+    return nil;
+}
+
+#endif
 
 + (NSString*) userAgentString {
     // TODO: Fill out with real string.
@@ -369,7 +378,9 @@ exit:
          "Version/11.0 Mobile/15A372 Safari/604.1\"";
 }
 
-#else
+// #else
+
+#if 0 // TARGET_OS_OSX
 
 + (NSString*) userAgentString {
 
@@ -458,6 +469,8 @@ exit:
 
 #endif
 
+#if TARGET_OS_OSX
+
 + (void) updateScreenAttributesWithDevice:(BNCDevice*)device {
     if (!device) return;
     NSDictionary*attributes = [[NSScreen mainScreen] deviceDescription];
@@ -466,6 +479,16 @@ exit:
     device->_screenSize = size;
     device->_screenDPI = resolution.width;
 }
+
+#else
+
++ (void) updateScreenAttributesWithDevice:(BNCDevice*)device {
+    if (!device) return;
+    device->_screenSize = [UIScreen mainScreen].bounds.size;
+    device->_screenDPI = [UIScreen mainScreen].scale;
+}
+
+#endif
 
 + (instancetype) createCurrentDevice {
     BNCDevice*device = [[BNCDevice alloc] init];
@@ -545,7 +568,7 @@ exit:
     @synchronized (self) {
         static NSString* _vendorID = nil;
         if (!_vendorID) {
-            _vendorID = [[UIDevice currentDevice] identifierForVendor];
+            _vendorID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         }
         return [_vendorID copy];
     }

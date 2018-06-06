@@ -10,13 +10,19 @@
 
 #import "BranchHeader.h"
 #import "BranchDelegate.h"
-@class BranchSession, BNCNetworkAPIService;
+#import "BranchSession.h"
+@class BNCNetworkAPIService;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BranchConfiguration : NSObject
+#pragma mark BranchConfiguration
+
+@interface BranchConfiguration : NSObject <NSCopying>
++ (BranchConfiguration*) configurationWithKey:(NSString*)key;
 @property (atomic, strong) NSString*_Nullable key;
 @end
+
+#pragma mark - Branch
 
 @interface Branch : NSObject
 + (instancetype) sharedInstance;
@@ -24,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) kitDisplayVersion;
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration;
-
+- (BOOL) isStarted;
 - (BOOL) isBranchURL:(NSURL*)url;
 
 /**
@@ -61,10 +67,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback;
 
+- (void) branchShortLinkWithContent:(BranchUniversalObject*)content
+                     linkProperties:(BranchLinkProperties*)linkProperties
+                         completion:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error))completion;
+
+- (NSURL*) branchLongLinkWithContent:(BranchUniversalObject*)content
+                      linkProperties:(BranchLinkProperties*)linkProperties;
+
 @property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
 @property (atomic, strong) NSMutableDictionary* requestMetadataDictionary;
 @property (atomic, weak) id<BranchDelegate> delegate;
-
+@property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
 // Move to category
 @property (atomic, strong, readonly) BNCNetworkAPIService* networkAPIService;
 @end

@@ -11,6 +11,7 @@
 //#import "BranchConstants.h"
 #import "BranchEvent.h"
 #import "BNCDevice.h"
+#import "BranchMainClass.h"
 
 //@interface Branch (BranchEventTest)
 //- (void) processNextQueueItem;
@@ -255,12 +256,25 @@
     event.searchQuery = @"product name";
     event.customData[@"rating"] = @"5";
 
+    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
+    Branch*branch = [[Branch alloc] init];
+    [branch startWithConfiguration:configuration];
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
+    [branch logEvent:event completion:^ (NSError*error) {
+        XCTAssert(error == nil);
+        [expectation fulfill];
+    }];
+    [self awaitExpectations];
+
+/*
     XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
     [event logEventWithCompletion:^(NSError * _Nullable error) {
         XCTAssert(error == nil);
         [expectation fulfill];
     }];
     [self awaitExpectations];
+*/
 
     // Test that all events are in the array:
     XCTAssert([BranchEvent standardEvents].count == 16);

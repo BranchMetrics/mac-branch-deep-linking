@@ -107,6 +107,7 @@
 		4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-MacTests.m"; sourceTree = "<group>"; };
 		4D0F56AE20B33C97003D6607 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D39087E20BF378C00E28074 /* APPActionItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APPActionItemView.xib; sourceTree = "<group>"; };
+		4D67473B20C72DFF001639C5 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		4D85A9F720BF61D500E61F6E /* APPActionItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPActionItemView.h; sourceTree = "<group>"; };
 		4D85A9F820BF61D500E61F6E /* APPActionItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPActionItemView.m; sourceTree = "<group>"; };
 		4DED372C20B6221100A0750E /* TestBed-Mac.provisionprofile */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestBed-Mac.provisionprofile"; sourceTree = SOURCE_ROOT; };
@@ -135,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				2B3C071820ABE0F400F38167 /* README.md */,
+				4D67473B20C72DFF001639C5 /* index.html */,
 				2B3C06FD20AB722200F38167 /* Branch.xcodeproj */,
 				2B3C06EA20AB704600F38167 /* TestBed-Mac */,
 				4D0F56AB20B33C97003D6607 /* TestBed-MacTests */,

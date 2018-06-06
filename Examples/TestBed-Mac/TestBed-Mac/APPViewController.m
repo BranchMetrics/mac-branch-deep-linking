@@ -42,7 +42,15 @@
             @"title":       @"Purchase Event",
             @"detail":      @"Send a v2-purchase event.",
             @"selector":    @"sendPurchaseEvent:",
-        }
+        },@{
+            @"title":       @"Create Short Link",
+            @"detail":      @"Create a Branch short link.",
+            @"selector":    @"createShortLink:",
+        },@{
+            @"title":       @"Create Long Link",
+            @"detail":      @"Create a Branch lhort link.",
+            @"selector":    @"createLongLink:",
+        },
     ];
     NSNib*nib = [[NSNib alloc] initWithNibNamed:@"APPActionItemView" bundle:[NSBundle mainBundle]];
     [self.actionItemCollection registerNib:nib
@@ -171,6 +179,77 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
         self.stateField.stringValue = event.eventName;
         self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";
     }];
+}
+
+- (BranchUniversalObject*) createUniversalObject {
+    NSString *canonicalIdentifier = @"item/12345";
+    NSString *canonicalUrl = @"https://dev.branch.io/getting-started/deep-link-routing/guide/ios/";
+    NSString *contentTitle = @"Content Title";
+    NSString *contentDescription = @"My Content Description";
+    NSString *imageUrl =
+        @"http://a57.foxnews.com/images.foxnews.com/content/fox-news/science/2018/03/20/"
+         "first-day-spring-arrives-5-things-to-know-about-vernal-equinox/_jcr_content/"
+         "par/featured_image/media-0.img.jpg/1862/1048/1521552912093.jpg?ve=1&tl=1";
+
+    BranchUniversalObject *buo =
+        [[BranchUniversalObject alloc] initWithCanonicalIdentifier:canonicalIdentifier];
+    buo.canonicalUrl = canonicalUrl;
+    buo.title = contentTitle;
+    buo.contentDescription = contentDescription;
+    buo.imageUrl = imageUrl;
+    buo.contentMetadata.price = [NSDecimalNumber decimalNumberWithString:@"1000.00"];
+    buo.contentMetadata.currency = @"$";
+    buo.contentMetadata.contentSchema = BranchContentSchemaTextArticle;
+    buo.contentMetadata.customMetadata[@"deeplink_text"] =
+        [NSString stringWithFormat:
+            @"This text was embedded as data in a Branch link with the following characteristics:\n\n"
+             "canonicalUrl: %@\n  title: %@\n  contentDescription: %@\n  imageUrl: %@\n",
+                canonicalUrl, contentTitle, contentDescription, imageUrl];
+    return buo;
+}
+
+- (BranchLinkProperties*) createLinkProperties {
+    NSString *feature = @"Sharing Feature";
+    NSString *channel = @"Distribution Channel";
+//    NSString *desktop_url = @"http://branch.io";
+//    NSString *ios_url = @"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/";
+
+    BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
+    linkProperties.tags = @[ @"tag1", @"tag2" ];
+    linkProperties.feature = feature;
+    linkProperties.channel = channel;
+    linkProperties.stage = @"stage four";
+    linkProperties.campaign = @"some campaign";
+    linkProperties.matchDuration = 12.2;
+    // TODO: Control params:
+//    [linkProperties addControlParam:@"$desktop_url" withValue: desktop_url];
+//    [linkProperties addControlParam:@"$ios_url" withValue: ios_url];
+    return linkProperties;
+}
+
+- (void) createShortLink:(id)sender {
+    BranchLinkProperties *linkProperties = [self createLinkProperties];
+    BranchUniversalObject *buo = [self createUniversalObject];
+    buo.creationDate = [NSDate date];
+    [[Branch sharedInstance]
+        branchShortLinkWithContent:buo
+        linkProperties:linkProperties
+        completion:^(NSURL * _Nullable shortURL, NSError * _Nullable error) {
+            [self clearUIFields];
+            if (error)
+                self.errorField.stringValue = error.localizedDescription;
+            else
+                self.dataField.stringValue = shortURL.absoluteString;
+        }];
+}
+
+- (void) createLongLink:(id)sender {
+    BranchLinkProperties *linkProperties = [self createLinkProperties];
+    BranchUniversalObject *buo = [self createUniversalObject];
+    buo.creationDate = [NSDate date];
+    NSURL*url = [[Branch sharedInstance] branchLongLinkWithContent:buo linkProperties:linkProperties];
+    [self clearUIFields];
+    self.dataField.stringValue = url.absoluteString;
 }
 
 @end

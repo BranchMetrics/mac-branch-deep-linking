@@ -21,6 +21,19 @@
 #pragma mark BranchConfiguration
 
 @implementation BranchConfiguration
+
++ (BranchConfiguration*) configurationWithKey:(NSString*)key {
+    BranchConfiguration* configuration = [[BranchConfiguration alloc] init];
+    configuration.key = key;
+    return configuration;
+}
+
+- (instancetype) copyWithZone:(NSZone*)zone {
+    BranchConfiguration* configuration = [[BranchConfiguration alloc] init];
+    configuration.key = [self.key copy];
+    return configuration;
+}
+
 @end
 
 #pragma mark - Branch
@@ -31,6 +44,10 @@
 @property (readwrite) BNCNetworkAPIService* networkAPIService;
 @property (atomic, strong) BranchConfiguration* configuration;
 @property (atomic, strong) BNCSettings* settings;
+
+@property (atomic, strong) NSURL*delayedOpenURL;
+@property (atomic, strong) dispatch_source_t delayedOpenTimer;
+@property (atomic, strong) dispatch_queue_t workQueue;
 @end
 
 @implementation Branch
@@ -62,7 +79,7 @@
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
 
-    self.configuration = configuration;
+    self.configuration = [configuration copy];
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
     self.settings = [BNCSettings sharedInstance];
 
@@ -93,6 +110,10 @@
         selector:@selector(notificationObserver:)
         name:nil
         object:nil];
+}
+
+- (BOOL) isStarted {
+    return (self.configuration && self.networkAPIService && self.settings) ? YES : NO;
 }
 
 - (void) dealloc {
@@ -138,12 +159,63 @@
 - (BOOL) isBranchURL:(NSURL*)url {
     NSString*scheme = [url scheme];
     NSString*appScheme = [BNCApplication currentApplication].defaultURLScheme;
-    return (scheme && appScheme && [scheme isEqualToString:appScheme]);
+    if (!(scheme && appScheme && [scheme isEqualToString:appScheme]))
+        return NO;
+
+    // Check for link click identifier:
+
+    NSString*linkIdentifier = nil;
+    NSURLComponents*components = [NSURLComponents componentsWithString:url.absoluteString];
+    for (NSURLQueryItem*item in components.queryItems) {
+        if ([item.name isEqualToString:@"link_click_id"]) {
+            linkIdentifier = item.value;
+            break;
+        }
+    }
+
+    return (linkIdentifier.length > 0) ? YES : NO;
 }
 
-- (BOOL) openURL:(NSURL*)url {
-    if (url != nil && ![self isBranchURL:url]) {
-        return NO;
+- (BOOL) openURL:(NSURL *)url {
+    @synchronized(self) {
+        if (url != nil && ![self isBranchURL:url]) {
+            return NO;
+        }
+        if (url.absoluteString.length) self.delayedOpenURL = url;
+        if (self.delayedOpenTimer) return YES;
+
+        NSTimeInterval kOpenDeadline = 0.200; // TODO: Right delay?
+
+        if (!self.workQueue)
+            self.workQueue = dispatch_queue_create("io.branch.sdk.work", DISPATCH_QUEUE_CONCURRENT);
+
+        self.delayedOpenTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.workQueue);
+        if (!self.delayedOpenTimer) return YES;
+
+        dispatch_time_t startTime = BNCDispatchTimeFromSeconds(kOpenDeadline);
+        dispatch_source_set_timer(
+            self.delayedOpenTimer,
+            startTime,
+            BNCNanoSecondsFromTimeInterval(kOpenDeadline),
+            BNCNanoSecondsFromTimeInterval(kOpenDeadline / 10.0)
+        );
+        __weak __typeof(self) weakSelf = self;
+        dispatch_source_set_event_handler(self.delayedOpenTimer, ^ {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf delayedOpen];
+        });
+        dispatch_resume(self.delayedOpenTimer);
+
+        return YES;
+    }
+}
+
+- (void) delayedOpen {
+    NSURL*url = self.delayedOpenURL;
+    self.delayedOpenURL = nil;
+    if (self.delayedOpenTimer) {
+        dispatch_source_cancel(self.delayedOpenTimer);
+        self.delayedOpenTimer = nil;
     }
 
     BNCApplication*application = [BNCApplication currentApplication];
@@ -193,8 +265,6 @@
             __strong __typeof(self) strongSelf = weakSelf;
             [strongSelf openResponseWithOperation:operation url:url];
         }];
-
-    return YES;
 }
 
 - (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
@@ -297,7 +367,7 @@
     [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
-            BNCPerformBlockOnMainThreadSync(^{ if (callback) callback(operation.error); });
+            BNCPerformBlockOnMainThreadAsync(^{ if (callback) callback(operation.error); });
         }];
 }
 
@@ -318,8 +388,7 @@
         completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
             if (!operation.error)
                 self.settings.developerIdentityForUser = nil;
-            BNCPerformBlockOnMainThreadSync(^{
-            if (callback) callback(operation.error); });
+            BNCPerformBlockOnMainThreadAsync(^{ if (callback) callback(operation.error); });
         }];
 }
 
@@ -350,6 +419,103 @@
     [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
         dictionary:dictionary
         completion:nil];
+}
+
+#pragma mark - Links
+
+- (void) branchShortLinkWithContent:(BranchUniversalObject*)content
+                     linkProperties:(BranchLinkProperties*)linkProperties
+                         completion:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error))completion {
+    if (content == nil || linkProperties == nil) {
+        // TODO: Add localized description.
+        NSError*error = [NSError branchErrorWithCode:BNCBadRequestError];
+        if (completion) completion(nil, error);
+        return;
+    }
+
+    NSMutableDictionary*dictionary = [NSMutableDictionary new];
+    [dictionary addEntriesFromDictionary:linkProperties.dictionary];
+    dictionary[@"data"] = content.dictionary;
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService postOperationForAPIServiceName:@"v1/url"
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
+            BNCPerformBlockOnMainThreadAsync(^{
+                if (operation.error) {
+                    if (completion) completion(nil, operation.error);
+                    return;
+                }
+                NSURL*url = nil;
+                NSDictionary*dictionary = nil;
+                if ([operation.operation.responseData isKindOfClass:[NSDictionary class]])
+                    dictionary = (id) operation.operation.responseData;
+                NSString*urlString = dictionary[@"url"];
+                if (urlString) url = [NSURL URLWithString:urlString];
+                if (url) {
+                    if (completion) completion(url, nil);
+                    return;
+                }
+                NSError*error = [NSError branchErrorWithCode:BNCBadRequestError];
+                if (completion) completion(nil, error);
+            });
+        }];
+}
+
+- (NSURL*) branchLongLinkWithContent:(BranchUniversalObject*)content
+                      linkProperties:(BranchLinkProperties*)linkProperties {
+
+    NSMutableArray*queryItems = [NSMutableArray new];
+    void (^ addItem)(NSString*tag, NSString*value) = ^ (NSString*key, NSString*value) {
+        if (value.length && ![value isEqualToString:@"0"]) {
+            NSURLQueryItem*item = [NSURLQueryItem queryItemWithName:key value:value];
+            [queryItems addObject:item];
+        }
+    };
+
+    for (NSString *tag in linkProperties.tags) {
+        addItem(@"tags", tag);
+    }
+    addItem(@"alias", linkProperties.alias);
+    addItem(@"channel", linkProperties.channel);
+    addItem(@"feature", linkProperties.feature);
+    addItem(@"stage", linkProperties.stage);
+    addItem(@"type", [NSNumber numberWithInteger:linkProperties.linkType].stringValue);
+    addItem(@"matchDuration", [NSNumber numberWithInteger:linkProperties.matchDuration].stringValue);
+    addItem(@"source", @"ios"); // TODO
+
+    NSDictionary*dictionary = content.dictionary;
+    if (dictionary.count) {
+        NSError*error = nil;
+        NSData*data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
+        if (error) {
+            BNCLogError(@"Can't encode content item: %@", error);
+        } else {
+            NSString*dataString = [data base64EncodedStringWithOptions:0];
+            addItem(@"data", dataString);
+        }
+    }
+
+    NSString*baseURL = nil;
+    if (self.settings.linkCreationURL.length)
+        baseURL = self.settings.linkCreationURL;
+    else
+        baseURL = [[NSMutableString alloc] initWithFormat:@"https://bnc.lt/a/%@", self.configuration.key];
+
+    if (self.trackingIsDisabled) {
+        NSString *id_string = [NSString stringWithFormat:@"%%24identity_id=%@", self.settings.identityID];
+        NSRange range = [baseURL rangeOfString:id_string];
+        if (range.location != NSNotFound) {
+            NSMutableString*baseURL_ = [baseURL mutableCopy];
+            [baseURL_ replaceCharactersInRange:range withString:@""];
+            baseURL = baseURL_;
+        }
+    }
+
+    NSURLComponents*components = [NSURLComponents componentsWithString:baseURL];
+    components.queryItems = queryItems;
+    NSURL*URL = [components URL];
+
+    return URL;
 }
 
 @end

@@ -9,6 +9,7 @@
 */
 
 #import "BranchEvent.h"
+#import "BranchError.h"
 #import "BranchMainClass.h"
 #import "BNCLog.h"
 #import "BNCNetworkAPIService.h"
@@ -154,47 +155,6 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
     return ([self.class.standardEvents containsObject:self.eventName]);
 }
 
-- (void) logEventWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
-    if (![_eventName isKindOfClass:[NSString class]] || _eventName.length == 0) {
-        BNCLogError(@"Invalid event type '%@' or empty string.", NSStringFromClass(_eventName.class));
-        return;
-    }
-
-    NSMutableDictionary *eventDictionary = [NSMutableDictionary new];
-    eventDictionary[@"name"] = _eventName;
-
-    NSDictionary *propertyDictionary = [self dictionary];
-    if (propertyDictionary.count) {
-        eventDictionary[@"event_data"] = propertyDictionary;
-    }
-    eventDictionary[@"custom_data"] = eventDictionary[@"event_data"][@"custom_data"];
-    eventDictionary[@"event_data"][@"custom_data"] = nil;
-
-    NSMutableArray *contentItemDictionaries = [NSMutableArray new];
-    for (BranchUniversalObject *contentItem in self.contentItems) {
-        NSDictionary *dictionary = [contentItem dictionary];
-        if (dictionary.count) {
-            [contentItemDictionaries addObject:dictionary];
-        }
-    }
-
-    if (contentItemDictionaries.count) {
-        eventDictionary[@"content_items"] = contentItemDictionaries;
-    }
-
-    [[Branch sharedInstance].networkAPIService appendV2APIParametersWithDictionary:eventDictionary];
-    NSString*apiService = self.isStandardEvent ? @"v2/event/standard" : @"v2/event/custom";
-
-    [[Branch sharedInstance].networkAPIService
-        postOperationForAPIServiceName:apiService
-        dictionary:eventDictionary
-        completion:^ (BNCNetworkAPIOperation*operation) {
-            BNCPerformBlockOnMainThreadAsync(^{
-                if (completion) completion(operation.error);
-            });
-        }];
-}
-
 - (NSString*_Nonnull) description {
     return [NSString stringWithFormat:
         @"<%@ 0x%016llx %@ txID: %@ Amt: %@ %@ desc: %@ items: %ld customData: %@>",
@@ -208,6 +168,61 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
         (long) self.contentItems.count,
         self.customData
     ];
+}
+
+@end
+
+#pragma mark - Branch
+
+@implementation Branch (BranchEvent)
+
+- (void) logEvent:(BranchEvent*)event completion:(void (^_Nullable)(NSError*_Nullable error))completion {
+    if (![event.eventName isKindOfClass:[NSString class]] || event.eventName.length == 0) {
+        BNCLogError(@"Invalid event type '%@' or empty string.", NSStringFromClass(event.eventName.class));
+        NSError*error = [NSError branchErrorWithCode:BNCBadRequestError];
+        if (completion) completion(error);
+        return;
+    }
+
+    if (!self.isStarted) {
+        NSError*error = [NSError branchErrorWithCode:BNCInitError];
+        if (completion) completion(error);
+        return;
+    }
+
+    NSMutableDictionary *eventDictionary = [NSMutableDictionary new];
+    eventDictionary[@"name"] = event.eventName;
+
+    NSDictionary *propertyDictionary = [event dictionary];
+    if (propertyDictionary.count) {
+        eventDictionary[@"event_data"] = propertyDictionary;
+    }
+    eventDictionary[@"custom_data"] = eventDictionary[@"event_data"][@"custom_data"];
+    eventDictionary[@"event_data"][@"custom_data"] = nil;
+
+    NSMutableArray *contentItemDictionaries = [NSMutableArray new];
+    for (BranchUniversalObject *contentItem in event.contentItems) {
+        NSDictionary *dictionary = [contentItem dictionary];
+        if (dictionary.count) {
+            [contentItemDictionaries addObject:dictionary];
+        }
+    }
+
+    if (contentItemDictionaries.count) {
+        eventDictionary[@"content_items"] = contentItemDictionaries;
+    }
+
+    [self.networkAPIService appendV2APIParametersWithDictionary:eventDictionary];
+    NSString*apiService = event.isStandardEvent ? @"v2/event/standard" : @"v2/event/custom";
+
+    [self.networkAPIService
+        postOperationForAPIServiceName:apiService
+        dictionary:eventDictionary
+        completion:^ (BNCNetworkAPIOperation*operation) {
+            BNCPerformBlockOnMainThreadAsync(^{
+                if (completion) completion(operation.error);
+            });
+        }];
 }
 
 @end

@@ -32,6 +32,7 @@
     addString(stage, ~stage);
     addString(campaign, ~campaign);
     addInteger(matchDuration, ~duration);   // TODO: encodes as $match_duration in iOS
+    addInteger(linkType, ~type);            // Is this right?
 
     NSMutableDictionary *controlParams = [[NSMutableDictionary alloc] init];
     for (NSString*key in dictionary.allKeys) {
@@ -57,6 +58,7 @@
     addString(stage, ~stage);
     addString(campaign, ~campaign);
     addInteger(matchDuration, ~duration);
+    addInteger(linkType, ~type);
 
     [dictionary addEntriesFromDictionary:self.controlParams];
 
