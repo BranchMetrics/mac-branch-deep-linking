@@ -7,15 +7,9 @@
 //
 
 #import "BNCTestCase.h"
-//#import "BNCPreferenceHelper.h"
-//#import "BranchConstants.h"
 #import "BranchEvent.h"
 #import "BNCDevice.h"
 #import "BranchMainClass.h"
-
-//@interface Branch (BranchEventTest)
-//- (void) processNextQueueItem;
-//@end
 
 @interface BranchEventTest : BNCTestCase
 @end
@@ -38,7 +32,6 @@
          "items: 0 customData: {\n    Key1 = Value1;\n}>");
 }
 
-/*
 - (void) testEvent {
 
     // Set up the Branch Universal Object --
@@ -116,6 +109,23 @@
         [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
     expectedRequest[@"user_data"] = [[BNCDevice currentDevice] v2dictionary];
 
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
+    Branch*branch = [[Branch alloc] init];
+    [branch startWithConfiguration:configuration];
+/*
+    XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event"];
+    id networkAPIServiceMock = OCMPartialMock(branch.networkAPIService.networkService);
+
+    OCMStub(
+        [networkAPIServiceMock
+            postOperationForAPIServiceName:@"v2/event"
+            dictionary:(NSDictionary*)dictionary
+            completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
+
+            ]
+    )
+
     Branch *branch = [Branch getInstance:@"key_live_foo"];
     XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event"];
     id serverInterfaceMock = OCMPartialMock(branch.serverInterface);
@@ -154,13 +164,14 @@
     [serverInterfaceMock stopMocking];
 }
 */
+}
 
 /*
 - (void) testUserCompletedAction {
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
     NSMutableDictionary *expectedRequest =
-        [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
+        [self mutableDictionaryFromBundleJSON2WithKey:@"V2EventJSON"];
     expectedRequest[@"user_data"] = [[BNCDeviceInfo getInstance] v2dictionary];
     expectedRequest[@"event_data"] = nil;
     expectedRequest[@"custom_data"] = nil;
@@ -256,7 +267,8 @@
     event.searchQuery = @"product name";
     event.customData[@"rating"] = @"5";
 
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:configuration];
 
@@ -266,15 +278,6 @@
         [expectation fulfill];
     }];
     [self awaitExpectations];
-
-/*
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
-    [event logEventWithCompletion:^(NSError * _Nullable error) {
-        XCTAssert(error == nil);
-        [expectation fulfill];
-    }];
-    [self awaitExpectations];
-*/
 
     // Test that all events are in the array:
     XCTAssert([BranchEvent standardEvents].count == 16);

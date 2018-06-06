@@ -9,7 +9,7 @@
 */
 
 #import <XCTest/XCTest.h>
-#import <OCMock/OCMock.h>
+//#import <OCMock/OCMock.h>
 #import "NSString+Branch.h"
 #import "BNCThreads.h"
 
@@ -30,13 +30,12 @@ extern BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex);
 - (void)safelyFulfillExpectation:(XCTestExpectation *)expectation;
 - (void)awaitExpectations;
 - (void)resetExpectations;
-- (id)stringMatchingPattern:(NSString *)pattern;
+//- (id)stringMatchingPattern:(NSString *)pattern;
 
 // Load Resources from the test bundle:
 
 - (NSString*)stringFromBundleWithKey:(NSString*)key;
 - (NSMutableDictionary*) mutableDictionaryFromBundleJSONWithKey:(NSString*)key;
-- (NSMutableDictionary*) mutableDictionaryFromBundleJSON2WithKey:(NSString*)key;
 + (BOOL) breakpointsAreEnabledInTests;
 
 @end

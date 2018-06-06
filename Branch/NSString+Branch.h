@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///@return Returns a string that is truncated at the first null character.
 - (NSString*) bnc_stringTruncatedAtNull;
 
-///@discusion The `containsString:` method isn't supported pre-iOS 8.  Here we roll our own.
+///@discussion The `containsString:` method isn't supported pre-iOS 8.  Here we roll our own.
 //
 ///@param string    The string to for comparison.
 ///@return          Reurns true if the instance contains the string.

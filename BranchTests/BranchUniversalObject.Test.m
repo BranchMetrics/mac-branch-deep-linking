@@ -17,15 +17,9 @@
 @implementation BranchUniversalObjectTest
 
 - (void) testDeserialize {
-
-    NSString *jsonString = [self stringFromBundleWithKey:@"BranchUniversalObjectJSON"];
-    XCTAssertTrue(jsonString, @"Can't load BranchUniversalObjectJSON resource from plist!");
-
     NSError *error = nil;
     NSDictionary *dictionary =
-        [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
-            options:0 error:&error];
-    XCTAssertNil(error);
+        [self mutableDictionaryFromBundleJSONWithKey:@"BranchUniversalObjectJSON"];
     XCTAssert(dictionary);
 
     BranchUniversalObject *buo = [BranchUniversalObject objectWithDictionary:dictionary];
@@ -136,15 +130,9 @@
 
     // Load the JSON:
 
-    NSString *jsonString = [self stringFromBundleWithKey:@"BranchUniversalObjectJSON"];
-    XCTAssertTrue(jsonString, @"Can't load BranchUniversalObjectJSON resource from plist!");
-
-    NSError *error = nil;
     NSMutableDictionary *jsonDictionary =
-        [[NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
-            options:0 error:&error]
-                mutableCopy];
-    XCTAssertNil(error);
+        [self mutableDictionaryFromBundleJSONWithKey:@"BranchUniversalObjectJSON"];
+    XCTAssertTrue(jsonDictionary);
     jsonDictionary[@"$publicly_indexable"] = nil;
 
     // Compare:

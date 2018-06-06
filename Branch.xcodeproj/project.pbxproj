@@ -26,8 +26,6 @@
 		4D159DE620B62DD5005A9850 /* BranchError.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165220ACCD9B002BF211 /* BranchError.Test.m */; };
 		4D159DE920B62DD5005A9850 /* BranchUniversalObject.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818A020ADDCB600441881 /* BranchUniversalObject.Test.m */; };
 		4D159DEA20B62DD5005A9850 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */; };
-		4D159DEC20B62E5B005A9850 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; };
-		4D159DED20B62E72005A9850 /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DC2232320AA19A2005C57D0 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D27FF8B20B222C7002C7EB0 /* BNCPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D27FF8920B222C7002C7EB0 /* BNCPersistence.h */; };
 		4D27FF8C20B222C7002C7EB0 /* BNCPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D27FF8A20B222C7002C7EB0 /* BNCPersistence.m */; };
 		4D38923A20BA18A80013B811 /* BranchLinkProperties.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D38923920BA18A80013B811 /* BranchLinkProperties.Test.m */; };
@@ -81,6 +79,7 @@
 		4D67476D20C74E81001639C5 /* BNCLocalization.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164520ACCD7C002BF211 /* BNCLocalization.h */; };
 		4D67476E20C74E81001639C5 /* BNCSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163820ACB914002BF211 /* BNCSettings.h */; };
 		4D67476F20C74E81001639C5 /* BranchUniversalObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189620ADDC5000441881 /* BranchUniversalObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67477920C7B558001639C5 /* BranchMainClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMainClass.m */; };
 		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99771F20AA099D00A63EE1 /* BNCDebug.m */; };
 		4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -129,18 +128,15 @@
 		4DF818C120B025DA00441881 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		4D159DEB20B62E46005A9850 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4D159DED20B62E72005A9850 /* OCMock.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
+/* Begin PBXContainerItemProxy section */
+		4D67477D20C84566001639C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D54C07420A6560400C76496;
+			remoteInfo = Branch;
 		};
-/* End PBXCopyFilesBuildPhase section */
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4D08A82B20AA7844009BF226 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -235,7 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D159DD020B62D7D005A9850 /* Branch.framework in Frameworks */,
-				4D159DEC20B62E5B005A9850 /* OCMock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,11 +448,11 @@
 				4D159DC720B62D7D005A9850 /* Sources */,
 				4D159DC820B62D7D005A9850 /* Frameworks */,
 				4D159DC920B62D7D005A9850 /* Resources */,
-				4D159DEB20B62E46005A9850 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4D67477E20C84566001639C5 /* PBXTargetDependency */,
 			);
 			name = BranchTests;
 			productName = BranchTests;
@@ -628,6 +623,7 @@
 				4D67474820C74E81001639C5 /* BranchDelegate.m in Sources */,
 				4D67474920C74E81001639C5 /* Branch.m in Sources */,
 				4D67474A20C74E81001639C5 /* BranchError.m in Sources */,
+				4D67477920C7B558001639C5 /* BranchMainClass.m in Sources */,
 				4D67474B20C74E81001639C5 /* BranchHeader.m in Sources */,
 				4D67474C20C74E81001639C5 /* BNCWireFormat.m in Sources */,
 				4D67474D20C74E81001639C5 /* BranchLinkProperties.m in Sources */,
@@ -642,6 +638,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4D67477E20C84566001639C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D54C07420A6560400C76496 /* Branch */;
+			targetProxy = 4D67477D20C84566001639C5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4D159DD320B62D7D005A9850 /* Debug */ = {
@@ -660,6 +664,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.13;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -681,6 +686,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.13;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -791,6 +797,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.13;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};

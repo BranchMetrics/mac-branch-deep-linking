@@ -18,7 +18,7 @@
 @implementation BranchLinkPropertiesTest
 
 - (void) testSerializeDeserialize {
-    NSDictionary* open = [self mutableDictionaryFromBundleJSON2WithKey:@"BranchOpenResponse"];
+    NSDictionary* open = [self mutableDictionaryFromBundleJSONWithKey:@"BranchOpenResponse"];
     XCTAssertNotNil(open);
     NSDictionary*d1 = BNCDictionaryFromWireFormat(open[@"data"]);
     BranchLinkProperties *lp = [BranchLinkProperties linkPropertiesWithDictionary:d1];

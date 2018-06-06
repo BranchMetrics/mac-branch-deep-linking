@@ -19,8 +19,8 @@
 @implementation APPAppDelegate
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
-    BranchConfiguration*configuration = [[BranchConfiguration alloc] init];
-    configuration.key = @"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N";
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
     [[Branch sharedInstance] startWithConfiguration:configuration];
 
     [[NSNotificationCenter defaultCenter]

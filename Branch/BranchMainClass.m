@@ -22,15 +22,29 @@
 
 @implementation BranchConfiguration
 
+- (instancetype) init {
+    self = [self initWithKey:@""];
+    return self;
+}
+- (instancetype) initWithKey:(NSString *)key {
+    self = [super init];
+    if ([key hasPrefix:@"key_live_"] || [key hasPrefix:@"key_test_"]) {
+    } else {
+        [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
+    }
+    self.key = [key copy];
+    return self;
+}
+
 + (BranchConfiguration*) configurationWithKey:(NSString*)key {
-    BranchConfiguration* configuration = [[BranchConfiguration alloc] init];
-    configuration.key = key;
+    BranchConfiguration* configuration = [[BranchConfiguration alloc] initWithKey:key];
     return configuration;
 }
 
 - (instancetype) copyWithZone:(NSZone*)zone {
-    BranchConfiguration* configuration = [[BranchConfiguration alloc] init];
-    configuration.key = [self.key copy];
+    BranchConfiguration* configuration = [[BranchConfiguration alloc] initWithKey:self.key];
+    configuration.useCertificatePinning = self.useCertificatePinning;
+    configuration.branchServerURL = [self.branchServerURL copy];
     return configuration;
 }
 
@@ -75,13 +89,15 @@
 }
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration {
-    // Put a reference somewhere to these so the linker knows to load the categories.
+    // These function references force the linker to load the categories in case it forgot.
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
 
     self.configuration = [configuration copy];
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
     self.settings = [BNCSettings sharedInstance];
+
+#if TARGET_OS_OSX
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -104,6 +120,26 @@
         forEventClass:kInternetEventClass
         andEventID:kAEGetURL];
 
+#else
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(applicationDidFinishLaunchingNotification:)
+        name:UIApplicationDidFinishLaunchingNotification
+        object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(applicationWillBecomeActiveNotification:)
+        name:UIApplicationDidBecomeActiveNotification
+        object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(applicationDidResignActiveNotification:)
+     name:UIApplicationWillResignActiveNotification
+        object:nil];
+
+#endif
+
     // TODO: This is for debugging only.  Remove it.
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -118,13 +154,16 @@
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+#if TARGET_OS_OSX
     [[NSAppleEventManager sharedAppleEventManager]
         removeEventHandlerForEventClass:kInternetEventClass
         andEventID:kAEGetURL];
+#endif
 }
 
 #pragma mark - Application State Changes
 
+#if TARGET_OS_OSX
 - (void)urlAppleEvent:(NSAppleEventDescriptor *)event
        withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
     NSAppleEventDescriptor*descriptor = [event paramDescriptorForKeyword:keyDirectObject];
@@ -134,6 +173,7 @@
     BNCLogDebugSDK(@"Apple url open event from '%@' URL: %@.", sourceName, url);
     [self openURL:url];
 }
+#endif
 
 - (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
     BNCLogMethodName();

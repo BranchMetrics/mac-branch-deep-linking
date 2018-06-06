@@ -174,7 +174,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
         @"Custom_Event_Property_Key2": @"Custom_Event_Property_val2"
     };
     event.contentItems = (NSMutableArray*) @[ buo ];
-    [event logEventWithCompletion:^(NSError * _Nullable error) {
+    [[Branch sharedInstance] logEvent:event completion:^(NSError * _Nullable error) {
         [self clearUIFields];
         self.stateField.stringValue = event.eventName;
         self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";

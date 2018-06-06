@@ -208,7 +208,7 @@ exit:
     returnIfValidCountry();
 
     // Should work on iOS 8 and below.
-    //NSString* language = [[NSLocale preferredLanguages] firstObject];
+    // NSString* language = [[NSLocale preferredLanguages] firstObject];
     NSString *rawLocale = currentLocale.localeIdentifier;
     NSRange range = [rawLocale rangeOfString:@"_"];
     if (range.location != NSNotFound) {
@@ -501,7 +501,7 @@ exit:
     } else
         device->_hardwareIDType = @"vendor_id";
     device->_brandName = @"Apple";
-    device->_modelName = [self modelName];
+    device->_modelName = @"x86_64"; // TODO: [self modelName];
     device->_systemName = [self systemName];
     device->_isSimulator = [self isSimulator];
     NSOperatingSystemVersion version = [[NSProcessInfo processInfo] operatingSystemVersion];
@@ -539,8 +539,6 @@ exit:
     device->_country = [self country];
     device->_language = [self language];
     device->_browserUserAgent = [self userAgentString];
-    device->_deviceIsUnidentified =
-        ([device->_hardwareIDType isEqualToString:@"random"] && device->_advertisingID == nil);
 
     return device;
 }
@@ -575,6 +573,10 @@ exit:
 }
 
 #endif
+
+- (BOOL) deviceIsUnidentified {
+    return NO; // TODO: (self.vendorID == nil && self.advertisingID == nil);
+}
 
 - (NSMutableDictionary*) v1dictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];

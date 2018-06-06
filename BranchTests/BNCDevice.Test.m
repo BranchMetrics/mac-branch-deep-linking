@@ -26,17 +26,33 @@
     XCTAssertFalse(device.deviceIsUnidentified);
     XCTAssertTrue([device.brandName isEqualToString:@"Apple"]);
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
+
+#if TARGET_OS_OSX
     XCTAssertTrue([device.systemName isEqualToString:@"macOS"]);
+#elif TARGET_OS_TV
+    XCTAssertTrue([device.systemName isEqualToString:@"tvOS"]);
+#elif TARGET_OS_IOS
+    XCTAssertTrue([device.systemName isEqualToString:@"iOS"]);
+#else
+    #error Unknown target.
+#endif
+
     XCTAssertTrue(
-        device.systemVersion.doubleValue > 10.0 &&
-        device.systemVersion.doubleValue < 11.0
+        device.systemVersion.doubleValue > 8.0 &&
+        device.systemVersion.doubleValue <= 11.0
     );
     XCTAssertTrue(BNCTestStringMatchesRegex(device.systemBuildVersion, @"^[0-9A-F]*$"));
     XCTAssertTrue(
         device.screenSize.height > 0 &&
         device.screenSize.width > 0
     );
+
+#if TARGET_OS_OSX
     XCTAssertTrue(device.screenDPI >= 72.0 && device.screenDPI <= 216.0);
+#else
+    XCTAssertTrue(device.screenDPI >= 1.0 && device.screenDPI <= 3.0);
+#endif
+
     XCTAssertFalse(device.adTrackingIsEnabled);
     XCTAssertTrue(device.advertisingID == nil);
     XCTAssertTrue([device.country isEqualToString:@"US"]);

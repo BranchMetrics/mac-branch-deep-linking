@@ -57,6 +57,7 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
     }];
 }
 
+/*
 - (id)stringMatchingPattern:(NSString *)pattern {
     NSRegularExpression *regex =
         [[NSRegularExpression alloc]
@@ -69,6 +70,7 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
             options:kNilOptions range:NSMakeRange(0, param.length)] > 0;
     }];
 }
+*/
 
 - (NSString*) stringFromBundleWithKey:(NSString*)key {
     NSString *const kItemNotFound = @"<Item-Not-Found>";
@@ -79,6 +81,7 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
     return resource;
 }
 
+/*
 - (NSMutableDictionary*) mutableDictionaryFromBundleJSONWithKey:(NSString*)key {
     NSString *jsonString = [self stringFromBundleWithKey:key];
     XCTAssertNotNil(jsonString, @"Can't load '%@' resource from bundle JSON!", key);
@@ -94,8 +97,9 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
     NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:dictionary];
     return mutableDictionary;
 }
+*/
 
-- (NSMutableDictionary*) mutableDictionaryFromBundleJSON2WithKey:(NSString*)key {
+- (NSMutableDictionary*) mutableDictionaryFromBundleJSONWithKey:(NSString*)key {
     NSError*error = nil;
     NSBundle*bundle = [NSBundle bundleForClass:self.class];
     NSURL*url = [bundle URLForResource:@"BNCTestCase" withExtension:@"json"];

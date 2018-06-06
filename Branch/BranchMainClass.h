@@ -18,8 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark BranchConfiguration
 
 @interface BranchConfiguration : NSObject <NSCopying>
+- (instancetype) initWithKey:(NSString*)key NS_DESIGNATED_INITIALIZER;
 + (BranchConfiguration*) configurationWithKey:(NSString*)key;
-@property (atomic, strong) NSString*_Nullable key;
+
+@property (atomic, strong) NSString* key;
+@property (atomic, assign) BOOL      useCertificatePinning;
+@property (atomic, strong) NSString* branchServerURL;
 @end
 
 #pragma mark - Branch
