@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B073C1020C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
+		2B073C1120C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
+		2B0B035520CA50FF0008938F /* BNCURLBlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */; };
+		2B0B035620CA51000008938F /* BNCURLBlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */; };
 		4D159DD020B62D7D005A9850 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D54C07520A6560400C76496 /* Branch.framework */; };
 		4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */; };
 		4D159DD720B62DD5005A9850 /* BNCApplication+BNCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165820ACD00E002BF211 /* BNCApplication+BNCTest.m */; };
@@ -139,6 +143,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.m; sourceTree = "<group>"; };
+		2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCURLBlackList.h; sourceTree = "<group>"; };
 		4D08A82B20AA7844009BF226 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4D159DCB20B62D7D005A9850 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D27FF8620B15431002C7EB0 /* BNCSettings.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCSettings.Test.m; sourceTree = "<group>"; };
@@ -299,6 +305,8 @@
 				4D9C163920ACB914002BF211 /* BNCSettings.m */,
 				4D99772520AA099D00A63EE1 /* BNCThreads.h */,
 				4D99772120AA099D00A63EE1 /* BNCThreads.m */,
+				2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */,
+				2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */,
 				4D9C166020ACDB58002BF211 /* BNCWireFormat.h */,
 				4DF818A920ADF87800441881 /* BNCWireFormat.m */,
 				4D54C07820A6560400C76496 /* Branch.h */,
@@ -380,6 +388,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B073C1020C97F44005D16D2 /* BNCURLBlackList.h in Headers */,
 				4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */,
 				4D9C163620ACB790002BF211 /* BNCNetworkAPIService.h in Headers */,
 				4DF8189820ADDC5000441881 /* BranchLinkProperties.h in Headers */,
@@ -411,6 +420,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B073C1120C97F44005D16D2 /* BNCURLBlackList.h in Headers */,
 				4D67475820C74E81001639C5 /* NSString+Branch.h in Headers */,
 				4D67475920C74E81001639C5 /* BNCNetworkAPIService.h in Headers */,
 				4D67475A20C74E81001639C5 /* BranchLinkProperties.h in Headers */,
@@ -594,6 +604,7 @@
 				4D9C164E20ACCD7C002BF211 /* BranchError.m in Sources */,
 				4DF818AE20AE1A4C00441881 /* BranchHeader.m in Sources */,
 				4DF818AA20ADF87800441881 /* BNCWireFormat.m in Sources */,
+				2B0B035520CA50FF0008938F /* BNCURLBlackList.m in Sources */,
 				4DF8189920ADDC5000441881 /* BranchLinkProperties.m in Sources */,
 				4D9C164320ACC86F002BF211 /* BNCNetworkService.m in Sources */,
 				4DC2232A20AA262D005C57D0 /* BranchMainClass.m in Sources */,
@@ -625,6 +636,7 @@
 				4D67474A20C74E81001639C5 /* BranchError.m in Sources */,
 				4D67477920C7B558001639C5 /* BranchMainClass.m in Sources */,
 				4D67474B20C74E81001639C5 /* BranchHeader.m in Sources */,
+				2B0B035620CA51000008938F /* BNCURLBlackList.m in Sources */,
 				4D67474C20C74E81001639C5 /* BNCWireFormat.m in Sources */,
 				4D67474D20C74E81001639C5 /* BranchLinkProperties.m in Sources */,
 				4D67474E20C74E81001639C5 /* BNCNetworkService.m in Sources */,

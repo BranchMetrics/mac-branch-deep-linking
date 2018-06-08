@@ -170,7 +170,15 @@
     NSURL *url = [NSURL URLWithString:descriptor.stringValue];
     NSAppleEventDescriptor*source = [event attributeDescriptorForKeyword:keyOriginalAddressAttr];
     NSString*sourceName = source.stringValue;
-    BNCLogDebugSDK(@"Apple url open event from '%@' URL: %@.", sourceName, url);
+
+    NSDictionary*errorDictionary = nil;
+    NSAppleEventDescriptor*sourceBundleDescriptor =
+        [[[NSAppleScript alloc]
+            initWithSource:[NSString stringWithFormat:@"id of app \"%@\"", sourceName]]
+                executeAndReturnError:&errorDictionary];
+    NSString*sourceBundleID = sourceBundleDescriptor.stringValue;
+    
+    BNCLogDebugSDK(@"Apple url open event from '%@':%@ URL: %@.", sourceName, sourceBundleID, url);
     [self openURL:url];
 }
 #endif
