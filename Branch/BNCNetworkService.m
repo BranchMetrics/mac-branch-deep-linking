@@ -14,14 +14,15 @@
 #pragma mark  BNCNetworkOperation
 
 @interface BNCNetworkOperation ()
+@property NSURLSessionTaskState sessionState;
 @property BNCNetworkService     *networkService;
 @property NSMutableURLRequest   *request;
 @property NSHTTPURLResponse     *response;
+@property NSData                *responseData;
 @property NSURLSessionTask      *sessionTask;
 @property NSError               *error;
-@property id<NSObject>          responseData;
-@property NSDate                *dateStart;
-@property NSDate                *dateFinish;
+@property NSDate                *startDate;
+@property NSDate                *timeoutDate;
 @property (copy, nullable) void (^completionBlock)(BNCNetworkOperation*);
 @end
 
@@ -42,49 +43,12 @@
 
 @implementation BNCNetworkOperation
 
-- (NSURLSessionTaskState) sessionState {
-    return self.sessionTask.state;
-}
-
 - (NSInteger) HTTPStatusCode {
     return self.response.statusCode;
 }
 
 - (void) cancel {
     [self.sessionTask cancel];
-}
-
-- (void) deserializeJSONResponseData {
-    if (![self.responseData isKindOfClass:[NSData class]]) {
-        self.error =
-            [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorCannotDecodeContentData
-                userInfo:@{ NSLocalizedDescriptionKey: @"Can't decode JSON data."}];
-        return;
-    }
-    NSError *error = nil;
-    NSDictionary *dictionary =
-        [NSJSONSerialization JSONObjectWithData:(NSData*)self.responseData
-            options:0 error:&error];
-    if (error) {
-        self.error = error;
-        return;
-    }
-    self.responseData = dictionary;
-}
-
-- (NSString*) stringFromResponseData {
-    NSString *string = nil;
-    if ([self.responseData isKindOfClass:[NSData class]]) {
-        string = [[NSString alloc] initWithData:(NSData*)self.responseData encoding:NSUTF8StringEncoding];
-    }
-    if (!string && [self.responseData isKindOfClass:[NSData class]]) {
-        string = [NSString stringWithFormat:@"<NSData of length %ld.>",
-            (long)[(NSData*)self.responseData length]];
-    }
-    if (!string) {
-        string = self.responseData.description;
-    }
-    return string;
 }
 
 - (void) start {
@@ -96,15 +60,6 @@
 #pragma mark - BNCNetworkService
 
 @implementation BNCNetworkService
-
-+ (BNCNetworkService*) shared {
-    static BNCNetworkService* sharedInstance = nil;
-    static dispatch_once_t onceToken = 0;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
 
 - (instancetype) init {
     self = [super init];
@@ -169,58 +124,16 @@
     }
 }
 
-- (BNCNetworkOperation*) networkOperationWithURL:(NSURL*)URL {
-
+- (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
+                completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion {
     BNCNetworkOperation *operation = [BNCNetworkOperation new];
-    operation.request =
-    [[NSMutableURLRequest alloc]
-        initWithURL:URL
-        cachePolicy:NSURLRequestReloadIgnoringCacheData
-        timeoutInterval:60.0];
+    operation.request = request;
     operation.networkService = self;
-    return operation;
-}
-
-- (BNCNetworkOperation*) getOperationWithURL:(NSURL *)URL
-                        completion:(void (^)(BNCNetworkOperation*))completion {
-    BNCNetworkOperation *operation = [self networkOperationWithURL:URL];
     operation.completionBlock = completion;
     return operation;
 }
 
-- (BNCNetworkOperation*) postOperationWithURL:(NSURL *)URL
-                        contentType:(NSString*)contentType
-                               data:(NSData *)data
-                         completion:(void (^)(BNCNetworkOperation *))completion {
-                         
-    BNCNetworkOperation *operation = [self networkOperationWithURL:URL];
-    operation.request.HTTPMethod = @"POST";
-    operation.completionBlock = completion;
-    if (contentType.length)
-        [operation.request setValue:contentType forHTTPHeaderField:@"Content-Type"];
-    operation.request.HTTPBody = data;
-    return operation;
-}
-
-- (BNCNetworkOperation*) postOperationWithURL:(NSURL *)URL
-                                     JSONData:(id)dictionaryOrArray
-                                   completion:(void (^)(BNCNetworkOperation*operation))completion {
-    NSData *data = nil;
-    if (dictionaryOrArray) {
-        NSError *error = nil;
-        data = [NSJSONSerialization dataWithJSONObject:dictionaryOrArray options:0 error:&error];
-        if (error) BNCLogError(@"Can't convert to JSON: %@.", error);
-    }
-    BNCNetworkOperation *operation =
-        [[BNCNetworkService shared]
-            postOperationWithURL:URL
-            contentType:@"application/json"
-            data:data
-            completion:completion];
-    return operation;
-}
-
-- (NSString*) formattedStringWithData:(NSData*)data {
++ (NSString*) formattedStringWithData:(NSData*)data {
     NSString*responseString = nil;
     @try {
         NSDictionary*dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -242,7 +155,8 @@
 
 - (void) startOperation:(BNCNetworkOperation*)operation {
     operation.networkService = self;
-    operation.dateStart = [NSDate date];
+    operation.startDate = [NSDate date];
+    operation.timeoutDate = [operation.startDate dateByAddingTimeInterval:operation.request.timeoutInterval];
     operation.sessionTask =
         [self.session dataTaskWithRequest:operation.request
             completionHandler:
@@ -250,23 +164,24 @@
                 operation.responseData = data;
                 operation.response = (NSHTTPURLResponse*) response;
                 operation.error = error;
-                operation.dateFinish = [NSDate date];
-                NSString*responseString = [self formattedStringWithData:data];
+                NSString*responseString = [self.class formattedStringWithData:data];
                 BNCLogDebug(@"Network finish operation %@ %1.3fs. Status %ld error %@.\n%@.",
                     operation.request.URL.absoluteString,
-                    [operation.dateFinish timeIntervalSinceDate:operation.dateStart],
+                    - [operation.startDate timeIntervalSinceNow],
                     (long)operation.HTTPStatusCode,
                     operation.error,
                     responseString);
                 if (operation.completionBlock)
                     operation.completionBlock(operation);
-            }];
-    NSString*requestString = [self formattedStringWithData:operation.request.HTTPBody];
-    BNCLogDebug(@"Network start %@ %@\n%@.", operation.request.HTTPMethod, operation.request.URL, requestString);
+            }
+        ];
+    NSString*requestString = [self.class formattedStringWithData:operation.request.HTTPBody];
+    BNCLogDebug(@"Network start %@ %@\n%@.",
+        operation.request.HTTPMethod, operation.request.URL, requestString);
     [operation.sessionTask resume];
 }
 
-#pragma mark - The Transport Security
+#pragma mark - Transport Security
 
 - (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
     @synchronized (self) {
@@ -292,7 +207,8 @@
 - (void) URLSession:(NSURLSession *)session
                task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
-  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler {
+  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition,
+        NSURLCredential *credential))completionHandler {
 
     BOOL trusted = NO;
     SecTrustResultType trustResult = 0;

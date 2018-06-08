@@ -15,8 +15,10 @@
 #import "BNCThreads.h"
 #import "BNCWireFormat.h"
 #import "BNCApplication.h"
+#import "BNCNetworkService.h"
 #import "BranchError.h"
 #import "NSString+Branch.h"
+#import "NSData+Branch.h"
 
 #pragma mark BranchConfiguration
 
@@ -28,11 +30,13 @@
 }
 - (instancetype) initWithKey:(NSString *)key {
     self = [super init];
-    if ([key hasPrefix:@"key_live_"] || [key hasPrefix:@"key_test_"]) {
-    } else {
+    self.key = [key copy];
+    if (!self.hasValidKey) {
         [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
     }
-    self.key = [key copy];
+    self.useCertificatePinning = NO;
+    self.branchAPIServerURL = @"https://api.branch.io";
+    self.networkServiceClass = [BNCNetworkService class];
     return self;
 }
 
@@ -44,8 +48,21 @@
 - (instancetype) copyWithZone:(NSZone*)zone {
     BranchConfiguration* configuration = [[BranchConfiguration alloc] initWithKey:self.key];
     configuration.useCertificatePinning = self.useCertificatePinning;
-    configuration.branchServerURL = [self.branchServerURL copy];
+    configuration.branchAPIServerURL = [self.branchAPIServerURL copy];
+    configuration.networkServiceClass = self.networkServiceClass;
     return configuration;
+}
+
+- (BOOL) hasValidKey {
+    return ([self.key hasPrefix:@"key_live_"] || [self.key hasPrefix:@"key_test_"]);
+}
+
+- (BOOL) isValidConfiguration {
+    return (
+        self.hasValidKey &&
+        self.branchAPIServerURL.length > 0 &&
+        [self.networkServiceClass conformsToProtocol:@protocol(BNCNetworkServiceProtocol)]
+    );
 }
 
 @end
@@ -89,10 +106,14 @@
 }
 
 - (void) startWithConfiguration:(BranchConfiguration*)configuration {
-    // These function references force the linker to load the categories in case it forgot.
+    // These function references force the linker to load the categories just in case it forgot.
     BNCForceNSErrorCategoryToLoad();
+    BNCForceNSDataCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
 
+    if (!configuration.isValidConfiguration) {
+        [NSException raise:NSInvalidArgumentException format:@"Invalid configuration."];
+    }
     self.configuration = [configuration copy];
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
     self.settings = [BNCSettings sharedInstance];
@@ -392,7 +413,7 @@
 
 #pragma mark - Identity
 
-- (void)setIdentity:(NSString*)userID callback:(void (^_Nullable)(NSError*_Nullable))callback {
+- (void)setIdentity:(NSString*)userID callback:(void (^_Nullable)(NSError*_Nullable error))callback {
     if (!userID || [self.settings.developerIdentityForUser isEqualToString:userID]) {
         if (callback) callback(nil);
         return;

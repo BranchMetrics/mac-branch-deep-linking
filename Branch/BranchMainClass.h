@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, strong) NSString* key;
 @property (atomic, assign) BOOL      useCertificatePinning;
-@property (atomic, strong) NSString* branchServerURL;
+@property (atomic, strong) NSString* branchAPIServerURL;
+@property (atomic, assign) Class     networkServiceClass;
 @end
 
 #pragma mark - Branch
@@ -55,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
           The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
  */
-- (void)setIdentity:(NSString*)userId callback:(void (^_Nullable)(NSError*_Nullable))callback;
+- (void)setIdentity:(NSString*)userId callback:(void (^_Nullable)(NSError*_Nullable error))callback;
 
 /**
  Indicates whether or not this user has a custom identity specified for them. Note that this is *independent

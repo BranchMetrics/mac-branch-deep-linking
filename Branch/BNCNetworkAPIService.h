@@ -10,7 +10,7 @@
 
 #import "BranchHeader.h"
 #import "BranchSession.h"
-#import "BNCNetworkService.h"
+#import "BNCNetworkServiceProtocol.h"
 @class BranchConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark BNCNetworkAPIOperation
 
 @interface BNCNetworkAPIOperation : NSObject
-@property (atomic, strong) BNCNetworkOperation* operation;
+@property (atomic, strong) id<BNCNetworkOperationProtocol> operation;
 @property (atomic, strong) NSError*_Nullable error;
 @property (atomic, strong) BranchSession*_Nullable session;
 @end

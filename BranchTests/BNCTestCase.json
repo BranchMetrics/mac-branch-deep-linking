@@ -130,5 +130,35 @@
             "Custom_Event_Property_Key1": "Custom_Event_Property_val1",
             "Custom_Event_Property_Key2": "Custom_Event_Property_val2"
         }
+    },
+    "logoutRequest": {
+        "branch_key" : "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N",
+        "brand" : "Apple",
+        "country" : "US",
+        "device_fingerprint_id" : "526117323216942979",
+        "hardware_id" : "0b18c003-7a77-4211-ed86-853a7a8778f9",
+        "hardware_id_type" : "vendor_id",
+        "identity_id" : "533693351791327815",
+        "instrumentation" : {
+            "\/v1\/open-brtt" : "111"
+        },
+        "is_hardware_id_real" : true,
+        "language" : "en",
+        "limit_ad_tracking" : true,
+        "local_ip" : "10.0.1.5",
+        "model" : "x86_64",
+        "os" : "iOS",
+        "os_version" : "10.13.5",
+        "screen_dpi" : 144,
+        "screen_height" : 900,
+        "screen_width" : 1440,
+        "sdk" : "ios0.1.1",
+        "session_id" : "533693404530880274",
+        "user_agent" : "\"Mozilla\/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit\/604.1.38 (KHTML, like Gecko) Version\/11.0 Mobile\/15A372 Safari\/604.1\""
+        },
+    "logoutResponse": {
+        "identity_id" : "533693409806978587",
+        "link" : "https:\/\/testbed-mac.app.link\/?%24identity_id=533693409806978587",
+        "session_id" : "533693409829565758"
     }
 }
