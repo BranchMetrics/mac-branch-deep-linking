@@ -25,8 +25,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, strong) NSString*_Nullable   sessionID;
 @property (atomic, strong) NSString*_Nullable   linkCreationURL;
 @property (atomic, assign) BOOL                 limitFacebookTracking;
-@property (atomic, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *requestMetadataDictionary;
-@property (atomic, strong, null_resettable) NSMutableDictionary<NSString*, NSString*> *instrumentationDictionary;
+@property (atomic, strong) NSDate*_Nullable     blacklistLastCheckDate;
+
+// URL Black list settings:
+
+@property (atomic, strong) NSArray<NSString*>*_Nullable URLBlackList;
+@property (atomic, assign) NSInteger                    URLBlackListVersion;
+@property (atomic, strong) NSDate*_Nullable             URLBlackListLastRefreshDate;
+
+@property (atomic, strong, null_resettable)
+    NSMutableDictionary<NSString*, NSString*> *requestMetadataDictionary;
+@property (atomic, strong, null_resettable)
+    NSMutableDictionary<NSString*, NSString*> *instrumentationDictionary;
+
 @end
 
 NS_ASSUME_NONNULL_END

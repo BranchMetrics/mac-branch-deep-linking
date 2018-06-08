@@ -16,6 +16,7 @@
 #import "BNCWireFormat.h"
 #import "BNCApplication.h"
 #import "BNCNetworkService.h"
+#import "BNCURLBlackList.h"
 #import "BranchError.h"
 #import "NSString+Branch.h"
 #import "NSData+Branch.h"
@@ -72,13 +73,13 @@
 @interface Branch ()
 - (void) startNewSession;
 - (void) endSession;
-@property (readwrite) BNCNetworkAPIService* networkAPIService;
-@property (atomic, strong) BranchConfiguration* configuration;
-@property (atomic, strong) BNCSettings* settings;
-
-@property (atomic, strong) NSURL*delayedOpenURL;
-@property (atomic, strong) dispatch_source_t delayedOpenTimer;
-@property (atomic, strong) dispatch_queue_t workQueue;
+@property (readwrite) BNCNetworkAPIService      *networkAPIService;
+@property (atomic, strong) BranchConfiguration  *configuration;
+@property (atomic, strong) BNCSettings          *settings;
+@property (atomic, strong) BNCURLBlackList      *URLBlackList;
+@property (atomic, strong) NSURL                *delayedOpenURL;
+@property (atomic, strong) dispatch_source_t    delayedOpenTimer;
+@property (atomic, strong) dispatch_queue_t     workQueue;
 @end
 
 @implementation Branch
@@ -350,9 +351,6 @@
     BranchUniversalObject*object = [BranchUniversalObject objectWithDictionary:session.data];
     session.linkContent = object;
 
-//  TODO: Send intrumentation.
-//  preferenceHelper.previousAppBuildDate = [BNCApplication currentApplication].currentBuildDate;
-
     BNCPerformBlockOnMainThreadSync(^ {
         [self notifyDidStartSession:session withURL:URL error:nil];
     });
@@ -360,6 +358,17 @@
         BNCPerformBlockOnMainThreadSync(^ {
             [self notifyDidOpenURLWithSession:session];
         });
+    }
+    if (self.settings.URLBlackListLastRefreshDate == nil ||
+        [self.settings.URLBlackListLastRefreshDate timeIntervalSinceNow] < (-1.0*24.0*60.0*60.0)) {
+        [self.URLBlackList refreshBlackListFromServerWithBranch:self
+            completion:^(BNCURLBlackList*blackList, NSError*error) {
+                if (error) return;
+                self.settings.URLBlackList = blackList.blackList;
+                self.settings.URLBlackListVersion = blackList.blackListVersion;
+                self.settings.URLBlackListLastRefreshDate = [NSDate date];
+            }
+        ];
     }
 }
 

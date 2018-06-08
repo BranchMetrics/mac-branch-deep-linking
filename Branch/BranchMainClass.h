@@ -83,6 +83,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, strong) NSMutableDictionary* requestMetadataDictionary;
 @property (atomic, weak) id<BranchDelegate> delegate;
 @property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
+@property (atomic, strong, readonly) BranchConfiguration*configuration;
+
 // Move to category
 @property (atomic, strong, readonly) BNCNetworkAPIService* networkAPIService;
 @end

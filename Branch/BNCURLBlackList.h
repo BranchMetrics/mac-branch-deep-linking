@@ -9,6 +9,7 @@
 */
 
 #import "BranchHeader.h"
+@class Branch;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,10 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Refreshes the list of ignored URLs from the server.
 - (void) refreshBlackListFromServerWithBranch:(Branch*)branch
-    completion:(void (^_Nullable) (NSError*_Nullable error, NSArray*_Nullable list))completion;
+    completion:(void (^_Nullable) (BNCURLBlackList*blackList, NSError*_Nullable error))completion;
 
-/// Is YES if the listed has already been updated from the server.
-@property (assign, readonly) BOOL hasRefreshedBlackListFromServer;
+@property (assign) NSInteger blackListVersion;
 @property (strong) NSArray<NSString*>*_Nullable blackList;
 @end
 

@@ -15,7 +15,6 @@
     NSArray<NSString*>*_blackList;
 }
 @property (strong) NSArray<NSRegularExpression*> *blackListRegex;
-@property (assign) NSInteger blackListVersion;
 @property (strong) id<BNCNetworkServiceProtocol> networkService;
 @property (assign) BOOL hasRefreshedBlackListFromServer;
 @property (strong) NSError *error;
@@ -110,37 +109,37 @@
 }
 
 - (void) refreshBlackListFromServerWithBranch:(Branch*)branch
-        completion:(void (^_Nullable) (NSError*_Nullable error, NSArray*_Nullable list))completion {
+        completion:(void (^_Nullable) (BNCURLBlackList*blackList, NSError*_Nullable))completion {
     @synchronized(self) {
         if (self.hasRefreshedBlackListFromServer) {
-            if (completion) completion(self.error, self.blackList);
+            if (completion) completion(self, self.error);
             return;
         }
         self.hasRefreshedBlackListFromServer = YES;
-    }
 
-    self.error = nil;
-    NSString *urlString = [self.blackListJSONURL absoluteString];
-    if (!urlString) {
-        urlString = [NSString stringWithFormat:@"https://cdn.branch.io/sdk/uriskiplist_v%ld.json",
-            (long) self.blackListVersion+1];
-    }
-    NSMutableURLRequest *request =
-        [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-            timeoutInterval:30.0];
+        self.error = nil;
+        NSString *urlString = [self.blackListJSONURL absoluteString];
+        if (!urlString) {
+            urlString = [NSString stringWithFormat:@"https://cdn.branch.io/sdk/uriskiplist_v%ld.json",
+                (long) self.blackListVersion+1];
+        }
+        NSMutableURLRequest *request =
+            [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                timeoutInterval:30.0];
 
-    self.networkService = [[Branch networkServiceClass] new];
-    id<BNCNetworkOperationProtocol> operation =
-        [self.networkService networkOperationWithURLRequest:request completion:
-            ^(id<BNCNetworkOperationProtocol> operation) {
-                [self processServerOperation:operation];
-                if (completion) completion(self.error, self.blackList);
-                [self.networkService cancelAllOperations];
-                self.networkService = nil;
-            }
-        ];
-    [operation start];
+        self.networkService = [branch.configuration.networkServiceClass new];
+        id<BNCNetworkOperationProtocol> operation =
+            [self.networkService networkOperationWithURLRequest:request completion:
+                ^(id<BNCNetworkOperationProtocol> operation) {
+                    [self processServerOperation:operation];
+                    if (completion) completion(self, self.error);
+                    [self.networkService cancelAllOperations];
+                    self.networkService = nil;
+                }
+            ];
+        [operation start];
+    }
 }
 
 - (void) processServerOperation:(id<BNCNetworkOperationProtocol>)operation {
@@ -154,7 +153,7 @@
         BNCLogDebugSDK(@"BlackList refresh result. Error: %@ status: %ld body:\n%@.",
             operation.error, operation.HTTPStatusCode, responseString);
     }
-    if (operation.error || operation.responseData == nil || operation.response.statusCode != 200) {
+    if (operation.error || operation.responseData == nil || operation.HTTPStatusCode != 200) {
         self.error = operation.error;
         return;
     }
@@ -177,8 +176,6 @@
 
     self.blackList = blackListURLs;
     self.blackListVersion = [blackListVersion longValue];
-    [BNCSettings shaedInstance].URLBlackList = self.blackList;
-    [BNCSettings shaedInstance].URLBlackListVersion = self.blackListVersion;
 }
 
 @end
