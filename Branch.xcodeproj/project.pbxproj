@@ -139,6 +139,7 @@
 		4DF818BB20AF9EB000441881 /* BranchDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818B920AF9EAF00441881 /* BranchDelegate.m */; };
 		4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818BE20B025DA00441881 /* BNCEncoder.h */; };
 		4DF818C120B025DA00441881 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
+		4DFB135A20CCFAE800AF3E47 /* BranchOpen.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +261,7 @@
 		4DF818BE20B025DA00441881 /* BNCEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCEncoder.h; sourceTree = "<group>"; };
 		4DF818BF20B025DA00441881 /* BNCEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.m; sourceTree = "<group>"; };
 		4DF818C220B031EB00441881 /* BNCEncoder.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.Test.m; sourceTree = "<group>"; };
+		4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchOpen.Test.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,6 +413,7 @@
 				4DF8189E20ADDCB600441881 /* BranchEvent.Test.m */,
 				4DF8189F20ADDCB600441881 /* BranchEvent.Test.swift */,
 				4D38923920BA18A80013B811 /* BranchLinkProperties.Test.m */,
+				4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */,
 				4DDC6FEA20B6348C00A50F39 /* BranchTestHost.xcconfig */,
 				4DF8189D20ADDCB500441881 /* BranchTests-Bridging-Header.h */,
 				4DF818A020ADDCB600441881 /* BranchUniversalObject.Test.m */,
@@ -645,6 +648,7 @@
 				4D046E8F20C8A27C0073262B /* BNCTestNetworkService.m in Sources */,
 				4D159DDD20B62DD5005A9850 /* BNCLog.Test.m in Sources */,
 				4D159DD820B62DD5005A9850 /* BNCDebug.Test.m in Sources */,
+				4DFB135A20CCFAE800AF3E47 /* BranchOpen.Test.m in Sources */,
 				4D159DDE20B62DD5005A9850 /* BNCPersistence.Test.m in Sources */,
 				4D046E9A20C8CE740073262B /* BNCTestNetworkService.Test.m in Sources */,
 				4D159DE320B62DD5005A9850 /* BNCThreads.Test.m in Sources */,

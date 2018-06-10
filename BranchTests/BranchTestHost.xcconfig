@@ -7,3 +7,4 @@
 //@copyright     Copyright © 2018 Branch. All rights reserved.
 
 BranchTestHost  = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac
+//BranchTestHost  = $(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)

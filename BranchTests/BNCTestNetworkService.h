@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, class, copy) id<BNCNetworkOperationProtocol>(^requestHandler)(NSMutableURLRequest*request);
 
-+ (NSMutableDictionary*) mutableDictionaryFromRequest:(NSURLRequest*)request;
++ (NSMutableDictionary*_Nullable) mutableDictionaryFromRequest:(NSURLRequest*)request;
 
 + (id<BNCNetworkOperationProtocol>) operationWithRequest:(NSMutableURLRequest*)request
                                                 response:(NSString*)responseString;

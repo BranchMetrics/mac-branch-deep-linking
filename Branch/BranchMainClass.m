@@ -27,7 +27,6 @@
 
 - (instancetype) init {
     self = [self initWithKey:@""];
-    self.blackListURLRegex = [NSArray new];
     return self;
 }
 - (instancetype) initWithKey:(NSString *)key {
@@ -36,9 +35,10 @@
     if (!self.hasValidKey) {
         [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
     }
-    self.useCertificatePinning = NO;
+    self.useCertificatePinning = NO;    //  TODO: YES;
     self.branchAPIServerURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
+    self.blackListURLRegex = [NSArray new];
     return self;
 }
 
@@ -420,6 +420,9 @@
         return;
     }
 
+    if (self.startSessionBlock)
+        self.startSessionBlock(session, error);
+        
     if (error) {
         if ([branch.delegate respondsToSelector:@selector(branch:failedToStartSessionWithURL:error:)])
             [branch.delegate branch:branch failedToStartSessionWithURL:URL error:error];

@@ -748,6 +748,8 @@ exit:
         if (data) {
             SecKeyRef secKey = [self publicSecKeyFromPKCS12CertChainData:data];
             if (secKey) [array addObject:(__bridge_transfer id)secKey];
+        } else {
+            BNCLogError(@"Can't read data for public key.");
         }
     }
     return array;

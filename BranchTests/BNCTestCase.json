@@ -162,5 +162,43 @@
         "identity_id" : "533693409806978587",
         "link" : "https:\/\/testbed-mac.app.link\/?%24identity_id=533693409806978587",
         "session_id" : "533693409829565758"
+    },
+    "BranchInstallRequestMac": {
+        "app_version" : "1.2.3",
+        "branch_key" : "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N",
+        "brand" : "Apple",
+        "country" : "US",
+        "external_intent_uri" : "testbed-mac:\/\/open?link_click_id=348527481794276288",
+        "first_install_time" : 1528395638204,
+        "hardware_id" : "0b18c003-7a77-4211-ed86-853a7a8778f9",
+        "hardware_id_type" : "vendor_id",
+        "ios_bundle_id" : "blue.shimmering.TestBed-Mac",
+        "ios_team_id" : "WRWLR8VRUH",
+        "is_hardware_id_real" : true,
+        "language" : "en",
+        "lastest_update_time" : 1528641677025,
+        "latest_install_time" : 1527115004790,
+        "limit_ad_tracking" : true,
+        "limit_facebook_tracking" : true,
+        "link_identifier" : "348527481794276288",
+        "local_ip" : "10.0.1.5",
+        "model" : "MacBookPro11,5",
+        "os" : "iOS",
+        "os_version" : "10.13.5",
+        "screen_dpi" : 144,
+        "screen_height" : 900,
+        "screen_width" : 1440,
+        "sdk" : "ios0.1.1",
+        "update" : 2,
+        "uri_scheme" : "testbed-mac",
+        "user_agent" : "\"Mozilla\/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit\/604.1.38 (KHTML, like Gecko) Version\/11.0 Mobile\/15A372 Safari\/604.1\""
+        },
+    "BranchOpenResponseMac": {
+        "data" : "{\"$og_title\":\"Moof!\",\"$marketing_title\":\"First MacSDK Link\",\"~creation_source\":1,\"$og_description\":\"Hello Mac SDK!\",\"+click_timestamp\":1528641760,\"message\":\"Hello MacSDK\",\"$og_image_url\":\"https:\/\/i2.wp.com\/512pixels.net\/wp-content\/uploads\/2016\/01\/dogcow.png?w=500&ssl=1\",\"~feature\":\"marketing\",\"+match_guaranteed\":true,\"$desktop_deepview\":\"branch_default\",\"~marketing\":true,\"+clicked_branch_link\":true,\"$one_time_use\":false,\"~id\":\"525055150134625462\",\"~campaign\":\"MacSDK\",\"+is_first_session\":false,\"~referring_link\":\"https:\/\/testbed-mac.app.link\/ODYeswaVWM\",\"~channel\":\"QuickLink\",\"$ios_deepview\":\"branch_default\"}",
+        "device_fingerprint_id" : "526117323216942979",
+        "identity" : "Bob",
+        "identity_id" : "530077985169155272",
+        "link" : "https:\/\/testbed-mac.app.link?%24identity_id=530077985169155272",
+        "session_id" : "534369161321890489"
     }
 }
