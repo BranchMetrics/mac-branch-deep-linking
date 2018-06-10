@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BNCNetworkOperationProtocol
 
-
 /**
  @name The `BNCNetworkServiceProtocol` and `BNCNetworkOperationProtocol` protocols.
 

@@ -116,8 +116,9 @@
         [NSException raise:NSInvalidArgumentException format:@"Invalid configuration."];
     }
     self.configuration = [configuration copy];
+    self.configuration.settings = self.settings;
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
-    self.settings = [BNCSettings sharedInstance];
+    self.settings = [BNCSettings loadSettings];
 
 #if TARGET_OS_OSX
 
@@ -281,6 +282,7 @@
 }
 
 - (void) delayedOpen {
+    BNCLogMethodName();
     NSURL*url = self.delayedOpenURL;
     self.delayedOpenURL = nil;
     if (self.delayedOpenTimer) {

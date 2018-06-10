@@ -25,16 +25,26 @@
     );
     XCTAssertFalse(device.deviceIsUnidentified);
     XCTAssertTrue([device.brandName isEqualToString:@"Apple"]);
-    XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
 
 #if TARGET_OS_OSX
+
+    XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"macOS"]);
+
 #elif TARGET_OS_TV
+
+    XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"tvOS"]);
+
 #elif TARGET_OS_IOS
+
+    XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"iOS"]);
+
 #else
+
     #error Unknown target.
+
 #endif
 
     XCTAssertTrue(

@@ -74,7 +74,6 @@
     XCTAssert(newDictionary);
 
     NSMutableDictionary *oldDictionary = [NSMutableDictionary dictionaryWithDictionary:dictionary];
-    oldDictionary[@"$publicly_indexable"] = nil; // Remove this value since we don't add false values.
     XCTAssertEqualObjects(oldDictionary, newDictionary);
 
     NSData* data = [NSJSONSerialization dataWithJSONObject:newDictionary options:0 error:&error];
@@ -133,7 +132,6 @@
     NSMutableDictionary *jsonDictionary =
         [self mutableDictionaryFromBundleJSONWithKey:@"BranchUniversalObjectJSON"];
     XCTAssertTrue(jsonDictionary);
-    jsonDictionary[@"$publicly_indexable"] = nil;
 
     // Compare:
 

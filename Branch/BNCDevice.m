@@ -262,7 +262,6 @@ exit:
     u_int namelen = sizeof(mib) / sizeof(mib[0]);
 
     //    Get the size for the buffer --
-
     size_t bufferSize = 0;
     sysctl(mib, namelen, NULL, &bufferSize, NULL, 0);
     if (bufferSize <= 0) return nil;
@@ -501,7 +500,7 @@ exit:
     } else
         device->_hardwareIDType = @"vendor_id";
     device->_brandName = @"Apple";
-    device->_modelName = @"x86_64"; // TODO: [self modelName];
+    device->_modelName = [self modelName];
     device->_systemName = [self systemName];
     device->_isSimulator = [self isSimulator];
     NSOperatingSystemVersion version = [[NSProcessInfo processInfo] operatingSystemVersion];

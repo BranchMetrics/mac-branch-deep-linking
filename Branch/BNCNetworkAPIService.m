@@ -42,14 +42,12 @@
     self = [super init];
     if (!self) return self;
     self.configuration = configuration;
+    self.settings = self.configuration.settings;
     self.networkService = [configuration.networkServiceClass new];
     if (self.configuration.useCertificatePinning) {
         NSError*error = [self.networkService pinSessionToPublicSecKeyRefs:self.class.publicSecKeyRefs];
         if (error) BNCLogError(@"Can't pin network certificates: %@.", error);
     }
-// TODO: 
-//  self.networkService.maxConcurrentOperationCount = 1;
-    self.settings = [BNCSettings sharedInstance];
     return self;
 }
 
@@ -107,9 +105,8 @@
         userData[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
         userData[@"environment"] = application.branchExtensionType;
         userData[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
-        userData[@"sdk"] = @"ios";
+        userData[@"sdk"] = @"ios";  // TODO:
         userData[@"sdk_version"] = Branch.kitDisplayVersion;
-        //userData[@"environment"] = @"WHAT"; // TODO: remove.  Cause error on purpose.
         dictionary[@"user_data"] = userData;
 
         // Add instrumentation:

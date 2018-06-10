@@ -10,6 +10,7 @@
 #import "BranchEvent.h"
 #import "BNCDevice.h"
 #import "BranchMainClass.h"
+#import "BNCNetworkAPIService.h"
 
 @interface BranchEventTest : BNCTestCase
 @end
@@ -93,6 +94,8 @@
         @"Custom_Event_Property_Key2": @"Custom_Event_Property_val2"
     };
 
+    // Check the BUO:
+
     NSDictionary *testDictionary = [event dictionary];
     NSMutableDictionary *dictionary =
         [self mutableDictionaryFromBundleJSONWithKey:@"V2EventProperties"];
@@ -100,70 +103,43 @@
 
     testDictionary = [buo dictionary];
     dictionary = [self mutableDictionaryFromBundleJSONWithKey:@"BranchUniversalObjectJSON"];
-    dictionary[@"$publicly_indexable"] = nil; // Remove this value since we don't add false values.
     XCTAssertEqualObjects(testDictionary, dictionary);
+
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    Branch*branch = [[Branch alloc] init];
+    [branch startWithConfiguration:configuration];
+
+    event.contentItems = (NSMutableArray*) @[ buo ];
 
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
-    NSMutableDictionary *expectedRequest =
-        [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
-    expectedRequest[@"user_data"] = [[BNCDevice currentDevice] v2dictionary];
+    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+        XCTAssert([request.HTTPMethod isEqualToString:@"POST"]);
+        XCTAssert([request.URL.absoluteString hasSuffix:@"/v2/event/standard"]);
 
-    BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
-    Branch*branch = [[Branch alloc] init];
-    [branch startWithConfiguration:configuration];
-/*
+        NSMutableDictionary *expectedRequest =
+            [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
+        XCTAssertNotNil(expectedRequest);
+        [branch.networkAPIService appendV2APIParametersWithDictionary:expectedRequest];
+        expectedRequest[@"retryNumber"] = nil;
+        
+        NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+        XCTAssertNotNil(requestDictionary);
+
+        XCTAssertEqualObjects(expectedRequest, requestDictionary);
+
+        NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
+        return [BNCTestNetworkService operationWithRequest:request response:responseString];
+    };
+
     XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event"];
-    id networkAPIServiceMock = OCMPartialMock(branch.networkAPIService.networkService);
-
-    OCMStub(
-        [networkAPIServiceMock
-            postOperationForAPIServiceName:@"v2/event"
-            dictionary:(NSDictionary*)dictionary
-            completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
-
-            ]
-    )
-
-    Branch *branch = [Branch getInstance:@"key_live_foo"];
-    XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event"];
-    id serverInterfaceMock = OCMPartialMock(branch.serverInterface);
-
-    OCMStub(
-        [serverInterfaceMock genericHTTPRequest:[OCMArg any]
-            retryNumber:0
-            callback:[OCMArg any]
-            retryHandler:[OCMArg any]]
-    ).andDo(^(NSInvocation *invocation) {
-
-        __unsafe_unretained NSURLRequest *request = nil;
-        [invocation getArgument:&request atIndex:2];
-
-        NSError *error = nil;
-        NSString *url = request.URL.absoluteString;
-        NSData *bodyData = request.HTTPBody;
-        NSDictionary *parameters =
-            [NSJSONSerialization JSONObjectWithData:bodyData options:0 error:&error];
+    [branch logEvent:event completion:^(NSError * _Nullable error) {
         XCTAssertNil(error);
-
-        NSLog(@"testEvent 1");
-        NSLog(@"URL: %@.", url);
-        NSLog(@"Body: %@.", parameters);
-
-        if ([url containsString:@"branch.io/v2/event/standard"]) {
-            XCTAssertEqualObjects(expectedRequest, parameters);
-            [expectation fulfill];
-        }
-    });
-
-    [branch clearNetworkQueue];
-    event.contentItems = (NSMutableArray*) @[ buo ];
-    [event logEvent];
+        [expectation fulfill];
+    }];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
-    [serverInterfaceMock stopMocking];
-}
-*/
 }
 
 /*

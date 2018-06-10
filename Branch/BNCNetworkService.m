@@ -134,6 +134,7 @@
 }
 
 + (NSString*) formattedStringWithData:(NSData*)data {
+    if (!data) return nil;
     NSString*responseString = nil;
     @try {
         NSDictionary*dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];

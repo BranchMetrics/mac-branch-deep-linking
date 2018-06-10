@@ -11,7 +11,7 @@
 #import "BranchHeader.h"
 #import "BranchDelegate.h"
 #import "BranchSession.h"
-@class BNCNetworkAPIService;
+@class BNCNetworkAPIService, BNCSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,10 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) initWithKey:(NSString*)key NS_DESIGNATED_INITIALIZER;
 + (BranchConfiguration*) configurationWithKey:(NSString*)key;
 
-@property (atomic, strong) NSString* key;
-@property (atomic, assign) BOOL      useCertificatePinning;
-@property (atomic, strong) NSString* branchAPIServerURL;
-@property (atomic, assign) Class     networkServiceClass;
+@property (atomic, strong) NSString*    key;
+@property (atomic, assign) BOOL         useCertificatePinning;
+@property (atomic, strong) NSString*    branchAPIServerURL;
+@property (atomic, assign) Class        networkServiceClass;
+@property (atomic, strong) BNCSettings* settings;
 @end
 
 #pragma mark - Branch

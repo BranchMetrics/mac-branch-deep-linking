@@ -36,7 +36,6 @@
         "$og_description": "my_product_description1",
         "$og_image_url": "https://test_img_url",
         "$exp_date": 212123232544,
-        "$publicly_indexable": false,
         "$locally_indexable": true,
         "$creation_timestamp": 1501869445321,
         "Custom_Content_metadata_key1": "Custom_Content_metadata_val1",
@@ -130,6 +129,9 @@
             "Custom_Event_Property_Key1": "Custom_Event_Property_val1",
             "Custom_Event_Property_Key2": "Custom_Event_Property_val2"
         }
+    },
+    "V2EventJSONResponse": {
+        "branch_view_enabled" : false
     },
     "logoutRequest": {
         "branch_key" : "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N",

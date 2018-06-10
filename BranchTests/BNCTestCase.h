@@ -11,6 +11,7 @@
 #import <XCTest/XCTest.h>
 #import "NSString+Branch.h"
 #import "BNCThreads.h"
+#import "BNCTestNetworkService.h"
 
 #define BNCTAssertEqualMaskedString(string, mask) { \
     if ((id)string != nil && (id)mask != nil && [string bnc_isEqualToMaskedString:mask]) { \
