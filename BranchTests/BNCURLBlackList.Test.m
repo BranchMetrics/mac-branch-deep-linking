@@ -162,10 +162,10 @@
             NSLog(@"d: %@", dictionary);
             NSString* link = dictionary[@"external_intent_uri"];
             NSString *pattern =
-                @"^(?i)((http|https):\\/\\/).*[\\/|?|#].*"
-                 "\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
+                @"^(?i)(?!(http|https):).*(:|:.*\\b)(password|o?auth|o?auth.?token|access|access.?token)\\b";
+                // @"^(?i).+:.*[?].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
             NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
-            XCTAssert([link isEqualToString:pattern]);
+            XCTAssertEqualObjects(link, pattern);
             [expectation fulfill];
         };
 
@@ -178,77 +178,34 @@
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
 }
 
-/*
-- (void) testStandardBlackList {
-    Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"Key_live_foo"];
-    [branch startWithConfiguration:configuration];
-
-    Branch *branch = [Branch getInstance:@"key_live_foo"];
-    id serverInterfaceMock = OCMPartialMock(branch.serverInterface);
-    XCTestExpectation *expectation = [self expectationWithDescription:@"OpenRequest Expectation"];
-
-    OCMStub(
-        [serverInterfaceMock postRequest:[OCMArg any]
-            url:[OCMArg any]
-            key:[OCMArg any]
-            callback:[OCMArg any]]
-    ).andDo(^(NSInvocation *invocation) {
-        __unsafe_unretained NSDictionary *dictionary = nil;
-        [invocation getArgument:&dictionary atIndex:2];
-
-        NSLog(@"d: %@", dictionary);
-        NSString* link = dictionary[@"external_intent_uri"];
-        NSString *pattern = @"^(?i)((http|https):\\/\\/).*[\\/|?|#].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
-        NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
-        if ([link isEqualToString:pattern]) {
-            [expectation fulfill];
-        }
-    });
-
-    [branch clearNetworkQueue];
-    [branch handleDeepLinkWithNewSession:[NSURL URLWithString:@"https://myapp.app.link/bob/link?oauth=true"]];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
-    [serverInterfaceMock stopMocking];
-    [BNCPreferenceHelper preferenceHelper].referringURL = nil;
-    [[BNCPreferenceHelper preferenceHelper] synchronize];
-}
-*/
-
-/*
 - (void) testUserBlackList {
-    Branch *branch = [Branch getInstance:@"key_live_foo"];
-    branch.blackListURLRegex = @[
+    Branch*branch = [Branch new];
+    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    configuration.blackListURLRegex = @[
         @"\\/bob\\/"
     ];
-    id serverInterfaceMock = OCMPartialMock(branch.serverInterface);
+    [branch startWithConfiguration:configuration];
+
     XCTestExpectation *expectation = [self expectationWithDescription:@"OpenRequest Expectation"];
-
-    OCMStub(
-        [serverInterfaceMock postRequest:[OCMArg any]
-            url:[OCMArg any]
-            key:[OCMArg any]
-            callback:[OCMArg any]]
-    ).andDo(^(NSInvocation *invocation) {
-        __unsafe_unretained NSDictionary *dictionary = nil;
-        [invocation getArgument:&dictionary atIndex:2];
-
-        NSString* link = dictionary[@"external_intent_uri"];
-        NSString *pattern = @"\\/bob\\/";
-        NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
-
-        if ([link isEqualToString:pattern]) {
+    BNCTestNetworkService.requestHandler =
+        ^id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+            NSLog(@"d: %@", dictionary);
+            NSString* link = dictionary[@"external_intent_uri"];
+            NSString *pattern =  @"\\/bob\\/";
+            NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
+            XCTAssert([link isEqualToString:pattern]);
             [expectation fulfill];
-        }
-    });
+        };
 
-    [branch clearNetworkQueue];
-    [branch handleDeepLinkWithNewSession:[NSURL URLWithString:@"https://myapp.app.link/bob/link"]];
+    NSString *url = @"https://myapp.app.link/bob/link";
+    #if TARGET_OS_OSX
+    url = @"testbed-mac://bob/open?link_click_id=348527481794276288&oauth=true";
+    #endif
+
+    [branch openURL:[NSURL URLWithString:url]];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
-    [serverInterfaceMock stopMocking];
-    [BNCPreferenceHelper preferenceHelper].referringURL = nil;
-    [[BNCPreferenceHelper preferenceHelper] synchronize];
 }
-*/
 
 @end

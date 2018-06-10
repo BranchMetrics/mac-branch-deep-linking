@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, assign) BOOL         useCertificatePinning;
 @property (atomic, strong) NSString*    branchAPIServerURL;
 @property (atomic, assign) Class        networkServiceClass;
+@property (atomic, strong) NSArray<NSString*>* blackListURLRegex;
 @property (atomic, strong) BNCSettings* settings;
 @end
 

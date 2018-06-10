@@ -27,6 +27,7 @@
 
 - (instancetype) init {
     self = [self initWithKey:@""];
+    self.blackListURLRegex = [NSArray new];
     return self;
 }
 - (instancetype) initWithKey:(NSString *)key {
@@ -51,6 +52,7 @@
     configuration.useCertificatePinning = self.useCertificatePinning;
     configuration.branchAPIServerURL = [self.branchAPIServerURL copy];
     configuration.networkServiceClass = self.networkServiceClass;
+    configuration.blackListURLRegex = [self.blackListURLRegex copy];
     return configuration;
 }
 
@@ -77,6 +79,7 @@
 @property (atomic, strong) BranchConfiguration  *configuration;
 @property (atomic, strong) BNCSettings          *settings;
 @property (atomic, strong) BNCURLBlackList      *URLBlackList;
+@property (atomic, strong) BNCURLBlackList      *userURLBlackList;
 @property (atomic, strong) NSURL                *delayedOpenURL;
 @property (atomic, strong) dispatch_source_t    delayedOpenTimer;
 @property (atomic, strong) dispatch_queue_t     workQueue;
@@ -119,6 +122,16 @@
     self.configuration.settings = self.settings;
     self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
     self.settings = [BNCSettings loadSettings];
+    self.URLBlackList =
+        [[BNCURLBlackList alloc]
+            initWithBlackList:self.settings.URLBlackList
+            version:self.settings.URLBlackListVersion];
+
+    self.userURLBlackList =
+        [[BNCURLBlackList alloc]
+            initWithBlackList:self.configuration.blackListURLRegex
+            version:self.settings.URLBlackListVersion];
+
 
 #if TARGET_OS_OSX
 
@@ -283,7 +296,7 @@
 
 - (void) delayedOpen {
     BNCLogMethodName();
-    NSURL*url = self.delayedOpenURL;
+    NSURL*openURL = self.delayedOpenURL;
     self.delayedOpenURL = nil;
     if (self.delayedOpenTimer) {
         dispatch_source_cancel(self.delayedOpenTimer);
@@ -302,17 +315,26 @@
     dictionary[@"facebook_app_link_checked"] = BNCWireFormatFromBool(NO);
     dictionary[@"apple_ad_attribution_checked"] = BNCWireFormatFromBool(NO);
 
-    NSString*scheme = url.scheme;
-    if ([scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"]) {
-        dictionary[@"universal_link_url"] = url.absoluteString;
-    } else
-    if (scheme.length > 0) {
-        dictionary[@"external_intent_uri"] = url.absoluteString;
-        NSURLComponents*components = [NSURLComponents componentsWithString:url.absoluteString];
-        for (NSURLQueryItem*item in components.queryItems) {
-            if ([item.name isEqualToString:@"link_click_id"]) {
-                dictionary[@"link_identifier"] = item.value;
-                break;
+    NSString*blackListPattern = [self.userURLBlackList blackListPatternMatchingURL:openURL];
+    if (!blackListPattern) {
+        blackListPattern = [self.URLBlackList blackListPatternMatchingURL:openURL];
+    }
+
+    if (blackListPattern != nil) {
+        dictionary[@"external_intent_uri"] = blackListPattern;
+    } else {
+        NSString*scheme = openURL.scheme;
+        if ([scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"]) {
+            dictionary[@"universal_link_url"] = openURL.absoluteString;
+        } else
+        if (scheme.length > 0) {
+            dictionary[@"external_intent_uri"] = openURL.absoluteString;
+            NSURLComponents*components = [NSURLComponents componentsWithString:openURL.absoluteString];
+            for (NSURLQueryItem*item in components.queryItems) {
+                if ([item.name isEqualToString:@"link_click_id"]) {
+                    dictionary[@"link_identifier"] = item.value;
+                    break;
+                }
             }
         }
     }
@@ -327,7 +349,7 @@
     NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
 
     BNCPerformBlockOnMainThreadSync(^ {
-        [self notifyWillStartSessionWithURL:url];
+        [self notifyWillStartSessionWithURL:openURL];
     });
 
     __weak __typeof(self) weakSelf = self;
@@ -335,8 +357,9 @@
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation *operation) {
             __strong __typeof(self) strongSelf = weakSelf;
-            [strongSelf openResponseWithOperation:operation url:url];
-        }];
+            [strongSelf openResponseWithOperation:operation url:openURL];
+        }
+    ];
 }
 
 - (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
@@ -561,7 +584,7 @@
     addItem(@"stage", linkProperties.stage);
     addItem(@"type", [NSNumber numberWithInteger:linkProperties.linkType].stringValue);
     addItem(@"matchDuration", [NSNumber numberWithInteger:linkProperties.matchDuration].stringValue);
-    addItem(@"source", @"ios"); // TODO
+    addItem(@"source", @"ios"); // TODO: Add new sources.
 
     NSDictionary*dictionary = content.dictionary;
     if (dictionary.count) {
