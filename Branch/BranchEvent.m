@@ -66,7 +66,7 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
 }
 
 + (instancetype) standardEvent:(BranchStandardEvent)standardEvent
-               withContentItem:(BranchUniversalObject*)contentItem {
+                   contentItem:(BranchUniversalObject*)contentItem {
     BranchEvent *e = [BranchEvent standardEvent:standardEvent];
     if (contentItem) {
         e.contentItems = (NSMutableArray*) @[ contentItem ];

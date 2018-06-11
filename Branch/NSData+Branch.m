@@ -16,7 +16,7 @@ __attribute__((constructor)) void BNCForceNSDataCategoryToLoad() {
 
 @implementation NSData (Branch)
 
-static inline int8_t nibble(UniChar c) {
+static inline int16_t nibble(UniChar c) {
     if (c >= '0' && c <= '9')
         return c - '0';
     else
@@ -38,21 +38,21 @@ static inline int8_t nibble(UniChar c) {
         CFStringInitInlineBuffer((CFStringRef)string, &stringBuffer, CFRangeMake(0, stringLength));
 
         UniChar c;
-        int8_t n, lastNibble = -1;
+        int16_t n, lastNibble = -1;
         NSUInteger idx = 0;
         uint8_t*p = bytes = malloc(stringLength/2+1);
         while (idx < stringLength) {
             c = CFStringGetCharacterFromInlineBuffer(&stringBuffer, idx++);
             n = nibble(c);
-            if (n > -1) {
-                if (lastNibble > -1) {
-                    *p++ = lastNibble << 4 | n;
-                    lastNibble = -1;
-                } else
-                    lastNibble = n;
+            if (n < 0) continue;
+            if (lastNibble < 0)
+                lastNibble = n;
+            else {
+                *p++ = (uint8_t) (uint16_t) (lastNibble << 4 | n);
+                lastNibble = -1;
             }
         }
-        if (lastNibble > -1)
+        if (lastNibble >= 0)
             *p++ = lastNibble << 4 | 0;
         data = [NSData dataWithBytesNoCopy:bytes length:p-bytes freeWhenDone:YES];
         bytes = NULL;

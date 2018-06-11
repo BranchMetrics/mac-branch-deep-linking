@@ -52,7 +52,7 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 
 + (instancetype _Nonnull) standardEvent:(BranchStandardEvent _Nonnull)standardEvent;
 + (instancetype _Nonnull) standardEvent:(BranchStandardEvent _Nonnull)standardEvent
-                        withContentItem:(BranchUniversalObject* _Nonnull)contentItem;
+                            contentItem:(BranchUniversalObject* _Nonnull)contentItem;
 
 + (instancetype _Nonnull) customEventWithName:(NSString*_Nonnull)name;
 + (instancetype _Nonnull) customEventWithName:(NSString*_Nonnull)name

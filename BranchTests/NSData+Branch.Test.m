@@ -3,13 +3,13 @@
  @package       BranchTests
  @brief         Tests for the NSData+Branch category.
 
- @author        Edward
- @date          2018
+ @author        Edward Smith
+ @date          June 10, 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "NSData+Branch.h"
 #import "BNCTestCase.h"
+#import "NSData+Branch.h"
 
 @interface NSDataBranchTest : BNCTestCase
 @end
@@ -41,6 +41,13 @@
     XCTAssertTrue(data != nil && data.length == 0);
 
     data = [NSData bnc_dataWithHexString:@" XXX 012345678 9ab cde\nf"];
+    XCTAssertEqualObjects(truthData, data);
+}
+
+- (void) testHighLowBytes {
+    char bytes[] = { 0x00, 0x01, 0x7f, 0x80, 0xff };
+    NSData*truthData = [NSData dataWithBytes:bytes length:5];
+    NSData*data = [NSData bnc_dataWithHexString:@"0001 7f80 ff"];
     XCTAssertEqualObjects(truthData, data);
 }
 

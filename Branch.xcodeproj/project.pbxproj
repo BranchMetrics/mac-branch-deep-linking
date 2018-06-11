@@ -40,6 +40,7 @@
 		4D159DEA20B62DD5005A9850 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */; };
 		4D27FF8B20B222C7002C7EB0 /* BNCPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D27FF8920B222C7002C7EB0 /* BNCPersistence.h */; };
 		4D27FF8C20B222C7002C7EB0 /* BNCPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D27FF8A20B222C7002C7EB0 /* BNCPersistence.m */; };
+		4D323C2220CEEEC2003BCE3F /* BranchEvent.Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189F20ADDCB600441881 /* BranchEvent.Test.swift */; };
 		4D38923A20BA18A80013B811 /* BranchLinkProperties.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D38923920BA18A80013B811 /* BranchLinkProperties.Test.m */; };
 		4D38923D20BA24030013B811 /* BNCTestCase.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D38923C20BA24030013B811 /* BNCTestCase.json */; };
 		4D3E50C620B916B400C7BF5B /* BranchCommerce.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3E50C520B916B400C7BF5B /* BranchCommerce.Test.m */; };
@@ -662,6 +663,7 @@
 				4D159DDC20B62DD5005A9850 /* BNCLocalization.Test.m in Sources */,
 				4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */,
 				4D159DE220B62DD5005A9850 /* BNCTestCase.Test.m in Sources */,
+				4D323C2220CEEEC2003BCE3F /* BranchEvent.Test.swift in Sources */,
 				4DE667EE20CB7C1D000752E3 /* BNCURLBlackList.Test.m in Sources */,
 				4D159DDF20B62DD5005A9850 /* BNCSettings.Test.m in Sources */,
 			);

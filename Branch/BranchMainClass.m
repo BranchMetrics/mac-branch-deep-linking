@@ -35,7 +35,7 @@
     if (!self.hasValidKey) {
         [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
     }
-    self.useCertificatePinning = NO;    //  TODO: YES;
+    self.useCertificatePinning = NO; //  TODO: YES;
     self.branchAPIServerURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
     self.blackListURLRegex = [NSArray new];
@@ -109,7 +109,7 @@
     return string?:@"";
 }
 
-- (void) startWithConfiguration:(BranchConfiguration*)configuration {
+- (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
     // These function references force the linker to load the categories just in case it forgot.
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSDataCategoryToLoad();
@@ -182,6 +182,8 @@
         selector:@selector(notificationObserver:)
         name:nil
         object:nil];
+
+    return self;
 }
 
 - (BOOL) isStarted {

@@ -3,8 +3,8 @@
  @package       BranchTests
  @brief         Test the Branch Open handling.
 
- @author        Edward
- @date          2018
+ @author        Edward Smith
+ @date          June 10, 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 

@@ -1,10 +1,12 @@
-//
-//  BranchEvent.Test.swift
-//  Branch-SDK-Tests
-//
-//  Created by edward on 10/9/17.
-//  Copyright © 2017 Branch, Inc. All rights reserved.
-//
+/**
+ @file          BranchEvent.Test.swift
+ @package       BranchTests
+ @brief         Test the feel and compatibility of using the BranchEvent class in Swift.
+
+ @author        Edward Smith
+ @date          October 9, 2017
+ @copyright     Copyright © 2017 Branch. All rights reserved.
+*/
 
 import Foundation
 
@@ -83,10 +85,21 @@ class BranchEventTestSwift : BNCTestCase {
         XCTAssert((dictionary?.isEqual(to: testDictionary))!)
 
         event.contentItems = [ branchUniversalObject ]
-        event.logEvent()
+
+        let expectation = self.expectation(description: "v2-event Swift")
+        let branch = Branch.init().start(with: BranchConfiguration.init(key: "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"))
+        branch.logEvent(event, completion: { (error) in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        })
+        self.awaitExpectations()
     }
 
     func testExampleSyntaxSwift() {
+        let branch = Branch
+            .init()
+            .start(with: BranchConfiguration.init(key: "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"))
+
         let contentItem = BranchUniversalObject.init()
         contentItem.canonicalIdentifier = "item/123"
         contentItem.canonicalUrl = "https://branch.io/item/123"
@@ -98,19 +111,19 @@ class BranchEventTestSwift : BNCTestCase {
         event.searchQuery = "user search query terms for product xyz"
         event.customData["Custom_Event_Property_Key1"] = "Custom_Event_Property_val1"
         event.contentItems = [ contentItem ]
-        event.logEvent()
+        branch.logEvent(event, completion: nil)
 
         event = BranchEvent.standardEvent(.viewItem)
-        event.logEvent();
+        branch.logEvent(event)
 
         // Quickly log an event:
-        BranchEvent.standardEvent(.viewItem).logEvent()
+        branch.logEvent(BranchEvent.standardEvent(.viewItem))
 
         // Quickly log an event with content:
         let branchUniversalObject = BranchUniversalObject.init()
         branchUniversalObject.canonicalIdentifier = "item/12345"
         branchUniversalObject.canonicalUrl        = "https://branch.io/deepviews"
         branchUniversalObject.title               = "My Content Title"
-        BranchEvent.standardEvent(.viewItem, withContentItem: branchUniversalObject).logEvent()
+        branch.logEvent(BranchEvent.standardEvent(.viewItem, contentItem: branchUniversalObject))
     }
 }

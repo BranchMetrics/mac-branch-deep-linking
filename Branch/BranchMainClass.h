@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) bundleIdentifier;
 + (NSString*) kitDisplayVersion;
 
-- (void) startWithConfiguration:(BranchConfiguration*)configuration;
+- (Branch*) startWithConfiguration:(BranchConfiguration*)configuration;
 - (BOOL) isStarted;
 - (BOOL) isBranchURL:(NSURL*)url;
 
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @warning If the request to logout fails, the items will not be cleared.
  */
-- (void)logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback;
+- (void) logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback;
 
 - (void) branchShortLinkWithContent:(BranchUniversalObject*)content
                      linkProperties:(BranchLinkProperties*)linkProperties
