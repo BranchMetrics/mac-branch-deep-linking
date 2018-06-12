@@ -53,7 +53,7 @@ static inline int16_t nibble(UniChar c) {
             }
         }
         if (lastNibble >= 0)
-            *p++ = lastNibble << 4 | 0;
+            *p++ = (uint8_t) (uint16_t) (lastNibble << 4 | 0);
         data = [NSData dataWithBytesNoCopy:bytes length:p-bytes freeWhenDone:YES];
         bytes = NULL;
     }

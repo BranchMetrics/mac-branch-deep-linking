@@ -22,13 +22,9 @@
 @implementation BNCURLBlackListTest
 
 - (void) setUp {
-//    [BNCPreferenceHelper preferenceHelper].URLBlackList = nil;
-//    [BNCPreferenceHelper preferenceHelper].URLBlackListVersion = 0;
-//    [BNCPreferenceHelper preferenceHelper].blacklistURLOpen = NO;
 }
 
 - (void) tearDown {
-//    [BNCPreferenceHelper preferenceHelper].blacklistURLOpen = NO;
 }
 
 - (void)testListDownLoad {
