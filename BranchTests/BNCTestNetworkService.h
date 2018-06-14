@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BNCNetworkServiceProtocol.h"
+#import "BNCNetworkAPIService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

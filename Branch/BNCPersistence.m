@@ -19,10 +19,16 @@
     NSError *error = nil;
     NSURL *url = BNCURLForBranchDataDirectory();
     url = [url URLByAppendingPathComponent:name isDirectory:NO];
+    NSURL*urlPath = [url URLByDeletingLastPathComponent];
+    [[NSFileManager defaultManager]
+        createDirectoryAtURL:urlPath
+        withIntermediateDirectories:YES
+        attributes:nil
+        error:&error];
+    if (error) BNCLogError(@"Can't create directory: %@.", error);
+    error = nil;
     [data writeToURL:url options:NSDataWritingAtomic error:&error];
-    if (error) {
-        BNCLogWarning(@"Failed to write '%@': %@.", url, error);
-    }
+    if (error) BNCLogError(@"Failed to write '%@': %@.", url, error);
     return error;
 }
 
@@ -48,6 +54,39 @@
         else
             BNCLogWarning(@"Failed to remove '%@': %@.", url, error);
     }
+    return error;
+}
+
++ (id<NSSecureCoding>) unarchiveObjectNamed:(NSString*)name {
+    id<NSSecureCoding> object = nil;
+    @try {
+        NSData* data = [self loadDataNamed:name];
+        if (!data) return nil;
+        object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    @catch(id e) {
+        BNCLogError(@"Can't unarchive '%@': %@.", name, e);
+        object = nil;
+    }
+    return object;
+}
+
++ (NSError*) archiveObject:(id<NSSecureCoding>)object named:(NSString*)name {
+    NSError*error = nil;
+    @try {
+        NSData*data = [NSKeyedArchiver archivedDataWithRootObject:object];
+        error = [BNCPersistence saveDataNamed:@"io.branch.sdk.settings" data:data];
+    }
+    @catch (id exception) {
+        if (error) {
+            BNCLogDebugSDK(@"Exception: %@.", exception);
+        } else {
+            NSString*s = [NSString stringWithFormat:@"Exception %@.", exception];
+            error = [NSError errorWithDomain:NSCocoaErrorDomain
+                code:NSFileWriteUnknownError userInfo:@{NSLocalizedDescriptionKey: s}];
+        }
+    }
+    if (error) BNCLogError(@"Can't archive '%@': %@.", name, error);
     return error;
 }
 

@@ -87,8 +87,7 @@
     XCTAssertTrue((__bridge void*) realSettings.class == (__bridge void*) BNCSettings.class);
 }
 
-/*
-    Trying not to have a shared instance.
+/*  Try not to have a shared instance.
     
 - (void) testSharedInstance {
     BNCSettings*settings = [BNCSettings sharedInstance];

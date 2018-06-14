@@ -21,11 +21,26 @@
 #import "BranchEvent.h"
 #import "BranchError.h"
 #import "BNCLocalization.h"
+#import "BNCPersistence.h"
 #import "NSData+Branch.h"
 
 #pragma mark BNCNetworkAPIOperation
 
-@implementation BNCNetworkAPIOperation
+@interface BNCNetworkAPIOperation () <NSSecureCoding>
+- (instancetype) initWithNetworkService:(id<BNCNetworkServiceProtocol>)networkService
+                               settings:(BNCSettings*)settings
+                                    URL:(NSURL*)URL
+                             dictionary:(NSDictionary*)dictionary
+                             completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
+- (void) main;
+- (BOOL) asynchronous;
+
+@property (strong) id<BNCNetworkServiceProtocol>networkService;
+@property (strong) BNCSettings*settings;
+@property (strong) NSURL*URL;
+@property (strong) NSMutableDictionary*dictionary;
+@property (strong) NSString*identifier;
+@property (copy)   void (^_Nullable completion)(BNCNetworkAPIOperation*operation);
 @end
 
 #pragma mark - BNCAPIService
@@ -34,6 +49,11 @@
 @property (atomic, strong) id<BNCNetworkServiceProtocol> networkService;
 @property (atomic, strong) BranchConfiguration *configuration;
 @property (atomic, strong) BNCSettings* settings;
+@property (atomic, strong) NSOperationQueue *operationQueue;
+@property (atomic, strong) NSMutableDictionary<NSString*, NSData*> *archivedOperations;
+- (void) saveOperation:(BNCNetworkAPIOperation*)operation;
+- (void) deleteOperation:(BNCNetworkAPIOperation*)operation;
+- (void) loadOperations;
 @end
 
 @implementation BNCNetworkAPIService
@@ -48,6 +68,11 @@
         NSError*error = [self.networkService pinSessionToPublicSecKeyRefs:self.class.publicSecKeyRefs];
         if (error) BNCLogError(@"Can't pin network certificates: %@.", error);
     }
+    self.operationQueue = [[NSOperationQueue alloc] init];
+    self.operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
+    self.operationQueue.name = @"io.branch.sdk.BNCNetworkAPIService";
+    self.operationQueue.maxConcurrentOperationCount = 1;
+    [self loadOperations];
     return self;
 }
 
@@ -58,15 +83,6 @@
 }
 
 #pragma mark - Utilities
-
-- (NSURL*) URLForAPIService:(NSString*)serviceName {
-    @synchronized(self) {
-        serviceName = [serviceName stringByTrimmingCharactersInSet:
-            [NSCharacterSet characterSetWithCharactersInString:@" \t\n\\/"]];
-        NSString *string = [NSString stringWithFormat:@"https://api.branch.io/%@", serviceName];
-        return [NSURL URLWithString:string];
-    }
-}
 
 - (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary {
     @synchronized(self) {
@@ -133,220 +149,87 @@
 - (void) postOperationForAPIServiceName:(NSString*)serviceName
         dictionary:(NSDictionary*)dictionary
         completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion {
+
+    serviceName = [serviceName stringByTrimmingCharactersInSet:
+        [NSCharacterSet characterSetWithCharactersInString:@" \t\n\\/"]];
+    NSString *string = [NSString stringWithFormat:@"%@/%@", self.configuration.branchAPIServerURL, serviceName];
+    NSURL*url = [NSURL URLWithString:string];
+
+    __weak __typeof(self) weakSelf = self;
+    BNCNetworkAPIOperation* networkAPIOperation =
+        [[BNCNetworkAPIOperation alloc]
+            initWithNetworkService:self.networkService
+            settings:self.settings
+            URL:url
+            dictionary:dictionary
+            completion:^ (BNCNetworkAPIOperation*operation) {
+                __typeof(self) strongSelf = weakSelf;
+                [strongSelf deleteOperation:operation];
+                if (completion) completion(operation);
+            }];
+    [self saveOperation:networkAPIOperation];
+    [self.operationQueue addOperation:networkAPIOperation];
+}
+
+#pragma mark - Persistence
+
+- (void) saveOperation:(BNCNetworkAPIOperation *)operation {
     @synchronized(self) {
-        NSURL*apiURL = [self URLForAPIService:serviceName];
+        NSData*data = [NSKeyedArchiver archivedDataWithRootObject:operation];
+        self.archivedOperations[operation.identifier] = data;
+        [self saveArchivedOperations];
+    }
+}
 
-        NSData *data = nil;
-        if (dictionary) {
-            NSError *error = nil;
-            data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
-            if (error) BNCLogError(@"Can't convert to JSON: %@.", error);
-        }
+- (void) deleteOperation:(BNCNetworkAPIOperation *)operation {
+    @synchronized(self) {
+        self.archivedOperations[operation.identifier] = nil;
+        [self saveArchivedOperations];
+    }
+}
+- (void) saveArchivedOperations {
+    @synchronized(self) {
+        [BNCPersistence archiveObject:self.archivedOperations named:@"io.branch.sdk.networkqueue"];
+    }
+}
 
-        NSMutableURLRequest*request =
-            [[NSMutableURLRequest alloc]
-                initWithURL:apiURL
-                cachePolicy:NSURLRequestReloadIgnoringCacheData
-                timeoutInterval:60.0];
-        request.HTTPMethod = @"POST";
-        request.HTTPBody = data;
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
+- (void) loadOperations {
+    @synchronized(self) {
+        self.archivedOperations = [NSMutableDictionary new];
+        NSDictionary*d = [BNCPersistence unarchiveObjectNamed:@"io.branch.sdk.networkqueue"];
+        if (![d isKindOfClass:NSDictionary.class]) return;
+        // Start the operations:
         __weak __typeof(self) weakSelf = self;
-        id<BNCNetworkOperationProtocol>operation =
-            [self.networkService networkOperationWithURLRequest:request
-                completion:^ (id<BNCNetworkOperationProtocol>operation) {
-                    __strong __typeof(self) strongSelf = weakSelf;
-                    BNCNetworkAPIOperation*apiOperation = [strongSelf apiOperationWithNetworkOperation:operation];
-                    if (completion) completion(apiOperation);
-                }
-            ];
-        [operation start];
-        NSError *error = [self verifyNetworkOperation:operation];
-        if (error) {
-            BNCLogError(@"Network service error: %@.", error);
-            BNCNetworkAPIOperation *apiOperation = [self apiOperationWithNetworkOperation:operation];
-            apiOperation.error = error;
-            if (completion) {
-                completion(apiOperation);
-            }
-            return;
+        for (NSString*key in d.keyEnumerator) {
+            if (![key isKindOfClass:NSString.class])
+                continue;
+            BNCNetworkAPIOperation*op = d[key];
+            if (![op isKindOfClass:BNCNetworkAPIOperation.class])
+                continue;
+
+            op.networkService = self.networkService;
+            op.settings = self.settings;
+            op.completion = ^ (BNCNetworkAPIOperation*operation) {
+                __typeof(self) strongSelf = weakSelf;
+                [strongSelf deleteOperation:operation];
+            };
+            [self.operationQueue addOperation:op];
         }
+        self.archivedOperations = [d mutableCopy];
     }
 }
 
-- (NSError*) verifyNetworkOperation:(id<BNCNetworkOperationProtocol>)operation {
-    if (!operation) {
-        NSString *message = BNCLocalizedString(
-            @"A network operation instance is expected to be returned by the"
-             " networkOperationWithURLRequest:completion: method."
-        );
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    if (![operation conformsToProtocol:@protocol(BNCNetworkOperationProtocol)]) {
-        NSString *message =
-            BNCLocalizedFormattedString(
-                @"Network operation of class '%@' does not conform to the BNCNetworkOperationProtocol.",
-                NSStringFromClass([operation class]));
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    if (!operation.startDate) {
-        NSString *message = BNCLocalizedString(
-            @"The network operation start date is not set. The Branch SDK expects the network operation"
-             " start date to be set by the network provider."
-        );
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    if (!operation.timeoutDate) {
-        NSString*message = BNCLocalizedString(
-            @"The network operation timeout date is not set. The Branch SDK expects the network operation"
-             " timeout date to be set by the network provider."
-        );
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    if (!operation.request) {
-        NSString *message = BNCLocalizedString(
-            @"The network operation request is not set. The Branch SDK expects the network operation"
-             " request to be set by the network provider."
-        );
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    return nil;
-}
-
-- (NSDictionary*) dictionaryWithJSONData:(NSData*)data
-        error:(NSError*_Nullable __autoreleasing *_Nullable)error_ {
-    NSError*error = nil;
-    NSDictionary *dictionary = nil;
-    {
-        if (![data isKindOfClass:[NSData class]]) {
-            error =
-                [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorCannotDecodeContentData
-                    userInfo:@{ NSLocalizedDescriptionKey: @"Can't decode JSON data."}];
-            goto exit;
-        }
-        dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        if (error) goto exit;
-    }
-exit:
-    if (error_) *error_ = error;
-    return dictionary;
-}
-
-- (BNCNetworkAPIOperation*) apiOperationWithNetworkOperation:(id<BNCNetworkOperationProtocol>)operation {
+- (void) clearNetworkQueue {
     @synchronized(self) {
-        BNCNetworkAPIOperation*apiOperation = [[BNCNetworkAPIOperation alloc] init];
-        apiOperation.operation = operation;
-        [self collectInstrumentationMetricsWithOperation:operation];
-        NSError*error = [self errorWithOperation:operation];
-        if (error) {
-            apiOperation.error = error;
-            return apiOperation;
-        }
-        NSDictionary*dictionary = [self dictionaryWithJSONData:operation.responseData error:&error];
-        if (error) {
-            apiOperation.error = error;
-            return apiOperation;
-        }
-        if (![dictionary isKindOfClass:NSDictionary.class]) {
-            apiOperation.error = [NSError branchErrorWithCode:BNCBadRequestError];
-            return apiOperation;
-        }
-        BranchSession*session = [BranchSession sessionWithDictionary:dictionary];
-        apiOperation.session = session;
-
-        if (session.linkCreationURL.length)
-            self.settings.linkCreationURL = session.linkCreationURL;
-        if (session.deviceFingerprintID.length)
-            self.settings.deviceFingerprintID = session.deviceFingerprintID;
-        if (session.developerIdentityForUser.length)
-            self.settings.developerIdentityForUser = session.developerIdentityForUser;
-        if (session.sessionID.length)
-            self.settings.sessionID = session.sessionID;
-        if (session.identityID)
-            self.settings.identityID = session.identityID;
-
-        return apiOperation;
+        self.archivedOperations = [NSMutableDictionary new];
+        [BNCPersistence removeDataNamed:@"io.branch.sdk.networkqueue"];
+        if ([self.networkService respondsToSelector:@selector(cancelAllOperations)])
+            [self.networkService cancelAllOperations];
+        [self.operationQueue cancelAllOperations];
     }
 }
 
-- (NSError*) errorWithOperation:(id<BNCNetworkOperationProtocol>)operation {
-    NSError *underlyingError = operation.error;
-    NSInteger status = operation.HTTPStatusCode;
-/*
-    TODO: Handle retries.
-
-    // If the phone is in a poor network condition,
-    // iOS will return statuses such as -1001, -1003, -1200, -9806
-    // indicating various parts of the HTTP post failed.
-    // We should retry in those conditions in addition to the case where the server returns a 500
-
-    BOOL isRetryableStatusCode = status >= 500 || status < 0;
-
-    // Retry the request if appropriate
-    if (retryNumber < self.preferenceHelper.retryCount && isRetryableStatusCode) {
-        dispatch_time_t dispatchTime =
-            dispatch_time(DISPATCH_TIME_NOW, self.preferenceHelper.retryInterval * NSEC_PER_SEC);
-        dispatch_after(dispatchTime, dispatch_get_main_queue(), ^{
-            BNCLogDebug(@"Retrying request with url %@", request.URL.relativePath);
-            // Create the next request
-            NSURLRequest *retryRequest = retryHandler(retryNumber);
-            [self genericHTTPRequest:retryRequest
-                         retryNumber:(retryNumber + 1)
-                            callback:callback retryHandler:retryHandler];
-        });
-
-        // Do not continue on if retrying, else the callback will be called incorrectly
-        return;
-    }
-*/
-    NSError *branchError = nil;
-
-    // Wrap up bad statuses w/ specific error messages
-    if (status >= 500) {
-        branchError = [NSError branchErrorWithCode:BNCServerProblemError error:underlyingError];
-    }
-    else if (status == 409) {
-        branchError = [NSError branchErrorWithCode:BNCDuplicateResourceError error:underlyingError];
-    }
-    else if (status >= 400) {
-
-        NSDictionary*dictionary = [self dictionaryWithJSONData:operation.responseData error:nil];
-        if (![dictionary isKindOfClass:NSDictionary.class])
-            dictionary = nil;
-
-        NSString *errorString = nil;
-        NSString *s = dictionary[@"error"];
-        if ([s isKindOfClass:[NSString class]]) {
-            errorString = s;
-        }
-        if (!errorString) {
-            s = dictionary[@"error"][@"message"];
-            if ([s isKindOfClass:[NSString class]])
-                errorString = s;
-        }
-        if (!errorString)
-            errorString = underlyingError.localizedDescription;
-        if (!errorString)
-            errorString = BNCLocalizedString(@"The request was invalid.");
-        branchError = [NSError branchErrorWithCode:BNCBadRequestError localizedMessage:errorString];
-    }
-    else if (underlyingError) {
-        branchError = [NSError branchErrorWithCode:BNCServerProblemError error:underlyingError];
-    }
-
-    if (branchError) {
-        BNCLogError(@"An error prevented request to %@ from completing: %@",
-            operation.request.URL.absoluteString, branchError);
-    }
-
-    return branchError;
-}
+#pragma mark - Certificates
 
 + (SecKeyRef) publicSecKeyFromPKCS12CertChainData:(NSData*)keyData {
     OSStatus    status = errSecSuccess;
@@ -754,6 +637,276 @@ exit:
         }
     }
     return array;
+}
+
+@end
+
+#pragma mark - BNCNetworkAPIOperation
+
+@implementation BNCNetworkAPIOperation
+
+- (instancetype) initWithNetworkService:(id<BNCNetworkServiceProtocol>)networkService
+                               settings:(BNCSettings*)settings
+                                    URL:(NSURL*)URL
+                             dictionary:(NSDictionary*)dictionary
+                             completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion {
+    self = [super init];
+    if (!self) return self;
+    self.networkService = networkService;
+    self.settings = settings;
+    self.URL = URL;
+    self.dictionary = [dictionary mutableCopy];
+    self.completion = completion;
+    self.qualityOfService = NSQualityOfServiceUserInitiated;
+    self.name = [URL path];
+    self.identifier = [[NSUUID UUID] UUIDString];
+    return self;
+}
+
+- (BOOL) asynchronous {
+    return YES;
+}
+
+- (void) main {
+    NSInteger retry = -1;
+    NSError*error = nil;
+    NSDate*timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
+    {
+        do  {
+            retry++;
+            NSData *data = nil;
+            if (self.dictionary) {
+                NSError *error = nil;
+                self.dictionary[@"retryNumber"] = BNCWireFormatFromInteger(retry);
+                data = [NSJSONSerialization dataWithJSONObject:self.dictionary options:0 error:&error];
+                if (error) {
+                    BNCLogError(@"Can't convert to JSON: %@.", error);
+                    goto exit;
+                }
+            }
+
+            NSTimeInterval timeout = MIN(20.0, [timeoutDate timeIntervalSinceNow]);
+            if (timeout < 0.0) {
+                error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
+                goto exit;
+            }
+
+            NSMutableURLRequest*request =
+                [[NSMutableURLRequest alloc]
+                    initWithURL:self.URL
+                    cachePolicy:NSURLRequestReloadIgnoringCacheData
+                    timeoutInterval:timeout];
+            request.HTTPMethod = @"POST";
+            request.HTTPBody = data;
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+            dispatch_semaphore_t network_semaphore = dispatch_semaphore_create(0);
+            self.operation =
+                [self.networkService networkOperationWithURLRequest:request
+                    completion:^ (id<BNCNetworkOperationProtocol>operation) {
+                        dispatch_semaphore_signal(network_semaphore);
+                    }
+                ];
+            [self.operation start];
+            dispatch_semaphore_wait(network_semaphore, DISPATCH_TIME_FOREVER);
+            error = [self verifyNetworkOperation:self.operation];
+            if (error) {
+                BNCLogError(@"Bad network interface: %@.", error);
+                goto exit;
+            }
+
+            if (self.operation.error) {
+                BNCLogError(@"Network service error: %@.", error);
+            }
+
+        }
+        while (!self.isCancelled && [self.class canRetryOperation:self.operation]);
+
+    error = [self.class errorWithOperation:self.operation];
+    if (error) goto exit;
+
+    NSDictionary*dictionary = [self.class dictionaryWithJSONData:self.operation.responseData error:&error];
+    if (error) goto exit;
+
+    if (![dictionary isKindOfClass:NSDictionary.class]) {
+        error = [NSError branchErrorWithCode:BNCBadRequestError];
+        goto exit;
+    }
+    self.session = [BranchSession sessionWithDictionary:dictionary];
+
+    if (self.session.linkCreationURL.length)
+        self.settings.linkCreationURL = self.session.linkCreationURL;
+    if (self.session.deviceFingerprintID.length)
+        self.settings.deviceFingerprintID = self.session.deviceFingerprintID;
+    if (self.session.developerIdentityForUser.length)
+        self.settings.developerIdentityForUser = self.session.developerIdentityForUser;
+    if (self.session.sessionID.length)
+        self.settings.sessionID = self.session.sessionID;
+    if (self.session.identityID.length)
+        self.settings.identityID = self.session.identityID;
+
+    }
+exit:
+    self.error = error;
+    if (self.completion)
+        self.completion(self);
+}
+
+- (NSError*) verifyNetworkOperation:(id<BNCNetworkOperationProtocol>)operation {
+    if (!operation) {
+        NSString *message = BNCLocalizedString(
+            @"A network operation instance is expected to be returned by the"
+             " networkOperationWithURLRequest:completion: method."
+        );
+        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
+        return error;
+    }
+    if (![operation conformsToProtocol:@protocol(BNCNetworkOperationProtocol)]) {
+        NSString *message =
+            BNCLocalizedFormattedString(
+                @"Network operation of class '%@' does not conform to the BNCNetworkOperationProtocol.",
+                NSStringFromClass([operation class]));
+        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
+        return error;
+    }
+    if (!operation.startDate) {
+        NSString *message = BNCLocalizedString(
+            @"The network operation start date is not set. The Branch SDK expects the network operation"
+             " start date to be set by the network provider."
+        );
+        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
+        return error;
+    }
+    if (!operation.timeoutDate) {
+        NSString*message = BNCLocalizedString(
+            @"The network operation timeout date is not set. The Branch SDK expects the network operation"
+             " timeout date to be set by the network provider."
+        );
+        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
+        return error;
+    }
+    if (!operation.request) {
+        NSString *message = BNCLocalizedString(
+            @"The network operation request is not set. The Branch SDK expects the network operation"
+             " request to be set by the network provider."
+        );
+        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
+        return error;
+    }
+    return nil;
+}
+
++ (BOOL) canRetryOperation:(id<BNCNetworkOperationProtocol>)operation {
+    if (operation.error == nil && operation.HTTPStatusCode >= 200 && operation.HTTPStatusCode < 300)
+        return NO;
+    if (operation.HTTPStatusCode >= 500 || operation.HTTPStatusCode == 408)
+        return YES;
+    switch (operation.error.code) {
+    // Possible poor network condition codes. From NSURLError.h:
+    case NSURLErrorTimedOut:                // Timeout.
+    case NSURLErrorCannotFindHost:          // DNS error.
+    case NSURLErrorNetworkConnectionLost:   // Network dropped.
+    case NSURLErrorSecureConnectionFailed:  // SSL may have timed out.
+    case errSSLClosedAbort:                 // SSL may have timed out.
+        return YES;
+    default:
+        return NO;
+    }
+}
+
++ (NSDictionary*) dictionaryWithJSONData:(NSData*)data
+        error:(NSError*_Nullable __autoreleasing *_Nullable)error_ {
+    NSError*error = nil;
+    NSDictionary *dictionary = nil;
+    @try {
+        if ([data isKindOfClass:[NSData class]]) {
+            dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        } else {
+            error =
+                [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorCannotDecodeContentData
+                    userInfo:@{ NSLocalizedDescriptionKey: @"Can't decode JSON data."}];
+        }
+    }
+    @catch (id object) {
+        dictionary = nil;
+        if ([object isKindOfClass:[NSError class]]) {
+            error = object;
+        } else {
+            error =
+                [NSError errorWithDomain:NSCocoaErrorDomain code:NSURLErrorCannotDecodeContentData
+                    userInfo:@{ NSLocalizedDescriptionKey: @"Can't decode JSON data."}];
+        }
+    }
+exit:
+    if (error_) *error_ = error;
+    return dictionary;
+}
+
++ (NSError*) errorWithOperation:(id<BNCNetworkOperationProtocol>)operation {
+    NSError *underlyingError = operation.error;
+    NSInteger status = operation.HTTPStatusCode;
+    NSError *branchError = nil;
+
+    // Wrap up bad statuses w/ specific error messages
+    if (status >= 500 || status == 408) {
+        branchError = [NSError branchErrorWithCode:BNCServerProblemError error:underlyingError];
+    }
+    else if (status == 409) {
+        branchError = [NSError branchErrorWithCode:BNCDuplicateResourceError error:underlyingError];
+    }
+    else if (status >= 400) {
+
+        NSDictionary*dictionary = [self dictionaryWithJSONData:operation.responseData error:nil];
+        if (![dictionary isKindOfClass:NSDictionary.class])
+            dictionary = nil;
+
+        NSString *errorString = nil;
+        NSString *s = dictionary[@"error"];
+        if ([s isKindOfClass:[NSString class]]) {
+            errorString = s;
+        }
+        if (!errorString) {
+            s = dictionary[@"error"][@"message"];
+            if ([s isKindOfClass:[NSString class]])
+                errorString = s;
+        }
+        if (!errorString)
+            errorString = underlyingError.localizedDescription;
+        if (!errorString)
+            errorString = BNCLocalizedString(@"The request was invalid.");
+        branchError = [NSError branchErrorWithCode:BNCBadRequestError localizedMessage:errorString];
+    }
+    else if (underlyingError) {
+        branchError = [NSError branchErrorWithCode:BNCServerProblemError error:underlyingError];
+    }
+
+    if (branchError) {
+        BNCLogError(@"An error prevented request to %@ from completing: %@",
+            operation.request.URL.absoluteString, branchError);
+    }
+
+    return branchError;
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
+- (instancetype) initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    if (!self) return self;
+    self.URL = [aDecoder decodeObjectOfClass:NSURL.class forKey:@"URL"];
+    self.dictionary = [aDecoder decodeObjectOfClass:NSDictionary.class forKey:@"dictionary"];
+    self.identifier = [aDecoder decodeObjectOfClass:NSString.class forKey:@"identifier"];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.URL forKey:@"URL"];
+    [aCoder encodeObject:self.dictionary forKey:@"dictionary"];
+    [aCoder encodeObject:self.identifier forKey:@"identifier"];
 }
 
 @end

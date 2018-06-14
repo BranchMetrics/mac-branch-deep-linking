@@ -24,6 +24,9 @@ NSURL* BNCURLForBranchDataDirectory(void);
 + (NSData*_Nullable) loadDataNamed:(NSString*)name;
 + (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data;
 + (NSError*_Nullable) removeDataNamed:(NSString*)name;
+
++ (id _Nullable) unarchiveObjectNamed:(NSString*)name;
++ (NSError*_Nullable) archiveObject:(id<NSSecureCoding>)object named:(NSString*)name;
 @end
 
 NS_ASSUME_NONNULL_END

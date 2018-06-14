@@ -29,6 +29,7 @@
     self = [self initWithKey:@""];
     return self;
 }
+
 - (instancetype) initWithKey:(NSString *)key {
     self = [super init];
     self.key = [key copy];
@@ -197,6 +198,16 @@
         removeEventHandlerForEventClass:kInternetEventClass
         andEventID:kAEGetURL];
 #endif
+}
+
+#pragma mark - Properties
+
+- (void) setLimitFacebookTracking:(BOOL)limitFacebookTracking_ {
+    self.settings.limitFacebookTracking = limitFacebookTracking_;
+}
+
+- (BOOL) limitFacebookTracking {
+    return self.settings.limitFacebookTracking;
 }
 
 #pragma mark - Application State Changes

@@ -116,8 +116,8 @@
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        XCTAssert([request.HTTPMethod isEqualToString:@"POST"]);
-        XCTAssert([request.URL.absoluteString hasSuffix:@"/v2/event/standard"]);
+        XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+        XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
 
         NSMutableDictionary *expectedRequest =
             [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
@@ -134,6 +134,7 @@
         return [BNCTestNetworkService operationWithRequest:request response:responseString];
     };
 
+    [branch.networkAPIService clearNetworkQueue];
     XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event"];
     [branch logEvent:event completion:^(NSError * _Nullable error) {
         XCTAssertNil(error);

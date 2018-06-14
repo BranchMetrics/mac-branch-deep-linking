@@ -81,9 +81,8 @@
 + (instancetype) loadSettings {
     @synchronized(self) {
         BNCSettingsProxy*result = nil;
-        NSData*data = [BNCPersistence loadDataNamed:@"io.branch.sdk.settings"];
-        BNCSettings* settings =
-            (data) ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : [[BNCSettings alloc] init];
+        BNCSettings* settings = [BNCPersistence unarchiveObjectNamed:@"io.branch.sdk.settings"];
+        if (!settings) settings = [[BNCSettings alloc] init];
         Class foundClass = [settings class];
         Class proxyClass = [BNCSettingsProxy class];
         Class settingsClass = [BNCSettings class];
@@ -173,20 +172,7 @@
             dispatch_source_cancel(_saveTimer);
             _saveTimer = nil;
         }
-        NSError*error = nil;
-        @try {
-            NSData*data = [NSKeyedArchiver archivedDataWithRootObject:self];
-            error = [BNCPersistence saveDataNamed:@"io.branch.sdk.settings" data:data];
-        }
-        @catch (id exception) {
-            if (error) {
-                BNCLogDebugSDK(@"Exception: %@.", exception);
-            } else {
-                error = [NSError errorWithDomain:NSCocoaErrorDomain
-                    code:NSFileWriteUnknownError userInfo:@{NSUnderlyingErrorKey: exception}];
-            }
-        }
-        if (error) BNCLogDebugSDK(@"%@", error);
+        NSError*error = [BNCPersistence archiveObject:self named:@"io.branch.sdk.settings"];
         if (self.settingsSavedBlock) {
             BNCPerformBlockOnMainThreadAsync(^{
                 self.settingsSavedBlock((BNCSettings*)self->_proxy, error);

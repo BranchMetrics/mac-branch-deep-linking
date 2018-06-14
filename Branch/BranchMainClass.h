@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, strong) NSString*    key;
 @property (atomic, assign) BOOL         useCertificatePinning;
-@property (atomic, strong) NSString*    branchAPIServerURL;
+@property (atomic, copy)   NSString*    branchAPIServerURL;
 @property (atomic, assign) Class        networkServiceClass;
 @property (atomic, strong) NSArray<NSString*>* blackListURLRegex;
 @property (atomic, strong) BNCSettings* settings;
@@ -86,6 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, weak) id<BranchDelegate> delegate;
 @property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
 @property (atomic, strong, readonly) BranchConfiguration*configuration;
+@property (atomic, assign) BOOL limitFacebookTracking;
 
 // Move to category
 @property (atomic, strong, readonly) BNCNetworkAPIService* networkAPIService;

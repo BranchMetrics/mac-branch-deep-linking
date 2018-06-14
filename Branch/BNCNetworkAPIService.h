@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BNCNetworkAPIOperation
 
-@interface BNCNetworkAPIOperation : NSObject
+@interface BNCNetworkAPIOperation : NSOperation
 @property (atomic, strong) id<BNCNetworkOperationProtocol> operation;
 @property (atomic, strong) NSError*_Nullable error;
 @property (atomic, strong) BranchSession*_Nullable session;
@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
         dictionary:(NSDictionary*)dictionary
         completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
 
+- (void) clearNetworkQueue;
 @end
 
 NS_ASSUME_NONNULL_END

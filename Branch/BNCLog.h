@@ -227,11 +227,11 @@ extern void BNCLogFlushMessages(void);
 
 ///Write the name of the current method to the log.
 #define BNCLogMethodName() \
-    BNCLogDebug(@"Method '%@'.",  NSStringFromSelector(_cmd))
+    BNCLogDebugSDK(@"Method '%@'.",  NSStringFromSelector(_cmd))
 
 ///Write the name of the current function to the log.
 #define BNCLogFunctionName() \
-    BNCLogDebug(@"Function '%s'.", __FUNCTION__)
+    BNCLogDebugSDK(@"Function '%s'.", __FUNCTION__)
 
 #ifdef __cplusplus
 }

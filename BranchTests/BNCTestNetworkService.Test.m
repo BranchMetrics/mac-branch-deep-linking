@@ -24,19 +24,22 @@
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:config];
 
+    XCTestExpectation*requestExpectation = [self expectationWithDescription:@"testTheTestService-1"];
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        XCTAssert([request.HTTPMethod isEqualToString:@"POST"]);
-        XCTAssert([request.URL.absoluteString containsString:@"logout"]);
+        XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+        XCTAssertEqualObjects(request.URL.path, @"/v1/logout");
         NSMutableDictionary*truthDictionary = [self mutableDictionaryFromBundleJSONWithKey:@"logoutRequest"];
         NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
         XCTAssertNotNil(truthDictionary);
         XCTAssertNotNil(requestDictionary);
 
+        [requestExpectation fulfill];
         NSString*responseString = [self stringFromBundleJSONWithKey:@"logoutResponse"];
         return [BNCTestNetworkService operationWithRequest:request response:responseString];
     };
 
-    XCTestExpectation*expectation = [self expectationWithDescription:@"testTheTestService"];
+    [branch.networkAPIService clearNetworkQueue];
+    XCTestExpectation*expectation = [self expectationWithDescription:@"testTheTestService-2"];
     [branch logoutWithCallback:^(NSError * _Nullable error) {
         XCTAssertNil(error);
         [expectation fulfill];

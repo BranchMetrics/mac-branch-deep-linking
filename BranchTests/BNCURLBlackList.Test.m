@@ -90,7 +90,7 @@
 
 - (void) testDownloadBadURLs {
     // Test download list.
-    XCTestExpectation *expectation = [self expectationWithDescription:@"BlackList Download"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testDownloadBadURLs"];
 
     Branch*branch = [Branch new];
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
@@ -128,13 +128,13 @@
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
     [branch startWithConfiguration:configuration];
 
-    XCTestExpectation *expectation = [self expectationWithDescription:@"BlackList Download"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testDownloadGoodURLs"];
     BNCURLBlackList *blackList = [BNCURLBlackList new];
     blackList.blackListJSONURL = [NSURL URLWithString:@"https://cdn.branch.io/sdk/uriskiplist_tv1.json"];
     [blackList refreshBlackListFromServerWithBranch:branch completion:
         ^(BNCURLBlackList * _Nonnull blackList, NSError * _Nullable error) {
             XCTAssertNil(error);
-            XCTAssertTrue(blackList.blackList.count == 7);
+            XCTAssertEqual(blackList.blackList.count, 7);
             [expectation fulfill];
         }
     ];
@@ -150,19 +150,27 @@
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     [branch startWithConfiguration:configuration];
+    [branch.networkAPIService clearNetworkQueue];
 
-    XCTestExpectation *expectation = [self expectationWithDescription:@"OpenRequest Expectation"];
+    __block NSInteger callCount = 0;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testStandardBlackList"];
     BNCTestNetworkService.requestHandler =
-        ^id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-            NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-            NSLog(@"d: %@", dictionary);
-            NSString* link = dictionary[@"external_intent_uri"];
-            NSString *pattern =
-                @"^(?i)(?!(http|https):).*(:|:.*\\b)(password|o?auth|o?auth.?token|access|access.?token)\\b";
-                // @"^(?i).+:.*[?].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
-            NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
-            XCTAssertEqualObjects(link, pattern);
-            [expectation fulfill];
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            // Called twice: once for open and once to get list
+            ++callCount;
+            if (callCount == 1) {
+                NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+                NSLog(@"URL: %@", request.URL);
+                NSLog(@"d: %@", dictionary);
+                NSString* link = dictionary[@"external_intent_uri"];
+                NSString *pattern =
+                    @"^(?i)(?!(http|https):).*(:|:.*\\b)(password|o?auth|o?auth.?token|access|access.?token)\\b";
+                    // @"^(?i).+:.*[?].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
+                NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
+                XCTAssertEqualObjects(link, pattern);
+                BNCAfterSecondsPerformBlockOnMainThread(0.2, ^{ [expectation fulfill]; });
+            }
+            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
 
     NSString *url = @"https://myapp.app.link/bob/link?oauth=true";
@@ -182,17 +190,26 @@
         @"\\/bob\\/"
     ];
     [branch startWithConfiguration:configuration];
+    [branch.networkAPIService clearNetworkQueue];
 
-    XCTestExpectation *expectation = [self expectationWithDescription:@"OpenRequest Expectation"];
+    __block NSInteger callCount = 0;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testUserBlackList"];
     BNCTestNetworkService.requestHandler =
-        ^id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-            NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-            NSLog(@"d: %@", dictionary);
-            NSString* link = dictionary[@"external_intent_uri"];
-            NSString *pattern =  @"\\/bob\\/";
-            NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
-            XCTAssert([link isEqualToString:pattern]);
-            [expectation fulfill];
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            // Called twice: once for open and once to get list
+            ++callCount;
+            if (callCount == 1) {
+                XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+                XCTAssertEqualObjects(request.URL.path, @"/v1/install");
+                NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+                NSLog(@"d: %@", dictionary);
+                NSString* link = dictionary[@"external_intent_uri"];
+                NSString *pattern =  @"\\/bob\\/";
+                NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
+                XCTAssertEqualObjects(link, pattern);
+                BNCAfterSecondsPerformBlockOnMainThread(0.2, ^{ [expectation fulfill]; });
+            }
+            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
 
     NSString *url = @"https://myapp.app.link/bob/link";

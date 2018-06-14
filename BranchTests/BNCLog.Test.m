@@ -82,7 +82,7 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
     BNCLogMethodName();
     BNCLogFlushMessages();
     XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
-        @"[branch.io] BNCLog.Test.m(**) Debug: Method 'testLog'."]);
+        @"[branch.io] BNCLog.Test.m(**) DebugSDK: Method 'testLog'."]);
 
     //  Test breakpoints --
 
