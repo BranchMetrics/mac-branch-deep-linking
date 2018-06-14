@@ -471,9 +471,9 @@
 
 #pragma mark - Identity
 
-- (void)setIdentity:(NSString*)userID callback:(void (^_Nullable)(NSError*_Nullable error))callback {
+- (void)setIdentity:(NSString*)userID callback:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))callback {
     if (!userID || [self.settings.developerIdentityForUser isEqualToString:userID]) {
-        if (callback) callback(nil);
+        if (callback) callback(nil, nil);   // TODO:
         return;
     }
     // [self initSessionIfNeededAndNotInProgress];
@@ -486,7 +486,9 @@
     [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
-            BNCPerformBlockOnMainThreadAsync(^{ if (callback) callback(operation.error); });
+            BNCPerformBlockOnMainThreadAsync(^{
+                if (callback) callback(operation.session, operation.error);
+            });
         }];
 }
 

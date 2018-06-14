@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 //+ (instancetype) sharedInstance;
 + (instancetype) loadSettings;
 - (instancetype) init NS_DESIGNATED_INITIALIZER;
+- (void) clearAllSettings;
 - (void) setNeedsSave;
 - (void) save;
 @property (atomic, copy) void (^_Nullable settingsSavedBlock)(BNCSettings*settings, NSError*_Nullable error);

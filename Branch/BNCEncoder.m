@@ -140,4 +140,25 @@
     return nil;
 }
 
++ (NSError*) copyInstance:(id)toInstance
+         fromInstance:(id)fromInstance
+             ignoring:(NSArray<NSString*>*_Nullable)ignoreIvarsArray {
+    NSError*error = nil;
+    @try {
+        NSMutableData*data = [[NSMutableData alloc] init];
+        NSKeyedArchiver*archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [BNCEncoder encodeInstance:fromInstance withCoder:archiver ignoring:ignoreIvarsArray];
+        [archiver finishEncoding];
+        NSKeyedUnarchiver*unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        unarchiver.requiresSecureCoding = YES;
+        [BNCEncoder decodeInstance:toInstance withCoder:unarchiver ignoring:ignoreIvarsArray];
+    }
+    @catch (id e) {
+        NSString*message = [NSString stringWithFormat:@"Can't copy '%@': %@.", fromInstance, e];
+        BNCLogError(@"%@", message);
+        error = [NSError errorWithDomain:NSCocoaErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey: message}];
+    }
+    return error;
+}
+
 @end

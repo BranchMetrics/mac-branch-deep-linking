@@ -22,6 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
         withCoder:(NSCoder*)coder
         ignoring:(NSArray<NSString*>*_Nullable)ignoreIvars;
 
++ (NSError*) copyInstance:(id)toInstance
+        fromInstance:(id)fromInstance
+        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvarsArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

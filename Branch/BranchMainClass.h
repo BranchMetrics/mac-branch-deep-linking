@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
           The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
  */
-- (void)setIdentity:(NSString*)userId callback:(void (^_Nullable)(NSError*_Nullable error))callback;
+- (void)setIdentity:(NSString*)userId callback:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))callback;
 
 /**
  Indicates whether or not this user has a custom identity specified for them. Note that this is *independent

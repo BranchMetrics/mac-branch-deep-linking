@@ -99,11 +99,16 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 
 #pragma mark - Actions
 
+- (NSString*) errorMessage:(NSError*)error {
+    if (error) return [NSString stringWithFormat:@"%@ %@", error.localizedDescription, error.localizedFailureReason];
+    return @"< None >";
+}
+
 - (void) setIdentity:(id)sender {
-    [[Branch sharedInstance] setIdentity:@"Bob" callback:^ (NSError*error) {
+    [[Branch sharedInstance] setIdentity:@"Bob" callback:^ (BranchSession*session, NSError*error) {
         [self clearUIFields];
-        self.stateField.stringValue = @"Set Identity: 'Bob'";
-        self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";
+        self.stateField.stringValue = [NSString stringWithFormat:@"Set Identity: '%@'", session.developerIdentityForUser];
+        self.errorField.stringValue = [self errorMessage:error];
     }];
 }
 
@@ -112,7 +117,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     [[Branch sharedInstance] logoutWithCallback:^ (NSError*error) {
         [self clearUIFields];
         self.stateField.stringValue = @"Log User Out";
-        self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";
+        self.errorField.stringValue = [self errorMessage:error];
     }];
 }
 

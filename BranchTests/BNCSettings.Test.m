@@ -11,6 +11,7 @@
 #import "BNCTestCase.h"
 #import "BNCSettings.h"
 #import <objc/runtime.h>
+#import <stdatomic.h> // import not available in Xcode 7
 
 @interface BNCSettingsTest : BNCTestCase
 @end
@@ -18,19 +19,46 @@
 @implementation BNCSettingsTest
 
 - (void) testSettingsTriggerSave {
-    __block XCTestExpectation*expectation = [self expectationWithDescription:@"testSettingsSave"];
-
     BNCSettings*settings = [[BNCSettings alloc] init];
+    XCTestExpectation*expectationClear = [self expectationWithDescription:@"testSettingsClear"];
     settings.settingsSavedBlock = ^ (BNCSettings*_Nonnull settings, NSError*error) {
-        [expectation fulfill];
+        XCTAssertNotNil(settings);
+        XCTAssertNil(error);
+        XCTAssertEqual(settings.limitFacebookTracking, NO);
+        XCTAssertEqualObjects(settings.identityID, nil);
+        [expectationClear fulfill];
+    };
+    [settings clearAllSettings];
+    [self awaitExpectations];
+    [self resetExpectations];
+
+    XCTestExpectation*expectationSave = [self expectationWithDescription:@"testSettingsSave"];
+    settings.settingsSavedBlock = ^ (BNCSettings*_Nonnull settings, NSError*error) {
+        XCTAssertNotNil(settings);
+        XCTAssertNil(error);
+        XCTAssertEqual(settings.limitFacebookTracking, YES);
+        XCTAssertEqualObjects(settings.identityID, @"12345");
+        [expectationSave fulfill];
     };
     settings.limitFacebookTracking = YES;
+    settings.identityID = @"12345";
     [self awaitExpectations];
+    settings.settingsSavedBlock = nil;
+}
 
-    [self resetExpectations];
-    expectation = [self expectationWithDescription:@"testSettingsSaveDictionary"];
+- (void) testSaveDictionary {
+    BNCSettings*settings = [[BNCSettings alloc] init];
+    [settings clearAllSettings];
+    XCTestExpectation*expectation = [self expectationWithDescription:@"testSaveDictionary"];
+    settings.settingsSavedBlock = ^ (BNCSettings*_Nonnull settings, NSError*error) {
+        XCTAssertNotNil(settings);
+        XCTAssertNil(error);
+        XCTAssertEqualObjects(settings.instrumentationDictionary, @{@"howdy":@"partner"});
+        [expectation fulfill];
+    };
     settings.instrumentationDictionary[@"howdy"] = @"partner";
     [self awaitExpectations];
+    settings.settingsSavedBlock = nil;
 }
 
 - (void) testSettingsSaveAndLoad {
@@ -48,32 +76,28 @@
     XCTAssertEqual(s.limitFacebookTracking, t.limitFacebookTracking);
     XCTAssertEqualObjects(s.instrumentationDictionary, t.instrumentationDictionary);
 
-    // Make sure auto-save is triggered on new object:
+    // Make sure auto-save is triggered on the new settings object:
     __block XCTestExpectation*expectation = [self expectationWithDescription:@"testSettingsSave"];
-    t.settingsSavedBlock = ^ (BNCSettings*_Nonnull settings, NSError*error) {
+    t.settingsSavedBlock = ^ (BNCSettings*settings, NSError*_Nullable error) {
         [expectation fulfill];
     };
-    t.limitFacebookTracking = YES;
+    t.limitFacebookTracking = NO;
     [self awaitExpectations];
+    t.settingsSavedBlock = nil;
 }
 
-- (void) testSettingsDetectRace {
-    __block int count = 0;
-    __block XCTestExpectation*expectation = [self expectationWithDescription:@"testSettingsDetectRace"];
+- (void) testSettingsDetectRaceAndFrequency {
+    __block _Atomic(long) count = 0;
     BNCSettings*s = [[BNCSettings alloc] init];
     s.settingsSavedBlock = ^ (BNCSettings*_Nonnull settings, NSError*error) {
-        count++;
-        if (count > 1) {
-            [expectation fulfill];
-            expectation = nil;
-        } else {
-            BNCSleepForTimeInterval(0.5);
-        }
+        atomic_fetch_add(&count, 1);
+        NSLog(@"Count: %ld.", count);
     };
-    BNCSleepForTimeInterval(1.1);
+    BNCSleepForTimeInterval(1.5);
+    XCTAssertEqual(atomic_load(&count), 0);
     s.limitFacebookTracking = YES;
-    [self waitForExpectationsWithTimeout:10.0 handler:nil];
-    XCTAssertTrue(count > 1);
+    BNCSleepForTimeInterval(5.0);
+    XCTAssertEqual(atomic_load(&count), 1);
 }
 
 - (void) testProxy {

@@ -27,8 +27,18 @@ static inline void BNCAfterSecondsPerformBlockOnMainThread(NSTimeInterval second
 	dispatch_after(BNCDispatchTimeFromSeconds(seconds), dispatch_get_main_queue(), block);
 }
 
+static inline void BNCAfterSecondsPerformBlock(NSTimeInterval seconds, dispatch_block_t block) {
+    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_after(BNCDispatchTimeFromSeconds(seconds), queue, block);
+}
+
 static inline void BNCPerformBlockOnMainThreadAsync(dispatch_block_t block) {
     dispatch_async(dispatch_get_main_queue(), block);
+}
+
+static inline void BNCPerformBlockAsync(dispatch_block_t block) {
+    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_async(queue, block);
 }
 
 static inline void BNCPerformBlockOnMainThreadSync(dispatch_block_t block) {

@@ -15,6 +15,8 @@
 #import "BNCPersistence.h"
 @class BNCSettingsProxy;
 
+static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.settings";
+
 @interface BNCSettings () {
     dispatch_queue_t _saveQueue;
     dispatch_source_t _saveTimer;
@@ -42,8 +44,10 @@
         [invocation setTarget:self->_settings];
         [invocation invoke];
         NSString* selectorName = NSStringFromSelector(invocation.selector);
+        // NSLog(@"Proxy trigger '%@'.", selectorName);
         if ([selectorName hasPrefix:@"set"] &&
-            ![selectorName isEqualToString:@"setNeedsSave"]) {
+            !([selectorName isEqualToString:@"setNeedsSave"] ||
+              [selectorName isEqualToString:@"setSettingsSavedBlock:"])) {
             [self->_settings setNeedsSave];
         }
     }
@@ -61,6 +65,8 @@
 
 @implementation BNCSettings
 
+/*
+// TODO:
 + (instancetype) sharedInstance {
     // TODO: There's a weird ARC retain count problem here where the proxy is released at the end.
     // It's duct tape fixed by having sharedInstance have references to both the proxy and object.
@@ -77,11 +83,12 @@
     });
     return (BNCSettings*)sharedInstanceProxy;
 }
+*/
 
 + (instancetype) loadSettings {
     @synchronized(self) {
         BNCSettingsProxy*result = nil;
-        BNCSettings* settings = [BNCPersistence unarchiveObjectNamed:@"io.branch.sdk.settings"];
+        BNCSettings* settings = [BNCPersistence unarchiveObjectNamed:BNCSettingsPersistenceName];
         if (!settings) settings = [[BNCSettings alloc] init];
         Class foundClass = [settings class];
         Class proxyClass = [BNCSettingsProxy class];
@@ -114,10 +121,7 @@
 }
 
 - (void) dealloc {
-    if (_saveTimer) {
-        dispatch_source_cancel(_saveTimer);
-        _saveTimer = nil;
-    }
+    [self save];
 }
 
 + (NSArray<NSString*>*) ignoreMembers {
@@ -145,7 +149,7 @@
         NSTimeInterval kSaveTime = 1.0; // TODO: shorten?
 
         if (!_saveQueue)
-            _saveQueue = dispatch_queue_create("io.branch.sdk.settings", DISPATCH_QUEUE_SERIAL);
+            _saveQueue = dispatch_queue_create(BNCSettingsPersistenceName.UTF8String, DISPATCH_QUEUE_SERIAL);
 
         _saveTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _saveQueue);
         if (!_saveTimer) return;
@@ -172,12 +176,16 @@
             dispatch_source_cancel(_saveTimer);
             _saveTimer = nil;
         }
-        NSError*error = [BNCPersistence archiveObject:self named:@"io.branch.sdk.settings"];
-        if (self.settingsSavedBlock) {
-            BNCPerformBlockOnMainThreadAsync(^{
-                self.settingsSavedBlock((BNCSettings*)self->_proxy, error);
-            });
-        }
+        NSError*error = [BNCPersistence archiveObject:self named:BNCSettingsPersistenceName];
+        if (self.settingsSavedBlock) self.settingsSavedBlock((BNCSettings*)self->_proxy, error);
+    }
+}
+
+- (void) clearAllSettings {
+    @synchronized(self) {
+        BNCSettings*settings = [[BNCSettings alloc] init];
+        [BNCEncoder copyInstance:self fromInstance:((BNCSettingsProxy*)settings)->_settings ignoring:self.class.ignoreMembers];
+        [self setNeedsSave];
     }
 }
 

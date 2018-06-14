@@ -744,7 +744,6 @@ exit:
         self.settings.sessionID = self.session.sessionID;
     if (self.session.identityID.length)
         self.settings.identityID = self.session.identityID;
-
     }
 exit:
     self.error = error;
