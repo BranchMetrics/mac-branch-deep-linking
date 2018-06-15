@@ -72,4 +72,24 @@
     XCTAssert(t >= -1.5 && t < -1.0);
 }
 
+- (void) testBNCPerformBlockAsync {
+    XCTestExpectation*expectation = [self expectationWithDescription:@"testBNCPerformBlockAsync"];
+    BNCPerformBlockAsync( ^ {
+        [expectation fulfill];
+    });
+    [self awaitExpectations];
+}
+
+- (void) testBNCAfterSecondsPerformBlock {
+    NSDate*date = [NSDate date];
+    XCTestExpectation*expectation =
+        [self expectationWithDescription:@"BNCAfterSecondsPerformBlock"];
+    BNCAfterSecondsPerformBlock(1.0, ^ {
+        [expectation fulfill];
+    });
+    [self awaitExpectations];
+    NSTimeInterval t = [date timeIntervalSinceNow];
+    XCTAssert(t >= -1.25 && t < -1.0);
+}
+
 @end

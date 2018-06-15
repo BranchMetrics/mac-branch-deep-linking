@@ -186,16 +186,17 @@
 
 - (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
     @synchronized (self) {
+        NSError*error = nil;
         _pinnedPublicKeys = [NSMutableArray array];
         for (id secKey in publicKeys) {
             if (CFGetTypeID((SecKeyRef)secKey) == SecKeyGetTypeID())
                 [_pinnedPublicKeys addObject:secKey];
             else {
-                return [NSError errorWithDomain:NSNetServicesErrorDomain
+                error = [NSError errorWithDomain:NSNetServicesErrorDomain
                     code:NSNetServicesBadArgumentError userInfo:nil];
             }
         }
-        return nil;
+        return error;
     }
 }
 
@@ -247,7 +248,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
             goto exit;
         }
 
-        if (localPinnedKeys.count == 0) {
+        if (localPinnedKeys == nil) {
             trusted = YES;
             goto exit;
         }

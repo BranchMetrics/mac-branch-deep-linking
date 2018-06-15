@@ -21,6 +21,7 @@
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
     BranchConfiguration*configuration =
         [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
+    configuration.useCertificatePinning = YES;
     [[Branch sharedInstance] startWithConfiguration:configuration];
 
     [[NSNotificationCenter defaultCenter]
