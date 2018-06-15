@@ -21,8 +21,6 @@
 @property NSData                *responseData;
 @property NSURLSessionTask      *sessionTask;
 @property NSError               *error;
-@property NSDate                *startDate;
-@property NSDate                *timeoutDate;
 @property (copy, nullable) void (^completionBlock)(BNCNetworkOperation*);
 @end
 
@@ -155,9 +153,8 @@
 }
 
 - (void) startOperation:(BNCNetworkOperation*)operation {
+    NSDate*startDate = [NSDate date];
     operation.networkService = self;
-    operation.startDate = [NSDate date];
-    operation.timeoutDate = [operation.startDate dateByAddingTimeInterval:operation.request.timeoutInterval];
     operation.sessionTask =
         [self.session dataTaskWithRequest:operation.request
             completionHandler:
@@ -168,7 +165,7 @@
                 NSString*responseString = [self.class formattedStringWithData:data];
                 BNCLogDebug(@"Network finish operation %@ %1.3fs. Status %ld error %@.\n%@.",
                     operation.request.URL.absoluteString,
-                    - [operation.startDate timeIntervalSinceNow],
+                    - [startDate timeIntervalSinceNow],
                     (long)operation.HTTPStatusCode,
                     operation.error,
                     responseString);

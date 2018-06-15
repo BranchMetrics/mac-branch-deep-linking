@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 @property (readonly) NSURLRequest *request;
 
-/// The response from the server.
+/// The response code from the server.
 @required
 @property (readonly) NSInteger HTTPStatusCode;
 
@@ -58,21 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Any errors that occurred during the request.
 @required
 @property (readonly) NSError*_Nullable error;
-
-/// The original start date of the operation. This should be set by the network service provider
-/// when the operation is started.
-@required
-@property (readonly) NSDate*_Nullable startDate;
-
-/// The timeout date for the operation.  This is calculated and set by the underlying network service
-/// provider by taking the original start date and adding the timeout interval of the URL request.
-/// It should be set once (and not recalculated for each retry) by the network service.
-@required
-@property (readonly) NSDate*_Nullable timeoutDate;
-
-/// A dictionary for the Branch SDK to store operation user info.
-@required
-@property (strong) NSDictionary*_Nullable userInfo;
 
 /// Starts the network operation.
 @required
@@ -105,10 +90,6 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 - (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion;
-
-/// A dictionary for the Branch SDK to store operation user info.
-@required
-@property (strong) NSDictionary*_Nullable userInfo;
 
 /// Pins the session to the array of public keys.
 @optional

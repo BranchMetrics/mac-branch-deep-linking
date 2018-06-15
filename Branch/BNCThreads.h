@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-///@group Blocks and Threads
+///@name Blocks and Threads
 #pragma mark - Blocks and Threads
 
 static inline uint64_t BNCNanoSecondsFromTimeInterval(NSTimeInterval interval) {

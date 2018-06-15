@@ -136,12 +136,12 @@
     }
 }
 
-- (void) collectInstrumentationMetricsWithOperation:(id<BNCNetworkOperationProtocol>)operation {
+- (void) collectInstrumentationMetricsWithOperation:(BNCNetworkAPIOperation*)operation {
     @synchronized(self) {
         // Multiplying by negative because startTime happened in the past
         NSTimeInterval elapsedTime = [operation.startDate timeIntervalSinceNow] * -1000.0;
         NSString *lastRoundTripTime = [[NSNumber numberWithDouble:floor(elapsedTime)] stringValue];
-        NSString *path = [operation.request.URL path];
+        NSString *path = [operation.operation.request.URL path];
         NSString *brttKey = [NSString stringWithFormat:@"%@-brtt", path];
         self.settings.instrumentationDictionary = nil;
         self.settings.instrumentationDictionary[brttKey] = lastRoundTripTime;
@@ -566,22 +566,6 @@ exit:
             BNCLocalizedFormattedString(
                 @"Network operation of class '%@' does not conform to the BNCNetworkOperationProtocol.",
                 NSStringFromClass([operation class]));
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    if (!operation.startDate) {
-        NSString *message = BNCLocalizedString(
-            @"The network operation start date is not set. The Branch SDK expects the network operation"
-             " start date to be set by the network provider."
-        );
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
-        return error;
-    }
-    if (!operation.timeoutDate) {
-        NSString*message = BNCLocalizedString(
-            @"The network operation timeout date is not set. The Branch SDK expects the network operation"
-             " timeout date to be set by the network provider."
-        );
         NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError localizedMessage:message];
         return error;
     }

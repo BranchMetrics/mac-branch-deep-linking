@@ -73,7 +73,7 @@
 }
 
 - (void) testBNCPerformBlockAsync {
-    XCTestExpectation*expectation = [self expectationWithDescription:@"testBNCPerformBlockAsync"];
+    XCTestExpectation*expectation = [self expectationWithDescription:@"BNCPerformBlockAsync"];
     BNCPerformBlockAsync( ^ {
         [expectation fulfill];
     });

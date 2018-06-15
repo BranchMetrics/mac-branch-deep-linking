@@ -19,11 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) NSMutableURLRequest* request;
 @property (readonly) NSError*_Nullable error;
-@property (readonly) NSDate*_Nullable startDate;
-@property (readonly) NSDate*_Nullable timeoutDate;
 @property (readonly) NSInteger        HTTPStatusCode;
 @property (readonly) NSData*_Nullable responseData;
-@property (atomic, strong) NSDictionary*_Nullable userInfo;
 
 - (void) start;
 - (void) cancel;
@@ -41,7 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// An array of host domains that we will allow with a self-signed SSL cert.
 @property (atomic, strong, null_resettable) NSMutableSet<NSString*>* anySSLCertHosts;
 @property (atomic, assign) NSInteger maxConcurrentOperationCount;
-@property (atomic, strong) NSDictionary*_Nullable userInfo;
 @end
 
 NS_ASSUME_NONNULL_END

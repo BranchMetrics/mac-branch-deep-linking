@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BNCNetworkAPIOperation : NSOperation
 @property (atomic, strong) id<BNCNetworkOperationProtocol> operation;
+@property (atomic, strong) NSDate*_Nullable startDate;
+@property (atomic, strong) NSDate*_Nullable timeoutDate;
 @property (atomic, strong) NSError*_Nullable error;
 @property (atomic, strong) BranchSession*_Nullable session;
 @end
