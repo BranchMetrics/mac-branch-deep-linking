@@ -20,12 +20,14 @@
     #include "BNCWireFormat.h"
 
     addString(sessionID,            session_id);
-    addString(developerIdentityForUser, identity);
+    addString(userIdentityForDeveloper, identity);
     addString(deviceFingerprintID,  device_fingerprint_id);
     addString(identityID,           identity_id);
     addString(linkCreationURL,      link);
     
     NSString*dataString = dictionary[@"data"];
+    if (!dataString) dataString = dictionary[@"referring_data"];
+
     if (dataString) {
         NSData*dataData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
         if (dataData) {
@@ -37,6 +39,8 @@
             addBoolean(isBranchURL,         +clicked_branch_link);
             addURL(referringURL,            ~referring_link);
         }
+    } else {
+        object.data = dictionary;
     }
 
     return object;

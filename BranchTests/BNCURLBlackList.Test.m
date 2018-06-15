@@ -200,7 +200,10 @@
             ++callCount;
             if (callCount == 1) {
                 XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-                XCTAssertEqualObjects(request.URL.path, @"/v1/install");
+                XCTAssertTrue(
+                    [request.URL.path containsString:@"/v1/install"] ||
+                    [request.URL.path containsString:@"/v1/open"]
+                );
                 NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
                 NSLog(@"d: %@", dictionary);
                 NSString* link = dictionary[@"external_intent_uri"];

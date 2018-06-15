@@ -58,4 +58,3 @@ static inline void BNCSleepForTimeInterval(NSTimeInterval seconds) {
 }
 
 NS_ASSUME_NONNULL_END
-

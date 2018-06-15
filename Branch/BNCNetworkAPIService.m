@@ -738,8 +738,8 @@ exit:
         self.settings.linkCreationURL = self.session.linkCreationURL;
     if (self.session.deviceFingerprintID.length)
         self.settings.deviceFingerprintID = self.session.deviceFingerprintID;
-    if (self.session.developerIdentityForUser.length)
-        self.settings.developerIdentityForUser = self.session.developerIdentityForUser;
+    if (self.session.userIdentityForDeveloper.length)
+        self.settings.userIdentityForDeveloper = self.session.userIdentityForDeveloper;
     if (self.session.sessionID.length)
         self.settings.sessionID = self.session.sessionID;
     if (self.session.identityID.length)

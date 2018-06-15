@@ -116,23 +116,22 @@
     BNCForceNSDataCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
 
+    self.settings = [BNCSettings loadSettings];
     if (!configuration.isValidConfiguration) {
         [NSException raise:NSInvalidArgumentException format:@"Invalid configuration."];
     }
+
     self.configuration = [configuration copy];
     self.configuration.settings = self.settings;
-    self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:configuration];
-    self.settings = [BNCSettings loadSettings];
+    self.networkAPIService = [[BNCNetworkAPIService alloc] initWithConfiguration:self.configuration];
     self.URLBlackList =
         [[BNCURLBlackList alloc]
             initWithBlackList:self.settings.URLBlackList
             version:self.settings.URLBlackListVersion];
-
     self.userURLBlackList =
         [[BNCURLBlackList alloc]
             initWithBlackList:self.configuration.blackListURLRegex
-            version:self.settings.URLBlackListVersion];
-
+            version:0];
 
 #if TARGET_OS_OSX
 
@@ -471,8 +470,9 @@
 
 #pragma mark - Identity
 
-- (void)setIdentity:(NSString*)userID callback:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))callback {
-    if (!userID || [self.settings.developerIdentityForUser isEqualToString:userID]) {
+- (void)setIdentity:(NSString*)userID
+           callback:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))callback {
+    if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
         if (callback) callback(nil, nil);   // TODO:
         return;
     }
@@ -487,13 +487,16 @@
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
             BNCPerformBlockOnMainThreadAsync(^{
+                if (!operation.error)
+                    operation.session.userIdentityForDeveloper = userID;
                 if (callback) callback(operation.session, operation.error);
             });
-        }];
+        }
+    ];
 }
 
 - (BOOL)userIsIdentified {
-    return self.settings.developerIdentityForUser != nil;
+    return self.settings.userIdentityForDeveloper != nil;
 }
 
 #pragma mark - Logout
@@ -508,7 +511,7 @@
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
             if (!operation.error)
-                self.settings.developerIdentityForUser = nil;
+                self.settings.userIdentityForDeveloper = nil;
             BNCPerformBlockOnMainThreadAsync(^{ if (callback) callback(operation.error); });
         }];
 }
@@ -566,18 +569,10 @@
                     if (completion) completion(nil, operation.error);
                     return;
                 }
-                NSURL*url = nil;
-                NSDictionary*dictionary = nil;
-                if ([operation.operation.responseData isKindOfClass:[NSDictionary class]])
-                    dictionary = (id) operation.operation.responseData;
-                NSString*urlString = dictionary[@"url"];
-                if (urlString) url = [NSURL URLWithString:urlString];
-                if (url) {
-                    if (completion) completion(url, nil);
-                    return;
-                }
-                NSError*error = [NSError branchErrorWithCode:BNCBadRequestError];
-                if (completion) completion(nil, error);
+                NSError*error = nil;
+                NSURL*url = BNCURLFromWireFormat(operation.session.data[@"url"]);
+                if (!url) error = [NSError branchErrorWithCode:BNCBadRequestError];
+                if (completion) completion(url, error);
             });
         }];
 }

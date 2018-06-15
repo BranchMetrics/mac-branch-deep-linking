@@ -45,6 +45,8 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
         [invocation invoke];
         NSString* selectorName = NSStringFromSelector(invocation.selector);
         // NSLog(@"Proxy trigger '%@'.", selectorName);
+        // if ([selectorName isEqualToString:@"setIdentityID:"])
+        //    NSLog(@"%@", selectorName);
         if ([selectorName hasPrefix:@"set"] &&
             !([selectorName isEqualToString:@"setNeedsSave"] ||
               [selectorName isEqualToString:@"setSettingsSavedBlock:"])) {

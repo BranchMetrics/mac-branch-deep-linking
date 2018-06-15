@@ -19,20 +19,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) clearAllSettings;
 - (void) setNeedsSave;
 - (void) save;
-@property (atomic, copy) void (^_Nullable settingsSavedBlock)(BNCSettings*settings, NSError*_Nullable error);
-@property (atomic, strong) NSString*_Nullable   deviceFingerprintID;
-@property (atomic, strong) NSString*_Nullable   identityID;
-@property (atomic, strong) NSString*_Nullable   developerIdentityForUser;
-@property (atomic, strong) NSString*_Nullable   sessionID;
-@property (atomic, strong) NSString*_Nullable   linkCreationURL;
+@property (atomic, copy)   void (^_Nullable settingsSavedBlock)(BNCSettings*settings, NSError*_Nullable error);
+@property (atomic, copy)   NSString*_Nullable   deviceFingerprintID;
+@property (atomic, copy)   NSString*_Nullable   identityID;
+@property (atomic, copy)   NSString*_Nullable   userIdentityForDeveloper;
+@property (atomic, copy)   NSString*_Nullable   sessionID;
+@property (atomic, copy)   NSString*_Nullable   linkCreationURL;
 @property (atomic, assign) BOOL                 limitFacebookTracking;
-@property (atomic, strong) NSDate*_Nullable     blacklistLastCheckDate;
 
 // URL Black list settings:
 
-@property (atomic, strong) NSArray<NSString*>*_Nullable URLBlackList;
-@property (atomic, assign) NSInteger                    URLBlackListVersion;
-@property (atomic, strong) NSDate*_Nullable             URLBlackListLastRefreshDate;
+@property (atomic, assign) NSInteger            URLBlackListVersion;
+@property (atomic, copy) NSDate*_Nullable       URLBlackListLastRefreshDate;
+@property (atomic, copy) NSArray<NSString*>*_Nullable URLBlackList;
 
 @property (atomic, strong, null_resettable)
     NSMutableDictionary<NSString*, NSString*> *requestMetadataDictionary;
