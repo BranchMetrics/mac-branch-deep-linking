@@ -20,8 +20,10 @@
     BNCDevice *device = [BNCDevice currentDevice];
     XCTAssertTrue(device.hardwareID.length > 0);
     XCTAssertTrue(
+        [device.hardwareIDType isEqualToString:@"idfa"] ||
         [device.hardwareIDType isEqualToString:@"vendor_id"] ||
-        [device.hardwareIDType isEqualToString:@"random"]
+        [device.hardwareIDType isEqualToString:@"random"] ||
+        [device.hardwareIDType isEqualToString:@"net_address"]
     );
     XCTAssertFalse(device.deviceIsUnidentified);
     XCTAssertTrue([device.brandName isEqualToString:@"Apple"]);

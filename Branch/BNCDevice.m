@@ -169,8 +169,9 @@ exit:
     return @"tvOS";
     #elif TARGET_OS_WATCH
     return @"watchOS";
-    #endif
+    #else
     return @"Unknown";
+    #endif
 }
 
 + (BOOL) isSimulator {
@@ -332,7 +333,7 @@ exit:
     return (__bridge_transfer NSData*) macAddress;
 }
 
-+ (NSString*) hardwareID {
++ (NSString*) networkAddress {
     NSData*data = [self macAddress];
     if (!data || data.length != 6) return nil;
 
@@ -359,7 +360,7 @@ exit:
 
 #else
 
-+ (NSString*) hardwareID {
++ (NSString*) networkAddress {
     return nil;
 }
 
@@ -493,12 +494,6 @@ exit:
     BNCDevice*device = [[BNCDevice alloc] init];
     if (!device) return device;
 
-    device->_hardwareID = [self hardwareID];
-    if (device->_hardwareID.length == 0) {
-        device->_hardwareID = [[NSUUID UUID] UUIDString];
-        device->_hardwareIDType = @"random";
-    } else
-        device->_hardwareIDType = @"vendor_id";
     device->_brandName = @"Apple";
     device->_modelName = [self modelName];
     device->_systemName = [self systemName];
@@ -534,7 +529,7 @@ exit:
 
         #pragma clang diagnostic pop
     }
-
+    device->_netAddress = [self networkAddress];
     device->_country = [self country];
     device->_language = [self language];
     device->_browserUserAgent = [self userAgentString];
@@ -573,8 +568,34 @@ exit:
 
 #endif
 
+- (NSString*) hardwareID {
+    NSString*s;
+    s = [self netAddress];
+    if (s) {
+        _hardwareIDType = @"net_address";
+        return s;
+    }
+    s = [self vendorID];
+    if (s) {
+        _hardwareIDType = @"vendor_id";
+        return s;
+    }
+    s = [self advertisingID];
+    if (s) {
+        _hardwareIDType = @"idfa";
+        return s;
+    }
+    s = [[NSUUID UUID] UUIDString];
+    _hardwareIDType = @"random";
+    return s;
+}
+
 - (BOOL) deviceIsUnidentified {
-    return NO; // TODO: (self.vendorID == nil && self.advertisingID == nil);
+    if (self.advertisingID == nil &&
+        self.netAddress == nil &&
+        self.vendorID == nil)
+        return YES;
+    return NO;
 }
 
 - (NSMutableDictionary*) v1dictionary {
@@ -599,15 +620,13 @@ exit:
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
+    addString(systemName,           os);
 
     if (!self.adTrackingIsEnabled)
         dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
 
-    if (self.hardwareID.length > 0 && ![self.hardwareIDType isEqualToString:@"random"])
+    if (!self.deviceIsUnidentified)
         dictionary[@"is_hardware_id_real"] = BNCWireFormatFromBool(YES);
-
-    // TODO: change to actual os. Needs backend change.
-    dictionary[@"os"] = @"iOS";
 
     return dictionary;
 }
@@ -620,8 +639,9 @@ exit:
 
     addString(systemName,           os);
     addString(systemVersion,        os_version);
-    addString(hardwareID,           idfv);
+    addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
+    addString(netAddress,           net_address);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
@@ -632,12 +652,10 @@ exit:
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
+    addString(systemName,           os);
 
     if (!self.adTrackingIsEnabled)
         dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
-
-    // TODO: change to actual os. Needs backend change.
-    dictionary[@"os"] = @"iOS";
 
     return dictionary;
 }

@@ -37,7 +37,7 @@
         [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
     }
     self.useCertificatePinning = NO; //  TODO: YES;
-    self.branchAPIServerURL = @"https://api.branch.io";
+    self.branchAPIServiceURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
     self.blackListURLRegex = [NSArray new];
     return self;
@@ -51,7 +51,7 @@
 - (instancetype) copyWithZone:(NSZone*)zone {
     BranchConfiguration* configuration = [[BranchConfiguration alloc] initWithKey:self.key];
     configuration.useCertificatePinning = self.useCertificatePinning;
-    configuration.branchAPIServerURL = [self.branchAPIServerURL copy];
+    configuration.branchAPIServiceURL = [self.branchAPIServiceURL copy];
     configuration.networkServiceClass = self.networkServiceClass;
     configuration.blackListURLRegex = [self.blackListURLRegex copy];
     return configuration;
@@ -64,9 +64,20 @@
 - (BOOL) isValidConfiguration {
     return (
         self.hasValidKey &&
-        self.branchAPIServerURL.length > 0 &&
+        self.branchAPIServiceURL.length > 0 &&
+        self.networkServiceClass &&
         [self.networkServiceClass conformsToProtocol:@protocol(BNCNetworkServiceProtocol)]
     );
+}
+
+- (NSString*) description {
+    return [NSString stringWithFormat:@"<%@ %p key: %@ %@ %@>",
+        NSStringFromClass(self.class),
+        (void*) self,
+        self.key,
+        self.branchAPIServiceURL,
+        NSStringFromClass(self.networkServiceClass)
+    ];
 }
 
 @end
@@ -118,7 +129,8 @@
 
     self.settings = [BNCSettings loadSettings];
     if (!configuration.isValidConfiguration) {
-        [NSException raise:NSInvalidArgumentException format:@"Invalid configuration."];
+        [NSException raise:NSInvalidArgumentException format:@"Invalid Branch configuration.\n%@", configuration];
+        return self;
     }
 
     self.configuration = [configuration copy];
@@ -471,9 +483,9 @@
 #pragma mark - Identity
 
 - (void)setIdentity:(NSString*)userID
-           callback:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))callback {
+         completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
     if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
-        if (callback) callback(nil, nil);   // TODO:
+        if (completion) completion(nil, nil);   // TODO:
         return;
     }
     // [self initSessionIfNeededAndNotInProgress];
@@ -489,19 +501,19 @@
             BNCPerformBlockOnMainThreadAsync(^{
                 if (!operation.error)
                     operation.session.userIdentityForDeveloper = userID;
-                if (callback) callback(operation.session, operation.error);
+                if (completion) completion(operation.session, operation.error);
             });
         }
     ];
 }
 
-- (BOOL)userIsIdentified {
+- (BOOL)userIdentityIsSet {
     return self.settings.userIdentityForDeveloper != nil;
 }
 
 #pragma mark - Logout
 
-- (void)logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback {
+- (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
     dictionary[@"session_id"] = self.settings.sessionID;
@@ -512,7 +524,7 @@
         completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
             if (!operation.error)
                 self.settings.userIdentityForDeveloper = nil;
-            BNCPerformBlockOnMainThreadAsync(^{ if (callback) callback(operation.error); });
+            BNCPerformBlockOnMainThreadAsync(^{ if (completion) completion(operation.error); });
         }];
 }
 

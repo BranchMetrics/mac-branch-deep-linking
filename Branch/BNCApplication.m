@@ -104,9 +104,10 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     if (application.isApplication)
         application->_branchExtensionType = @"FULL_APP";
     else
-    if ([application->_extensionType isEqualToString:@"com.apple.identitylookup.message-filter"]) {
+    if ([application->_extensionType isEqualToString:@"com.apple.identitylookup.message-filter"])
         application->_branchExtensionType = @"IMESSAGE_APP";
-    }
+    else
+        application->_branchExtensionType = [application->_extensionType copy];
 
     application->_defaultURLScheme = [self defaultURLScheme];
 

@@ -109,7 +109,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 }
 
 - (void) setIdentity:(id)sender {
-    [[Branch sharedInstance] setIdentity:@"Bob" callback:^ (BranchSession*session, NSError*error) {
+    [[Branch sharedInstance] setIdentity:@"Bob" completion:^ (BranchSession*session, NSError*error) {
         [self clearUIFields];
         self.stateField.stringValue = [NSString stringWithFormat:@"Set Identity: '%@'", session.userIdentityForDeveloper];
         self.errorField.stringValue = [self errorMessage:error];
@@ -118,7 +118,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 
 - (void) logUserOut:(id)sender {
     BNCLogMethodName();
-    [[Branch sharedInstance] logoutWithCallback:^ (NSError*error) {
+    [[Branch sharedInstance] logoutWithCompletion:^ (NSError*error) {
         [self clearUIFields];
         self.stateField.stringValue = @"Log User Out";
         self.errorField.stringValue = [self errorMessage:error];

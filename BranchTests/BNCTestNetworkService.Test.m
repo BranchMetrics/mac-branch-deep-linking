@@ -40,7 +40,7 @@
 
     [branch.networkAPIService clearNetworkQueue];
     XCTestExpectation*expectation = [self expectationWithDescription:@"testTheTestService-2"];
-    [branch logoutWithCallback:^(NSError * _Nullable error) {
+    [branch logoutWithCompletion:^(NSError * _Nullable error) {
         XCTAssertNil(error);
         [expectation fulfill];
     }];

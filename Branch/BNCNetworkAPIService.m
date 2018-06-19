@@ -69,6 +69,7 @@
         if (error) {
             BNCLogError(@"Can't pin network certificates: %@.", error);
             error = [NSError branchErrorWithCode:BNCInvalidNetworkPublicKeyError];
+            BNCLogError(@"Can't pin network certificates: %@.", error);
         }
     }
     self.operationQueue = [[NSOperationQueue alloc] init];
@@ -91,10 +92,9 @@
     @synchronized(self) {
         if (!dictionary) return;
         NSMutableDictionary* device = [BNCDevice currentDevice].v1dictionary;
-        device[@"os"] = @"iOS";
         [dictionary addEntriesFromDictionary:device];
 
-        dictionary[@"sdk"] = [NSString stringWithFormat:@"ios%@", Branch.kitDisplayVersion];
+        dictionary[@"sdk"] = [NSString stringWithFormat:@"macos%@", Branch.kitDisplayVersion];
         dictionary[@"ios_extension"] =
             BNCWireFormatFromBool([BNCApplication currentApplication].isApplicationExtension);
         dictionary[@"branch_key"] = self.configuration.key;
@@ -123,7 +123,7 @@
         userData[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
         userData[@"environment"] = application.branchExtensionType;
         userData[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
-        userData[@"sdk"] = @"ios";  // TODO:
+        userData[@"sdk"] = @"macos";
         userData[@"sdk_version"] = Branch.kitDisplayVersion;
         dictionary[@"user_data"] = userData;
 
@@ -154,7 +154,7 @@
 
     serviceName = [serviceName stringByTrimmingCharactersInSet:
         [NSCharacterSet characterSetWithCharactersInString:@" \t\n\\/"]];
-    NSString *string = [NSString stringWithFormat:@"%@/%@", self.configuration.branchAPIServerURL, serviceName];
+    NSString *string = [NSString stringWithFormat:@"%@/%@", self.configuration.branchAPIServiceURL, serviceName];
     NSURL*url = [NSURL URLWithString:string];
 
     __weak __typeof(self) weakSelf = self;

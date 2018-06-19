@@ -143,46 +143,31 @@
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
 }
 
-/*
 - (void) testUserCompletedAction {
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
-    NSMutableDictionary *expectedRequest =
-        [self mutableDictionaryFromBundleJSON2WithKey:@"V2EventJSON"];
-    expectedRequest[@"user_data"] = [[BNCDeviceInfo getInstance] v2dictionary];
-    expectedRequest[@"event_data"] = nil;
-    expectedRequest[@"custom_data"] = nil;
-
-    Branch *branch = [Branch getInstance:@"key_live_foo"];
     XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event-user-action"];
-    id serverInterfaceMock = OCMPartialMock(branch.serverInterface);
+    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+        XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+        XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
 
-    OCMStub(
-        [serverInterfaceMock genericHTTPRequest:[OCMArg any]
-            retryNumber:0
-            callback:[OCMArg any]
-            retryHandler:[OCMArg any]]
-    ).andDo(^(NSInvocation *invocation) {
+        NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+        NSMutableDictionary*expectedRequest = [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
+        expectedRequest[@"custom_data"] = nil;
+        expectedRequest[@"event_data"] = nil;
 
-        __unsafe_unretained NSURLRequest *request = nil;
-        [invocation getArgument:&request atIndex:2];
+        XCTAssertEqualObjects(expectedRequest, requestDictionary);
 
-        NSError *error = nil;
-        NSString *url = request.URL.absoluteString;
-        NSData *bodyData = request.HTTPBody;
-        NSDictionary *parameters =
-            [NSJSONSerialization JSONObjectWithData:bodyData options:0 error:&error];
-        XCTAssertNil(error);
+        NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
+        BNCAfterSecondsPerformBlock(0.01, ^{ [expectation fulfill]; });
+        return [BNCTestNetworkService operationWithRequest:request response:responseString];
+    };
 
-        NSLog(@"2");
-        NSLog(@"URL: %@.", url);
-        NSLog(@"Body: %@.", parameters);
-
-        if ([url containsString:@"branch.io/v2/event/standard"]) {
-            XCTAssertEqualObjects(expectedRequest, parameters);
-            [expectation fulfill];
-        }
-    });
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    Branch*branch = [[Branch alloc] init];
+    [branch startWithConfiguration:configuration];
 
     // Set up the Branch Univseral Object --
 
@@ -226,12 +211,10 @@
     };
 
     // Set up and invoke --
-    [branch clearNetworkQueue];
-    [buo userCompletedAction:BranchStandardEventPurchase];
+    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventPurchase contentItem:buo] completion:nil];
+    //[buo userCompletedAction:BranchStandardEventPurchase];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
-    [serverInterfaceMock stopMocking];
 }
-*/
 
 - (void) testExampleSyntax {
     BranchUniversalObject *contentItem = [BranchUniversalObject new];

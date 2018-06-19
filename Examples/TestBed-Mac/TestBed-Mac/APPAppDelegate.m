@@ -20,8 +20,10 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
     BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
-    configuration.useCertificatePinning = YES;
+        //[BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
+        [BranchConfiguration configurationWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
+    configuration.useCertificatePinning = NO;
+    configuration.branchAPIServiceURL = @"http://esmith.api.beta.branch.io";
     [[Branch sharedInstance] startWithConfiguration:configuration];
 
     [[NSNotificationCenter defaultCenter]

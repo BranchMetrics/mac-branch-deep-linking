@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, strong) NSString*    key;
 @property (atomic, assign) BOOL         useCertificatePinning;
-@property (atomic, copy)   NSString*    branchAPIServerURL;
+@property (atomic, copy)   NSString*    branchAPIServiceURL;
 @property (atomic, assign) Class        networkServiceClass;
 @property (atomic, strong) NSArray<NSString*>* blackListURLRegex;
 @property (atomic, strong) BNCSettings* settings;
@@ -50,29 +50,30 @@ NS_ASSUME_NONNULL_BEGIN
  Set the user's identity to an ID used by your system, so that it is identifiable by you elsewhere. Receive
  a completion callback, notifying you whether it succeeded or failed.
 
- @param   userId    The ID Branch should use to identify this user.
- @param   callback  The callback to be called once the request has completed (success or failure).
+ @param   userId      The ID Branch should use to identify this user.
+ @param   completion  The callback to be called once the request has completed (success or failure).
 
  @warning If you use the same ID between users on different sessions / devices, their actions will be merged.
  @warning This request is not removed from the queue upon failure -- it will be retried until it succeeds.
           The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
  */
-- (void)setIdentity:(NSString*)userId callback:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))callback;
+- (void)setIdentity:(NSString*)userId
+         completion:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))completion;
 
 /**
  Indicates whether or not this user has a custom identity specified for them. Note that this is *independent
  of installs*. If you call setIdentity, this device will have that identity associated with this user until
  `logout` is called. This includes persisting through uninstalls, as we track device id.
  */
-- (BOOL)userIsIdentified;
+- (BOOL)userIdentityIsSet;
 
 /**
  Clear all of the current user's session items.
 
  @warning If the request to logout fails, the items will not be cleared.
  */
-- (void) logoutWithCallback:(void (^_Nullable)(NSError*_Nullable))callback;
+- (void) logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion;
 
 - (void) branchShortLinkWithContent:(BranchUniversalObject*)content
                      linkProperties:(BranchLinkProperties*)linkProperties

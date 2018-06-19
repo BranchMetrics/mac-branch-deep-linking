@@ -22,3 +22,23 @@ key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N
 525024923253494062
 
 https://developer.apple.com/library/content/technotes/tn1103/_index.html
+
+## Configuration
+
+### Branch Live 
+
+key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N
+
+testbed-mac://
+https://apple.com/
+
+*     Desktop: testbed-mac://
+* Link Domain: testbed-mac.app.link
+*   Alternate: testbed-mac-alternate.app.link
+
+### Branch Beta
+
+*    App Name: BranchTestBedMac
+*     App Key: key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC
+* Link Domain: 2gyk-esmith.branchbeta.link
+*   Alternate: 2gyk-alternate-esmith.branchbeta.link
