@@ -44,7 +44,7 @@
     // Remove and validate gone:
 
     error = [keychain removeValuesForService:kServiceName key:nil];
-    if (![systemName isEqualToString:@"macOS"] && systemVersion >= 10.0 && systemVersion < 11.0)
+    if (![systemName isEqualToString:@"mac_OS"] && systemVersion >= 10.0 && systemVersion < 11.0)
         { XCTAssertTrue(error == nil || error.code == -34018); }
     else
         { XCTAssertTrue(error == nil); }

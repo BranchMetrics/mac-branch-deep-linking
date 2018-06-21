@@ -94,7 +94,7 @@
         NSMutableDictionary* device = [BNCDevice currentDevice].v1dictionary;
         [dictionary addEntriesFromDictionary:device];
 
-        dictionary[@"sdk"] = [NSString stringWithFormat:@"macos%@", Branch.kitDisplayVersion];
+        dictionary[@"sdk"] = [NSString stringWithFormat:@"mac%@", Branch.kitDisplayVersion];
         dictionary[@"ios_extension"] =
             BNCWireFormatFromBool([BNCApplication currentApplication].isApplicationExtension);
         dictionary[@"branch_key"] = self.configuration.key;
@@ -123,7 +123,7 @@
         userData[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
         userData[@"environment"] = application.branchExtensionType;
         userData[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
-        userData[@"sdk"] = @"macos";
+        userData[@"sdk"] = @"mac";
         userData[@"sdk_version"] = Branch.kitDisplayVersion;
         dictionary[@"user_data"] = userData;
 

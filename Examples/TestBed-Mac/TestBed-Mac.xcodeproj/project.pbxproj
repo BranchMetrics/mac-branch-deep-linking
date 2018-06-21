@@ -43,6 +43,20 @@
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
 		};
+		4D58660F20DB231400A51633 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D159DCA20B62D7D005A9850;
+			remoteInfo = BranchTests;
+		};
+		4D58661320DB231B00A51633 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06E020AB704600F38167 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D0F56A920B33C97003D6607;
+			remoteInfo = "TestBed-MacTests";
+		};
 		4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
@@ -201,6 +215,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				4D58661420DB231B00A51633 /* PBXTargetDependency */,
+				4D58661020DB231400A51633 /* PBXTargetDependency */,
 				4DD347A520BCFA5C003891F1 /* PBXTargetDependency */,
 			);
 			name = "TestBed-Mac";
@@ -366,6 +382,16 @@
 			isa = PBXTargetDependency;
 			target = 2B3C06E720AB704600F38167 /* TestBed-Mac */;
 			targetProxy = 4D03D57F20CB61DD00DD1341 /* PBXContainerItemProxy */;
+		};
+		4D58661020DB231400A51633 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BranchTests;
+			targetProxy = 4D58660F20DB231400A51633 /* PBXContainerItemProxy */;
+		};
+		4D58661420DB231B00A51633 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D0F56A920B33C97003D6607 /* TestBed-MacTests */;
+			targetProxy = 4D58661320DB231B00A51633 /* PBXContainerItemProxy */;
 		};
 		4DD347A520BCFA5C003891F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

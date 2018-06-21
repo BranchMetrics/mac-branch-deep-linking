@@ -31,12 +31,12 @@
 #if TARGET_OS_OSX
 
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
-    XCTAssertTrue([device.systemName isEqualToString:@"macOS"]);
+    XCTAssertTrue([device.systemName isEqualToString:@"mac_OS"]);
 
 #elif TARGET_OS_TV
 
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
-    XCTAssertTrue([device.systemName isEqualToString:@"tvOS"]);
+    XCTAssertTrue([device.systemName isEqualToString:@"tv_OS"]);
 
 #elif TARGET_OS_IOS
 

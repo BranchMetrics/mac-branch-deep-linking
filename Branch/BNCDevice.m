@@ -162,13 +162,13 @@ exit:
 
 + (NSString*) systemName {
     #if TARGET_OS_OSX
-    return @"macOS";
+    return @"mac_OS";
     #elif TARGET_OS_IOS
     return @"iOS";
     #elif TARGET_OS_TV
-    return @"tvOS";
+    return @"tv_OS";
     #elif TARGET_OS_WATCH
-    return @"watchOS";
+    return @"watch_OS";
     #else
     return @"Unknown";
     #endif
@@ -366,6 +366,7 @@ exit:
 
 #endif
 
+/*
 + (NSString*) userAgentString {
     // TODO: Fill out with real string.
 
@@ -376,6 +377,11 @@ exit:
     return
         @"\"Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) "
          "Version/11.0 Mobile/15A372 Safari/604.1\"";
+}
+*/
+
++ (NSString*) userAgentString {
+    return nil;
 }
 
 // #else
@@ -610,6 +616,7 @@ exit:
     addString(hardwareIDType,       hardware_id_type);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
+    addString(netAddress,           net_address);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
@@ -652,7 +659,6 @@ exit:
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
-    addString(systemName,           os);
 
     if (!self.adTrackingIsEnabled)
         dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
