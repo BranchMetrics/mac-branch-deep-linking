@@ -11,8 +11,8 @@ The Branch SDK for Mac OS X
 * [x] Open / Install network called correctly
 * [x] Open / Install with deep link data
 * [x] Make a Branch-Test test project bundle.
+* [x] Send v2-event
 * [ ] Deferred deep linking
-* [ ] Send v2-event
 ```
 
 ## Notes

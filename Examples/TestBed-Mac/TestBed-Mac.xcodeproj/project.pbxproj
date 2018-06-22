@@ -15,7 +15,6 @@
 		2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C070E20AB8E9400F38167 /* APPViewController.xib */; };
 		4D0F56AD20B33C97003D6607 /* TestBed-MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */; };
 		4D39087F20BF378C00E28074 /* APPActionItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D39087E20BF378C00E28074 /* APPActionItemView.xib */; };
-		4D45E7C520CD735100D8F3BB /* BranchTests.xctest in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D85A9F920BF61D500E61F6E /* APPActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D85A9F820BF61D500E61F6E /* APPActionItemView.m */; };
 		4DD347A220BCFA1D003891F1 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
 		4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -43,20 +42,6 @@
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
 		};
-		4D58660F20DB231400A51633 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D159DCA20B62D7D005A9850;
-			remoteInfo = BranchTests;
-		};
-		4D58661320DB231B00A51633 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06E020AB704600F38167 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D0F56A920B33C97003D6607;
-			remoteInfo = "TestBed-MacTests";
-		};
 		4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
@@ -80,7 +65,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4D45E7C520CD735100D8F3BB /* BranchTests.xctest in CopyFiles */,
 				4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,13 +194,10 @@
 				2B3C06E520AB704600F38167 /* Frameworks */,
 				2B3C06E620AB704600F38167 /* Resources */,
 				2B3C06FC20AB720900F38167 /* CopyFiles */,
-				4D45E7C820CD74C200D8F3BB /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4D58661420DB231B00A51633 /* PBXTargetDependency */,
-				4D58661020DB231400A51633 /* PBXTargetDependency */,
 				4DD347A520BCFA5C003891F1 /* PBXTargetDependency */,
 			);
 			name = "TestBed-Mac";
@@ -339,22 +320,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4D45E7C820CD74C200D8F3BB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo Wow";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		2B3C06E420AB704600F38167 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -382,16 +347,6 @@
 			isa = PBXTargetDependency;
 			target = 2B3C06E720AB704600F38167 /* TestBed-Mac */;
 			targetProxy = 4D03D57F20CB61DD00DD1341 /* PBXContainerItemProxy */;
-		};
-		4D58661020DB231400A51633 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BranchTests;
-			targetProxy = 4D58660F20DB231400A51633 /* PBXContainerItemProxy */;
-		};
-		4D58661420DB231B00A51633 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4D0F56A920B33C97003D6607 /* TestBed-MacTests */;
-			targetProxy = 4D58661320DB231B00A51633 /* PBXContainerItemProxy */;
 		};
 		4DD347A520BCFA5C003891F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
