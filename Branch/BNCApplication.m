@@ -101,13 +101,13 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     if ([package isEqualToString:@"APPL"] && !application->_extensionType.length) {
         application->_isApplication = YES;
     }
-    if (application.isApplication)
-        application->_branchExtensionType = @"FULL_APP";
-    else
     if ([application->_extensionType isEqualToString:@"com.apple.identitylookup.message-filter"])
         application->_branchExtensionType = @"IMESSAGE_APP";
     else
-        application->_branchExtensionType = [application->_extensionType copy];
+    if ([application->_extensionType isEqualToString:@"com.apple.watchkit"])
+        application->_branchExtensionType = @"WATCH_APP";
+    else
+        application->_branchExtensionType = @"FULL_APP";
 
     application->_defaultURLScheme = [self defaultURLScheme];
 
@@ -184,9 +184,10 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     return firstInstallDate;
 }
 
+#if 0
 // TODO: Add this back at some point.
-/// Returns a dictionary of device / identity pairs.
-//@property (atomic, readonly) NSDictionary<NSString*, NSString*>*_Nonnull deviceKeyIdentityValueDictionary;
+// Returns a dictionary of device / identity pairs.
+// @property (atomic, readonly) NSDictionary<NSString*, NSString*>*_Nonnull deviceKeyIdentityValueDictionary;
 - (NSDictionary*) deviceKeyIdentityValueDictionary:(BNCKeyChain*)keychain {
     @synchronized (self.class) {
         NSError *error = nil;
@@ -199,6 +200,7 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
         return deviceDictionary;
     }
 }
+#endif
 
 + (BNCApplicationUpdateState) updateStateForApplication:(BNCApplication*)application {
 

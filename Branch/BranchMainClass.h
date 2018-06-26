@@ -11,7 +11,7 @@
 #import "BranchHeader.h"
 #import "BranchDelegate.h"
 #import "BranchSession.h"
-@class BNCNetworkAPIService, BNCSettings;
+@class BNCSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
           The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
  */
-- (void)setIdentity:(NSString*)userId
+- (void)setUserIdentity:(NSString*)userId
          completion:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))completion;
 
 /**
@@ -82,15 +82,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSURL*) branchLongLinkWithContent:(BranchUniversalObject*)content
                       linkProperties:(BranchLinkProperties*)linkProperties;
 
-@property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
 @property (atomic, strong) NSMutableDictionary* requestMetadataDictionary;
-@property (atomic, weak) id<BranchDelegate> delegate;
 @property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
-@property (atomic, strong, readonly) BranchConfiguration*configuration;
 @property (atomic, assign) BOOL limitFacebookTracking;
-
-// Move to category
-@property (atomic, strong, readonly) BNCNetworkAPIService* networkAPIService;
+@property (atomic, weak) id<BranchDelegate> delegate;
+@property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
 @end
 
 NS_ASSUME_NONNULL_END

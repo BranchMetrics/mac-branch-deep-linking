@@ -334,13 +334,14 @@ exit:
 }
 
 + (NSString*) networkAddress {
+    NSMutableString* string = nil;
     NSData*data = [self macAddress];
     if (!data || data.length != 6) return nil;
 
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     CC_SHA1(data.bytes, (const unsigned int) data.length, digest);
 
-    NSMutableString* string = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+    string = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
     for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
         [string appendFormat:@"%02x", digest[i]];
 
@@ -578,7 +579,7 @@ exit:
     NSString*s;
     s = [self netAddress];
     if (s) {
-        _hardwareIDType = @"net_address";
+        _hardwareIDType = @"desktop_id";
         return s;
     }
     s = [self vendorID];
@@ -616,7 +617,7 @@ exit:
     addString(hardwareIDType,       hardware_id_type);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
-    addString(netAddress,           net_address);
+    addString(netAddress,           desktop_id);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
@@ -648,7 +649,7 @@ exit:
     addString(systemVersion,        os_version);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
-    addString(netAddress,           net_address);
+    addString(netAddress,           desktop_id);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);

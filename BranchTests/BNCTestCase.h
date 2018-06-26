@@ -11,6 +11,7 @@
 #import <XCTest/XCTest.h>
 #import "NSString+Branch.h"
 #import "BNCThreads.h"
+#import "BranchMainClass+Private.h"
 #import "BNCTestNetworkService.h"
 
 #define BNCTAssertEqualMaskedString(string, mask) { \

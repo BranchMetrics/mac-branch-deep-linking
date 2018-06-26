@@ -11,7 +11,7 @@
 		2B073C1120C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
 		2B0B035520CA50FF0008938F /* BNCURLBlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */; };
 		2B0B035620CA51000008938F /* BNCURLBlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */; };
-		4D046E8B20C881480073262B /* BNCNetworkServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D046E8A20C881470073262B /* BNCNetworkServiceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D046E8B20C881480073262B /* BranchNetworkServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D046E8F20C8A27C0073262B /* BNCTestNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E8E20C8A27C0073262B /* BNCTestNetworkService.m */; };
 		4D046E9220C8AD3A0073262B /* NSData+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D046E9020C8AD3A0073262B /* NSData+Branch.h */; };
 		4D046E9320C8AD3A0073262B /* NSData+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D046E9020C8AD3A0073262B /* NSData+Branch.h */; };
@@ -19,7 +19,6 @@
 		4D046E9520C8AD3A0073262B /* NSData+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9120C8AD3A0073262B /* NSData+Branch.m */; };
 		4D046E9720C8B5B20073262B /* NSData+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */; };
 		4D046E9A20C8CE740073262B /* BNCTestNetworkService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9920C8CE740073262B /* BNCTestNetworkService.Test.m */; };
-		4D159DD020B62D7D005A9850 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D54C07520A6560400C76496 /* Branch.framework */; };
 		4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */; };
 		4D159DD720B62DD5005A9850 /* BNCApplication+BNCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165820ACD00E002BF211 /* BNCApplication+BNCTest.m */; };
 		4D159DD820B62DD5005A9850 /* BNCDebug.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773420AA09B300A63EE1 /* BNCDebug.Test.m */; };
@@ -93,6 +92,7 @@
 		4D67476E20C74E81001639C5 /* BNCSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163820ACB914002BF211 /* BNCSettings.h */; };
 		4D67476F20C74E81001639C5 /* BranchUniversalObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189620ADDC5000441881 /* BranchUniversalObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67477920C7B558001639C5 /* BranchMainClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMainClass.m */; };
+		4D70A4B720DDBBBB0083768C /* BNCNetworkAPIService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */; };
 		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772720AA099D00A63EE1 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99771F20AA099D00A63EE1 /* BNCDebug.m */; };
 		4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772020AA099D00A63EE1 /* BNCDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -100,7 +100,7 @@
 		4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772220AA099D00A63EE1 /* NSString+Branch.h */; };
 		4D99772B20AA099D00A63EE1 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772320AA099D00A63EE1 /* BNCLog.m */; };
 		4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772420AA099D00A63EE1 /* NSString+Branch.m */; };
-		4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; };
 		4D9C163620ACB790002BF211 /* BNCNetworkAPIService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163420ACB790002BF211 /* BNCNetworkAPIService.h */; };
 		4D9C163720ACB790002BF211 /* BNCNetworkAPIService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C163520ACB790002BF211 /* BNCNetworkAPIService.m */; };
 		4D9C163A20ACB914002BF211 /* BNCSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163820ACB914002BF211 /* BNCSettings.h */; };
@@ -158,7 +158,7 @@
 			remoteGlobalIDString = 4D0F56AA20B33C97003D6607;
 			remoteInfo = "TestBed-MacTests";
 		};
-		4D67477D20C84566001639C5 /* PBXContainerItemProxy */ = {
+		4D70A4B820E14D780083768C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
 			proxyType = 1;
@@ -171,7 +171,7 @@
 		2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.m; sourceTree = "<group>"; };
 		2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCURLBlackList.h; sourceTree = "<group>"; };
 		4D03D57520CB5E3C00DD1341 /* TestBed-Mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "TestBed-Mac.xcodeproj"; path = "Examples/TestBed-Mac/TestBed-Mac.xcodeproj"; sourceTree = "<group>"; };
-		4D046E8A20C881470073262B /* BNCNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCNetworkServiceProtocol.h; sourceTree = "<group>"; };
+		4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchNetworkServiceProtocol.h; sourceTree = "<group>"; };
 		4D046E8D20C8A27C0073262B /* BNCTestNetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCTestNetworkService.h; sourceTree = "<group>"; };
 		4D046E8E20C8A27C0073262B /* BNCTestNetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCTestNetworkService.m; sourceTree = "<group>"; };
 		4D046E9020C8AD3A0073262B /* NSData+Branch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Branch.h"; sourceTree = "<group>"; };
@@ -192,6 +192,8 @@
 		4D54C07920A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D54C08520A6560400C76496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D67477420C74E81001639C5 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkAPIService.Test.m; sourceTree = "<group>"; };
+		4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BranchMainClass+Private.h"; sourceTree = "<group>"; };
 		4D99771E20AA099D00A63EE1 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
 		4D99771F20AA099D00A63EE1 /* BNCDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCDebug.m; sourceTree = "<group>"; };
 		4D99772020AA099D00A63EE1 /* BNCDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCDebug.h; sourceTree = "<group>"; };
@@ -270,7 +272,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D159DD020B62D7D005A9850 /* Branch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,7 +343,6 @@
 				4D9C163520ACB790002BF211 /* BNCNetworkAPIService.m */,
 				4D9C164020ACC86E002BF211 /* BNCNetworkService.h */,
 				4D9C164120ACC86E002BF211 /* BNCNetworkService.m */,
-				4D046E8A20C881470073262B /* BNCNetworkServiceProtocol.h */,
 				4D27FF8920B222C7002C7EB0 /* BNCPersistence.h */,
 				4D27FF8A20B222C7002C7EB0 /* BNCPersistence.m */,
 				4D9C163820ACB914002BF211 /* BNCSettings.h */,
@@ -369,7 +369,9 @@
 				4DF8189220ADDC4F00441881 /* BranchLinkProperties.h */,
 				4DF8189320ADDC4F00441881 /* BranchLinkProperties.m */,
 				4DC2232720AA262D005C57D0 /* BranchMainClass.h */,
+				4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */,
 				4DC2232820AA262D005C57D0 /* BranchMainClass.m */,
+				4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */,
 				4DF818B320AE23BC00441881 /* BranchSession.h */,
 				4DF818B420AE23BC00441881 /* BranchSession.m */,
 				4DF8189620ADDC5000441881 /* BranchUniversalObject.h */,
@@ -395,6 +397,7 @@
 				4D9C165020ACCD9B002BF211 /* BNCKeyChain.Test.m */,
 				4D9C165120ACCD9B002BF211 /* BNCLocalization.Test.m */,
 				4D99773220AA09B300A63EE1 /* BNCLog.Test.m */,
+				4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */,
 				4D27FF8E20B22659002C7EB0 /* BNCPersistence.Test.m */,
 				4D27FF8620B15431002C7EB0 /* BNCSettings.Test.m */,
 				4D99772E20AA09B300A63EE1 /* BNCTestCase.h */,
@@ -447,7 +450,7 @@
 				4D99772820AA099D00A63EE1 /* BNCDebug.h in Headers */,
 				4DF8189720ADDC5000441881 /* BranchEvent.h in Headers */,
 				4DC2232920AA262D005C57D0 /* BranchMainClass.h in Headers */,
-				4D046E8B20C881480073262B /* BNCNetworkServiceProtocol.h in Headers */,
+				4D046E8B20C881480073262B /* BranchNetworkServiceProtocol.h in Headers */,
 				4D27FF8B20B222C7002C7EB0 /* BNCPersistence.h in Headers */,
 				4D9C165E20ACD625002BF211 /* BNCDevice.h in Headers */,
 				4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */,
@@ -457,11 +460,11 @@
 				4D046E9220C8AD3A0073262B /* NSData+Branch.h in Headers */,
 				4D9C166120ACDB59002BF211 /* BNCWireFormat.h in Headers */,
 				4DF818A720ADE1BB00441881 /* BranchCommerce.h in Headers */,
+				4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */,
 				4D9C164C20ACCD7C002BF211 /* BNCKeyChain.h in Headers */,
 				4D9C163E20ACBEF6002BF211 /* BNCApplication.h in Headers */,
 				4D9C164D20ACCD7C002BF211 /* BranchError.h in Headers */,
 				4DF818BA20AF9EB000441881 /* BranchDelegate.h in Headers */,
-				4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */,
 				4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */,
 				4DF818B520AE23BC00441881 /* BranchSession.h in Headers */,
 				4D9C164B20ACCD7C002BF211 /* BNCLocalization.h in Headers */,
@@ -513,12 +516,11 @@
 				4D159DC720B62D7D005A9850 /* Sources */,
 				4D159DC820B62D7D005A9850 /* Frameworks */,
 				4D159DC920B62D7D005A9850 /* Resources */,
-				4D904D7320CF3F180045D924 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4D67477E20C84566001639C5 /* PBXTargetDependency */,
+				4D70A4B920E14D780083768C /* PBXTargetDependency */,
 			);
 			name = BranchTests;
 			productName = BranchTests;
@@ -571,7 +573,7 @@
 				TargetAttributes = {
 					4D159DCA20B62D7D005A9850 = {
 						CreatedOnToolsVersion = 9.3.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					4D54C07420A6560400C76496 = {
 						CreatedOnToolsVersion = 9.3;
@@ -601,8 +603,8 @@
 			projectRoot = "";
 			targets = (
 				4D54C07420A6560400C76496 /* Branch */,
-				4D159DCA20B62D7D005A9850 /* BranchTests */,
 				4D67473C20C74E81001639C5 /* Branch-tvOS */,
+				4D159DCA20B62D7D005A9850 /* BranchTests */,
 			);
 		};
 /* End PBXProject section */
@@ -636,22 +638,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4D904D7320CF3F180045D924 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		4D159DC720B62D7D005A9850 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -677,6 +663,7 @@
 				4D159DE420B62DD5005A9850 /* Branch.Test.m in Sources */,
 				4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */,
 				4DCD40ED20BA066D003BB641 /* BranchEvent.Test.m in Sources */,
+				4D70A4B720DDBBBB0083768C /* BNCNetworkAPIService.Test.m in Sources */,
 				4D159DDC20B62DD5005A9850 /* BNCLocalization.Test.m in Sources */,
 				4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */,
 				4D159DE220B62DD5005A9850 /* BNCTestCase.Test.m in Sources */,
@@ -755,10 +742,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4D67477E20C84566001639C5 /* PBXTargetDependency */ = {
+		4D70A4B920E14D780083768C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4D54C07420A6560400C76496 /* Branch */;
-			targetProxy = 4D67477D20C84566001639C5 /* PBXContainerItemProxy */;
+			targetProxy = 4D70A4B820E14D780083768C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -769,10 +756,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUNDLE_LOADER = "$(BranchTestHost)";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BranchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -791,10 +778,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUNDLE_LOADER = "$(BranchTestHost)";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BranchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -941,7 +928,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -963,7 +950,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1091,7 +1078,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1111,10 +1098,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUNDLE_LOADER = "$(BranchTestHost)";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BranchTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";

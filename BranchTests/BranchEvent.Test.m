@@ -123,7 +123,7 @@
             [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
         XCTAssertNotNil(expectedRequest);
         [branch.networkAPIService appendV2APIParametersWithDictionary:expectedRequest];
-        expectedRequest[@"retryNumber"] = nil;
+        expectedRequest[@"retry_number"] = nil;
         
         NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
         XCTAssertNotNil(requestDictionary);

@@ -10,9 +10,34 @@ The Branch SDK for Mac OS X
 * [x] Get application info for mac environment
 * [x] Open / Install network called correctly
 * [x] Open / Install with deep link data
-* [x] Make a Branch-Test test project bundle.
+* [x] Make a Branch-Test test project bundle
 * [x] Send v2-event
 * [ ] Deferred deep linking
+
+## Unit Tests
+### App Installs
+* [ ] First install app dates.
+* [ ] Re-open app dates (with app update).
+* [ ] Re-open app dates (non-update).
+* [ ] Re-install app dates.
+
+### Open URL Tests
+* [ ] Open URL
+* [ ] Open Deferred URL
+* [ ] Delegate Tests
+
+### Request Tests
+* [ ] Intrumentation tests.
+* [ ] Make sure requests have meta-data when set.
+
+### Functional Tests
+* [ ] Set identity.
+* [ ] Log out.
+* [ ] Make short link.
+* [ ] Make long link.
+
+### Tracking Disabled
+* [ ] Tracking should be disabled .
 ```
 
 ## Notes

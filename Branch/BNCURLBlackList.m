@@ -10,6 +10,7 @@
 
 #import "BNCURLBlackList.h"
 #import "Branch.h"
+#import "BranchMainClass+Private.h"
 
 @interface BNCURLBlackList () {
     NSArray<NSString*>*_blackList;

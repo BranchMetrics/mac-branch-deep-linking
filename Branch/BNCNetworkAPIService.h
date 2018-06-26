@@ -10,7 +10,7 @@
 
 #import "BranchHeader.h"
 #import "BranchSession.h"
-#import "BNCNetworkServiceProtocol.h"
+#import "BranchNetworkServiceProtocol.h"
 @class BranchConfiguration;
 
 NS_ASSUME_NONNULL_BEGIN

@@ -123,7 +123,6 @@
 
 - (void) testDownloadGoodURLs {
     // Test download list.
-
     Branch*branch = [Branch new];
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
     [branch startWithConfiguration:configuration];

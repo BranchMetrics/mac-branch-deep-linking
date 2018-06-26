@@ -11,6 +11,7 @@
 #import "BranchEvent.h"
 #import "BranchError.h"
 #import "BranchMainClass.h"
+#import "BranchMainClass+Private.h"
 #import "BNCLog.h"
 #import "BNCNetworkAPIService.h"
 #import "BNCDevice.h"

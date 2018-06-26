@@ -469,16 +469,19 @@ exit:
 }
 
 - (void) main {
-    NSInteger retry = -1;
+    NSInteger retry = 0;
     NSError*error = nil;
     NSDate*timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
     {
         do  {
-            retry++;
+            if (retry > 0) {
+                // Wait before retrying to avoid flooding the network.
+                BNCSleepForTimeInterval(1.0);
+            }
             NSData *data = nil;
             if (self.dictionary) {
                 NSError *error = nil;
-                self.dictionary[@"retryNumber"] = BNCWireFormatFromInteger(retry);
+                self.dictionary[@"retry_number"] = BNCWireFormatFromInteger(retry);
                 data = [NSJSONSerialization dataWithJSONObject:self.dictionary options:0 error:&error];
                 if (error) {
                     BNCLogError(@"Can't convert to JSON: %@.", error);
@@ -520,8 +523,9 @@ exit:
                 BNCLogError(@"Network service error: %@.", error);
             }
 
-        }
-        while (!self.isCancelled && [self.class canRetryOperation:self.operation]);
+            retry++;
+
+        } while (!self.isCancelled && [self.class canRetryOperation:self.operation]);
 
     error = [self.class errorWithOperation:self.operation];
     if (error) goto exit;

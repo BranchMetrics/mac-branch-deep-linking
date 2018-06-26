@@ -9,7 +9,7 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "BNCNetworkServiceProtocol.h"
+#import "BranchNetworkServiceProtocol.h"
 #import "BNCNetworkAPIService.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSMutableDictionary*_Nullable) mutableDictionaryFromRequest:(NSURLRequest*)request;
 
 + (id<BNCNetworkOperationProtocol>) operationWithRequest:(NSMutableURLRequest*)request
-                                                response:(NSString*)responseString;
+                                                response:(NSString*_Nullable)responseString;
 @end
 
 NS_ASSUME_NONNULL_END

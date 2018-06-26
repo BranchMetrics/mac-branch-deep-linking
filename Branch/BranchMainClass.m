@@ -480,9 +480,33 @@
         userInfo:userInfo];
 }
 
-#pragma mark - Identity
+#pragma mark - User Tracking
 
-- (void)setIdentity:(NSString*)userID
+- (void) setTrackingDisabled:(BOOL)trackingDisabled_ {
+    @synchronized(self) {
+        self.settings.trackingDisabled = trackingDisabled_;
+        if (trackingDisabled_) {
+            // Set the flag (which also clears the settings):
+            [self.settings clearAllSettings];
+            [self.networkAPIService clearNetworkQueue];
+            //[self.linkCache clear];
+        } else {
+            // Initialize a Branch session:
+            [self startNewSession];
+        }
+    }
+}
+
+- (BOOL) trackingIsDisabled {
+    @synchronized(self) {
+        return self.settings.trackingDisabled;
+    }
+}
+
+
+#pragma mark - User Identity
+
+- (void)setUserIdentity:(NSString*)userID
          completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
     if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
         if (completion) completion(nil, nil);   // TODO:

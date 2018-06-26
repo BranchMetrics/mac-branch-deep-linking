@@ -23,7 +23,7 @@
         [device.hardwareIDType isEqualToString:@"idfa"] ||
         [device.hardwareIDType isEqualToString:@"vendor_id"] ||
         [device.hardwareIDType isEqualToString:@"random"] ||
-        [device.hardwareIDType isEqualToString:@"net_address"]
+        [device.hardwareIDType isEqualToString:@"desktop_id"]
     );
     XCTAssertFalse(device.deviceIsUnidentified);
     XCTAssertTrue([device.brandName isEqualToString:@"Apple"]);
@@ -69,7 +69,7 @@
     XCTAssertTrue(device.advertisingID == nil);
     XCTAssertTrue([device.country isEqualToString:@"US"]);
     XCTAssertTrue([device.language isEqualToString:@"en"]);
-    XCTAssertTrue(device.browserUserAgent.length > 0);
+    XCTAssertTrue(device.browserUserAgent.length == 0);
     XCTAssertTrue(BNCTestStringMatchesRegex(device.localIPAddress, @"^\\d*\\.\\d*\\.\\d*\\.\\d*$"));
 }
 

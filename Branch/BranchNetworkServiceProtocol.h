@@ -1,5 +1,5 @@
 /**
- @file          BNCNetworkServiceProtocol.h
+ @file          BranchNetworkServiceProtocol.h
  @package       Branch-SDK
  @brief         A networking protocol contract to an abstract underlying network class.
 

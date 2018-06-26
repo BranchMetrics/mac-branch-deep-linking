@@ -102,7 +102,7 @@
             "limit_ad_tracking": true,
             "local_ip": "192.168.192.60",
             "model": "MacBookPro11,5",
-            "net_address": "0b18c003-7a77-4211-ed86-853a7a8778f9",
+            "desktop_id": "0b18c003-7a77-4211-ed86-853a7a8778f9",
             "os_version": "10.13.5",
             "os": "mac_OS",
             "screen_dpi": 144,

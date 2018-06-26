@@ -9,7 +9,7 @@
 */
 
 #import "BranchHeader.h"
-#import "BNCNetworkServiceProtocol.h"
+#import "BranchNetworkServiceProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
