@@ -266,6 +266,9 @@
 
 - (BOOL) isBranchURL:(NSURL*)url {
     NSString*scheme = [url scheme];
+    if ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])
+        return YES; // TODO: For now.
+
     NSString*appScheme = [BNCApplication currentApplication].defaultURLScheme;
     if (!(scheme && appScheme && [scheme isEqualToString:appScheme]))
         return NO;

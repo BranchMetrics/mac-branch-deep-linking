@@ -6,10 +6,8 @@
 //  Copyright © 2017 Branch Metrics. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "BNCTestCase.h"
-#import "NSString+Branch.h"
-#import "Branch.h"
+#import "BranchUniversalObject.h"
 
 @interface BranchUniversalObjectTest : BNCTestCase
 @end
@@ -157,6 +155,7 @@
     XCTAssertTrue([s bnc_isEqualToMaskedString:mask]);
 }
 
+/*
 - (void) testDeprecations {
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -195,6 +194,7 @@
 
     #pragma clang diagnostic pop
 }
+*/
 
 - (void) testDictionary {
     NSDictionary *d = nil;

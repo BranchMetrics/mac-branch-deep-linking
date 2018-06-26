@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BranchContentIndexMode
 
-typedef NS_ENUM(NSInteger, BranchContentIndexMode) {
-    BranchContentIndexModePublic = 0,
-    BranchContentIndexModePrivate
-};
+//typedef NS_ENUM(NSInteger, BranchContentIndexMode) {
+//    BranchContentIndexModePublic = 0,
+//    BranchContentIndexModePrivate
+//};
 
 #pragma mark - BranchContentSchema
 
@@ -99,11 +99,13 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 
 @interface BranchUniversalObject : NSObject
 
-- (NSMutableDictionary*_Nonnull) dictionary;
-+ (BranchUniversalObject*_Nonnull) objectWithDictionary:(NSDictionary*_Null_unspecified)dictionary;
-
 - (nonnull instancetype)initWithCanonicalIdentifier:(nonnull NSString *)canonicalIdentifier;
 - (nonnull instancetype)initWithTitle:(nonnull NSString *)title;
+
++ (BranchUniversalObject*_Nonnull) objectWithDictionary:(NSDictionary*_Null_unspecified)dictionary;
+- (NSMutableDictionary*_Nonnull) dictionary;
+
+- (NSString*_Nonnull) description;
 
 @property (nonatomic, strong, nullable) NSString *canonicalIdentifier;
 @property (nonatomic, strong, nullable) NSString *canonicalUrl;
@@ -118,6 +120,7 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 
 @property (nonatomic, strong, nonnull) BranchContentMetadata *contentMetadata;
 
+/*
 ///@name Deprecated Properties
 
 @property (nonatomic, strong, nullable)
@@ -150,8 +153,7 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 @property (nonatomic, assign)
     __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex` instead."))))
     BOOL automaticallyListOnSpotlight;
-
-- (NSString*_Nonnull) description;
+*/
 
 @end
 

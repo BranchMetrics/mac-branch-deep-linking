@@ -341,20 +341,16 @@ exit:
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
     CC_SHA1(data.bytes, (const unsigned int) data.length, digest);
 
+    // SHA1 is 160 bits = 20 bytes
+
     string = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
     for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
         [string appendFormat:@"%02x", digest[i]];
 
-    // We started with 6 bytes, SHA1 is 20 bytes, UUID is 128-bits = 16 bytes.
     // Truncate last four bytes to make UUID:
 
     if (string.length < 32) return nil; // What?
-    NSString*result = [NSString stringWithFormat:@"%@-%@-%@-%@-%@",
-        [string substringWithRange:NSMakeRange(0, 8)],
-        [string substringWithRange:NSMakeRange(8, 4)],
-        [string substringWithRange:NSMakeRange(12, 4)],
-        [string substringWithRange:NSMakeRange(16, 4)],
-        [string substringWithRange:NSMakeRange(20, 12)]];
+    NSString*result = [NSString stringWithFormat:@"mac_%@", string];
 
     return result;
 }
@@ -579,7 +575,7 @@ exit:
     NSString*s;
     s = [self netAddress];
     if (s) {
-        _hardwareIDType = @"desktop_id";
+        _hardwareIDType = @"mac_id";
         return s;
     }
     s = [self vendorID];
@@ -617,7 +613,7 @@ exit:
     addString(hardwareIDType,       hardware_id_type);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
-    addString(netAddress,           desktop_id);
+    addString(netAddress,           mac_id);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
@@ -649,7 +645,7 @@ exit:
     addString(systemVersion,        os_version);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
-    addString(netAddress,           desktop_id);
+    addString(netAddress,           mac_id);
     addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);

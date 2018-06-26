@@ -94,7 +94,9 @@
 }
 
 - (void) testRetriesAndTimeout3 {
+    //
     // Fail a non-rety-able operation.
+    //
 
     Branch*branch = [Branch new];
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
@@ -126,5 +128,63 @@
     NSTimeInterval howLong = - [startDate timeIntervalSinceNow];
     XCTAssertTrue(retryCount == 1 && howLong < 60.0);
 }
+
+- (void) testSaveAndLoadOperations {
+    //
+    // Save operations to the queue. Quit Branch. Start Branch. See if events replay.
+    //
+    // TODO: Finish.
+
+    {
+        Branch*branch = [Branch new];
+        BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+        configuration.networkServiceClass = BNCTestNetworkService.class;
+        [branch startWithConfiguration:configuration];
+        [branch.networkAPIService pause];
+
+        __block long operationCount = 0;
+        BNCTestNetworkService.requestHandler =
+            ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+                // Called twice: once for open and once to get list
+                ++operationCount;
+                BNCTestNetworkOperation*operation =
+                    operation = [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+                return operation;
+            };
+
+        __block long successCount = 0;
+        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial] completion:
+            ^(NSError * _Nullable error) {
+                successCount++;
+            }
+        ];
+        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial] completion:
+            ^(NSError * _Nullable error) {
+                successCount++;
+            }
+        ];
+        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial] completion:
+            ^(NSError * _Nullable error) {
+                successCount++;
+            }
+        ];
+
+        BNCSleepForTimeInterval(2.0);
+        XCTAssert(successCount == 0);
+    }
+
+    Branch*branch = [Branch new];
+    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    [branch startWithConfiguration:configuration];
+
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testRetriesAndTimeout3"];
+
+
+
+
+}
+
 
 @end

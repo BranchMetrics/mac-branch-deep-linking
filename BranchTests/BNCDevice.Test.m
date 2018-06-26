@@ -23,7 +23,7 @@
         [device.hardwareIDType isEqualToString:@"idfa"] ||
         [device.hardwareIDType isEqualToString:@"vendor_id"] ||
         [device.hardwareIDType isEqualToString:@"random"] ||
-        [device.hardwareIDType isEqualToString:@"desktop_id"]
+        [device.hardwareIDType isEqualToString:@"mac_id"]
     );
     XCTAssertFalse(device.deviceIsUnidentified);
     XCTAssertTrue([device.brandName isEqualToString:@"Apple"]);
@@ -32,6 +32,7 @@
 
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"mac_OS"]);
+    XCTAssertStringMatchesRegex(device.hardwareID, @"^mac_[0-9a-f]+$");
 
 #elif TARGET_OS_TV
 

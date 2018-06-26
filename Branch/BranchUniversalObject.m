@@ -188,6 +188,8 @@ BranchCondition _Nonnull BranchConditionRefurbished   = @"REFURBISHED";
 
 #pragma mark - Deprecated Fields
 
+/* Deprecated:
+
 - (NSDictionary *)metadata {
     return self.contentMetadata.customMetadata;
 }
@@ -246,6 +248,7 @@ BranchCondition _Nonnull BranchConditionRefurbished   = @"REFURBISHED";
 - (void) setAutomaticallyListOnSpotlight:(BOOL)automaticallyListOnSpotlight {
     self.locallyIndex = automaticallyListOnSpotlight;
 }
+*/
 
 #pragma mark - Setters / Getters / Standard Methods
 

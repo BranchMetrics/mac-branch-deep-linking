@@ -48,8 +48,12 @@
             @"selector":    @"createShortLink:",
         },@{
             @"title":       @"Create Long Link",
-            @"detail":      @"Create a Branch lhort link.",
+            @"detail":      @"Create a Branch long link.",
             @"selector":    @"createLongLink:",
+        },@{
+            @"title":       @"Open Last Link",
+            @"detail":      @"Open the link the was just created.",
+            @"selector":    @"openLink:",
         },
     ];
     NSNib*nib = [[NSNib alloc] initWithNibNamed:@"APPActionItemView" bundle:[NSBundle mainBundle]];
@@ -236,6 +240,8 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     return linkProperties;
 }
 
+static NSURL*lastCreatedLink = nil;
+
 - (void) createShortLink:(id)sender {
     [self clearUIFields];
     BranchLinkProperties *linkProperties = [self createLinkProperties];
@@ -248,6 +254,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
             [self clearUIFields];
             self.errorField.stringValue = [self errorMessage:error];
             self.dataField.stringValue = shortURL.absoluteString ?: @"";
+            lastCreatedLink = shortURL;
         }];
 }
 
@@ -259,6 +266,11 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     [self clearUIFields];
     self.errorField.stringValue = [self errorMessage:nil];
     self.dataField.stringValue = url.absoluteString;
+    lastCreatedLink = url;
+}
+
+- (void) openLink:(id)sender {
+    [[Branch sharedInstance] openURL:lastCreatedLink];
 }
 
 @end
