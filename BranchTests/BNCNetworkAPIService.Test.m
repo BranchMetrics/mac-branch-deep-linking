@@ -133,58 +133,52 @@
     //
     // Save operations to the queue. Quit Branch. Start Branch. See if events replay.
     //
-    // TODO: Finish.
 
     {
+        __block long operationCount = 0;
+        BNCTestNetworkService.requestHandler =
+            ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+                ++operationCount;
+                return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+            };
+
         Branch*branch = [Branch new];
         BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
         configuration.networkServiceClass = BNCTestNetworkService.class;
         [branch startWithConfiguration:configuration];
-        [branch.networkAPIService pause];
+        branch.networkAPIService.queuePaused = YES;
+        [branch.networkAPIService clearNetworkQueue];
+        XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
+        
+        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]];
+        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]];
+        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]];
 
-        __block long operationCount = 0;
-        BNCTestNetworkService.requestHandler =
-            ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-                // Called twice: once for open and once to get list
-                ++operationCount;
-                BNCTestNetworkOperation*operation =
-                    operation = [BNCTestNetworkService operationWithRequest:request response:@"{}"];
-                return operation;
-            };
-
-        __block long successCount = 0;
-        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial] completion:
-            ^(NSError * _Nullable error) {
-                successCount++;
-            }
-        ];
-        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial] completion:
-            ^(NSError * _Nullable error) {
-                successCount++;
-            }
-        ];
-        [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial] completion:
-            ^(NSError * _Nullable error) {
-                successCount++;
-            }
-        ];
-
-        BNCSleepForTimeInterval(2.0);
-        XCTAssert(successCount == 0);
+        BNCSleepForTimeInterval(1.0);
+        XCTAssert(branch.networkAPIService.queueDepth == 3 && operationCount == 0);
     }
 
     Branch*branch = [Branch new];
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
+
+    __block long operationCount = 0;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testSaveAndLoadOperations"];
+    BNCTestNetworkService.requestHandler =
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            ++operationCount;
+            if (operationCount == 3) {
+                BNCAfterSecondsPerformBlock(0.010, ^{ [expectation fulfill]; });
+            }
+            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+        };
     [branch startWithConfiguration:configuration];
 
+    [self waitForExpectationsWithTimeout:3.0 handler:nil];
 
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testRetriesAndTimeout3"];
-
-
-
-
+    // Wait for any extra operation to drain too:
+    BNCSleepForTimeInterval(0.5);
+    XCTAssertEqual(operationCount, 3);
 }
-
 
 @end

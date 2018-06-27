@@ -87,7 +87,8 @@ class BranchEventTestSwift : BNCTestCase {
         event.contentItems = [ branchUniversalObject ]
 
         let expectation = self.expectation(description: "v2-event Swift")
-        let branch = Branch.init().start(with: BranchConfiguration.init(key: "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"))
+        let branch = Branch.init().start(with: BranchConfiguration.init(key:
+            "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"))
         branch.logEvent(event, completion: { (error) in
             XCTAssertNil(error)
             expectation.fulfill()

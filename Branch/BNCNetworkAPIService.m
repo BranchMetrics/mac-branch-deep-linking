@@ -24,6 +24,8 @@
 #import "BNCPersistence.h"
 #import "NSData+Branch.h"
 
+static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queue";
+
 #pragma mark BNCNetworkAPIOperation
 
 @interface BNCNetworkAPIOperation () <NSSecureCoding>
@@ -83,6 +85,24 @@
 - (void) dealloc {
     if ([self.networkService respondsToSelector:@selector(cancelAllOperations)]) {
         [self.networkService cancelAllOperations];
+    }
+}
+
+- (void) setQueuePaused:(BOOL)paused_ {
+    @synchronized(self) {
+        self.operationQueue.suspended = paused_;
+    }
+}
+
+- (BOOL) queueIsPaused {
+    @synchronized(self) {
+        return self.operationQueue.isSuspended;
+    }
+}
+
+- (NSInteger) queueDepth {
+    @synchronized(self) {
+        return self.operationQueue.operationCount;
     }
 }
 
@@ -191,40 +211,51 @@
 }
 - (void) saveArchivedOperations {
     @synchronized(self) {
-        [BNCPersistence archiveObject:self.archivedOperations named:@"io.branch.sdk.networkqueue"];
+        [BNCPersistence archiveObject:self.archivedOperations named:BNCNetworkQueueFilename];
     }
 }
 
 - (void) loadOperations {
     @synchronized(self) {
         self.archivedOperations = [NSMutableDictionary new];
-        NSDictionary*d = [BNCPersistence unarchiveObjectNamed:@"io.branch.sdk.networkqueue"];
+        NSDictionary*d = [BNCPersistence unarchiveObjectNamed:BNCNetworkQueueFilename];
         if (![d isKindOfClass:NSDictionary.class]) return;
         // Start the operations:
         __weak __typeof(self) weakSelf = self;
         for (NSString*key in d.keyEnumerator) {
             if (![key isKindOfClass:NSString.class])
                 continue;
-            BNCNetworkAPIOperation*op = d[key];
+            NSData*data = d[key];
+            if (![data isKindOfClass:NSData.class])
+                continue;
+            BNCNetworkAPIOperation*op = nil;
+            @try {
+                op = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            }
+            @catch (id e) {
+                BNCLogError(@"Can't unarchive network operation: %@.", e);
+                op = nil;
+            }
             if (![op isKindOfClass:BNCNetworkAPIOperation.class])
                 continue;
-
-            op.networkService = self.networkService;
-            op.settings = self.settings;
-            op.completion = ^ (BNCNetworkAPIOperation*operation) {
-                __typeof(self) strongSelf = weakSelf;
-                [strongSelf deleteOperation:operation];
-            };
-            [self.operationQueue addOperation:op];
+            if (!self.archivedOperations[op.identifier]) {
+                self.archivedOperations[op.identifier] = data;
+                op.networkService = self.networkService;
+                op.settings = self.settings;
+                op.completion = ^ (BNCNetworkAPIOperation*operation) {
+                    __typeof(self) strongSelf = weakSelf;
+                    [strongSelf deleteOperation:operation];
+                };
+                [self.operationQueue addOperation:op];
+            }
         }
-        self.archivedOperations = [d mutableCopy];
     }
 }
 
 - (void) clearNetworkQueue {
     @synchronized(self) {
         self.archivedOperations = [NSMutableDictionary new];
-        [BNCPersistence removeDataNamed:@"io.branch.sdk.networkqueue"];
+        [BNCPersistence removeDataNamed:BNCNetworkQueueFilename];
         if ([self.networkService respondsToSelector:@selector(cancelAllOperations)])
             [self.networkService cancelAllOperations];
         [self.operationQueue cancelAllOperations];

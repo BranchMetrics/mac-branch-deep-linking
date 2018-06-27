@@ -2,7 +2,7 @@
 //  BNCApplication.Test.m
 //  Branch-SDK-Tests
 //
-//  Created by Edward on 1/10/18.
+//  Created by Edward Smith on 1/10/18.
 //  Copyright © 2018 Branch, Inc. All rights reserved.
 //
 
@@ -65,7 +65,6 @@
     XCTAssertTrue(application.currentBuildDate && [application.currentBuildDate timeIntervalSinceNow] > kOneYearAgo);
 
     NSString*const kBranchKeychainService          = @"BranchKeychainService";
-//  NSString*const kBranchKeychainDevicesKey       = @"BranchKeychainDevices";
     NSString*const kBranchKeychainFirstBuildKey    = @"BranchKeychainFirstBuild";
     NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstInstall";
 

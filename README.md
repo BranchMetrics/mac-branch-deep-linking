@@ -15,6 +15,9 @@ The Branch SDK for Mac OS X
 * [ ] Deferred deep linking
 
 ## Unit Tests
+### Branch Events
+* [x] BranchEvent.Test.m
+
 ### App Installs
 * [ ] First install app dates.
 * [ ] Re-open app dates (with app update).
@@ -37,8 +40,14 @@ The Branch SDK for Mac OS X
 * [ ] Make long link.
 
 ### Tracking Disabled
-* [ ] Tracking should be disabled .
+* [ ] Tracking disabled: Test persistence, open link work, long links work, else fail.
 ```
+
+## Design Questions
+1. Should we be able to directly open an app scheme like:  `testbed-mac://testbed-mac.app.link/ODYeswaVWM` rather just 
+    app schemes like `testbed-mac://open?link_click_id=348527481794276288` on Mac?
+     
+2. Should the Mac SDK be able to process http/https schemes too, like: `https://testbed-mac.app.link/ODYeswaVWM`?
 
 ## Notes
 
@@ -64,7 +73,8 @@ In the TestBed-Mac project:
 - application:continueUserActivity:restorationHandler:
 - (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls;
 ```
-### Headers
+### HTTP Headers
+
 ```
 {
     "args": {},

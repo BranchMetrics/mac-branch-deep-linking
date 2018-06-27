@@ -10,6 +10,7 @@
 
 #import "BNCTestCase.h"
 #import "BNCLog.h"
+#import "BNCSettings.h"
 
 NSString* kTestStringResourceName = @"BNCTestCase"; // File is 'BNCTestCase.strings'. Omit the '.string'.
 
@@ -35,6 +36,11 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
 @end
 
 @implementation BNCTestCase
+
++ (void) setUp {
+    BNCTestNetworkService.requestHandler = nil;
+    [[[BNCSettings alloc] init] clearAllSettings];
+}
 
 - (void)setUp {
     [super setUp];

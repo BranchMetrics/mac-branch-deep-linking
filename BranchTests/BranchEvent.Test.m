@@ -110,6 +110,7 @@
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:configuration];
+    [branch.networkAPIService clearNetworkQueue];
 
     event.contentItems = (NSMutableArray*) @[ buo ];
 
@@ -141,12 +142,12 @@
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
 }
 
 - (void) testUserCompletedAction {
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
-    XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event-user-action"];
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
         XCTAssertEqualObjects(request.HTTPMethod, @"POST");
         XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
@@ -155,11 +156,12 @@
         NSMutableDictionary*expectedRequest = [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
         expectedRequest[@"custom_data"] = nil;
         expectedRequest[@"event_data"] = nil;
+        expectedRequest[@"device_fingerprint_id"] = nil;
+        requestDictionary[@"device_fingerprint_id"] = nil;
 
         XCTAssertEqualObjects(expectedRequest, requestDictionary);
 
         NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
-        BNCAfterSecondsPerformBlock(0.01, ^{ [expectation fulfill]; });
         return [BNCTestNetworkService operationWithRequest:request response:responseString];
     };
 
@@ -168,6 +170,7 @@
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:configuration];
+    [branch.networkAPIService clearNetworkQueue];
 
     // Set up the Branch Univseral Object --
 
@@ -211,9 +214,17 @@
     };
 
     // Set up and invoke --
-    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventPurchase contentItem:buo] completion:nil];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event-user-action"];
+    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventPurchase contentItem:buo] completion:
+        ^ (NSError * _Nullable error) {
+            XCTAssertNil(error);
+            [expectation fulfill];
+        }
+    ];
+
     //[buo userCompletedAction:BranchStandardEventPurchase];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
 }
 
 - (void) testExampleSyntax {
@@ -231,13 +242,15 @@
         [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:configuration];
+    [branch.networkAPIService clearNetworkQueue];
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
     [branch logEvent:event completion:^ (NSError*error) {
-        XCTAssert(error == nil);
+        XCTAssertNil(error);
         [expectation fulfill];
     }];
     [self awaitExpectations];
+    XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
 
     // Test that all events are in the array:
     XCTAssert([BranchEvent standardEvents].count == 16);

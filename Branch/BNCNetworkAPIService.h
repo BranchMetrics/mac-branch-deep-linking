@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
         completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
 
 - (void) clearNetworkQueue;
+@property (atomic, assign, getter=queueIsPaused) BOOL queuePaused;
+@property (atomic, assign, readonly) NSInteger queueDepth;
 @end
 
 NS_ASSUME_NONNULL_END

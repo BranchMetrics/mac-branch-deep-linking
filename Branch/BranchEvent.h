@@ -83,6 +83,7 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 #pragma mark - Branch
 
 @interface Branch (BranchEvent)
+- (void) logEvent:(BranchEvent*)event;
 - (void) logEvent:(BranchEvent*)event completion:(void (^_Nullable)(NSError*_Nullable error))completion;
 @end
 

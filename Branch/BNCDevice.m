@@ -674,7 +674,7 @@ exit:
     }
 }
 
-- (NSArray<NSString*>*) allIPAddresses {
+- (NSArray<NSString*>*) allLocalIPAddresses {
     @synchronized(self) {
         NSMutableArray *array = [NSMutableArray new];
         for (BNCNetworkInterface *inf in [BNCNetworkInterface currentInterfaces]) {

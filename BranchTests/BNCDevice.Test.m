@@ -74,4 +74,10 @@
     XCTAssertTrue(BNCTestStringMatchesRegex(device.localIPAddress, @"^\\d*\\.\\d*\\.\\d*\\.\\d*$"));
 }
 
+- (void) testIPAddresses {
+    NSArray*d = [[BNCDevice currentDevice] allLocalIPAddresses];
+    XCTAssertGreaterThan(d.count, 1);
+    NSLog(@"IP Addresses: %@.", d);
+}
+
 @end

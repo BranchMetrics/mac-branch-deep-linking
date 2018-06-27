@@ -75,7 +75,7 @@
     NSError*error = nil;
     @try {
         NSData*data = [NSKeyedArchiver archivedDataWithRootObject:object];
-        error = [BNCPersistence saveDataNamed:@"io.branch.sdk.settings" data:data];
+        error = [BNCPersistence saveDataNamed:name data:data];
     }
     @catch (id exception) {
         if (error) {

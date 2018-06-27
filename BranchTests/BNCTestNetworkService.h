@@ -20,10 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong) NSMutableURLRequest* request;
 @property (assign) NSInteger HTTPStatusCode;
 @property (strong) NSError*_Nullable error;
-@property (strong) NSDate*_Nullable startDate;
-@property (strong) NSDate*_Nullable timeoutDate;
+//@property (strong) NSDate*_Nullable startDate;
+//@property (strong) NSDate*_Nullable timeoutDate;
 @property (strong) NSData*_Nullable responseData;
-@property (strong) NSDictionary*userInfo;
+//@property (strong) NSDictionary*userInfo;
 - (void) start;
 - (void) cancel;
 @end
@@ -37,13 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*_Nullable)publicKeys;
 
-- (void) startOperation:(BNCTestNetworkOperation*)operation;
-
-@property (atomic, strong) NSDictionary*_Nullable userInfo;
+//@property (atomic, strong) NSDictionary*_Nullable userInfo;
 
 // Properties and methods for mocking tests:
 
-@property (atomic, class, copy) id<BNCNetworkOperationProtocol>(^requestHandler)(NSMutableURLRequest*request);
+@property (atomic, class, copy) id<BNCNetworkOperationProtocol>(^_Nullable requestHandler)(NSMutableURLRequest*request);
 
 + (NSMutableDictionary*_Nullable) mutableDictionaryFromRequest:(NSURLRequest*)request;
 

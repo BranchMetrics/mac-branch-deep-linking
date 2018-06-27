@@ -11,6 +11,10 @@
 #import "BNCTestNetworkService.h"
 #import "BNCThreads.h"
 
+@interface BNCTestNetworkService ()
+- (void) startOperation:(BNCTestNetworkOperation*)operation;
+@end
+
 #pragma mark BNCTestNetworkOperation
 
 @interface BNCTestNetworkOperation ()
@@ -68,7 +72,14 @@ static id<BNCNetworkOperationProtocol>(^_requestHandler)(NSMutableURLRequest*req
 
 - (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion {
-    id<BNCNetworkOperationProtocol>operation = self.class.requestHandler(request);
+    id<BNCNetworkOperationProtocol>operation = nil;
+    if (self.class.requestHandler == nil) {
+//        [NSException raise:NSInternalInconsistencyException
+//            format:@"%@ requestHandler not set!", NSStringFromClass(self.class)];
+        operation = [self.class operationWithRequest:request response:@"{}"];
+    } else {
+        operation = self.class.requestHandler(request);
+    }
     ((BNCTestNetworkOperation*)operation).networkService = self;
     ((BNCTestNetworkOperation*)operation).completionBlock = completion;
     return operation;
@@ -80,8 +91,8 @@ static id<BNCNetworkOperationProtocol>(^_requestHandler)(NSMutableURLRequest*req
 
 - (void) startOperation:(BNCTestNetworkOperation*)operation {
     operation.networkService = self;
-    operation.startDate = [NSDate date];
-    operation.timeoutDate = [operation.startDate dateByAddingTimeInterval:operation.request.timeoutInterval];
+//    operation.startDate = [NSDate date];
+//    operation.timeoutDate = [operation.startDate dateByAddingTimeInterval:operation.request.timeoutInterval];
     BNCAfterSecondsPerformBlockOnMainThread(0.010, ^{
         if (operation.completionBlock)
             operation.completionBlock(operation);

@@ -36,7 +36,7 @@
     if (!self.hasValidKey) {
         [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
     }
-    self.useCertificatePinning = NO; //  TODO: YES;
+    self.useCertificatePinning = YES; //  TODO: YES;
     self.branchAPIServiceURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
     self.blackListURLRegex = [NSArray new];
@@ -565,14 +565,6 @@
     [self sendClose];
 }
 
-- (NSMutableDictionary*) requestMetadataDictionary {
-    return self.settings.requestMetadataDictionary;
-}
-
-- (void) setRequestMetadataDictionary:(NSMutableDictionary *)requestMetadataDictionary {
-    self.settings.requestMetadataDictionary = requestMetadataDictionary;
-}
-
 - (void) sendClose {
     NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
     dictionary[@"identity_id"] = self.settings.identityID;
@@ -582,6 +574,14 @@
     [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
         dictionary:dictionary
         completion:nil];
+}
+
+- (NSMutableDictionary*) requestMetadataDictionary {
+    return self.settings.requestMetadataDictionary;
+}
+
+- (void) setRequestMetadataDictionary:(NSMutableDictionary *)requestMetadataDictionary {
+    self.settings.requestMetadataDictionary = requestMetadataDictionary;
 }
 
 #pragma mark - Links

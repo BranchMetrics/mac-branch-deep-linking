@@ -226,4 +226,8 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
         }];
 }
 
+- (void) logEvent:(BranchEvent*)event {
+    [self logEvent:event completion:nil];
+}
+
 @end

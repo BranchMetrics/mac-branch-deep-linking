@@ -39,7 +39,7 @@
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
             }
-            XCTAssert(test.count == 0);
+            XCTAssert(test.count == 0, @"Found keys: %@.", test);
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
             XCTAssertNotNil(response);
             return [BNCTestNetworkService operationWithRequest:request response:response];
