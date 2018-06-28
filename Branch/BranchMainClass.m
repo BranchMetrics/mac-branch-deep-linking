@@ -195,6 +195,7 @@
         name:nil
         object:nil];
 
+    [self openURL:nil];
     return self;
 }
 
@@ -203,6 +204,7 @@
 }
 
 - (void) dealloc {
+    self.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #if TARGET_OS_OSX
     [[NSAppleEventManager sharedAppleEventManager]
@@ -426,21 +428,19 @@
 
 - (void) notifyWillStartSessionWithURL:(NSURL*)URL {
     BNCLogAssert([NSThread isMainThread]);
-    Branch*branch = [Branch sharedInstance];
-    if ([branch.delegate respondsToSelector:@selector(branch:willStartSessionWithURL:)]) {
-        [branch.delegate branch:branch willStartSessionWithURL:URL];
+    if ([self.delegate respondsToSelector:@selector(branch:willStartSessionWithURL:)]) {
+        [self.delegate branch:self willStartSessionWithURL:URL];
     }
     NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
     userInfo[BranchURLKey] = URL;
     [[NSNotificationCenter defaultCenter]
         postNotificationName:BranchWillStartSessionNotification
-        object:branch
+        object:self
         userInfo:userInfo];
 }
 
 - (void) notifyDidStartSession:(BranchSession*)session withURL:(NSURL*)URL error:(NSError*)error {
     BNCLogAssert([NSThread isMainThread] && (session || error));
-    Branch*branch = [Branch sharedInstance];
 
     if (session == nil && error == nil) {
         BNCLogError(@"Both session and error are nil!");
@@ -451,11 +451,11 @@
         self.startSessionBlock(session, error);
         
     if (error) {
-        if ([branch.delegate respondsToSelector:@selector(branch:failedToStartSessionWithURL:error:)])
-            [branch.delegate branch:branch failedToStartSessionWithURL:URL error:error];
+        if ([self.delegate respondsToSelector:@selector(branch:failedToStartSessionWithURL:error:)])
+            [self.delegate branch:self failedToStartSessionWithURL:URL error:error];
     } else {
-        if ([branch.delegate respondsToSelector:@selector(branch:didStartSession:)])
-            [branch.delegate branch:branch didStartSession:session];
+        if ([self.delegate respondsToSelector:@selector(branch:didStartSession:)])
+            [self.delegate branch:self didStartSession:session];
     }
 
     NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
@@ -464,22 +464,19 @@
     userInfo[BranchErrorKey] = error;
     [[NSNotificationCenter defaultCenter]
         postNotificationName:BranchDidStartSessionNotification
-        object:branch
+        object:self
         userInfo:userInfo];
 }
 
 - (void) notifyDidOpenURLWithSession:(BranchSession*)session {
     BNCLogAssert([NSThread isMainThread]);
-    Branch*branch = [Branch sharedInstance];
-
-    if ([branch.delegate respondsToSelector:@selector(branch:didOpenURLWithSession:)])
-        [branch.delegate branch:branch didOpenURLWithSession:session];
-
+    if ([self.delegate respondsToSelector:@selector(branch:didOpenURLWithSession:)])
+        [self.delegate branch:self didOpenURLWithSession:session];
     NSMutableDictionary*userInfo = [[NSMutableDictionary alloc] init];
     userInfo[BranchSessionKey] = session;
     [[NSNotificationCenter defaultCenter]
         postNotificationName:BranchDidOpenURLWithSessionNotification
-        object:branch
+        object:self
         userInfo:userInfo];
 }
 
@@ -487,9 +484,9 @@
 
 - (void) setTrackingDisabled:(BOOL)trackingDisabled_ {
     @synchronized(self) {
+        if (!!self.settings.trackingDisabled == !!trackingDisabled_) return;
         self.settings.trackingDisabled = trackingDisabled_;
         if (trackingDisabled_) {
-            // Set the flag (which also clears the settings):
             [self.settings clearAllSettings];
             [self.networkAPIService clearNetworkQueue];
             //[self.linkCache clear];
@@ -671,6 +668,12 @@
     NSURL*URL = [components URL];
 
     return URL;
+}
+
++ (void) clearAllSettings {
+    [[[BNCNetworkAPIService alloc] init] clearNetworkQueue];
+    [[[BNCSettings alloc] init] clearAllSettings];
+    // May need to clear keychain too.
 }
 
 @end

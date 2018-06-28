@@ -117,22 +117,25 @@
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-        XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
+        if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+            XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
 
-        NSMutableDictionary *expectedRequest =
-            [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
-        XCTAssertNotNil(expectedRequest);
-        [branch.networkAPIService appendV2APIParametersWithDictionary:expectedRequest];
-        expectedRequest[@"retry_number"] = nil;
-        
-        NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-        XCTAssertNotNil(requestDictionary);
+            NSMutableDictionary *expectedRequest =
+                [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
+            XCTAssertNotNil(expectedRequest);
+            [branch.networkAPIService appendV2APIParametersWithDictionary:expectedRequest];
+            expectedRequest[@"retry_number"] = nil;
 
-        XCTAssertEqualObjects(expectedRequest, requestDictionary);
+            NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+            XCTAssertNotNil(requestDictionary);
 
-        NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
-        return [BNCTestNetworkService operationWithRequest:request response:responseString];
+            XCTAssertEqualObjects(expectedRequest, requestDictionary);
+
+            NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
+            return [BNCTestNetworkService operationWithRequest:request response:responseString];
+        }
+        return [BNCTestNetworkService operationWithRequest:request response:@""];
     };
 
     [branch.networkAPIService clearNetworkQueue];
@@ -149,20 +152,28 @@
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-        XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
+        if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+            XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
 
-        NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-        NSMutableDictionary*expectedRequest = [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
-        expectedRequest[@"custom_data"] = nil;
-        expectedRequest[@"event_data"] = nil;
-        expectedRequest[@"device_fingerprint_id"] = nil;
-        requestDictionary[@"device_fingerprint_id"] = nil;
+            NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+            NSMutableDictionary*expectedRequest = [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
+            expectedRequest[@"custom_data"] = nil;
+            expectedRequest[@"event_data"] = nil;
+            NSMutableDictionary*er_ud = [expectedRequest[@"user_data"] mutableCopy];
+            er_ud[@"device_fingerprint_id"] = nil;
+            expectedRequest[@"user_data"] = er_ud;
 
-        XCTAssertEqualObjects(expectedRequest, requestDictionary);
+            NSMutableDictionary*rd_ud = [expectedRequest[@"user_data"] mutableCopy];
+            rd_ud[@"device_fingerprint_id"] = nil;
+            requestDictionary[@"user_data"] = rd_ud;
 
-        NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
-        return [BNCTestNetworkService operationWithRequest:request response:responseString];
+            XCTAssertEqualObjects(expectedRequest, requestDictionary);
+
+            NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
+            return [BNCTestNetworkService operationWithRequest:request response:responseString];
+        }
+        return [BNCTestNetworkService operationWithRequest:request response:@""];
     };
 
     BranchConfiguration*configuration =
@@ -238,9 +249,11 @@
     event.searchQuery = @"product name";
     event.customData[@"rating"] = @"5";
 
+    Branch*branch = [[Branch alloc] init];
     BranchConfiguration*configuration =
         [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
-    Branch*branch = [[Branch alloc] init];
+    configuration.key = @"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC";
+    configuration.branchAPIServiceURL = @"http://esmith.api.beta.branch.io";
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
 

@@ -24,18 +24,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) branch:(Branch*)branch didStartSession:(BranchSession*)session;
 - (void) branch:(Branch*)branch failedToStartSessionWithURL:(NSURL*_Nullable)url
                                                       error:(NSError*_Nullable)error;
-
 - (void) branch:(Branch*)branch didOpenURLWithSession:(BranchSession*)session;
 @end
 
-#pragma mark - Branch Notifications
+#pragma mark - Branch Notifications and Keys
 
 FOUNDATION_EXPORT NSString*const BranchWillStartSessionNotification;
 FOUNDATION_EXPORT NSString*const BranchDidStartSessionNotification;
 FOUNDATION_EXPORT NSString*const BranchDidOpenURLWithSessionNotification;
 
-FOUNDATION_EXPORT NSString*const BranchErrorKey;
 FOUNDATION_EXPORT NSString*const BranchURLKey;
 FOUNDATION_EXPORT NSString*const BranchSessionKey;
+FOUNDATION_EXPORT NSString*const BranchErrorKey;
 
 NS_ASSUME_NONNULL_END

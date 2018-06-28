@@ -10,6 +10,7 @@
 
 #import "BNCTestCase.h"
 #import "BranchEvent.h"
+#import <stdatomic.h> // import not available in Xcode 7
 
 @interface BNCNetworkAPIServiceTest : BNCTestCase
 @end
@@ -30,11 +31,11 @@
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
 
-    __block long retryCount = 0;
+    __block _Atomic(long) retryCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
             // Called twice: once for open and once to get list
-            ++retryCount;
+            atomic_fetch_add(&retryCount, 1);
             BNCTestNetworkOperation*operation = [BNCTestNetworkService operationWithRequest:request response:nil];
             operation.HTTPStatusCode = 500;
             return operation;
@@ -51,7 +52,8 @@
     NSDate*startDate = [NSDate date];
     [self waitForExpectationsWithTimeout:90.0 handler:nil];
     NSTimeInterval howLong = - [startDate timeIntervalSinceNow];
-    XCTAssertTrue(retryCount > 1 && howLong > 60.0 && howLong < 80.0);
+    long count = atomic_load(&retryCount);
+    XCTAssertTrue(count > 1 && howLong > 60.0 && howLong < 80.0);
 }
 
 - (void) testRetriesAndTimeout2 {
@@ -64,11 +66,11 @@
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
 
-    __block long retryCount = 0;
+    __block _Atomic(long) retryCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
             // Called twice: once for open and once to get list
-            ++retryCount;
+            atomic_fetch_add(&retryCount, 1);
             BNCTestNetworkOperation*operation = nil;
             if (retryCount > 5) {
                 operation = [BNCTestNetworkService operationWithRequest:request response:@"{}"];
@@ -90,7 +92,8 @@
     NSDate*startDate = [NSDate date];
     [self waitForExpectationsWithTimeout:90.0 handler:nil];
     NSTimeInterval howLong = - [startDate timeIntervalSinceNow];
-    XCTAssertTrue(retryCount > 1 && howLong < 60.0);
+    long count = atomic_load(&retryCount);
+    XCTAssertTrue(count > 1 && howLong < 60.0);
 }
 
 - (void) testRetriesAndTimeout3 {
@@ -104,11 +107,11 @@
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
 
-    __block long retryCount = 0;
+    __block _Atomic(long) retryCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
             // Called twice: once for open and once to get list
-            ++retryCount;
+            atomic_fetch_add(&retryCount, 1);
             BNCTestNetworkOperation*operation =
                 operation = [BNCTestNetworkService operationWithRequest:request response:nil];
             operation.HTTPStatusCode = 409;
@@ -126,7 +129,8 @@
     NSDate*startDate = [NSDate date];
     [self waitForExpectationsWithTimeout:90.0 handler:nil];
     NSTimeInterval howLong = - [startDate timeIntervalSinceNow];
-    XCTAssertTrue(retryCount == 1 && howLong < 60.0);
+    long count = atomic_load(&retryCount);
+    XCTAssertTrue(count == 1 && howLong < 60.0);
 }
 
 - (void) testSaveAndLoadOperations {
@@ -135,10 +139,10 @@
     //
 
     {
-        __block long operationCount = 0;
+        __block _Atomic(long) operationCount = 0;
         BNCTestNetworkService.requestHandler =
             ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-                ++operationCount;
+                atomic_fetch_add(&operationCount, 1);
                 return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
             };
 
@@ -155,7 +159,8 @@
         [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]];
 
         BNCSleepForTimeInterval(1.0);
-        XCTAssert(branch.networkAPIService.queueDepth == 3 && operationCount == 0);
+        long count = atomic_load(&operationCount);
+        XCTAssert(branch.networkAPIService.queueDepth == 3 && count == 0);
     }
 
     Branch*branch = [Branch new];

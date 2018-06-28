@@ -13,7 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BNCSettings : NSObject <NSSecureCoding>
-//+ (instancetype) sharedInstance;
 + (instancetype) loadSettings;
 - (instancetype) init NS_DESIGNATED_INITIALIZER;
 - (void) clearAllSettings;

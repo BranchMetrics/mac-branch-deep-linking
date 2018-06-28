@@ -122,6 +122,7 @@
 		4DC2232920AA262D005C57D0 /* BranchMainClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DC2232720AA262D005C57D0 /* BranchMainClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DC2232A20AA262D005C57D0 /* BranchMainClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMainClass.m */; };
 		4DE667EE20CB7C1D000752E3 /* BNCURLBlackList.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE667EB20CB7C1D000752E3 /* BNCURLBlackList.Test.m */; };
+		4DE997CB20E45FC6006F1C94 /* BranchDelegate.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BC20AF9EC000441881 /* BranchDelegate.Test.m */; };
 		4DF8189720ADDC5000441881 /* BranchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189120ADDC4F00441881 /* BranchEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DF8189820ADDC5000441881 /* BranchLinkProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189220ADDC4F00441881 /* BranchLinkProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DF8189920ADDC5000441881 /* BranchLinkProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189320ADDC4F00441881 /* BranchLinkProperties.m */; };
@@ -650,6 +651,7 @@
 				4D159DE620B62DD5005A9850 /* BranchError.Test.m in Sources */,
 				4D38923A20BA18A80013B811 /* BranchLinkProperties.Test.m in Sources */,
 				4D046E8F20C8A27C0073262B /* BNCTestNetworkService.m in Sources */,
+				4DE997CB20E45FC6006F1C94 /* BranchDelegate.Test.m in Sources */,
 				4D159DDD20B62DD5005A9850 /* BNCLog.Test.m in Sources */,
 				4D159DD820B62DD5005A9850 /* BNCDebug.Test.m in Sources */,
 				4DFB135A20CCFAE800AF3E47 /* BranchOpen.Test.m in Sources */,

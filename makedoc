@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+
+# Public documentation:
+
+appledoc \
+    --project-name "Branch SDK" \
+    --project-company "Branch Metrics" \
+    --company-id io.branch.sdk \
+    --output ./Documentation \
+        Branch/BranchCommerce.h \
+        Branch/BranchDelegate.h \
+        Branch/BranchError.h \
+        Branch/BranchEvent.h \
+        Branch/BranchLinkProperties.h \
+        Branch/BranchNetworkServiceProtocol.h \
+        Branch/BranchMainClass.h \
+        Branch/BranchSession.h \
+        Branch/BranchUniversalObject.h
+
+# Internal documentation:
+
+appledoc \
+    --project-name "Branch SDK" \
+    --project-company "Branch Metrics" \
+    --company-id io.branch.sdk \
+    --output ./Documentation/Internal \
+    --ignore .m \
+        Branch

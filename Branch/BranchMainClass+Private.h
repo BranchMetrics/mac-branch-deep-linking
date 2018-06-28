@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Branch (Private)
 @property (atomic, strong, readonly) BNCNetworkAPIService*networkAPIService;
 @property (atomic, strong, readonly) BranchConfiguration*configuration;
++ (void) clearAllSettings;
 @end
 
 NS_ASSUME_NONNULL_END

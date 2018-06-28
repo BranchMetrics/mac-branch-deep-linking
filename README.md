@@ -3,6 +3,7 @@ The Branch SDK for Mac OS X
 
 ## To Do
 ```
+## Coding Tasks
 * [x] Add common files from iOS
 * [x] Set up project
 * [x] Create test bed app
@@ -25,9 +26,9 @@ The Branch SDK for Mac OS X
 * [ ] Re-install app dates.
 
 ### Open URL Tests
-* [ ] Open URL
-* [ ] Open Deferred URL
-* [ ] Delegate Tests
+* [x] Open app scheme URL
+* [x] Open http scheme URL 
+* [x] Delegate Tests
 
 ### Request Tests
 * [ ] Intrumentation tests.
@@ -40,7 +41,14 @@ The Branch SDK for Mac OS X
 * [ ] Make long link.
 
 ### Tracking Disabled
-* [ ] Tracking disabled: Test persistence, open link work, long links work, else fail.
+* [ ] Tracking disabled: Test setting persistence, open link work, long links work, else fail.
+
+## Documentation
+
+### AppleDoc
+* https://github.com/tomaz/appledoc
+* http://appledoc.gentlebytes.com/appledoc/
+* Example: https://www.cocoanetics.com/2011/11/amazing-apple-like-documentation/
 ```
 
 ## Design Questions

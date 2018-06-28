@@ -2,21 +2,29 @@
 //  BranchDelegateTest.m
 //  Branch-SDK-Tests
 //
-//  Created by edward on 11/3/17.
+//  Created by Edward Smith on 11/3/17.
 //  Copyright © 2017 Branch, Inc. All rights reserved.
 //
 
 #import "BNCTestCase.h"
-#import "Branch.h"
-#import "BNCEncodingUtils.h"
+#import "BranchMainClass.h"
+#import "BranchDelegate.h"
+#import "BranchError.h"
 
 @interface BranchDelegateTest : BNCTestCase <BranchDelegate>
 @property (assign, nonatomic) NSInteger notificationOrder;
-@property (strong, nonatomic) XCTestExpectation *branchWillOpenURLExpectation;
-@property (strong, nonatomic) XCTestExpectation *branchWillOpenURLNotificationExpectation;
+@property (strong, nonatomic) XCTestExpectation *branchWillStartSessionExpectation;
+@property (strong, nonatomic) XCTestExpectation *branchWillStartSessionNotificationExpectation;
+
+@property (strong, nonatomic) XCTestExpectation *branchCallbackExpectation;
+
+@property (strong, nonatomic) XCTestExpectation *branchDidStartSessionExpectation;
+@property (strong, nonatomic) XCTestExpectation *branchDidStartSessionNotificationExpectation;
+
 @property (strong, nonatomic) XCTestExpectation *branchDidOpenURLExpectation;
 @property (strong, nonatomic) XCTestExpectation *branchDidOpenURLNotificationExpectation;
-@property (strong, nonatomic) NSDictionary *deepLinkParams;
+
+//@property (strong, nonatomic) NSDictionary *deepLinkParams;
 @property (assign, nonatomic) BOOL expectFailure;
 @end
 
@@ -30,14 +38,17 @@
 
     self.expectFailure = NO;
     self.notificationOrder = 0;
-    self.branchWillOpenURLExpectation =
-        [self expectationWithDescription:@"branchWillOpenURLExpectation"];
-    self.branchWillOpenURLNotificationExpectation =
-        [self expectationWithDescription:@"branchWillOpenURLNotificationExpectation"];
-    self.branchDidOpenURLExpectation =
-        [self expectationWithDescription:@"branchDidOpenURLExpectation"];
-    self.branchDidOpenURLNotificationExpectation =
-        [self expectationWithDescription:@"branchDidOpenURLNotificationExpectation"];
+
+    self.branchWillStartSessionExpectation = [self expectationWithDescription:@"branchWillStartSessionExpectation"];
+    self.branchWillStartSessionNotificationExpectation = [self expectationWithDescription:@"branchWillStartSessionNotificationExpectation"];
+
+    self.branchCallbackExpectation = [self expectationWithDescription:@"branchCallbackExpectation"];
+
+    self.branchDidStartSessionExpectation = [self expectationWithDescription:@"branchDidStartSessionExpectation"];
+    self.branchDidStartSessionNotificationExpectation = [self expectationWithDescription:@"branchDidStartSessionNotificationExpectation"];
+
+    self.branchDidOpenURLExpectation = [self expectationWithDescription:@"branchDidOpenURLExpectation"];
+    self.branchDidOpenURLNotificationExpectation = [self expectationWithDescription:@"branchDidOpenURLNotificationExpectation"];
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -51,70 +62,44 @@
         name:BranchDidStartSessionNotification
         object:nil];
 
-    id serverInterfaceMock = OCMClassMock([BNCServerInterface class]);
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchDidOpenURLWithSessionNotification:)
+        name:BranchDidOpenURLWithSessionNotification
+        object:nil];
 
-    BNCPreferenceHelper *preferenceHelper = [BNCPreferenceHelper preferenceHelper];
-    Branch.branchKey = @"key_live_foo";
-
-    Branch *branch =
-        [[Branch alloc]
-            initWithInterface:serverInterfaceMock
-            queue:[[BNCServerRequestQueue alloc] init]
-            cache:[[BNCLinkCache alloc] init]
-            preferenceHelper:preferenceHelper
-            key:@"key_live_foo"];
-    branch.delegate = self;
-
-    BNCServerResponse *openInstallResponse = [[BNCServerResponse alloc] init];
-    openInstallResponse.data = @{
-        @"data": @"{\"$og_title\":\"Content Title\",\"$identity_id\":\"423237095633725879\",\"~feature\":\"Sharing Feature\",\"$desktop_url\":\"http://branch.io\",\"$canonical_identifier\":\"item/12345\",\"~id\":423243086454504450,\"~campaign\":\"some campaign\",\"+is_first_session\":false,\"~channel\":\"Distribution Channel\",\"$ios_url\":\"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/\",\"$exp_date\":0,\"$currency\":\"$\",\"$publicly_indexable\":1,\"$content_type\":\"some type\",\"~creation_source\":3,\"$amount\":1000,\"$og_description\":\"My Content Description\",\"+click_timestamp\":1506983962,\"$og_image_url\":\"https://pbs.twimg.com/profile_images/658759610220703744/IO1HUADP.png\",\"+match_guaranteed\":true,\"+clicked_branch_link\":true,\"deeplink_text\":\"This text was embedded as data in a Branch link with the following characteristics:\\n\\ncanonicalUrl: https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\\n  title: Content Title\\n  contentDescription: My Content Description\\n  imageUrl: https://pbs.twimg.com/profile_images/658759610220703744/IO1HUADP.png\\n\",\"$one_time_use\":false,\"$canonical_url\":\"https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\",\"~referring_link\":\"https://bnctestbed.app.link/izPBY2xCqF\"}",
-        @"device_fingerprint_id": @"439892172783867901",
-        @"identity_id": @"439892172804841307",
-        @"link": @"https://bnctestbed.app.link?%24identity_id=439892172804841307",
-        @"session_id": @"443529761084512316",
-    };
-
-    __block BNCServerCallback openOrInstallCallback;
-    id openOrInstallCallbackCheckBlock = [OCMArg checkWithBlock:^BOOL(BNCServerCallback callback) {
-        openOrInstallCallback = callback;
-        return YES;
-    }];
-
-    id openOrInstallInvocation = ^(NSInvocation *invocation) {
-        openOrInstallCallback(openInstallResponse, nil);
-    };
-
-    id openOrInstallUrlCheckBlock = [OCMArg checkWithBlock:^BOOL(NSString *url) {
-        return [url rangeOfString:@"open"].location != NSNotFound ||
-               [url rangeOfString:@"install"].location != NSNotFound;
-    }];
-    [[[serverInterfaceMock expect]
-        andDo:openOrInstallInvocation]
-            postRequest:[OCMArg any]
-            url:openOrInstallUrlCheckBlock
-            key:[OCMArg any]
-            callback:openOrInstallCallbackCheckBlock];
-
-    preferenceHelper.universalLinkUrl = nil;
-    preferenceHelper.externalIntentURI = nil;
-    preferenceHelper.referringURL = nil;
-
-    [branch clearNetworkQueue];
-    XCTestExpectation *openExpectation = [self expectationWithDescription:@"Test open"];
-    [branch initSessionWithLaunchOptions:@{}
-        andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-            // Callback block. Order: 2.
-            XCTAssertNil(error);
-            XCTAssertEqualObjects(preferenceHelper.sessionID, @"443529761084512316");
-            XCTAssertTrue(self.notificationOrder == 2);
-            self.notificationOrder++;
-            self.deepLinkParams = params;
-            [openExpectation fulfill];
+    // Set up the network mock:
+    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+        if ([request.HTTPMethod isEqualToString:@"POST"] &&
+            ([request.URL.path hasSuffix:@"/v1/open"] ||
+             [request.URL.path hasSuffix:@"/v1/install"])) {
+            NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
+            XCTAssertNotNil(response);
+            return [BNCTestNetworkService operationWithRequest:request response:response];
         }
-    ];
+        return [BNCTestNetworkService operationWithRequest:request response:@""];
+    };
+
+    // Start Branch:
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    Branch*branch = [[Branch alloc] init];
+    branch.delegate = self;
+    branch.startSessionBlock = ^(BranchSession * _Nullable session, NSError * _Nullable error) {
+        // Callback block. Order: 2.
+        XCTAssertTrue([NSThread isMainThread]);
+        XCTAssertNotNil(session);
+        XCTAssertNil(error);
+        XCTAssertEqualObjects(session.sessionID, @"534369161321890489");
+        XCTAssertEqual(self.notificationOrder, 2);
+        self.notificationOrder++;
+        [self.branchCallbackExpectation fulfill];
+    };
+    [branch startWithConfiguration:configuration];
 
     [self waitForExpectationsWithTimeout:5.0 handler:NULL];
-    XCTAssertTrue(self.notificationOrder == 5);
+    XCTAssertEqual(self.notificationOrder, 7);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     branch.delegate = nil;
 }
@@ -122,17 +107,16 @@
 // Test that Branch notifications work with a failure.
 // Test that they 1) work and 2) are sent in the right order.
 - (void) testNotificationsFailure {
-
     self.expectFailure = YES;
     self.notificationOrder = 0;
-    self.branchWillOpenURLExpectation =
-        [self expectationWithDescription:@"branchWillOpenURLExpectation"];
-    self.branchWillOpenURLNotificationExpectation =
-        [self expectationWithDescription:@"branchWillOpenURLNotificationExpectation"];
-    self.branchDidOpenURLExpectation =
-        [self expectationWithDescription:@"branchDidOpenURLExpectation"];
-    self.branchDidOpenURLNotificationExpectation =
-        [self expectationWithDescription:@"branchDidOpenURLNotificationExpectation"];
+
+    self.branchWillStartSessionExpectation = [self expectationWithDescription:@"branchWillStartSessionExpectation"];
+    self.branchWillStartSessionNotificationExpectation = [self expectationWithDescription:@"branchWillStartSessionNotificationExpectation"];
+
+    self.branchCallbackExpectation = [self expectationWithDescription:@"branchCallbackExpectation"];
+
+    self.branchDidStartSessionExpectation = [self expectationWithDescription:@"branchDidStartSessionExpectation"];
+    self.branchDidStartSessionNotificationExpectation = [self expectationWithDescription:@"branchDidStartSessionNotificationExpectation"];
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -146,62 +130,46 @@
         name:BranchDidStartSessionNotification
         object:nil];
 
-    id serverInterfaceMock = OCMClassMock([BNCServerInterface class]);
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchDidOpenURLWithSessionNotification:)
+        name:BranchDidOpenURLWithSessionNotification
+        object:nil];
 
-    BNCPreferenceHelper *preferenceHelper = [BNCPreferenceHelper preferenceHelper];
-    Branch.branchKey = @"key_live_foo";
-
-    Branch *branch =
-        [[Branch alloc]
-            initWithInterface:serverInterfaceMock
-            queue:[[BNCServerRequestQueue alloc] init]
-            cache:[[BNCLinkCache alloc] init]
-            preferenceHelper:preferenceHelper
-            key:@"key_live_foo"];
-    branch.delegate = self;
-
-    BNCServerResponse *openInstallResponse = [[BNCServerResponse alloc] init];
-    openInstallResponse.data = @{ };
-
-    __block BNCServerCallback openOrInstallCallback;
-    id openOrInstallCallbackCheckBlock = [OCMArg checkWithBlock:^BOOL(BNCServerCallback callback) {
-        openOrInstallCallback = callback;
-        return YES;
-    }];
-
-    id openOrInstallInvocation = ^(NSInvocation *invocation) {
-        NSError *error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError];
-        openOrInstallCallback(openInstallResponse, error);
+    // Set up the network mock:
+    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+        if ([request.HTTPMethod isEqualToString:@"POST"] &&
+            ([request.URL.path hasSuffix:@"/v1/open"] ||
+             [request.URL.path hasSuffix:@"/v1/install"])) {
+            NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
+            XCTAssertNotNil(response);
+            BNCTestNetworkOperation*operation = [BNCTestNetworkService operationWithRequest:request response:response];
+            operation.error = [NSError branchErrorWithCode:BNCNetworkServiceInterfaceError];
+            return operation;
+        }
+        return [BNCTestNetworkService operationWithRequest:request response:@""];
     };
 
-    id openOrInstallUrlCheckBlock = [OCMArg checkWithBlock:^BOOL(NSString *url) {
-        return [url rangeOfString:@"open"].location != NSNotFound ||
-               [url rangeOfString:@"install"].location != NSNotFound;
-    }];
-
-    [[[serverInterfaceMock expect]
-        andDo:openOrInstallInvocation]
-        postRequest:[OCMArg any]
-        url:openOrInstallUrlCheckBlock
-        key:[OCMArg any]
-        callback:openOrInstallCallbackCheckBlock];
-
-    [branch clearNetworkQueue];
-    XCTestExpectation *openExpectation = [self expectationWithDescription:@"Test open"];
-    [branch initSessionWithLaunchOptions:@{}
-        andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-            // Callback block. Order: 2.
-            XCTAssertEqualObjects(params, @{});
-            XCTAssertNotNil(error);
-            XCTAssertTrue(self.notificationOrder == 2);
-            self.notificationOrder++;
-            self.deepLinkParams = params;
-            [openExpectation fulfill];
-        }
-    ];
+    // Start Branch:
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    Branch*branch = [[Branch alloc] init];
+    branch.delegate = self;
+    branch.startSessionBlock = ^(BranchSession * _Nullable session, NSError * _Nullable error) {
+        // Callback block. Order: 2.
+        XCTAssertTrue([NSThread isMainThread]);
+        XCTAssertNil(session);
+        XCTAssertNotNil(error);
+        XCTAssertEqual(self.notificationOrder, 2);
+        self.notificationOrder++;
+        [self.branchCallbackExpectation fulfill];
+    };
+    [branch startWithConfiguration:configuration];
 
     [self waitForExpectationsWithTimeout:5.0 handler:NULL];
-    XCTAssertTrue(self.notificationOrder == 5);
+    BNCSleepForTimeInterval(0.200); // Wait to drain any outstanding double fulfillments.
+    XCTAssertEqual(self.notificationOrder, 5);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     branch.delegate = nil;
 }
@@ -211,122 +179,115 @@
 // Delegate method. Order: 0.
 - (void) branch:(Branch*)branch willStartSessionWithURL:(NSURL*)url {
     XCTAssertTrue([NSThread isMainThread]);
-    XCTAssertTrue(self.notificationOrder == 0);
+    XCTAssertNotNil(branch);
+    XCTAssertNil(url);
+    XCTAssertEqual(self.notificationOrder, 0);
     self.notificationOrder++;
-    [self.branchWillOpenURLExpectation fulfill];
+    [self.branchWillStartSessionExpectation fulfill];
 }
 
 // Notification method. Order: 1.
 - (void) branchWillStartSessionNotification:(NSNotification*)notification {
     XCTAssertTrue([NSThread isMainThread]);
-    XCTAssertTrue(self.notificationOrder == 1);
+    XCTAssertEqual(self.notificationOrder, 1);
     self.notificationOrder++;
+
+    XCTAssertTrue([notification.object isKindOfClass:[Branch class]]);
+
+    BranchSession*session = notification.userInfo[BranchSessionKey];
+    XCTAssertNil(session);
+
+    NSURL*URL = notification.userInfo[BranchURLKey];
+    XCTAssertNil(URL);
 
     NSError *error = notification.userInfo[BranchErrorKey];
     XCTAssertNil(error);
 
-    NSURL *URL = notification.userInfo[BranchURLKey];
-    XCTAssertNil(URL);
-
-    BranchUniversalObject *object = notification.userInfo[BranchUniversalObjectKey];
-    XCTAssertNil(object);
-
-    BranchLinkProperties *properties = notification.userInfo[BranchLinkPropertiesKey];
-    XCTAssertNil(properties);
-
-    [self.branchWillOpenURLNotificationExpectation fulfill];
+    [self.branchWillStartSessionNotificationExpectation fulfill];
 }
 
 // Delegate method. Order: 3.
-- (void) branch:(Branch*)branch
-didStartSessionWithURL:(NSURL*)url
-     branchLink:(BranchLink*)branchLink {
+- (void) branch:(Branch*)branch didStartSession:(BranchSession*)session {
     XCTAssertTrue([NSThread isMainThread]);
-    XCTAssertTrue(self.notificationOrder == 3);
+    XCTAssertNotNil(branch);
+    XCTAssertNotNil(session);
+    XCTAssertEqual(self.notificationOrder, 3);
     self.notificationOrder++;
-    XCTAssertNotNil(branchLink.universalObject);
-    XCTAssertNotNil(branchLink.linkProperties);
     if (self.expectFailure)
         [NSException raise:NSInternalInconsistencyException format:@"Should return an error here."];
-    [self.branchDidOpenURLExpectation fulfill];
+    [self.branchDidStartSessionExpectation fulfill];
 }
 
-// Delegate method. Order: 3
+// Delegate method: failure. Order: 3
 - (void) branch:(Branch*)branch
 failedToStartSessionWithURL:(NSURL*)url
                       error:(NSError*)error {
     XCTAssertTrue([NSThread isMainThread]);
-    XCTAssertTrue(self.notificationOrder == 3);
-    self.notificationOrder++;
+    XCTAssertNil(url);
     XCTAssertNotNil(error);
+    XCTAssertEqual(self.notificationOrder, 3);
+    self.notificationOrder++;
     if (!self.expectFailure)
         [NSException raise:NSInternalInconsistencyException format:@"Shouldn't return an error here."];
-    [self.branchDidOpenURLExpectation fulfill];
+    [self.branchDidStartSessionExpectation fulfill];
 }
 
 // Notification method. Order: 4
 - (void) branchDidStartSessionNotification:(NSNotification*)notification {
     XCTAssertTrue([NSThread isMainThread]);
-    XCTAssertTrue(self.notificationOrder == 4);
+    XCTAssertEqual(self.notificationOrder, 4);
     self.notificationOrder++;
 
-    NSError *error = notification.userInfo[BranchErrorKey];
-    NSURL *URL = notification.userInfo[BranchURLKey];
-    BranchUniversalObject *object = notification.userInfo[BranchUniversalObjectKey];
-    BranchLinkProperties *properties = notification.userInfo[BranchLinkPropertiesKey];
+    XCTAssertTrue([notification.object isKindOfClass:[Branch class]]);
 
     if (self.expectFailure) {
+        BranchSession*session = notification.userInfo[BranchSessionKey];
+        XCTAssertNil(session);
 
-        XCTAssertNotNil(error);
+        NSURL*URL = notification.userInfo[BranchURLKey];
         XCTAssertNil(URL);
-        XCTAssertNil(object);
-        XCTAssertNil(properties);
 
+        NSError *error = notification.userInfo[BranchErrorKey];
+        XCTAssertNotNil(error);
     } else {
+        BranchSession*session = notification.userInfo[BranchSessionKey];
+        XCTAssertNotNil(session);
 
+        NSURL*URL = notification.userInfo[BranchURLKey];
+        XCTAssertNil(URL);
+
+        NSError *error = notification.userInfo[BranchErrorKey];
         XCTAssertNil(error);
-        XCTAssertNotNil(URL);
-        XCTAssertNotNil(object);
-        XCTAssertNotNil(properties);
-
-        NSMutableDictionary *d =
-            [NSMutableDictionary dictionaryWithDictionary:
-                [object getDictionaryWithCompleteLinkProperties:properties]];
-        NSMutableDictionary *truth = [NSMutableDictionary dictionaryWithDictionary:@{
-            @"$amount": @1000,
-            @"$canonical_identifier": @"item/12345",
-            @"$canonical_url": @"https://dev.branch.io/getting-started/deep-link-routing/guide/ios/",
-            @"$content_type": @"some type",
-            @"$currency": @"$",
-            @"$desktop_url": @"http://branch.io",
-            @"$exp_date": @0,
-            @"$identity_id": @"423237095633725879",
-            @"$ios_url": @"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/",
-            @"$og_description": @"My Content Description",
-            @"$og_image_url": @"https://pbs.twimg.com/profile_images/658759610220703744/IO1HUADP.png",
-            @"$og_title": @"Content Title",
-            @"$one_time_use": @0,
-            @"$publicly_indexable": @1,
-
-            @"+click_timestamp": @1506983962,
-            @"+clicked_branch_link": @1,
-            @"+is_first_session": @0,
-            @"+match_guaranteed": @1,
-
-            @"deeplink_text": @"This text was embedded as data in a Branch link with the following characteristics:\n\ncanonicalUrl: https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\n  title: Content Title\n  contentDescription: My Content Description\n  imageUrl: https://pbs.twimg.com/profile_images/658759610220703744/IO1HUADP.png\n",
-
-            @"~campaign": @"some campaign",
-            @"~channel": @"Distribution Channel",
-            @"~creation_source": @3,
-            @"~duration": @0,
-            @"~feature": @"Sharing Feature",
-            @"~id": @423243086454504450,
-            @"~referring_link": @"https://bnctestbed.app.link/izPBY2xCqF"
-        }];
-
-        XCTAssertTrue(d.count == truth.count);
-        XCTAssertTrue(!d || [d isEqualToDictionary:truth]);
     }
+    [self.branchDidStartSessionNotificationExpectation fulfill];
+}
+
+// Delegate method. Order: 5
+- (void) branch:(Branch *)branch didOpenURLWithSession:(BranchSession *)session {
+    XCTAssertTrue([NSThread isMainThread]);
+    XCTAssertNotNil(branch);
+    XCTAssertNotNil(session);
+    XCTAssertEqual(self.notificationOrder, 5);
+    self.notificationOrder++;
+    [self.branchDidOpenURLExpectation fulfill];
+}
+
+// Notification method. Order: 6
+- (void) branchDidOpenURLWithSessionNotification:(NSNotification*)notification {
+    XCTAssertTrue([NSThread isMainThread]);
+    XCTAssertEqual(self.notificationOrder, 6);
+    self.notificationOrder++;
+
+    XCTAssertTrue([notification.object isKindOfClass:[Branch class]]);
+
+    BranchSession*session = notification.userInfo[BranchSessionKey];
+    XCTAssertNotNil(session);
+
+    NSURL*URL = notification.userInfo[BranchURLKey];
+    XCTAssertNil(URL);
+
+    NSError*error = notification.userInfo[BranchErrorKey];
+    XCTAssertNil(error);
 
     [self.branchDidOpenURLNotificationExpectation fulfill];
 }
