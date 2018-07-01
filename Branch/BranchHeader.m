@@ -1,7 +1,7 @@
 /**
  @file          BranchHeader.h
  @package       Branch
- @brief         Branch SDK header dependencies.
+ @brief         Imports the system header dependencies for the Branch SDK.
 
  @author        Edward Smith
  @date          May 2018

@@ -20,7 +20,6 @@
 		4D046E9720C8B5B20073262B /* NSData+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */; };
 		4D046E9A20C8CE740073262B /* BNCTestNetworkService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9920C8CE740073262B /* BNCTestNetworkService.Test.m */; };
 		4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */; };
-		4D159DD720B62DD5005A9850 /* BNCApplication+BNCTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165820ACD00E002BF211 /* BNCApplication+BNCTest.m */; };
 		4D159DD820B62DD5005A9850 /* BNCDebug.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99773420AA09B300A63EE1 /* BNCDebug.Test.m */; };
 		4D159DD920B62DD5005A9850 /* BNCDevice.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C166220AD090F002BF211 /* BNCDevice.Test.m */; };
 		4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818C220B031EB00441881 /* BNCEncoder.Test.m */; };
@@ -229,8 +228,6 @@
 		4D9C165120ACCD9B002BF211 /* BNCLocalization.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLocalization.Test.m; sourceTree = "<group>"; };
 		4D9C165220ACCD9B002BF211 /* BranchError.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchError.Test.m; sourceTree = "<group>"; };
 		4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCApplication.Test.m; sourceTree = "<group>"; };
-		4D9C165720ACD00E002BF211 /* BNCApplication+BNCTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BNCApplication+BNCTest.h"; sourceTree = "<group>"; };
-		4D9C165820ACD00E002BF211 /* BNCApplication+BNCTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BNCApplication+BNCTest.m"; sourceTree = "<group>"; };
 		4D9C165C20ACD625002BF211 /* BNCDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCDevice.h; sourceTree = "<group>"; };
 		4D9C165D20ACD625002BF211 /* BNCDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCDevice.m; sourceTree = "<group>"; };
 		4D9C166020ACDB58002BF211 /* BNCWireFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCWireFormat.h; sourceTree = "<group>"; };
@@ -370,8 +367,8 @@
 				4DF8189220ADDC4F00441881 /* BranchLinkProperties.h */,
 				4DF8189320ADDC4F00441881 /* BranchLinkProperties.m */,
 				4DC2232720AA262D005C57D0 /* BranchMainClass.h */,
-				4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */,
 				4DC2232820AA262D005C57D0 /* BranchMainClass.m */,
+				4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */,
 				4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */,
 				4DF818B320AE23BC00441881 /* BranchSession.h */,
 				4DF818B420AE23BC00441881 /* BranchSession.m */,
@@ -390,8 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */,
-				4D9C165720ACD00E002BF211 /* BNCApplication+BNCTest.h */,
-				4D9C165820ACD00E002BF211 /* BNCApplication+BNCTest.m */,
 				4D99773420AA09B300A63EE1 /* BNCDebug.Test.m */,
 				4D9C166220AD090F002BF211 /* BNCDevice.Test.m */,
 				4DF818C220B031EB00441881 /* BNCEncoder.Test.m */,
@@ -647,7 +642,6 @@
 				4D159DDB20B62DD5005A9850 /* BNCKeyChain.Test.m in Sources */,
 				4D159DD920B62DD5005A9850 /* BNCDevice.Test.m in Sources */,
 				4D159DE920B62DD5005A9850 /* BranchUniversalObject.Test.m in Sources */,
-				4D159DD720B62DD5005A9850 /* BNCApplication+BNCTest.m in Sources */,
 				4D159DE620B62DD5005A9850 /* BranchError.Test.m in Sources */,
 				4D38923A20BA18A80013B811 /* BranchLinkProperties.Test.m in Sources */,
 				4D046E8F20C8A27C0073262B /* BNCTestNetworkService.m in Sources */,

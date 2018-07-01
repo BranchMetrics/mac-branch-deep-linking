@@ -13,17 +13,17 @@ The Branch SDK for Mac OS X
 * [x] Open / Install with deep link data
 * [x] Make a Branch-Test test project bundle
 * [x] Send v2-event
-* [ ] Deferred deep linking
+* [x] Deferred deep linking
 
 ## Unit Tests
 ### Branch Events
 * [x] BranchEvent.Test.m
 
 ### App Installs
-* [ ] First install app dates.
-* [ ] Re-open app dates (with app update).
-* [ ] Re-open app dates (non-update).
-* [ ] Re-install app dates.
+* [-] First install app dates.
+* [-] Re-open app dates (with app update).
+* [-] Re-open app dates (non-update).
+* [-] Re-install app dates.
 
 ### Open URL Tests
 * [x] Open app scheme URL
@@ -35,6 +35,7 @@ The Branch SDK for Mac OS X
 * [ ] Make sure requests have meta-data when set.
 
 ### Functional Tests
+* [ ] Set logging enabled / disabled.
 * [ ] Set identity.
 * [ ] Log out.
 * [ ] Make short link.
@@ -44,11 +45,13 @@ The Branch SDK for Mac OS X
 * [ ] Tracking disabled: Test setting persistence, open link work, long links work, else fail.
 
 ## Documentation
-
 ### AppleDoc
 * https://github.com/tomaz/appledoc
 * http://appledoc.gentlebytes.com/appledoc/
 * Example: https://www.cocoanetics.com/2011/11/amazing-apple-like-documentation/
+
+### Jazzy
+* https://github.com/realm/jazzy
 ```
 
 ## Design Questions

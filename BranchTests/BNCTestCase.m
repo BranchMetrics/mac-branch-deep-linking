@@ -12,7 +12,10 @@
 #import "BNCLog.h"
 #import "BNCSettings.h"
 
-NSString* kTestStringResourceName = @"BNCTestCase"; // File is 'BNCTestCase.strings'. Omit the '.string'.
+// File is 'BNCTestCase.strings'. Omit the '.string'.
+NSString*_Nonnull const     BNCTestStringResourceName = @"BNCTestCase";
+NSString*_Nonnull const     BNCTestBranchKey    = @"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N";
+//NSString*_Nonnull const     BNCTestBranchKey    = @"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC";
 
 #pragma mark - BNCTestStringMatchesRegex
 
@@ -82,7 +85,7 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
     NSString *const kItemNotFound = @"<Item-Not-Found>";
     NSString *resource =
         [[NSBundle bundleForClass:self.class]
-            localizedStringForKey:key value:kItemNotFound table:kTestStringResourceName];
+            localizedStringForKey:key value:kItemNotFound table:BNCTestStringResourceName];
     if ([resource isEqualToString:kItemNotFound]) resource = nil;
     return resource;
 }

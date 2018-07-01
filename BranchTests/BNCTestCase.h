@@ -14,6 +14,8 @@
 #import "BranchMainClass+Private.h"
 #import "BNCTestNetworkService.h"
 
+FOUNDATION_EXPORT NSString*_Nonnull const BNCTestBranchKey;
+
 #define BNCTAssertEqualMaskedString(string, mask) { \
     if ((id)string != nil && (id)mask != nil && [string bnc_isEqualToMaskedString:mask]) { \
     } else { \

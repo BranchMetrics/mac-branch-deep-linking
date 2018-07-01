@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// An array of host domains that we will allow with a self-signed SSL cert.
 @property (atomic, strong, null_resettable) NSMutableSet<NSString*>* anySSLCertHosts;
 @property (atomic, assign) NSInteger maxConcurrentOperationCount;
+- (void) cancelAllOperations;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -215,13 +215,13 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
         latest_install_time <= 0.0 ||
         latest_update_time <= 0.0 ||
         previous_update_time > latest_update_time)
-        update_state = BNCApplicationUpdateStateNonUpdate; // Error: Send Non-update.
+        update_state = BNCApplicationUpdateStateNonUpdate; // BNCApplicationUpdateStateError. Error: Send Non-update.
     else
     if ((latest_update_time - kOneDay) <= first_install_time && previous_update_time <= 0)
         update_state = BNCApplicationUpdateStateInstall;
     else
     if (first_install_time < latest_install_time && previous_update_time <= 0)
-        update_state = BNCApplicationUpdateStateUpdate; // Re-install: Send Update.
+        update_state = BNCApplicationUpdateStateUpdate; // BNCApplicationUpdateStateReinstall. Re-install: Send Update.
     else
     if (latest_update_time > first_install_time && previous_update_time < latest_update_time)
         update_state = BNCApplicationUpdateStateUpdate;
@@ -284,16 +284,3 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
 }
 
 @end
-
-@implementation BNCApplication (BNCTest)
-
-- (void) setAppOriginalInstallDate:(NSDate*)originalInstallDate
-        firstInstallDate:(NSDate*)firstInstallDate
-        lastUpdateDate:(NSDate*)lastUpdateDate {
-    self->_currentInstallDate = firstInstallDate;        // latest_install_time
-    self->_firstInstallDate = originalInstallDate;       // first_install_time
-    self->_currentBuildDate = lastUpdateDate;            // lastest_update_time
-}
-
-@end
-

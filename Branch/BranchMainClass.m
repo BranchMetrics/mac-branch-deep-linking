@@ -17,6 +17,7 @@
 #import "BNCApplication.h"
 #import "BNCNetworkService.h"
 #import "BNCURLBlackList.h"
+#import "BNCKeyChain.h"
 #import "BranchError.h"
 #import "NSString+Branch.h"
 #import "NSData+Branch.h"
@@ -96,6 +97,8 @@
 @property (atomic, strong) dispatch_source_t    delayedOpenTimer;
 @property (atomic, strong) dispatch_queue_t     workQueue;
 @end
+
+#pragma mark - Branch
 
 @implementation Branch
 
@@ -221,6 +224,15 @@
 
 - (BOOL) limitFacebookTracking {
     return self.settings.limitFacebookTracking;
+}
+
+- (void) setEnableLogging:(BOOL)enabled_ {
+    BNCLogLevel level = enabled_ ? BNCLogLevelDebug : BNCLogLevelLog;
+    BNCLogSetDisplayLevel(level);
+}
+
+- (BOOL) enableLogging {
+    return (BNCLogDisplayLevel() < BNCLogLevelLog) ? YES : NO;
 }
 
 #pragma mark - Application State Changes
@@ -673,7 +685,12 @@
 + (void) clearAllSettings {
     [[[BNCNetworkAPIService alloc] init] clearNetworkQueue];
     [[[BNCSettings alloc] init] clearAllSettings];
-    // May need to clear keychain too.
+    NSString*appGroup = [BNCApplication currentApplication].applicationID;
+    if (appGroup.length > 0) {
+        BNCKeyChain*keyChain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:appGroup];
+        NSError*error = [keyChain removeValuesForService:@"BranchKeychainService" key:nil];
+        if (error) BNCLogError(@"Can't remove app group '%@' settings: %@.", appGroup, error);
+    }
 }
 
 @end

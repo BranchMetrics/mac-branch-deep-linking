@@ -29,12 +29,14 @@
 @interface BNCNetworkService () <NSURLSessionDelegate> {
     NSMutableArray*_pinnedPublicKeys;
     NSMutableSet<NSString*>*_anySSLCertHosts;
+    NSOperationQueue*_serviceQueue;
+    NSURLSession*_session;
 }
 
 - (void) startOperation:(BNCNetworkOperation*)operation;
 
-@property NSOperationQueue *serviceQueue;
-@property NSURLSession *session;
+@property (atomic, readonly) NSOperationQueue *serviceQueue;
+@property (atomic, readonly) NSURLSession *session;
 @end
 
 #pragma mark - BNCNetworkOperation
@@ -61,44 +63,55 @@
 
 - (instancetype) init {
     self = [super init];
-    if (!self) return self;
-
-    NSError *error = nil;
-    NSURL *cacheURL =
-        [[NSFileManager defaultManager]
-            URLForDirectory:NSCachesDirectory
-            inDomain:NSUserDomainMask | NSLocalDomainMask
-            appropriateForURL:nil
-            create:YES
-            error:&error];
-    if (error) {
-        BNCLogError(@"Error locating cache directory. Will use local directory instead. %@.", error);
-        cacheURL = [NSURL fileURLWithPath:@"."];
-    }
-    cacheURL = [cacheURL URLByAppendingPathComponent:@"io.branch.network.cache"];
-
-    NSURLSessionConfiguration *configuration =
-        [NSURLSessionConfiguration defaultSessionConfiguration];
-    configuration.timeoutIntervalForRequest = 60.0;
-    configuration.timeoutIntervalForResource = 60.0;
-    configuration.URLCache =
-        [[NSURLCache alloc]
-            initWithMemoryCapacity:20*1024*1024
-            diskCapacity:200*1024*1024
-            diskPath:[cacheURL path]];
-
-    self.serviceQueue = [NSOperationQueue new];
-    self.serviceQueue.name = @"io.branch.network.queue";
-    self.serviceQueue.maxConcurrentOperationCount = 3;
-    self.serviceQueue.qualityOfService = NSQualityOfServiceUserInteractive;
-
-    self.session =
-        [NSURLSession sessionWithConfiguration:configuration
-            delegate:self
-            delegateQueue:self.serviceQueue];
-    self.session.sessionDescription = @"io.branch.network.session";
-
     return self;
+}
+
+- (NSOperationQueue*) serviceQueue {
+    @synchronized(self) {
+        if (_serviceQueue) return _serviceQueue;
+        _serviceQueue = [NSOperationQueue new];
+        _serviceQueue.name = @"io.branch.network.queue";
+        _serviceQueue.maxConcurrentOperationCount = 3;
+        _serviceQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+        return _serviceQueue;
+    }
+}
+
+- (NSURLSession*) session {
+    @synchronized(self) {
+        if (_session) return _session;
+
+        NSError *error = nil;
+        NSURL *cacheURL =
+            [[NSFileManager defaultManager]
+                URLForDirectory:NSCachesDirectory
+                inDomain:NSUserDomainMask | NSLocalDomainMask
+                appropriateForURL:nil
+                create:YES
+                error:&error];
+        if (error) {
+            BNCLogError(@"Error locating cache directory. Will use local directory instead. %@.", error);
+            cacheURL = [NSURL fileURLWithPath:@"."];
+        }
+        cacheURL = [cacheURL URLByAppendingPathComponent:@"io.branch.network.cache"];
+
+        NSURLSessionConfiguration *configuration =
+            [NSURLSessionConfiguration defaultSessionConfiguration];
+        configuration.timeoutIntervalForRequest = 60.0;
+        configuration.timeoutIntervalForResource = 60.0;
+        configuration.URLCache =
+            [[NSURLCache alloc]
+                initWithMemoryCapacity:20*1024*1024
+                diskCapacity:200*1024*1024
+                diskPath:[cacheURL path]];
+
+        _session =
+            [NSURLSession sessionWithConfiguration:configuration
+                delegate:self
+                delegateQueue:self.serviceQueue];
+        _session.sessionDescription = @"io.branch.network.session";
+        return _session;
+    }
 }
 
 - (void) setMaxConcurrentOperationCount:(NSInteger)count {
@@ -274,6 +287,13 @@ exit:
         completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
     } else {
         completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, NULL);
+    }
+}
+
+- (void) cancelAllOperations {
+    @synchronized(self) {
+        [self.session invalidateAndCancel];
+        _session = nil;
     }
 }
 

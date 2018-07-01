@@ -22,6 +22,8 @@
     XCTAssertTrue(vn > 0 && vs);
     NSString*testString = [[NSString alloc] initWithUTF8String:(const char*)vs];
     XCTAssertTrue([testString hasPrefix:@"@(#)PROGRAM:Branch  PROJECT:Branch-"]);
+
+    
 }
 
 @end

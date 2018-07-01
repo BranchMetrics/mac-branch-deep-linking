@@ -9,8 +9,7 @@
 #import "APPAppDelegate.h"
 #import "APPViewController.h"
 #import <Branch/Branch.h>
-
-#include "Branch/BNCLog.h"
+#import <Branch/BNCLog.h>
 
 @interface APPAppDelegate ()
 @property (strong, nonatomic) APPViewController*viewController;
@@ -20,13 +19,16 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
     BranchConfiguration*configuration =
-        //[BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
         [BranchConfiguration configurationWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
 
 #if 0
     configuration.useCertificatePinning = NO;
     configuration.branchAPIServiceURL = @"http://esmith.api.beta.branch.io";
     configuration.key = @"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC";
+#elif 0
+    configuration.useCertificatePinning = NO;
+    configuration.branchAPIServiceURL = @"http://cjones.api.beta.branch.io";
+    configuration.key = @"key_live_ocyWSee4dsA1EUPxxMvFchefuqdjuxyW";
 #else
     configuration.useCertificatePinning = YES;
     configuration.branchAPIServiceURL = @"https://api.branch.io";

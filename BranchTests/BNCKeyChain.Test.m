@@ -10,8 +10,12 @@
 
 #import "BNCTestCase.h"
 #import "BNCKeyChain.h"
-#import "BNCApplication+BNCTest.h"
 #import "BNCDevice.h"
+#import "BNCApplication.h"
+
+@interface BNCApplication (BNCTest)
++ (NSDictionary*) entitlementsDictionary;
+@end
 
 @interface BNCKeyChainTest : BNCTestCase
 @end

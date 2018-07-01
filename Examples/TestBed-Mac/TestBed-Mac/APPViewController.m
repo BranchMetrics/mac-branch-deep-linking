@@ -9,6 +9,8 @@
 #import "APPViewController.h"
 #import "APPActionItemView.h"
 #import <Branch/Branch.h>
+#import "../../../Branch/BNCApplication.h"
+#import "../../../Branch/BranchMainClass+Private.h"
 
 #pragma mark APPViewController
 
@@ -16,6 +18,8 @@
 @property (weak) IBOutlet NSCollectionView *actionItemCollection;
 @property (strong) NSArray<NSDictionary*> *actionItems;
 @end
+
+#pragma mark - APPViewController
 
 @implementation APPViewController
 
@@ -31,6 +35,10 @@
 
 - (void) awakeFromNib {
     self.actionItems = @[@{
+            @"title":       @"Show Configuration",
+            @"detail":      @"Show the current Branch configuration.",
+            @"selector":    @"showConfiguration:",
+        },@{
             @"title":       @"Set Identity",
             @"detail":      @"Set the current user's identity to a developer friendly value.",
             @"selector":    @"setIdentity:",
@@ -68,6 +76,15 @@
     self.dataField.stringValue = @"";
 }
 
+- (NSString*) errorMessage:(NSError*)error {
+    if (error) {
+        NSString*a = error.localizedDescription ?: @"";
+        NSString*b = error.localizedFailureReason ?: @"";
+        return [NSString stringWithFormat:@"%@ %@", a, b];
+    }
+    return @"< None >";
+}
+
 #pragma mark - Action Item Collection
 
 - (NSInteger)numberOfSectionsInCollectionView:(NSCollectionView *)collectionView {
@@ -103,16 +120,15 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 
 #pragma mark - Actions
 
-- (NSString*) errorMessage:(NSError*)error {
-    if (error) {
-        NSString*a = error.localizedDescription ?: @"";
-        NSString*b = error.localizedFailureReason ?: @"";
-        return [NSString stringWithFormat:@"%@ %@", a, b];
-    }
-    return @"< None >";
+- (IBAction) showConfiguration:(id)sender {
+    [self clearUIFields];
+    NSString*string = [NSString stringWithFormat:@"%@\nScheme: %@",
+        [Branch sharedInstance].configuration.description,
+        [BNCApplication currentApplication].defaultURLScheme];
+    self.dataField.stringValue = string;
 }
 
-- (void) setIdentity:(id)sender {
+- (IBAction) setIdentity:(id)sender {
     [[Branch sharedInstance] setUserIdentity:@"Bob" completion:^ (BranchSession*session, NSError*error) {
         [self clearUIFields];
         self.stateField.stringValue = [NSString stringWithFormat:@"Set Identity: '%@'", session.userIdentityForDeveloper];
@@ -120,7 +136,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     }];
 }
 
-- (void) logUserOut:(id)sender {
+- (IBAction) logUserOut:(id)sender {
     BNCLogMethodName();
     [[Branch sharedInstance] logoutWithCompletion:^ (NSError*error) {
         [self clearUIFields];
@@ -129,7 +145,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     }];
 }
 
-- (void) sendPurchaseEvent:(id)sender {
+- (IBAction) sendPurchaseEvent:(id)sender {
     // Set up the Branch Universal Object --
     BranchUniversalObject *buo = [BranchUniversalObject new];
     buo.canonicalIdentifier = @"item/12345";
@@ -242,7 +258,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 
 static NSURL*lastCreatedLink = nil;
 
-- (void) createShortLink:(id)sender {
+- (IBAction) createShortLink:(id)sender {
     [self clearUIFields];
     BranchLinkProperties *linkProperties = [self createLinkProperties];
     BranchUniversalObject *buo = [self createUniversalObject];
@@ -258,7 +274,7 @@ static NSURL*lastCreatedLink = nil;
         }];
 }
 
-- (void) createLongLink:(id)sender {
+- (IBAction) createLongLink:(id)sender {
     BranchLinkProperties *linkProperties = [self createLinkProperties];
     BranchUniversalObject *buo = [self createUniversalObject];
     buo.creationDate = [NSDate date];
@@ -269,7 +285,7 @@ static NSURL*lastCreatedLink = nil;
     lastCreatedLink = url;
 }
 
-- (void) openLink:(id)sender {
+- (IBAction) openLink:(id)sender {
     [[Branch sharedInstance] openURL:lastCreatedLink];
 }
 

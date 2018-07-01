@@ -58,6 +58,8 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 - (void) loadOperations;
 @end
 
+#pragma mark - BNCNetworkAPIService
+
 @implementation BNCNetworkAPIService
 
 - (instancetype) initWithConfiguration:(BranchConfiguration *)configuration {
@@ -504,6 +506,9 @@ exit:
     NSError*error = nil;
     NSDate*timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
     {
+        if (([timeoutDate timeIntervalSinceNow] < 0) || self.isCancelled)
+            goto exit;
+
         do  {
             if (retry > 0) {
                 // Wait before retrying to avoid flooding the network.

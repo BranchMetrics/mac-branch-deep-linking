@@ -8,14 +8,14 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "BranchMainClass.h"
-#import "BNCNetworkAPIService.h"
+#import <Branch/BranchMainClass.h>
+@class BNCNetworkAPIService;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Branch (Private)
-@property (atomic, strong, readonly) BNCNetworkAPIService*networkAPIService;
-@property (atomic, strong, readonly) BranchConfiguration*configuration;
+@property (atomic, strong, readonly) BNCNetworkAPIService*_Nullable networkAPIService;
+@property (atomic, strong, readonly) BranchConfiguration*_Nullable configuration;
 + (void) clearAllSettings;
 @end
 

@@ -9,6 +9,14 @@
 #import "BNCTestCase.h"
 #import "BNCApplication.h"
 #import "BNCKeyChain.h"
+#import "BranchMainClass.h"
+#import "BranchMainClass+Private.h"
+
+@interface BNCApplication (BNCTestCase)
++ (BNCApplication*) createCurrentApplication;
+@end
+
+#pragma mark - BNCApplicationTest
 
 @interface BNCApplicationTest : BNCTestCase
 @end
@@ -47,7 +55,8 @@
     #endif
 }
 
-- (void) testAppDates {
+// These are methods are numbered so they run in order:
+- (void) testAppUpdate1Basic {
     BNCApplication *application = [BNCApplication currentApplication];
     if (!application.isApplication) {
         return;

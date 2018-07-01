@@ -1,4 +1,3 @@
-//
 /**
  @file          BNCTestNetworkService.Test.m
  @package       BranchTests

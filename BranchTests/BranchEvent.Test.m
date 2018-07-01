@@ -149,40 +149,6 @@
 }
 
 - (void) testUserCompletedAction {
-    // Mock the result. Fix up the expectedParameters for simulator hardware --
-
-    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
-            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-            XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
-
-            NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-            NSMutableDictionary*expectedRequest = [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
-            expectedRequest[@"custom_data"] = nil;
-            expectedRequest[@"event_data"] = nil;
-            NSMutableDictionary*er_ud = [expectedRequest[@"user_data"] mutableCopy];
-            er_ud[@"device_fingerprint_id"] = nil;
-            expectedRequest[@"user_data"] = er_ud;
-
-            NSMutableDictionary*rd_ud = [expectedRequest[@"user_data"] mutableCopy];
-            rd_ud[@"device_fingerprint_id"] = nil;
-            requestDictionary[@"user_data"] = rd_ud;
-
-            XCTAssertEqualObjects(expectedRequest, requestDictionary);
-
-            NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
-            return [BNCTestNetworkService operationWithRequest:request response:responseString];
-        }
-        return [BNCTestNetworkService operationWithRequest:request response:@""];
-    };
-
-    BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_foo"];
-    configuration.networkServiceClass = BNCTestNetworkService.class;
-    Branch*branch = [[Branch alloc] init];
-    [branch startWithConfiguration:configuration];
-    [branch.networkAPIService clearNetworkQueue];
-
     // Set up the Branch Univseral Object --
 
     BranchUniversalObject *buo = [BranchUniversalObject new];
@@ -224,6 +190,37 @@
         @"Custom_Content_metadata_key2": @"Custom_Content_metadata_val2"
     };
 
+    // Mock the result. Fix up the expectedParameters for simulator hardware --
+    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+        if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+            XCTAssertEqualObjects(request.URL.path, @"/v2/event/standard");
+
+            NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+            NSMutableDictionary*expectedRequest = [self mutableDictionaryFromBundleJSONWithKey:@"V2EventJSON"];
+            expectedRequest[@"custom_data"] = nil;
+            expectedRequest[@"event_data"] = nil;
+            NSMutableDictionary*er_ud = [expectedRequest[@"user_data"] mutableCopy];
+            er_ud[@"device_fingerprint_id"] = nil;
+            expectedRequest[@"user_data"] = er_ud;
+            NSMutableDictionary*rd_ud = [expectedRequest[@"user_data"] mutableCopy];
+            rd_ud[@"device_fingerprint_id"] = nil;
+            requestDictionary[@"user_data"] = rd_ud;
+
+            XCTAssertEqualObjects(expectedRequest, requestDictionary);
+
+            NSString*responseString = [self stringFromBundleJSONWithKey:@"V2EventJSONResponse"];
+            return [BNCTestNetworkService operationWithRequest:request response:responseString];
+        }
+        return [BNCTestNetworkService operationWithRequest:request response:@""];
+    };
+    BranchConfiguration*configuration =
+        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+    Branch*branch = [[Branch alloc] init];
+    [branch startWithConfiguration:configuration];
+    [branch.networkAPIService clearNetworkQueue];
+
     // Set up and invoke --
     XCTestExpectation *expectation = [self expectationWithDescription:@"v2-event-user-action"];
     [branch logEvent:[BranchEvent standardEvent:BranchStandardEventPurchase contentItem:buo] completion:
@@ -250,20 +247,17 @@
     event.customData[@"rating"] = @"5";
 
     Branch*branch = [[Branch alloc] init];
-    BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N"];
-    configuration.key = @"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC";
-    configuration.branchAPIServiceURL = @"http://esmith.api.beta.branch.io";
+    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:BNCTestBranchKey];
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
-
+    XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
     XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
     [branch logEvent:event completion:^ (NSError*error) {
         XCTAssertNil(error);
         [expectation fulfill];
     }];
     [self awaitExpectations];
-    XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
+    XCTAssertEqual(branch.networkAPIService.queueDepth, 0); // TODO: Make sure the open/install happens first.
 
     // Test that all events are in the array:
     XCTAssert([BranchEvent standardEvents].count == 16);
