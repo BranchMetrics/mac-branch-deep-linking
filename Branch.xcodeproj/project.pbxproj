@@ -144,20 +144,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4D03D57A20CB5E3C00DD1341 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D03D57520CB5E3C00DD1341 /* TestBed-Mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2B3C06E820AB704600F38167;
-			remoteInfo = "TestBed-Mac";
-		};
-		4D03D57C20CB5E3C00DD1341 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D03D57520CB5E3C00DD1341 /* TestBed-Mac.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4D0F56AA20B33C97003D6607;
-			remoteInfo = "TestBed-MacTests";
-		};
 		4D70A4B820E14D780083768C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
@@ -170,7 +156,6 @@
 /* Begin PBXFileReference section */
 		2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.m; sourceTree = "<group>"; };
 		2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCURLBlackList.h; sourceTree = "<group>"; };
-		4D03D57520CB5E3C00DD1341 /* TestBed-Mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "TestBed-Mac.xcodeproj"; path = "Examples/TestBed-Mac/TestBed-Mac.xcodeproj"; sourceTree = "<group>"; };
 		4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchNetworkServiceProtocol.h; sourceTree = "<group>"; };
 		4D046E8D20C8A27C0073262B /* BNCTestNetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCTestNetworkService.h; sourceTree = "<group>"; };
 		4D046E8E20C8A27C0073262B /* BNCTestNetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCTestNetworkService.m; sourceTree = "<group>"; };
@@ -291,15 +276,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4D03D57620CB5E3C00DD1341 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4D03D57B20CB5E3C00DD1341 /* TestBed-Mac.app */,
-				4D03D57D20CB5E3C00DD1341 /* TestBed-MacTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4D54C06B20A6560400C76496 = {
 			isa = PBXGroup;
 			children = (
@@ -429,7 +405,6 @@
 		4DC2232220AA19A2005C57D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4D03D57520CB5E3C00DD1341 /* TestBed-Mac.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -592,12 +567,6 @@
 			mainGroup = 4D54C06B20A6560400C76496;
 			productRefGroup = 4D54C07620A6560400C76496 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 4D03D57620CB5E3C00DD1341 /* Products */;
-					ProjectRef = 4D03D57520CB5E3C00DD1341 /* TestBed-Mac.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				4D54C07420A6560400C76496 /* Branch */,
@@ -606,23 +575,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		4D03D57B20CB5E3C00DD1341 /* TestBed-Mac.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "TestBed-Mac.app";
-			remoteRef = 4D03D57A20CB5E3C00DD1341 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4D03D57D20CB5E3C00DD1341 /* TestBed-MacTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "TestBed-MacTests.xctest";
-			remoteRef = 4D03D57C20CB5E3C00DD1341 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4D159DC920B62D7D005A9850 /* Resources */ = {
@@ -922,11 +874,11 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -937,6 +889,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -944,11 +897,11 @@
 		4D54C08B20A6560400C76496 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -959,6 +912,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -1072,11 +1026,11 @@
 		4DFB135520CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1087,6 +1041,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
 			name = UnitTests;

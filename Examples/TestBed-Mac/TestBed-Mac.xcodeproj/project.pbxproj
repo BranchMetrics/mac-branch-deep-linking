@@ -170,8 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				2B3C070320AB722200F38167 /* Branch.framework */,
-				4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */,
 				2B073C1520C9AC45005D16D2 /* Branch.framework */,
+				4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -491,18 +491,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "TestBed-Mac/TestBed-Mac.entitlements";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "TestBed-Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "blue.shimmering.TestBed-Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "89b9c4ff-10d8-4ac7-994e-71a965f73ee0";
-				PROVISIONING_PROFILE_SPECIFIER = TestBedMac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -511,18 +511,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "TestBed-Mac/TestBed-Mac.entitlements";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "TestBed-Mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "blue.shimmering.TestBed-Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b4f406d4-ebaa-49c3-8474-2b8c4ae22c74";
-				PROVISIONING_PROFILE_SPECIFIER = TestBedMac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -530,10 +530,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "TestBed-MacTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -551,10 +551,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = WRWLR8VRUH;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "TestBed-MacTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
