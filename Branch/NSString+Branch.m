@@ -1,6 +1,6 @@
 /**
  @file          NSString+Branch.m
- @package       Branch-SDK
+ @package       Branch
  @brief         NSString Additions
 
  @author        Edward Smith

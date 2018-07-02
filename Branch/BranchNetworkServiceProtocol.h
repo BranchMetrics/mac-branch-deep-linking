@@ -1,6 +1,6 @@
 /**
  @file          BranchNetworkServiceProtocol.h
- @package       Branch-SDK
+ @package       Branch
  @brief         A networking protocol contract to an abstract underlying network class.
 
  @author        Edward Smith

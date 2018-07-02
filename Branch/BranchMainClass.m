@@ -1,6 +1,6 @@
 /**
  @file          BranchMainClass.m
- @package       Branch-SDK
+ @package       Branch
  @brief         The main Branch class.
 
  @author        Edward Smith

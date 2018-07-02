@@ -1,6 +1,6 @@
 /**
  @file          BNCURLBlackList.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Manages a list of sensitive URLs such as login data that should not be handled by Branch.
 
  @author        Edward Smith

@@ -1,6 +1,6 @@
 /**
  @file          BNCSettings.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch SDK persistent settings.
 
  @author        Edward Smith

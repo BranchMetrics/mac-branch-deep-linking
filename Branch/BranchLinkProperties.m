@@ -1,6 +1,6 @@
 /**
- @file          BranchLinkProperties.h
- @package       Branch-SDK
+ @file          BranchLinkProperties.m
+ @package       Branch
  @brief         Branch link properties: non-content properties that are associated with a link.
 
  @author        Derrick Staten

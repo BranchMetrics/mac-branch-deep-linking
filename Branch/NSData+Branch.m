@@ -1,10 +1,10 @@
 /**
  @file          NSData+Branch.m
  @package       Branch
- @brief         < A brief description of the file function. >
+ @brief         NSData additions.
 
- @author        Edward
- @date          2018
+ @author        Edward Smith
+ @date          June 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 

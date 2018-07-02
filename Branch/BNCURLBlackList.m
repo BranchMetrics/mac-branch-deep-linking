@@ -1,6 +1,6 @@
 /**
  @file          BNCURLBlackList.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Manages a list of URLs that we should ignore.
 
  @author        Edward Smith

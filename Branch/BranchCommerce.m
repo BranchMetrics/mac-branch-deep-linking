@@ -1,6 +1,6 @@
 /**
  @file          BranchCommerce.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Constants for Branch commerce events.
 
  @author        Edward Smith

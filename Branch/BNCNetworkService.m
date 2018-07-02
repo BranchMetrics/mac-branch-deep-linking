@@ -1,6 +1,6 @@
 /**
  @file          BNCNetworkService.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Basic Networking Services
 
  @author        Edward Smith

@@ -1,6 +1,6 @@
 /**
  @file          BranchError.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch errors.
 
  @author        Qinwei Gong

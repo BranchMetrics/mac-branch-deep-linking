@@ -1,6 +1,6 @@
 /**
  @file          BNCKeyChain.Test.m
- @package       Branch-SDK-Tests
+ @package       Branch-Tests
  @brief         BNCKeyChain tests.
 
  @author        Edward Smith

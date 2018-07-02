@@ -1,6 +1,6 @@
 /**
  @file          Branch.h
- @package       Branch-SDK
+ @package       Branch
  @brief         The Branch framework header.
 
  @author        Edward Smith

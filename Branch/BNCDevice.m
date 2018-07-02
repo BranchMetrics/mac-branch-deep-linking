@@ -1,6 +1,6 @@
 /**
  @file          BNCDevice.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Device information.
 
  @author        Edward Smith

@@ -1,6 +1,6 @@
 /**
  @file          BranchEvent.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Event actions for logging user events, especially commerce events.
 
  @author        Edward Smith

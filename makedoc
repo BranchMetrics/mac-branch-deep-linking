@@ -45,12 +45,11 @@ jazzy \
     --use-safe-filenames \
     --exclude=Branch/BNCLog.h,Branch/BranchMainClass+Private.h \
     --output ../Documentation \
-
-#     --skip-documentation
-#     --github_url "https://github.com/BranchMetrics/Branch-SDK-Mac" \
-#     --github-file-prefix  "https://github.com/realm/realm-cocoa/tree/v0.87.1" \
+    --github_url "https://github.com/BranchMetrics/Branch-SDK-Mac" \
+    --github-file-prefix  "https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1" \
 #     --docset-icon FILEPATH
 #     --docset-path DIRPATH
+#     --skip-documentation
 
 cd ..
 ln -vsf Documentation/index.html Documentation.html

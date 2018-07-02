@@ -1,6 +1,6 @@
 /**
  @file          BNCWireFormat.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Functions and defines for converting to dictionaries and JSON.
 
  @author        Edward Smith

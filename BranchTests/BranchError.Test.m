@@ -1,6 +1,6 @@
 /**
  @file          BranchError.Test.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch error tests.
 
  @author        Edward Smith

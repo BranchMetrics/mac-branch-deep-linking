@@ -1,6 +1,6 @@
 /**
  @file          BranchDelegate.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch delegate protocol and notifications.
 
  @author        Edward Smith

@@ -1,6 +1,6 @@
 /**
  @file          BNCLocalization.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch string localizations.
 
  @author        Parth Kalavadia

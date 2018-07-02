@@ -1,6 +1,6 @@
 /**
  @file          BranchError.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch errors.
 
  @author        Qinwei Gong

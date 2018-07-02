@@ -1,6 +1,6 @@
 /**
  @file          BNCKeyChain.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Simple access routines for secure keychain storage.
 
  @author        Edward Smith

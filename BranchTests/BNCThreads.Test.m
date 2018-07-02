@@ -1,6 +1,6 @@
 /**
  @file          BNCThreads.Test.m
- @package       Branch-SDK-Tests
+ @package       Branch-Tests
  @brief         Test cases for BNCThreads.
 
  @author        Edward Smith

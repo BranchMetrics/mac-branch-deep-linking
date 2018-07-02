@@ -1,6 +1,6 @@
 /**
  @file          BNCApplication.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Current application and extension info.
 
  @author        Edward Smith

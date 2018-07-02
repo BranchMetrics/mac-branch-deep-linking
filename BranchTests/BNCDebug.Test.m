@@ -1,6 +1,6 @@
 /**
  @file          BNCDebug.Test.m
- @package       Branch-SDK-Tests
+ @package       Branch-Tests
  @brief         Tests for BNCDebug.
 
  @author        Edward Smith

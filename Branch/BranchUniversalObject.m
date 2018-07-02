@@ -1,7 +1,7 @@
 /**
  @file          BranchUniversalObject.m
- @package       Branch-SDK
- @brief         A Branch Universal Object describes the content to which a Branch link points.
+ @package       Branch
+ @brief         A BranchUniversalObject describes the content to which a Branch link points.
 
  @author        Derrick Staten
  @date          October 2015

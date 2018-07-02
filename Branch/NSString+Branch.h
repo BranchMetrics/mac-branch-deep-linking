@@ -1,6 +1,6 @@
 /**
  @file          NSString+Branch.h
- @package       Branch-SDK
+ @package       Branch
  @brief         NSString Additions
 
  @author        Edward Smith
@@ -14,19 +14,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (Branch)
 
-///@discussion Compares the receiver to a masked string.  Masked characters (the '*' character) are
-/// ignored for purposes of the compare.
-///
-///@return YES if string (ignoring any masked characters) is equal to the receiver.
+/**
+ Compares the receiver to a masked string.  Masked characters (the '*' character) are
+ ignored for purposes of the compare.
+
+ @return YES if string (ignoring any masked characters) is equal to the receiver.
+*/
 - (BOOL) bnc_isEqualToMaskedString:(NSString*_Nullable)string;
 
-///@return Returns a string that is truncated at the first null character.
+/** @return Returns a string that is truncated at the first null character. */
 - (NSString*) bnc_stringTruncatedAtNull;
 
-///@discussion The `containsString:` method isn't supported pre-iOS 8.  Here we roll our own.
-//
-///@param string    The string to for comparison.
-///@return          Reurns true if the instance contains the string.
+/**
+ The `containsString:` method isn't supported pre-iOS 8.  Here we roll our own.
+
+ @param string    The string to for comparison.
+
+ @return Reurns true if the instance contains the string.
+*/
 - (BOOL) bnc_containsString:(NSString*_Nullable)string;
 @end
 

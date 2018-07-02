@@ -1,6 +1,6 @@
 /**
  @file          BNCLog.Test.m
- @package       Branch-SDK-Tests
+ @package       Branch-Tests
  @brief         Tests for BNCLog.
 
  @author        Edward Smith

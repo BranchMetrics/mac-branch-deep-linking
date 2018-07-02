@@ -1,6 +1,6 @@
 /**
  @file          BNCThreads.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Utilities for working with threads, queues, and blocks.
 
  @author        Edward Smith

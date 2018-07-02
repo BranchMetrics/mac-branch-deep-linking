@@ -1,6 +1,6 @@
 /**
  @file          BNCLog.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Simple logging functions.
 
  @author        Edward Smith

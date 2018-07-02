@@ -1,6 +1,6 @@
 /**
  @file          BranchSession.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Attributes of the current Branch session.
 
  @author        Edward Smith

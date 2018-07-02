@@ -1,6 +1,6 @@
 /**
  @file          BNCDebug.m
- @package       Branch-SDK
+ @package       Branch
  @brief         Debugging Support.
 
  @author        Edward Smith

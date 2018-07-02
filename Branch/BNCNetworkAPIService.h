@@ -1,6 +1,6 @@
 /**
  @file          BNCNetworkAPIService.h
- @package       Branch-SDK
+ @package       Branch
  @brief         Branch API network service interface.
 
  @author        Edward Smith

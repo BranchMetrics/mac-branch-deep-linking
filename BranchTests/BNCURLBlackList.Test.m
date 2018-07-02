@@ -1,6 +1,6 @@
 /**
  @file          BNCURLBlackList.Test.m
- @package       Branch-SDK-Tests
+ @package       Branch-Tests
  @brief         BNCURLBlackList tests.
 
  @author        Edward Smith
