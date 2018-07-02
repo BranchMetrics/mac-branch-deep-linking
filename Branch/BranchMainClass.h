@@ -197,8 +197,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, assign) BOOL limitFacebookTracking;
 
 /**
-  Sets the `BranchDelegate` object if you want to track Branch events with delegate methods.
-  @see <Branch/BranchDelegate.h>
+ Sets the `BranchDelegate` object if you want to track Branch events with delegate methods.
+ @see <Branch/BranchDelegate.h>
 */
 @property (atomic, weak) id<BranchDelegate> delegate;
 

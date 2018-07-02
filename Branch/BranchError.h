@@ -17,7 +17,7 @@ FOUNDATION_EXPORT NSString*const BNCErrorDomain;
 
 /// Branch specific error codes.
 typedef NS_ENUM(NSInteger, BNCErrorCode) {
-    BNCInitError                    = 1000, //!< The Branch instance wasn't initialized correctly.
+    BNCInitError                    = 1000, //!< The main Branch instance wasn't initialized correctly.
     BNCDuplicateResourceError       = 1001, //!< A requested resource, such as a short link, already exists.
     BNCRedeemCreditsError           = 1002, //!< The credits could not be redeemed.
     BNCBadRequestError              = 1003,

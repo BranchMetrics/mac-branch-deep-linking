@@ -10,6 +10,5 @@
 #import <AppKit/AppKit.h>
 
 @interface APPActionItemView : NSCollectionViewItem
-//@property (atomic, assign) NSCollectionViewItemHighlightState highlightState;
 @property (weak) IBOutlet NSTextField *detailTextField;
 @end

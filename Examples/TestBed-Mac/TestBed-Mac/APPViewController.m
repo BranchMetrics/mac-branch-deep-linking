@@ -73,7 +73,7 @@
     self.stateField.stringValue = @"";
     self.urlField.stringValue = @"";
     self.errorField.stringValue = @"";
-    self.dataField.stringValue = @"";
+    self.dataTextView.string = @"";
 }
 
 - (NSString*) errorMessage:(NSError*)error {
@@ -125,7 +125,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     NSString*string = [NSString stringWithFormat:@"%@\nScheme: %@",
         [Branch sharedInstance].configuration.description,
         [BNCApplication currentApplication].defaultURLScheme];
-    self.dataField.stringValue = string;
+    self.dataTextView.string = string;
 }
 
 - (IBAction) setIdentity:(id)sender {
@@ -269,7 +269,7 @@ static NSURL*lastCreatedLink = nil;
         completion:^(NSURL * _Nullable shortURL, NSError * _Nullable error) {
             [self clearUIFields];
             self.errorField.stringValue = [self errorMessage:error];
-            self.dataField.stringValue = shortURL.absoluteString ?: @"";
+            self.dataTextView.string = shortURL.absoluteString ?: @"";
             lastCreatedLink = shortURL;
         }];
 }
@@ -281,7 +281,7 @@ static NSURL*lastCreatedLink = nil;
     NSURL*url = [[Branch sharedInstance] branchLongLinkWithContent:buo linkProperties:linkProperties];
     [self clearUIFields];
     self.errorField.stringValue = [self errorMessage:nil];
-    self.dataField.stringValue = url.absoluteString;
+    self.dataTextView.string = url.absoluteString;
     lastCreatedLink = url;
 }
 

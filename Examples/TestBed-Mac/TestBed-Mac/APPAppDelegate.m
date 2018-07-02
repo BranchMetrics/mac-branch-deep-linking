@@ -81,7 +81,7 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     self.viewController.stateField.stringValue = notification.name;
     self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
     self.viewController.errorField.stringValue = @"< No Error >";
-    self.viewController.dataField.stringValue  = @"< No Data >";
+    self.viewController.dataTextView.string    = @"< No Data >";
 }
 
 - (void) branchDidStartSession:(NSNotification*)notification {
@@ -90,7 +90,7 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";
     BranchSession*session = notification.userInfo[BranchSessionKey];
     NSString*data = (session && session.data) ? session.data.description : @"< No Data >";
-    self.viewController.dataField.stringValue  = data;
+    self.viewController.dataTextView.string = data;
 }
 
 - (void) branchOpenedURLNotification:(NSNotification*)notification {
