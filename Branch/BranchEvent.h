@@ -83,7 +83,19 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 #pragma mark - Branch
 
 @interface Branch (BranchEvent)
+/**
+ Sends the `BranchEvent` to the Branch servers.
+
+ @param event The `BranchEvent` to send.
+*/
 - (void) logEvent:(BranchEvent*)event;
+
+/**
+ Sends the `BranchEvent` to the Branch servers.
+
+ @param event       The `BranchEvent` event to send.
+ @param completion  A completion block that is called with success or failure.
+*/
 - (void) logEvent:(BranchEvent*)event completion:(void (^_Nullable)(NSError*_Nullable error))completion;
 @end
 

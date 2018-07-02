@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-///@functiongroup Branch Logging Functions
+///@functiongroup Branch Logging Functions :nodoc:
 
 #pragma mark Log Initialization
 

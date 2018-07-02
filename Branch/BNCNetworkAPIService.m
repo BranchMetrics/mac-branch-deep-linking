@@ -16,6 +16,7 @@
 #import "BNCThreads.h"
 #import "BranchSession.h"
 #import "BranchMainClass.h"
+#import "BranchMainClass+Private.h"
 #import "BNCLog.h"
 #import "BranchDelegate.h"
 #import "BranchEvent.h"

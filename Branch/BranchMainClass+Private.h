@@ -9,7 +9,7 @@
 */
 
 #import <Branch/BranchMainClass.h>
-@class BNCNetworkAPIService;
+@class BNCNetworkAPIService, BNCSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, strong, readonly) BNCNetworkAPIService*_Nullable networkAPIService;
 @property (atomic, strong, readonly) BranchConfiguration*_Nullable configuration;
 + (void) clearAllSettings;
+@end
+
+@interface BranchConfiguration (Private)
+@property (atomic, strong) BNCSettings* settings;
 @end
 
 NS_ASSUME_NONNULL_END

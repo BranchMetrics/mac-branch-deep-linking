@@ -11,53 +11,101 @@
 #import "BranchHeader.h"
 #import "BranchDelegate.h"
 #import "BranchSession.h"
-@class BNCSettings;
 
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BranchConfiguration
 
+/**
+ Use a `BranchConfiguration` object to configure Branch for your app when you start Branch.
+*/
 @interface BranchConfiguration : NSObject <NSCopying>
+
+/**
+ @param key Your Branch key.
+
+ @return Returns an initialized `BranchConfiguration` object.
+*/
 - (instancetype) initWithKey:(NSString*)key NS_DESIGNATED_INITIALIZER;
+
+/**This is a convenience method to create a `BranchConfiguration` object.
+
+ @param key Your Branch key.
+
+ @return Returns an initialized `BranchConfiguration` object.
+*/
 + (BranchConfiguration*) configurationWithKey:(NSString*)key;
 
+/** Your Branch key. */
 @property (atomic, strong) NSString*    key;
-@property (atomic, assign) BOOL         useCertificatePinning;
+
+/** Use certificate pinning for extra security. The default is to use certificate pinning. */
+@property (atomic, assign) BOOL useCertificatePinning;
+
+/** The URL to the Branch API servers. */
 @property (atomic, copy)   NSString*    branchAPIServiceURL;
+
+/**
+    This is `Class` for the network service. If you want to use your own underlying network service,
+    set the `Class` of the service here before you start Branch. The class most conform to the
+    `BranchNetworkServiceProtocol` defined here:
+
+    @see `Branch/BranchNetworkServiceProtocol.h`
+
+    You probably don't need to do this.
+*/
 @property (atomic, assign) Class        networkServiceClass;
+
+/**
+  Sets an array of regex patterns that match URLs for Branch to ignore.
+
+ Set this property to prevent URLs containing sensitive data such as oauth tokens,
+ passwords, login credentials, and other URLs from being transmitted to Branch.
+
+ The Branch SDK already ignores login URLs for Facebook, Twitter, Google, and many oauth
+ security URLs, so it's usually unnecessary to set this parameter yourself.
+
+ Set this parameter with any additional URLs that should be ignored by Branch.
+
+ These are ICU standard regular expressions.
+*/
 @property (atomic, strong) NSArray<NSString*>* blackListURLRegex;
-@property (atomic, strong) BNCSettings* settings;
 @end
 
 #pragma mark - Branch
 
+/**
+  The `Branch` class is the main class for interacting with Branch services.
+*/
 @interface Branch : NSObject
 
-/// Returns a pointer to the shared Branch instance.
+/** Returns a pointer to the shared Branch instance. */
 + (instancetype) sharedInstance;
 
-/// Returns the bundle identifier of the Branch framework.
+/** Returns the bundle identifier of the Branch framework. */
 + (NSString*) bundleIdentifier;
 
-/// Returns  the display version number of the Branch framework.
+/** Returns  the display version number of the Branch framework. */
 + (NSString*) kitDisplayVersion;
 
 /**
-  @param configuration Pass the configuration parameters to start Branch.
+  @param configuration Pass the configuration parameters for your app.
+
   @return Returns a pointer to the receiver.
  */
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration;
 
-/// Returns true if the Branch SDK has been started.
+/** Returns true if the Branch SDK has been started. */
 - (BOOL) isStarted;
 
-/// Returns true if the passed URL is a URL that will be handled by Branch.
+/** Returns true if the passed URL is a URL that will be handled by Branch. */
 - (BOOL) isBranchURL:(NSURL*)url;
 
 /**
  Open a URL with Branch.  This will start a new Branch session.
 
  @param  url    The URL to open.
+
  @return BOOL   Returns true if it is a Branch link and an attempt will be made to open the link.
  */
 - (BOOL) openURL:(NSURL*_Nullable)url;
@@ -73,19 +121,22 @@ NS_ASSUME_NONNULL_BEGIN
  @warning This request is not removed from the queue upon failure -- it will be retried until it succeeds.
           The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
- */
+*/
 - (void)setUserIdentity:(NSString*)userId
          completion:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))completion;
 
 /**
  Indicates whether or not this user has a custom identity specified for them. Note that this is *independent
  of installs*. If you call setIdentity, this device will have that identity associated with this user until
- `logout` is called. This includes persisting through uninstalls, as we track device id.
- */
+ `logoutWithCompletion` is called. This includes persisting through uninstalls, as we track device id.
+*/
 - (BOOL)userIdentityIsSet;
 
 /**
  Clear all of the current user's session items.
+
+ @param completion An optional completion block that is called by Branch with the success or failure
+                   of the logout.
 
  @warning If the request to logout fails, the session items will not be cleared.
  */
@@ -97,7 +148,8 @@ NS_ASSUME_NONNULL_BEGIN
 
   @param content        The BranchUniversalObject that describes the URL content.
   @param linkProperties The link properties for the short link.
-  @param completion     The completion block that receives the short URL or an NSError if the operation fails.
+  @param completion     The completion block that receives the short URL or an NSError if the operation
+                        fails.
 */
 - (void) branchShortLinkWithContent:(BranchUniversalObject*)content
                      linkProperties:(BranchLinkProperties*)linkProperties
@@ -108,12 +160,13 @@ NS_ASSUME_NONNULL_BEGIN
 
   @param content        The BranchUniversalObject that describes the URL content.
   @param linkProperties The link properties for the short link.
+
   @return Returns a Branch URL that has the given properties.
 */
 - (NSURL*) branchLongLinkWithContent:(BranchUniversalObject*)content
                       linkProperties:(BranchLinkProperties*)linkProperties;
 
-/// Key-value pairs to be included in the metadata on every request.
+/** Key-value pairs to be included in the metadata on every request. */
 @property (atomic, strong, null_resettable) NSMutableDictionary* requestMetadataDictionary;
 
 /**
@@ -124,23 +177,37 @@ NS_ASSUME_NONNULL_BEGIN
 
  Note that:
 
- * Opening Branch deep links with an explicit URL will work.
- * Deferred deep linking will not work.
- * Generating short links will not work and will return long links instead.
- * Sending user tracking events such as `userCompletedAction`, `BranchCommerceEvents`, and
+ + Opening Branch deep links with an explicit URL will work.
+ + Deferred deep linking will not work.
+ + Generating short links will not work and will return long links instead.
+ + Sending user tracking events such as `userCompletedAction`, `BranchCommerceEvents`, and
    `BranchEvents` will fail.
- * User rewards and credits will not work.
- * Setting a user identity and logging a user identity out will not work.
+ + User rewards and credits will not work.
+ + Setting a user identity and logging a user identity out will not work.
 */
 @property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
 
-/// Enables logging to the console for debugging.  Should be set to `NO` for production apps.
+/** Enables logging to the console for debugging.  Should be set to `NO` for production apps. */
 @property (atomic, assign) BOOL enableLogging;
 
+/**
+ If you are tracking users through Facebook installs and events well as with Branch, setting this property
+ to true limits the amount of user data that is synchronized with Facebook for this user.
+*/
 @property (atomic, assign) BOOL limitFacebookTracking;
 
+/**
+  Sets the `BranchDelegate` object if you want to track Branch events with delegate methods.
+  @see <Branch/BranchDelegate.h>
+*/
 @property (atomic, weak) id<BranchDelegate> delegate;
-@property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session, NSError*_Nullable error);
+
+/**
+ Set the `startSessionBlock` with a call back block if you want to be notified of start of Branch sessions
+ though a block call back.
+*/
+@property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session,
+                                                             NSError*_Nullable error);
 @end
 
 NS_ASSUME_NONNULL_END

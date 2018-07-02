@@ -9,6 +9,7 @@
 */
 
 #import "BranchMainClass.h"
+#import "BranchMainClass+Private.h"
 #import "BNCLog.h"
 #import "BNCNetworkAPIService.h"
 #import "BNCSettings.h"

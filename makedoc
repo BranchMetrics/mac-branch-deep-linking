@@ -43,7 +43,8 @@ jazzy \
     --module-version 1.0 \
     --copyright "Copyright © 2018 Branch. All rights reserved." \
     --use-safe-filenames \
-    --output ../Documentation/Jazzy \
+    --exclude=Branch/BNCLog.h \
+    --output ../Documentation \
 
 #     --skip-documentation
 #     --github_url "https://github.com/BranchMetrics/Branch-SDK-Mac" \
@@ -52,4 +53,5 @@ jazzy \
 #     --docset-path DIRPATH
 
 cd ..
+ln -vsf Documentation/index.html Documentation.html
 rm -Rf Temp
