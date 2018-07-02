@@ -1,29 +1,55 @@
 #!/bin/bash
 set -euo pipefail
 
-# Public documentation:
+# Documentation hints:
+#
+# https://medium.com/google-developers/how-to-generate-fabulous-api-reference-docs-for-ios-5bd297b9697d
+# https://medium.com/google-developers/how-to-migrate-ios-api-reference-from-doxygen-to-jazzy-35bd89c6a92b
+# https://pandoc.org
+# https://kapeli.com/docsets
 
-appledoc \
-    --project-name "Branch SDK" \
-    --project-company "Branch Metrics" \
-    --company-id io.branch.sdk \
-    --output ./Documentation \
-        Branch/BranchCommerce.h \
-        Branch/BranchDelegate.h \
-        Branch/BranchError.h \
-        Branch/BranchEvent.h \
-        Branch/BranchLinkProperties.h \
-        Branch/BranchNetworkServiceProtocol.h \
-        Branch/BranchMainClass.h \
-        Branch/BranchSession.h \
-        Branch/BranchUniversalObject.h
+function current_script_fullpath() {
+    local scriptfile
+    if (( $BASH_SUBSHELL > 1 ))
+    then
+        echo ">>> Error: function '$FUNCNAME' can't be invoked in a sub-shell." 1>&2
+        kill -9 -- $$
+        exit 1
+    fi
+    scriptfile="$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    scriptfile="${scriptfile}"/$(basename "$0")
+    echo "$scriptfile"
+}
 
-# Internal documentation:
+source_path="$(current_script_fullpath)"
+cd "$(dirname "$source_path")"
 
-appledoc \
-    --project-name "Branch SDK" \
-    --project-company "Branch Metrics" \
-    --company-id io.branch.sdk \
-    --output ./Documentation/Internal \
-    --ignore .m \
-        Branch
+mkdir Temp
+ditto Branch Temp/Branch
+ditto Branch.xcodeproj Temp
+ditto LICENSE Temp
+ditto README.md Temp
+cd Temp
+
+jazzy \
+    --clean \
+    --objc \
+    --umbrella-header Branch/Branch.h \
+    --framework-root . \
+    --module Branch \
+    --sdk macosx \
+    --author Branch \
+    --author_url https://branch.io \
+    --module-version 1.0 \
+    --copyright "Copyright © 2018 Branch. All rights reserved." \
+    --use-safe-filenames \
+    --output ../Documentation/Jazzy \
+
+#     --skip-documentation
+#     --github_url "https://github.com/BranchMetrics/Branch-SDK-Mac" \
+#     --github-file-prefix  "https://github.com/realm/realm-cocoa/tree/v0.87.1" \
+#     --docset-icon FILEPATH
+#     --docset-path DIRPATH
+
+cd ..
+rm -Rf Temp
