@@ -1,7 +1,7 @@
 /**
  @file          BranchMainClass+Private.h
  @package       Branch
- @brief         Private definiations for the Branch class.
+ @brief         Private definitions for the Branch class.
 
  @author        Edward Smith
  @date          June 2018
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface BranchConfiguration (Private)
-@property (atomic, strong) BNCSettings* settings;
+@property (atomic, strong, readonly) BNCSettings* settings;
 @end
 
 NS_ASSUME_NONNULL_END

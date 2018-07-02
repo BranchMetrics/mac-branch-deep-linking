@@ -43,7 +43,7 @@ jazzy \
     --module-version 1.0 \
     --copyright "Copyright © 2018 Branch. All rights reserved." \
     --use-safe-filenames \
-    --exclude=Branch/BNCLog.h \
+    --exclude=Branch/BNCLog.h,Branch/BranchMainClass+Private.h \
     --output ../Documentation \
 
 #     --skip-documentation

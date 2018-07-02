@@ -13,12 +13,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, BNCApplicationUpdateState) {
-    BNCApplicationUpdateStateInstall       = 0,    // Application was recently installed.
-    BNCApplicationUpdateStateNonUpdate     = 1,    // Application was neither newly installed nor updated.
-    BNCApplicationUpdateStateUpdate        = 2,    // Application was recently updated.
+    BNCApplicationUpdateStateInstall       = 0,    //!< Application was recently installed.
+    BNCApplicationUpdateStateNonUpdate     = 1,    //!< Application was neither newly installed nor updated.
+    BNCApplicationUpdateStateUpdate        = 2,    //!< Application was recently updated.
 
-    BNCApplicationUpdateStateError         = 3,    // Error determining update state.
-    BNCApplicationUpdateStateReinstall     = 4,    // App was re-installed.
+    BNCApplicationUpdateStateError         = 3,    //!< Error determining update state.
+    BNCApplicationUpdateStateReinstall     = 4,    //!< App was re-installed.
 };
 
 @interface BNCApplication : NSObject

@@ -1514,177 +1514,142 @@
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 15,
-      "symbol": "BNCErrorDomain",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 17,
-      "symbol": "BNCErrorCode",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 17,
-      "symbol": "BNCErrorCode",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 18,
+      "line": 20,
       "symbol": "BNCErrorCode.BNCInitError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 19,
+      "line": 21,
       "symbol": "BNCErrorCode.BNCDuplicateResourceError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 20,
+      "line": 22,
       "symbol": "BNCErrorCode.BNCRedeemCreditsError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 21,
+      "line": 23,
       "symbol": "BNCErrorCode.BNCBadRequestError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 22,
+      "line": 24,
       "symbol": "BNCErrorCode.BNCServerProblemError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 23,
+      "line": 25,
       "symbol": "BNCErrorCode.BNCNilLogError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 24,
+      "line": 26,
       "symbol": "BNCErrorCode.BNCVersionError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 25,
+      "line": 27,
       "symbol": "BNCErrorCode.BNCNetworkServiceInterfaceError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 26,
+      "line": 28,
       "symbol": "BNCErrorCode.BNCInvalidNetworkPublicKeyError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 27,
+      "line": 29,
       "symbol": "BNCErrorCode.BNCContentIdentifierError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 28,
+      "line": 30,
       "symbol": "BNCErrorCode.BNCSpotlightNotAvailableError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 29,
+      "line": 31,
       "symbol": "BNCErrorCode.BNCSpotlightTitleError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 30,
+      "line": 32,
       "symbol": "BNCErrorCode.BNCRedeemZeroCreditsError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 31,
+      "line": 33,
       "symbol": "BNCErrorCode.BNCSpotlightIdentifierError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 32,
+      "line": 34,
       "symbol": "BNCErrorCode.BNCSpotlightPublicIndexError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 33,
+      "line": 35,
       "symbol": "BNCErrorCode.BNCTrackingDisabledError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 34,
+      "line": 36,
       "symbol": "BNCErrorCode.BNCHighestError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 37,
-      "symbol": "NSError(Branch)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 38,
+      "line": 43,
       "symbol": "NSError(Branch).+branchErrorWithCode:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 39,
+      "line": 44,
       "symbol": "NSError(Branch).+branchErrorWithCode:error:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 40,
+      "line": 45,
       "symbol": "NSError(Branch).+branchErrorWithCode:localizedMessage:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchError.h",
-      "line": 43,
-      "symbol": "BNCForceNSErrorCategoryToLoad",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.function",
       "warning": "undocumented"
     },
     {

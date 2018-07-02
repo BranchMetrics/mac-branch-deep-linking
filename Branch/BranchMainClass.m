@@ -25,6 +25,10 @@
 
 #pragma mark BranchConfiguration
 
+@interface BranchConfiguration ()
+@property (atomic, strong) BNCSettings* settings;
+@end
+
 @implementation BranchConfiguration
 
 - (instancetype) init {
@@ -133,7 +137,8 @@
 
     self.settings = [BNCSettings loadSettings];
     if (!configuration.isValidConfiguration) {
-        [NSException raise:NSInvalidArgumentException format:@"Invalid Branch configuration.\n%@", configuration];
+        [NSException raise:NSInvalidArgumentException
+            format:@"Invalid Branch configuration.\n%@", configuration];
         return self;
     }
 
