@@ -25,6 +25,7 @@ FOUNDATION_EXPORT NSDictionary*_Nullable BNCWireFormatFromDictionary(NSDictionar
 FOUNDATION_EXPORT NSString*_Nullable BNCWireFormatFromURL(NSURL* url);
 
 FOUNDATION_EXPORT NSDate*_Nullable   BNCDateFromWireFormat(id object);
+FOUNDATION_EXPORT NSDate*_Nullable   BNCDateFromWireFormatSeconds(id object);
 FOUNDATION_EXPORT BOOL               BNCBoolFromWireFormat(id object);
 FOUNDATION_EXPORT NSString*_Nullable BNCStringFromWireFormat(id object);
 FOUNDATION_EXPORT NSDecimalNumber*_Nullable BNCDecimalFromWireFormat(id object);

@@ -1,10 +1,12 @@
-//
-//  BranchDelegateTest.m
-//  Branch-SDK-Tests
-//
-//  Created by Edward Smith on 11/3/17.
-//  Copyright © 2017 Branch, Inc. All rights reserved.
-//
+/**
+ @file          BranchDelegate.Test.m
+ @package       BranchTests
+ @brief         Tests for the Branch delegate and notifications.
+
+ @author        Edward Smith
+ @date          May 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "BNCTestCase.h"
 #import "BranchMainClass.h"

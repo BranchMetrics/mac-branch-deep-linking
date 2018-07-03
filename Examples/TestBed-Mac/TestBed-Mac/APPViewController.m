@@ -126,9 +126,13 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 
 - (IBAction) showConfiguration:(id)sender {
     [self clearUIFields];
-    NSString*string = [NSString stringWithFormat:@"%@\nScheme: %@",
-        [Branch sharedInstance].configuration.description,
-        [BNCApplication currentApplication].defaultURLScheme];
+    BranchConfiguration*configuration = [Branch sharedInstance].configuration;
+    NSString*string =
+        [NSString stringWithFormat:@"      Key: %@\n  Server: %@\n Service: %@\nScheme: %@",
+            configuration.key,
+            configuration.branchAPIServiceURL,
+            configuration.networkServiceClass,
+            [BNCApplication currentApplication].defaultURLScheme];
     self.dataTextView.string = string;
 }
 

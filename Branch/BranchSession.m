@@ -11,6 +11,11 @@
 #import "BranchSession.h"
 #import "BNCLog.h"
 
+@interface BranchSession ()
+@property (nonatomic, assign) BOOL matchGuaranteed;
+@property (nonatomic, strong) NSDate* clickTimestamp;
+@end
+
 @implementation BranchSession
 
 + (instancetype) sessionWithDictionary:(NSDictionary *)dictionary {
@@ -37,12 +42,13 @@
             NSDictionary*dictionary = object.data;
             addBoolean(isFirstSession,      +is_first_session);
             addBoolean(isBranchURL,         +clicked_branch_link);
+            addBoolean(matchGuaranteed,     +match_guaranteed);
             addURL(referringURL,            ~referring_link);
+            object.clickTimestamp = BNCDateFromWireFormatSeconds(dictionary[@"+click_timestamp"]);
         }
     } else {
         object.data = dictionary;
     }
-
     return object;
 }
 
@@ -50,7 +56,8 @@
 
 - (NSString*) description {
     return [NSString stringWithFormat:
-        @"<%@ 0x%p isFirst: %@ isBranchURL: %@ sessionID: %@ referring: %@ identity: %@ buo: %@ link: %@ items data: %@>",
+        @"<%@ 0x%p isFirst: %@ isBranchURL: %@ sessionID: %@ referring: %@ identity: %@"
+         " buo: %@ link: %@ items data: %@>",
             NSStringFromClass(self.class),
             (void*) self,
             BNCStringFromBool(self.isFirstSession),

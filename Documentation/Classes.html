@@ -14,7 +14,8 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Branch Docs</a> (10% documented)</p>
+        <p><a href="index.html">Branch Docs</a> (11% documented)</p>
+        <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -886,15 +887,6 @@
                 <a href="Functions.html#/c:@F@BNCCurrencyAllCurrencies">BNCCurrencyAllCurrencies</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@BNCDebugArrayOfReqisteredClasses">BNCDebugArrayOfReqisteredClasses</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@BNCDebugStringFromObject">BNCDebugStringFromObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@BNCDebuggerIsAttached">BNCDebuggerIsAttached</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@BNCForceNSErrorCategoryToLoad">BNCForceNSErrorCategoryToLoad</a>
               </li>
               <li class="nav-group-task">
@@ -983,6 +975,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchEvent.h#L49-L81">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1026,6 +1021,9 @@
                           <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Branch</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchMainClass.h#L80-L211">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1078,6 +1076,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchLinkProperties.h#L20-L34">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1122,6 +1123,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchMainClass.h#L22-L73">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1142,7 +1146,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Branch session parameters.</p>
 
                         <a href="Classes/BranchSession.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1150,22 +1154,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">BranchSession</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span> <span class="nf">sessionWithDictionary</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="nv">dictionary</span><span class="p">;</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">sessionID</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isFirstSession</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isBranchURL</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSURL</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">referringURL</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">identityID</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">userIdentityForDeveloper</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">deviceFingerprintID</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">linkCreationURL</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n"><a href="Classes/BranchUniversalObject.html">BranchUniversalObject</a></span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">linkContent</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n"><a href="Classes/BranchLinkProperties.html">BranchLinkProperties</a></span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">linkProperties</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSDictionary</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">data</span><span class="p">;</span>
-<span class="k">@end</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">BranchSession</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -1173,6 +1162,9 @@
                           <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">BranchSession</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L20-L37">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1247,6 +1239,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L60-L89">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1305,41 +1300,6 @@
 </span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n"><a href="Classes/BranchContentMetadata.html">BranchContentMetadata</a></span> <span class="o">*</span><span class="n">contentMetadata</span><span class="p">;</span>
 
-<span class="cm">/*
-///@name Deprecated Properties
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.customMetadata` instead."))))
-    NSDictionary *metadata;
-
-- (void)addMetadataKey:(nonnull NSString *)key value:(nonnull NSString *)value
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.customMetadata` instead."))));
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.contentSchema` instead."))))
-    NSString *type;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex and BranchUniversalObject.publiclyIndex` instead."))))
-    BranchContentIndexMode contentIndexMode;
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Not used due to iOS 10.0 Spotlight changes."))))
-    NSString *spotlightIdentifier;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.price` instead."))))
-    CGFloat price;
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.currency` instead."))))
-    NSString *currency;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex` instead."))))
-    BOOL automaticallyListOnSpotlight;
-*/</span>
-
 <span class="k">@end</span></code></pre>
 
                         </div>
@@ -1348,6 +1308,9 @@
                           <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">BranchUniversalObject</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L93-L116">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

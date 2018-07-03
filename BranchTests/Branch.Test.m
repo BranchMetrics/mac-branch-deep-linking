@@ -1,7 +1,7 @@
 /**
  @file          Branch.Test.m
  @package       BranchTests
- @brief         Branch tests.
+ @brief         Branch frame work tests.
 
  @author        Edward Smith
  @date          May 2018
@@ -22,8 +22,6 @@
     XCTAssertTrue(vn > 0 && vs);
     NSString*testString = [[NSString alloc] initWithUTF8String:(const char*)vs];
     XCTAssertTrue([testString hasPrefix:@"@(#)PROGRAM:Branch  PROJECT:Branch-"]);
-
-    
 }
 
 @end

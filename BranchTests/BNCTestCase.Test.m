@@ -1,7 +1,7 @@
 /**
  @file          BNCTestCase.Test.m
- @package       Branch-Tests
- @brief         Test cases for the underlying Branch test class.
+ @package       BranchTests
+ @brief         Test cases for the BNCTestCase super class.
 
  @author        Edward Smith
  @date          April 2018

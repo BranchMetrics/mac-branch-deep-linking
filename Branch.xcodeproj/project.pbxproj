@@ -43,6 +43,7 @@
 		4D3E50C620B916B400C7BF5B /* BranchCommerce.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3E50C520B916B400C7BF5B /* BranchCommerce.Test.m */; };
 		4D4679F720E3F6F6005E68AC /* BranchEvent.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189E20ADDCB600441881 /* BranchEvent.Test.m */; };
 		4D54C08620A6560400C76496 /* Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D54C07820A6560400C76496 /* Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D629EB220EC19C00013FAF2 /* BranchNetworkServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67473E20C74E81001639C5 /* BranchUniversalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189520ADDC4F00441881 /* BranchUniversalObject.m */; };
 		4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818A420ADE1BB00441881 /* BranchCommerce.m */; };
 		4D67474120C74E81001639C5 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772420AA099D00A63EE1 /* NSString+Branch.m */; };
@@ -82,7 +83,7 @@
 		4D67476720C74E81001639C5 /* BNCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C163C20ACBEF6002BF211 /* BNCApplication.h */; };
 		4D67476820C74E81001639C5 /* BranchError.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164720ACCD7C002BF211 /* BranchError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67476920C74E81001639C5 /* BranchDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818B820AF9EAF00441881 /* BranchDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4D67476A20C74E81001639C5 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D67476A20C74E81001639C5 /* BNCThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772520AA099D00A63EE1 /* BNCThreads.h */; };
 		4D67476B20C74E81001639C5 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67476C20C74E81001639C5 /* BranchSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818B320AE23BC00441881 /* BranchSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67476D20C74E81001639C5 /* BNCLocalization.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D9C164520ACCD7C002BF211 /* BNCLocalization.h */; };
@@ -453,6 +454,7 @@
 				4D67476320C74E81001639C5 /* BNCNetworkService.h in Headers */,
 				4D67476420C74E81001639C5 /* BNCWireFormat.h in Headers */,
 				4D67476520C74E81001639C5 /* BranchCommerce.h in Headers */,
+				4D629EB220EC19C00013FAF2 /* BranchNetworkServiceProtocol.h in Headers */,
 				4D67476620C74E81001639C5 /* BNCKeyChain.h in Headers */,
 				4D67476720C74E81001639C5 /* BNCApplication.h in Headers */,
 				4D67476820C74E81001639C5 /* BranchError.h in Headers */,
@@ -697,7 +699,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.13;
+				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -716,7 +718,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.13;
+				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -756,9 +758,14 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -776,10 +783,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Branch/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Branch;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -822,9 +833,14 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -836,9 +852,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Branch/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = Branch;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 4.0;
@@ -851,53 +871,20 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Branch/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		4D54C08B20A6560400C76496 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Branch/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		4D67477120C74E81001639C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
 				SDKROOT = appletvos;
 			};
@@ -906,15 +893,6 @@
 		4D67477320C74E81001639C5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
 				SDKROOT = appletvos;
 			};
@@ -954,9 +932,14 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -974,10 +957,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Branch/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Branch;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -989,19 +976,7 @@
 		4DFB135520CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Branch/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
-				SDKROOT = macosx;
 			};
 			name = UnitTests;
 		};
@@ -1018,7 +993,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.13;
+				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -1027,15 +1002,6 @@
 		4DFB135720CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = Branch/Branch.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
 				SDKROOT = appletvos;
 			};

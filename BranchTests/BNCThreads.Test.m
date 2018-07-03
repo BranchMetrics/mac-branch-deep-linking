@@ -1,7 +1,7 @@
 /**
  @file          BNCThreads.Test.m
- @package       Branch-Tests
- @brief         Test cases for BNCThreads.
+ @package       BranchTests
+ @brief         Tests for BNCThreads.
 
  @author        Edward Smith
  @date          May 2018

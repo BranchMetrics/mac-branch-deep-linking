@@ -1,6 +1,6 @@
 /**
  @file          BNCLocalization.Test.m
- @package       Branch
+ @package       BranchTests
  @brief         Branch string localization tests.
 
  @author        Edward Smith

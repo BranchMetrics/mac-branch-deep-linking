@@ -1,10 +1,12 @@
-//
-//  BNCApplication.Test.m
-//  Branch-SDK-Tests
-//
-//  Created by Edward Smith on 1/10/18.
-//  Copyright © 2018 Branch, Inc. All rights reserved.
-//
+/**
+ @file          BNCApplication.Test.m
+ @package       BranchTests
+ @brief         Tests for BNCApplication.
+
+ @author        Edward Smith
+ @date          January 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "BNCTestCase.h"
 #import "BNCApplication.h"

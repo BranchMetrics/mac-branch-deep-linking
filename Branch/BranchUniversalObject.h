@@ -13,13 +13,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark BranchContentIndexMode
-
-//typedef NS_ENUM(NSInteger, BranchContentIndexMode) {
-//    BranchContentIndexModePublic = 0,
-//    BranchContentIndexModePrivate
-//};
-
 #pragma mark - BranchContentSchema
 
 typedef NSString * const BranchContentSchema NS_STRING_ENUM;
@@ -119,41 +112,6 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 @property (nonatomic, assign)           BOOL      publiclyIndex;    //!< Index on Google, Branch, etc.
 
 @property (nonatomic, strong, nonnull) BranchContentMetadata *contentMetadata;
-
-/*
-///@name Deprecated Properties
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.customMetadata` instead."))))
-    NSDictionary *metadata;
-
-- (void)addMetadataKey:(nonnull NSString *)key value:(nonnull NSString *)value
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.customMetadata` instead."))));
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.contentSchema` instead."))))
-    NSString *type;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex and BranchUniversalObject.publiclyIndex` instead."))))
-    BranchContentIndexMode contentIndexMode;
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Not used due to iOS 10.0 Spotlight changes."))))
-    NSString *spotlightIdentifier;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.price` instead."))))
-    CGFloat price;
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.currency` instead."))))
-    NSString *currency;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex` instead."))))
-    BOOL automaticallyListOnSpotlight;
-*/
 
 @end
 

@@ -1,6 +1,6 @@
 /**
  @file          BNCTestCase.strings
- @package       Branch-Tests
+ @package       BranchTests
  @brief         String resources for Branch-SDK-Tests.
 
  @author        Edward Smith

@@ -14,7 +14,8 @@
     <a title="BranchSession Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Branch Docs</a> (10% documented)</p>
+        <p><a href="../index.html">Branch Docs</a> (11% documented)</p>
+        <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -886,15 +887,6 @@
                 <a href="../Functions.html#/c:@F@BNCCurrencyAllCurrencies">BNCCurrencyAllCurrencies</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/c:@F@BNCDebugArrayOfReqisteredClasses">BNCDebugArrayOfReqisteredClasses</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/c:@F@BNCDebugStringFromObject">BNCDebugStringFromObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/c:@F@BNCDebuggerIsAttached">BNCDebuggerIsAttached</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@BNCForceNSErrorCategoryToLoad">BNCForceNSErrorCategoryToLoad</a>
               </li>
               <li class="nav-group-task">
@@ -910,26 +902,11 @@
             <h1>BranchSession</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">BranchSession</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span> <span class="nf">sessionWithDictionary</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="p">)</span><span class="nv">dictionary</span><span class="p">;</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">sessionID</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isFirstSession</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isBranchURL</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSURL</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">referringURL</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">identityID</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">userIdentityForDeveloper</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">deviceFingerprintID</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">linkCreationURL</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n"><a href="../Classes/BranchUniversalObject.html">BranchUniversalObject</a></span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">linkContent</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n"><a href="../Classes/BranchLinkProperties.html">BranchLinkProperties</a></span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">linkProperties</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSDictionary</span><span class="o">*</span><span class="n">_Nullable</span> <span class="n">data</span><span class="p">;</span>
-<span class="k">@end</span></code></pre>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">BranchSession</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Branch session parameters.</p>
 
           </section>
           <section class="section task-group-section">
@@ -964,6 +941,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -995,6 +975,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">sessionID</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1028,6 +1011,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1059,6 +1045,79 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isBranchURL</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)BranchSession(py)matchGuaranteed"></a>
+                    <a name="//apple_ref/objc/Property/matchGuaranteed" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)BranchSession(py)matchGuaranteed">matchGuaranteed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">matchGuaranteed</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">matchGuaranteed</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)BranchSession(py)clickTimestamp"></a>
+                    <a name="//apple_ref/objc/Property/clickTimestamp" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)BranchSession(py)clickTimestamp">clickTimestamp</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSDate</span><span class="o">*</span> <span class="n">clickTimestamp</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">clickTimestamp</span><span class="p">:</span> <span class="kt">Date</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1092,6 +1151,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1123,6 +1185,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">identityID</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1156,6 +1221,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1187,6 +1255,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">deviceFingerprintID</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1220,6 +1291,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1251,6 +1325,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">linkContent</span><span class="p">:</span> <span class="kt"><a href="../Classes/BranchUniversalObject.html">BranchUniversalObject</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1284,6 +1361,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1315,6 +1395,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchSession.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

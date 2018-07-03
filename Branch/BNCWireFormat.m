@@ -21,6 +21,15 @@ NSDate* BNCDateFromWireFormat(id object) {
     return date;
 }
 
+NSDate* BNCDateFromWireFormatSeconds(id object) {
+    NSDate *date = nil;
+    if ([object respondsToSelector:@selector(doubleValue)]) {
+        NSTimeInterval t = [object doubleValue];
+        date = [NSDate dateWithTimeIntervalSince1970:t];
+    }
+    return date;
+}
+
 NSNumber* BNCWireFormatFromDate(NSDate *date) {
     NSNumber *number = nil;
     NSTimeInterval t = [date timeIntervalSince1970];

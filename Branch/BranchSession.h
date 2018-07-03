@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString*_Nullable sessionID;
 @property (nonatomic, assign) BOOL isFirstSession;
 @property (nonatomic, assign) BOOL isBranchURL;
+@property (nonatomic, assign, readonly) BOOL matchGuaranteed;
+@property (nonatomic, strong, readonly) NSDate* clickTimestamp;
 @property (nonatomic, strong) NSURL*_Nullable referringURL;
 @property (nonatomic, strong) NSString*_Nullable identityID;
 @property (nonatomic, strong) NSString*_Nullable userIdentityForDeveloper;

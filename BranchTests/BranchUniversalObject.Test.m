@@ -1,10 +1,12 @@
-//
-//  BranchUniversalObject.Test.m
-//  Branch-TestBed
-//
-//  Created by Edward Smith on 8/15/17.
-//  Copyright © 2017 Branch Metrics. All rights reserved.
-//
+/**
+ @file          BranchUniversalObject.Test.m
+ @package       BranchTests
+ @brief         BranchUniversalObject tests.
+
+ @author        Edward Smith
+ @date          August 15, 2017
+ @copyright     Copyright © 2017 Branch. All rights reserved.
+*/
 
 #import "BNCTestCase.h"
 #import "BranchUniversalObject.h"

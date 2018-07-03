@@ -14,7 +14,8 @@
     <a title="BranchUniversalObject Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Branch Docs</a> (10% documented)</p>
+        <p><a href="../index.html">Branch Docs</a> (11% documented)</p>
+        <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -886,15 +887,6 @@
                 <a href="../Functions.html#/c:@F@BNCCurrencyAllCurrencies">BNCCurrencyAllCurrencies</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/c:@F@BNCDebugArrayOfReqisteredClasses">BNCDebugArrayOfReqisteredClasses</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/c:@F@BNCDebugStringFromObject">BNCDebugStringFromObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/c:@F@BNCDebuggerIsAttached">BNCDebuggerIsAttached</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@BNCForceNSErrorCategoryToLoad">BNCForceNSErrorCategoryToLoad</a>
               </li>
               <li class="nav-group-task">
@@ -932,41 +924,6 @@
 </span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="n">BOOL</span>      <span class="n">publiclyIndex</span><span class="p">;</span>    <span class="c1">//!&lt; Index on Google, Branch, etc.
 </span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span> <span class="n"><a href="../Classes/BranchContentMetadata.html">BranchContentMetadata</a></span> <span class="o">*</span><span class="n">contentMetadata</span><span class="p">;</span>
-
-<span class="cm">/*
-///@name Deprecated Properties
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.customMetadata` instead."))))
-    NSDictionary *metadata;
-
-- (void)addMetadataKey:(nonnull NSString *)key value:(nonnull NSString *)value
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.customMetadata` instead."))));
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.contentSchema` instead."))))
-    NSString *type;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex and BranchUniversalObject.publiclyIndex` instead."))))
-    BranchContentIndexMode contentIndexMode;
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Not used due to iOS 10.0 Spotlight changes."))))
-    NSString *spotlightIdentifier;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.price` instead."))))
-    CGFloat price;
-
-@property (nonatomic, strong, nullable)
-    __attribute__((deprecated(("Use `BranchUniversalObject.contentMetadata.currency` instead."))))
-    NSString *currency;
-
-@property (nonatomic, assign)
-    __attribute__((deprecated(("Use `BranchUniversalObject.locallyIndex` instead."))))
-    BOOL automaticallyListOnSpotlight;
-*/</span>
 
 <span class="k">@end</span></code></pre>
 
@@ -1007,6 +964,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1038,6 +998,9 @@
                           <pre class="highlight swift"><code><span class="nf">init</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1071,6 +1034,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1102,6 +1068,9 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">dictionary</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">NSMutableDictionary</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1135,6 +1104,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1166,6 +1138,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">canonicalIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1199,6 +1174,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1230,6 +1208,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1263,6 +1244,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1294,6 +1278,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">imageUrl</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1327,6 +1314,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1358,6 +1348,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">creationDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1391,6 +1384,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1422,6 +1418,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">locallyIndex</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1455,6 +1454,9 @@
 
                         </div>
                       </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1486,6 +1488,9 @@
                           <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">contentMetadata</span><span class="p">:</span> <span class="kt"><a href="../Classes/BranchContentMetadata.html">BranchContentMetadata</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v0.87.1/Branch/BranchUniversalObject.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

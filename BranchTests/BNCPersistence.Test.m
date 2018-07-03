@@ -1,7 +1,7 @@
 /**
  @file          BNCPersistenceTest.m
  @package       BranchTests
- @brief         < A brief description of the file function. >
+ @brief         Tests for BNCPersistence.
 
  @author        Edward Smith
  @date          May 2018

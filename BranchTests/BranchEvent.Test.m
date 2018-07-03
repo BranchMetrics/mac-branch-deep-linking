@@ -1,10 +1,12 @@
-//
-//  BranchEvent.Test.m
-//  Branch-SDK-Tests
-//
-//  Created by Edward Smith on 8/15/17.
-//  Copyright © 2017 Branch Metrics. All rights reserved.
-//
+/**
+ @file          BranchEvent.Test.m
+ @package       BranchTests
+ @brief         BranchEvent tests.
+
+ @author        Edward Smith
+ @date          August 2017
+ @copyright     Copyright © 2017 Branch. All rights reserved.
+*/
 
 #import "BNCTestCase.h"
 #import "BranchEvent.h"

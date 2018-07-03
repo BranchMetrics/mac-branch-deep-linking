@@ -8,8 +8,6 @@
  @copyright     Copyright © 2017 Branch. All rights reserved.
 */
 
-// TODO: Add documentation
-
 #import "BranchHeader.h"
 @class Branch, BranchSession;
 

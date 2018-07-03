@@ -10,12 +10,6 @@
 
 #import "BranchUniversalObject.h"
 #import "BranchError.h"
-//#import "BranchLinkProperties.h"
-//#import "BNCDeviceInfo.h"
-//#import "BNCLog.h"
-//#import "BNCLocalization.h"
-//#import "BNCEncodingUtils.h"
-//#import "Branch.h"
 
 #pragma mark BranchContentSchema
 
@@ -185,70 +179,6 @@ BranchCondition _Nonnull BranchConditionRefurbished   = @"REFURBISHED";
     }
     return self;
 }
-
-#pragma mark - Deprecated Fields
-
-/* Deprecated:
-
-- (NSDictionary *)metadata {
-    return self.contentMetadata.customMetadata;
-}
-
-- (void) setMetadata:(NSDictionary *)metadata {
-    self.contentMetadata.customMetadata = (NSMutableDictionary*) metadata;
-}
-
-- (void)addMetadataKey:(NSString *)key value:(NSString *)value {
-    if (key) [self.contentMetadata.customMetadata setValue:value forKey:key];
-}
-
-- (CGFloat) price {
-    return [self.contentMetadata.price floatValue];
-}
-
-- (void) setPrice:(CGFloat)price {
-    NSString *string = [NSString stringWithFormat:@"%f", price];
-    self.contentMetadata.price = [NSDecimalNumber decimalNumberWithString:string];
-}
-
-- (NSString*) currency {
-    return self.contentMetadata.currency;
-}
-
-- (void) setCurrency:(NSString *)currency {
-    self.contentMetadata.currency = currency;
-}
-
-- (NSString*) type {
-    return self.contentMetadata.contentSchema;
-}
-
-- (void) setType:(NSString*)type {
-    self.contentMetadata.contentSchema = type;
-}
-
-- (BranchContentIndexMode) contentIndexMode {
-    if (self.publiclyIndex)
-        return BranchContentIndexModePublic;
-    else
-        return BranchContentIndexModePrivate;
-}
-
-- (void) setContentIndexMode:(BranchContentIndexMode)contentIndexMode {
-    if (contentIndexMode == BranchContentIndexModePublic)
-        self.publiclyIndex = YES;
-    else
-        self.locallyIndex = YES;
-}
-
-- (BOOL) automaticallyListOnSpotlight {
-    return self.locallyIndex;
-}
-
-- (void) setAutomaticallyListOnSpotlight:(BOOL)automaticallyListOnSpotlight {
-    self.locallyIndex = automaticallyListOnSpotlight;
-}
-*/
 
 #pragma mark - Setters / Getters / Standard Methods
 

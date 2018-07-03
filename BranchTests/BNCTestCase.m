@@ -1,6 +1,6 @@
 /**
  @file          BNCTestCase.m
- @package       Branch-Tests
+ @package       BranchTests
  @brief         The Branch testing framework super class.
 
  @author        Edward Smith
