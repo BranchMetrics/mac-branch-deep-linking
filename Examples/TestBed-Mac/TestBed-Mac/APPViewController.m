@@ -67,6 +67,10 @@
     NSNib*nib = [[NSNib alloc] initWithNibNamed:@"APPActionItemView" bundle:[NSBundle mainBundle]];
     [self.actionItemCollection registerNib:nib
         forItemWithIdentifier:NSStringFromClass(APPActionItemView.class)];
+    self.trackingDisabled.state =
+        [Branch sharedInstance].trackingDisabled ? NSControlStateValueOn : NSControlStateValueOff;
+    self.limitFacebookTracking.state =
+        [Branch sharedInstance].limitFacebookTracking ? NSControlStateValueOn : NSControlStateValueOff;
 }
 
 - (void) clearUIFields {
@@ -287,6 +291,14 @@ static NSURL*lastCreatedLink = nil;
 
 - (IBAction) openLink:(id)sender {
     [[Branch sharedInstance] openURL:lastCreatedLink];
+}
+
+- (IBAction)trackingDisabledAction:(id)sender {
+    [Branch sharedInstance].trackingDisabled = (self.trackingDisabled.state == NSControlStateValueOn);
+}
+
+- (IBAction)limitFacebookTrackingAction:(id)sender {
+    [Branch sharedInstance].limitFacebookTracking = (self.limitFacebookTracking.state == NSControlStateValueOn);
 }
 
 @end

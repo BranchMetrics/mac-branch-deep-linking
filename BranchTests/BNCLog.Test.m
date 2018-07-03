@@ -62,8 +62,6 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
     XCTAssertTrue(BNCLogDisplayLevel() == BNCLogLevelLog);
     BNCLogSetDisplayLevel(BNCLogLevelAll);
 
-    XCTAssertFalse(BNCLogBreakPointsAreEnabled());
-
     BNCLogSetOutputFunction(TestLogProcedure);
     XCTAssertTrue(BNCLogOutputFunction() == TestLogProcedure);
 
@@ -84,39 +82,17 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
     XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(**) DebugSDK: Method 'testLog'."]);
 
-    //  Test breakpoints --
-
-    if (self.class.breakpointsAreEnabledInTests) {  // Test break points too:
-        BNCLogSetBreakPointsEnabled(YES);
-        BNCLogBreakPoint();
-        XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
-            @"[branch.io] BNCLog.Test.m(**)   Break: Programmatic breakpoint."]
-        );
-        BNCLogSetBreakPointsEnabled(NO);
-        globalTestLogString = nil;
-        BNCLogBreakPoint();
-        XCTAssertFalse(globalTestLogString);
-        BNCLogSetBreakPointsEnabled(YES);
-    }
-
-    BNCLogSetBreakPointsEnabled(NO);
     BNCLogAssert(1 == 2);
     XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
-        @"[branch.io] BNCLog.Test.m(***) Assert: (1 == 2) !!!"]);
+        @"[branch.io] BNCLog.Test.m(**) Assert: (1 == 2) !!! "]);
 
     BNCLogAssertWithMessage(1 == 2, @"Assert message! Parameter: %d.", 2);
     XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
-        @"[branch.io] BNCLog.Test.m(***) Assert: (1 == 2) !!! Assert message! Parameter: 2."]);
+        @"[branch.io] BNCLog.Test.m(**) Assert: (1 == 2) !!! Assert message! Parameter: 2."]);
 }
 
 - (void) testOutputFunctions {
     BNCLogOutputFunctionPtr origPtr = BNCLogOutputFunction();
-
-    BNCLogSetOutputFunction(BNCLogFunctionOutputToStdOut);
-    BNCLog(@"Hi to StdOut.");
-
-    BNCLogSetOutputFunction(BNCLogFunctionOutputToStdErr);
-    BNCLog(@"Hi to StdErr.");
 
     NSError *error = nil;
     NSURL *URL =
@@ -300,280 +276,6 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
          "<54657374 20737472 696e672e>"]);
 }
 
-#pragma mark - Test BNCLogSetOutputToURLRecordWrapSize
-
-extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRecords, long recordSize);
-
-- (void) testLogFunctionOutputToURLRecordWrap {
-
-    BNCLogSetDisplayLevel(BNCLogLevelAll);
-
-    // Remove the current file if it exists.
-
-    NSError *error = nil;
-    NSURL *URL =
-        [[NSFileManager defaultManager]
-            URLForDirectory:NSCachesDirectory
-            inDomain:NSUserDomainMask
-            appropriateForURL:nil
-            create:YES
-            error:&error];
-    XCTAssert(!error);
-    URL = [URL URLByAppendingPathComponent:@"io.branch.BranchSDK-Test"];
-    [[NSFileManager defaultManager]
-        createDirectoryAtURL:URL
-        withIntermediateDirectories:YES
-        attributes:nil
-        error:&error];
-    XCTAssert(!error);
-    URL = [URL URLByAppendingPathComponent:@"TestWrap.log"];
-    [[NSFileManager defaultManager]
-        removeItemAtURL:URL
-        error:&error];
-    if (error) {
-        NSLog(@"Error removing file: %@.", error);
-        error = nil;
-    }
-
-    // Extra line 1
-
-    // Open the file, write 3 records.
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 5, 80);
-    BNCLog(@"Log 1.");
-    BNCLog(@"Log 2.");
-    BNCLog(@"Log 3.");
-    BNCLogCloseLogFile();
-
-    // Check the file.
-
-    NSData *data;
-    NSString *string, *truth;
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 2.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 3.       \n";
-    XCTAssert([string bnc_isEqualToMaskedString:truth]);
-
-    // Re-open the file, write 1 record.
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 5, 80);
-    BNCLog(@"Log 4.");
-    BNCLogCloseLogFile();
-
-    // Check the file again.
-
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 2.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 3.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 4.       \n";
-    XCTAssert([string bnc_isEqualToMaskedString:truth]);
-
-    // Re-open the file, write 3 records.
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 5, 80);
-    BNCLog(@"Log 5.");
-    BNCLog(@"Log 6.");
-    BNCLog(@"Log 7.");
-    BNCLogCloseLogFile();
-
-    // Check the file: make sure it wrapped in the right place.
-
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 6.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 7.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 3.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 4.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 5.       \n";
-    XCTAssert([string bnc_isEqualToMaskedString:truth]);
-
-    // Write 1 and check again.
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 5, 80);
-    BNCLog(@"Log 8.");
-    BNCLogCloseLogFile();
-
-    // Check the file: make sure it wrapped in the right place.
-
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 6.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 7.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 8.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 4.       \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 5.       \n";
-    XCTAssert([string bnc_isEqualToMaskedString:truth]);
-
-    // Write 23 records.  Make sure it wraps correctly.
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 5, 80);
-    for (long i = 1; i <= 23; i++)
-        BNCLog(@"Log %ld.", i);
-    BNCLogCloseLogFile();
-
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 23.      \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 19.      \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 20.      \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 21.      \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 22.      \n";
-    XCTAssert([string bnc_isEqualToMaskedString:truth]);
-}
-
-// This test sometimes fails due to timing issues so it's commented out.
-//- (void) testStressRecordWrap {
-//    for (int i = 0; i < 1000; i++)
-//        [self testLogFunctionOutputToURLRecordWrap];
-//}
-
-- (void) testLogRecordWrapPerformanceTesting {
-
-    NSError *error = nil;
-    NSURL *URL =
-        [[NSFileManager defaultManager]
-            URLForDirectory:NSCachesDirectory
-            inDomain:NSUserDomainMask
-            appropriateForURL:nil
-            create:YES
-            error:&error];
-    XCTAssert(!error);
-    URL = [URL URLByAppendingPathComponent:@"io.branch.BranchSDK-Test"];
-    [[NSFileManager defaultManager]
-        createDirectoryAtURL:URL
-        withIntermediateDirectories:YES
-        attributes:nil
-        error:&error];
-    XCTAssert(!error);
-    URL = [URL URLByAppendingPathComponent:@"TestWrapSync.log"];
-    [[NSFileManager defaultManager]
-        removeItemAtURL:URL
-        error:&error];
-    NSLog(@"Log is %@.", URL);
-
-    //  Test sychronized first --
-
-    BNCLogSetOutputToURLRecordWrap(URL, 5);
-
-    NSDate *startTime = [NSDate date];
-    dispatch_group_t waitGroup = dispatch_group_create();
-
-    dispatch_group_async(waitGroup,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        for (long i = 0; i < 2000; i++)
-            BNCLog(@"Message 1x%ld.", i);
-    });
-
-    dispatch_group_async(waitGroup,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        for (long i = 0; i < 2000; i++)
-            BNCLog(@"Message 2x%ld.", i);
-    });
-
-    dispatch_group_async(waitGroup,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        for (long i = 0; i < 2000; i++)
-            BNCLog(@"Message 3x%ld.", i);
-    });
-
-    dispatch_group_wait(waitGroup, DISPATCH_TIME_FOREVER);
-    BNCLogCloseLogFile();
-    NSLog(@"%@: Synchronized time: %1.5f.",
-        BNCSStringForCurrentMethod(), - startTime.timeIntervalSinceNow);
-
-/*
-    //  Non-sychronized -- There is only synchronized.
-
-    BNCLogSetOutputToURLRecordWrap(URL, 5);
-    BNCLogSetSynchronizeMessages(NO);
-
-    startTime = [NSDate date];
-    waitGroup = dispatch_group_create();
-
-    dispatch_group_async(waitGroup,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        for (long i = 0; i < 2000; i++)
-            BNCLog(@"Message 1x%ld", i);
-    });
-
-    dispatch_group_async(waitGroup,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        for (long i = 0; i < 2000; i++)
-            BNCLog(@"Message 2x%ld", i);
-    });
-
-    dispatch_group_async(waitGroup,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
-        for (long i = 0; i < 2000; i++)
-            BNCLog(@"Message 3x%ld", i);
-    });
-
-    dispatch_group_wait(waitGroup, DISPATCH_TIME_FOREVER);
-    BNCLogCloseLogFile();
-    NSLog(@"%@: Non-synchronized time: %1.5f",
-        BNCSStringForCurrentMethod(), - startTime.timeIntervalSinceNow);
-*/
-}
-
-- (void) testRecordWrapTruncate {
-    //  Create a larger log file then re-open and write smaller file to make sure it truncates.
-
-    NSError *error = nil;
-    NSURL *URL =
-        [[NSFileManager defaultManager]
-            URLForDirectory:NSCachesDirectory
-            inDomain:NSUserDomainMask
-            appropriateForURL:nil
-            create:YES
-            error:&error];
-    XCTAssert(!error);
-    URL = [URL URLByAppendingPathComponent:@"io.branch.BranchSDK-Test"];
-    [[NSFileManager defaultManager]
-        createDirectoryAtURL:URL
-        withIntermediateDirectories:YES
-        attributes:nil
-        error:&error];
-    XCTAssert(!error);
-    URL = [URL URLByAppendingPathComponent:@"TestWrapSync.log"];
-    [[NSFileManager defaultManager]
-        removeItemAtURL:URL
-        error:&error];
-    error = nil;
-    NSLog(@"Log is %@.", URL);
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 23, 80);
-    for (long i = 0; i < 23; i++) {
-        BNCLog(@"Log %ld.", i);
-    }
-    BNCLogCloseLogFile();
-
-    NSData *data;
-    NSString *string;
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    XCTAssert(string.length == 80*23);
-
-    BNCLogSetOutputToURLRecordWrapSize(URL, 5, 80);
-    for (long i = 0; i < 23; i++) {
-        BNCLog(@"Log %ld.", i);
-    }
-    BNCLogCloseLogFile();
-
-    data = [NSData dataWithContentsOfURL:URL options:NSDataReadingUncached error:&error];
-    XCTAssert(!error && data);
-    string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    XCTAssert(string.length == 80*5);
-}
-
 #pragma mark - Test BNCLogSetOutputToURLByteWrap
 
 - (void) testLogFunctionOutputToURLByteWrap {
@@ -627,9 +329,9 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 01.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 02.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 03.\n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 01.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 02.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 03.\n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
     // Re-open the file, write 1 record.
@@ -644,10 +346,10 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 01.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 02.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 03.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 04.\n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 01.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 02.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 03.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 04.\n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
     // Re-open the file, write 3 records.
@@ -664,11 +366,11 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 06.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 07.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 03.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 04.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 05.\n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 06.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 07.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 03.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 04.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 05.\n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
     // Write 1 and check again.
@@ -683,11 +385,11 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 06.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 07.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 08.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 04.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 05.\n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 06.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 07.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 08.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 04.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 05.\n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
     // Write 23 records.  Make sure it wraps correctly.
@@ -701,11 +403,11 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 23.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 19.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 20.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 21.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 22.\n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 23.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 19.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 20.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 21.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 22.\n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
     //NSLog(@"Result string:\n%@\ntruth:\n%@.", string, truth);
 }
@@ -909,9 +611,9 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1. \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 12.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123. \n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 1. \n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 12.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123. \n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
     //  Write record.  Check for append and wrap:
@@ -928,11 +630,11 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123456.\n"
-         "-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 12.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123. \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1234.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 12345. \n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123456.\n"
+         "-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 12.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123. \n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 1234.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 12345. \n";
 
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
@@ -948,11 +650,11 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123456.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1234567. \n"
-         "T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123. \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1234.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 12345. \n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123456.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 1234567. \n"
+         "T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123. \n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 1234.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 12345. \n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
 
     // Re-open the file, write 2 records.
@@ -966,11 +668,11 @@ extern void BNCLogSetOutputToURLRecordWrapSize(NSURL *_Nullable url, long maxRec
     XCTAssert(!error && data);
     string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     truth  =
-        @"****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123456.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 1234567. \n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 12345678.\n"
-         "****-**-**T**:**:**.******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 123456789. \n"
-         "******Z 6 [branch.io] BNCLog.Test.m(***) Log: Log 12345. \n";
+        @"****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123456.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 1234567. \n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 12345678.\n"
+         "****-**-**T**:**:**.******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 123456789. \n"
+         "******Z 5 [branch.io] BNCLog.Test.m(***) Log: Log 12345. \n";
     XCTAssert([string bnc_isEqualToMaskedString:truth]);
     //NSLog(@"string:\n%@\n%@.", string, truth);
 }

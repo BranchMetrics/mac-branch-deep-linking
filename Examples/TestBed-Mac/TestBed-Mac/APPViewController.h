@@ -10,6 +10,8 @@
 
 @interface APPViewController : NSViewController
 + (APPViewController*) loadController;
+@property (weak)   IBOutlet NSButton *trackingDisabled;
+@property (weak)   IBOutlet NSButton *limitFacebookTracking;
 @property (weak)   IBOutlet NSTextField *stateField;
 @property (weak)   IBOutlet NSTextField *urlField;
 @property (weak)   IBOutlet NSTextField *errorField;

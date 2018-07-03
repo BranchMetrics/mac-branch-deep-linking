@@ -3,7 +3,7 @@
  @package       Branch
  @brief         Persists a smallish (< 1mb?) set of data between app runs.
 
- @author        Edward
+ @author        Edward Smith
  @date          May 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */

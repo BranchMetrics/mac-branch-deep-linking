@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BNCProductCategory
 
+/// String enumeration type for Branch product categories.
 typedef NSString*const BNCProductCategory NS_STRING_ENUM;
 
 FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategoryAnimalSupplies;
@@ -38,10 +39,12 @@ FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategorySportingGoods;
 FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategoryToysGames;
 FOUNDATION_EXPORT  BNCProductCategory _Nonnull BNCProductCategoryVehiclesParts;
 
+/// Returns an array of all Branch product categories.
 FOUNDATION_EXPORT NSArray<BNCProductCategory>* BNCProductCategoryAllCategories(void);
 
 #pragma mark - BNCCurrency
 
+/// A string enumeration type for world currencies.
 typedef NSString*const BNCCurrency NS_STRING_ENUM;
 
 FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyAED;
@@ -237,6 +240,7 @@ FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyYER;
 FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyZAR;
 FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyZMW;
 
+/// Returns an array of all Branch BNCCurrency currencies.
 FOUNDATION_EXPORT NSArray<BNCCurrency>* BNCCurrencyAllCurrencies(void);
 
 NS_ASSUME_NONNULL_END

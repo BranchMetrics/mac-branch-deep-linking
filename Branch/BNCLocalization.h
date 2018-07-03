@@ -8,21 +8,16 @@
  @copyright     Copyright © 2017 Branch. All rights reserved.
 */
 
+#import "BranchHeader.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 /**
-    @discusion
-
-    # BNCLocalization
-
     Since the Branch SDK can be shipped as a static library, it can't use the standard Apple
     string localization mechanism.
 
     Use this class to localize the few user-facing string resources the Branch SDK has.
 */
-
-#import "BranchHeader.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
 @interface BNCLocalization : NSObject
 
 + (instancetype) shared;

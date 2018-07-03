@@ -187,7 +187,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
     @synchronized(self) {
         BNCSettings*settings = [[BNCSettings alloc] init];
         [BNCEncoder copyInstance:self fromInstance:((BNCSettingsProxy*)settings)->_settings ignoring:self.class.ignoreMembers];
-        [self setNeedsSave];
+        [self save];
     }
 }
 

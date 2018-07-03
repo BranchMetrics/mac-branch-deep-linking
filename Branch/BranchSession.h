@@ -14,6 +14,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+    Branch session parameters.
+*/
 @interface BranchSession : NSObject
 
 + (instancetype) sessionWithDictionary:(NSDictionary*)dictionary;

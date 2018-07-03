@@ -8,7 +8,7 @@
  @copyright     Copyright © 2016 Branch. All rights reserved.
 */
 
-#import "BNCDebug.h"
+#import "BranchHeader.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,15 +25,14 @@ extern void BNCLogInitialize(void) __attribute__((constructor));
 
 /// Log message severity
 typedef NS_ENUM(NSInteger, BNCLogLevel) {
-    BNCLogLevelAll = 0,
-    BNCLogLevelDebugSDK = BNCLogLevelAll,
-    BNCLogLevelBreakPoint,
-    BNCLogLevelDebug,
-    BNCLogLevelWarning,
-    BNCLogLevelError,
-    BNCLogLevelAssert,
-    BNCLogLevelLog,
-    BNCLogLevelNone,
+    BNCLogLevelAll = 0,                     //!< Show all log messages.
+    BNCLogLevelDebugSDK = BNCLogLevelAll,   //!< Show debug messages specific to debugging the SDK.
+    BNCLogLevelDebug,                       //!< Only show debug messages for debugging app problems and above.
+    BNCLogLevelWarning,                     //!< Only show warning messages and above.
+    BNCLogLevelError,                       //!< Only show error messages and above.
+    BNCLogLevelAssert,                      //!< Only show assertion messages and above.
+    BNCLogLevelLog,                         //!< Only show log messages and above.
+    BNCLogLevelNone,                        //!< Don't show any log messages.
     BNCLogLevelMax
 };
 
@@ -49,29 +48,19 @@ extern void BNCLogSetDisplayLevel(BNCLogLevel level);
 
 /*!
 * @param level The log level to convert to a string.
+*
 * @return Returns the string indicating the log level.
 */
 extern NSString *_Nonnull BNCLogStringFromLogLevel(BNCLogLevel level);
 
 /*!
 * @param string A string indicating the log level.
+*
 * @return Returns The log level corresponding to the string.
 */
 extern BNCLogLevel BNCLogLevelFromString(NSString*_Nullable string);
 
-
-#pragma mark - Programmatic Breakpoints
-
-
-///@return Returns 'YES' if programmatic breakpoints are enabled.
-extern BOOL BNCLogBreakPointsAreEnabled(void);
-
-///@param enabled Sets programmatic breakpoints enabled or disabled.
-extern void BNCLogSetBreakPointsEnabled(BOOL enabled);
-
-
 #pragma mark - Client Initialization Function
-
 
 typedef void (*BNCLogClientInitializeFunctionPtr)(void);
 
@@ -79,16 +68,11 @@ typedef void (*BNCLogClientInitializeFunctionPtr)(void);
 extern BNCLogClientInitializeFunctionPtr _Nullable
     BNCLogSetClientInitializeFunction(BNCLogClientInitializeFunctionPtr _Nullable clientInitializationFunction);
 
-
 #pragma mark - Optional Log Output Handlers
-
 
 ///@brief Pre-defined log message handlers --
 
 typedef void (*BNCLogOutputFunctionPtr)(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Nullable message);
-
-extern void BNCLogFunctionOutputToStdOut(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString *_Nullable message);
-extern void BNCLogFunctionOutputToStdErr(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString *_Nullable message);
 
 ///@param functionPtr   A pointer to the logging function.  Setting the parameter to NULL will flush
 ///                     and close the currently set log function and future log messages will be
@@ -105,10 +89,6 @@ extern void BNCLogCloseLogFile(void);
 extern void BNCLogSetOutputToURL(NSURL*_Nullable URL);
 
 ///@param URL Sets the log output function to a function that writes messages to the file at URL.
-///@param maxRecords Wraps the file at `maxRecords` records.
-extern void BNCLogSetOutputToURLRecordWrap(NSURL*_Nullable URL, long maxRecords);
-
-///@param URL Sets the log output function to a function that writes messages to the file at URL.
 ///@param maxBytes Wraps the file at `maxBytes` bytes.  Must be an even number of bytes.
 extern void BNCLogSetOutputToURLByteWrap(NSURL*_Nullable URL, long maxBytes);
 
@@ -122,9 +102,7 @@ extern void BNCLogSetFlushFunction(BNCLogFlushFunctionPtr _Nullable flushFunctio
 ///@return Returns the current flush function.
 extern BNCLogFlushFunctionPtr _Nullable BNCLogFlushFunction(void);
 
-
 #pragma mark - BNCLogWriteMessage
-
 
 /// The main logging function used in the variadic logging defines.
 extern void BNCLogWriteMessageFormat(
@@ -147,6 +125,13 @@ extern void BNCLogWriteMessage(
 /// set by BNCLogSetOutputFunction.
 extern void BNCLogFlushMessages(void);
 
+///@return  Returns an NSString indicating the name of the enclosing method.
+#define BNCSStringForCurrentMethod() \
+    NSStringFromSelector(_cmd)
+
+///@return  Returns an NSString indicating the name of the enclosing function.
+#define BNCSStringForCurrentFunction() \
+    [NSString stringWithFormat:@"%s", __FUNCTION__]
 
 #pragma mark - Logging
 ///@info Logging
@@ -171,59 +156,26 @@ extern void BNCLogFlushMessages(void);
 #define BNCLog(...) \
     do  { BNCLogWriteMessageFormat(BNCLogLevelLog, __FILE__, __LINE__, __VA_ARGS__); } while (0)
 
-///Cause a programmatic breakpoint if breakpoints are enabled.
-#define BNCLogBreakPoint() \
-    do  { \
-        if (BNCLogBreakPointsAreEnabled()) { \
-            BNCLogWriteMessageFormat(BNCLogLevelBreakPoint, __FILE__, __LINE__, @"Programmatic breakpoint."); \
-            if (BNCDebuggerIsAttached()) { \
-                BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
-            } \
-        } \
-    } while (0)
-
-///Log a message and cause a programmatic breakpoint if breakpoints are enabled.
-#define BNCBreakPointWithMessage(...) \
-    do  { \
-        if (BNCLogBreakPointsAreEnabled() { \
-            BNCLogWriteMessageFormat(BNCLogLevelBreakPoint, __FILE__, __LINE__, __VA_ARGS__); \
-            if (BNCDebuggerIsAttached()) { \
-                BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
-            } \
-        } \
-    } while (0)
-
-///Check if an asserting is true.  If programmatic breakpoints are enabled then break.
-#define BNCLogAssert(condition) \
+///Check that an asserting is true logging a message if the assertion fails.
+#define BNCLogAssertWithMessage(condition, ...) \
     do  { \
         if (!(condition)) { \
-            BNCLogWriteMessageFormat(BNCLogLevelAssert, __FILE__, __LINE__, @"(%s) !!!", #condition); \
-            if (BNCLogBreakPointsAreEnabled() && BNCDebuggerIsAttached()) { \
-                BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
-            } \
-        } \
-    } while (0)
-
-///Check if an asserting is true logging a message if the assertion fails.
-///If programmatic breakpoints are enabled then break.
-#define BNCLogAssertWithMessage(condition, message, ...) \
-    do  { \
-        if (!(condition)) { \
-            NSString *m = [NSString stringWithFormat:message, __VA_ARGS__]; \
+            NSString *m = [NSString stringWithFormat:__VA_ARGS__]; \
+            BNCLogWriteMessageFormat(BNCLogLevelAssert, __FILE__, __LINE__, \
+                @"Assertion failed! Set 'BranchAssert' as a symbolic break point to catch this error."); \
             BNCLogWriteMessageFormat(BNCLogLevelAssert, __FILE__, __LINE__, @"(%s) !!! %@", #condition, m); \
-            if (BNCLogBreakPointsAreEnabled() && BNCDebuggerIsAttached()) { \
+            @try { \
                 BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
+                [NSException raise:@"BranchAssert" format:@"Branch assertion failed!"]; \
+            } \
+            @catch (id e) { \
             } \
         } \
     } while (0)
 
-///Assert that the current thread is the main thread.
-#define BNCLogAssertIsMainThread() \
-    BNCLogAssert([NSThread isMainThread])
+///Check that an assertion is true.
+#define BNCLogAssert(condition) \
+    BNCLogAssertWithMessage(condition, @"")
 
 ///Write the name of the current method to the log.
 #define BNCLogMethodName() \

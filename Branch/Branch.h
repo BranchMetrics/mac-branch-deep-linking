@@ -25,5 +25,4 @@ FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 
 // Exposed private headers:
 
-#import <Branch/BNCDebug.h>
 #import <Branch/BNCLog.h>

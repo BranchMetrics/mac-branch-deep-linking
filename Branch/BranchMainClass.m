@@ -689,6 +689,7 @@
 }
 
 + (void) clearAllSettings {
+    BNCLogDebugSDK(@"[Branch clearAllSettings].");
     [[[BNCNetworkAPIService alloc] init] clearNetworkQueue];
     [[[BNCSettings alloc] init] clearAllSettings];
     NSString*appGroup = [BNCApplication currentApplication].applicationID;

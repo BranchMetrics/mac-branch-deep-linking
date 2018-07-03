@@ -190,7 +190,7 @@
         "sdk" : "ios0.1.1",
         "update" : 2,
         "uri_scheme" : "testbed-mac",
-        },
+    },
     "BranchOpenResponseMac": {
         "data" : "{\"$og_title\":\"Moof!\",\"$marketing_title\":\"First MacSDK Link\",\"~creation_source\":1,\"$og_description\":\"Hello Mac SDK!\",\"+click_timestamp\":1528641760,\"message\":\"Hello MacSDK\",\"$og_image_url\":\"https:\/\/i2.wp.com\/512pixels.net\/wp-content\/uploads\/2016\/01\/dogcow.png?w=500&ssl=1\",\"~feature\":\"marketing\",\"+match_guaranteed\":true,\"$desktop_deepview\":\"branch_default\",\"~marketing\":true,\"+clicked_branch_link\":true,\"$one_time_use\":false,\"~id\":\"525055150134625462\",\"~campaign\":\"MacSDK\",\"+is_first_session\":false,\"~referring_link\":\"https:\/\/testbed-mac.app.link\/ODYeswaVWM\",\"~channel\":\"QuickLink\",\"$ios_deepview\":\"branch_default\"}",
         "device_fingerprint_id" : "526117323216942979",

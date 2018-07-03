@@ -66,22 +66,25 @@
 }
 
 - (void) testOpenHTTP {
+    NSString*const kTestURL = @"https://testbed-mac.app.link/ODYeswaVWM";
+    [Branch clearAllSettings];
     BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
-    [Branch clearAllSettings];
     [branch startWithConfiguration:configuration];
     branch.limitFacebookTracking = YES;
 
     // Mock the result. Fix up the expectedParameters for simulator hardware --
 
-    __block _Atomic(NSInteger) callCount = 0;
+    __block BOOL foundInstallRequest = NO;
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        NSInteger count = atomic_fetch_add(&callCount, 1);
-        if (count == 1) {
+        if ([request.URL.path isEqualToString:@"/v1/install"]) {
+            foundInstallRequest = YES;
             XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-            XCTAssertEqualObjects(request.URL.path, @"/v1/install");
             NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
+            truth[@"external_intent_uri"] = nil;
+            truth[@"link_identifier"] = nil;
+            truth[@"universal_link_url"] = kTestURL;
             NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
             for (NSString*key in truth) {
                 XCTAssertNotNil(test[key], @"No key '%@'!", key);
@@ -107,8 +110,9 @@
         [expectation fulfill];
     };
 
-    [branch openURL:[NSURL URLWithString:@"https://testbed-mac.app.link/ODYeswaVWM"]];
+    [branch openURL:[NSURL URLWithString:kTestURL]];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    XCTAssertTrue(foundInstallRequest);
 }
 
 @end

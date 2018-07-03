@@ -11,7 +11,9 @@
                 <outlet property="actionItemCollection" destination="iW3-2P-Fpe" id="qKc-KF-qC0"/>
                 <outlet property="dataTextView" destination="hOV-5p-g78" id="GJO-SX-CQY"/>
                 <outlet property="errorField" destination="RBf-KP-p6D" id="m5z-CP-GUL"/>
+                <outlet property="limitFacebookTracking" destination="3wo-tY-S63" id="aBf-ln-xwd"/>
                 <outlet property="stateField" destination="GWW-ZH-Gro" id="T5O-cr-HnB"/>
+                <outlet property="trackingDisabled" destination="UmN-S6-I1y" id="gE9-3h-GAO"/>
                 <outlet property="urlField" destination="r18-ej-hCq" id="XRu-Dp-NCC"/>
                 <outlet property="view" destination="cZK-UO-Lya" id="XqN-Tg-FMl"/>
                 <outlet property="window" destination="nWU-8m-tPw" id="QdA-UL-XCr"/>
@@ -34,7 +36,7 @@
                         <rect key="frame" x="160" y="0.0" width="690" height="420"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gQn-0x-f14">
-                                <rect key="frame" x="18" y="340" width="37" height="16"/>
+                                <rect key="frame" x="18" y="318" width="37" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Error" id="TKX-uM-Egv">
                                     <font key="font" metaFont="systemBold" size="12"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -42,7 +44,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kmr-ok-g1v">
-                                <rect key="frame" x="18" y="384" width="37" height="16"/>
+                                <rect key="frame" x="18" y="362" width="37" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="State" id="LfJ-5G-aeO">
                                     <font key="font" metaFont="systemBold" size="12"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -50,7 +52,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="499" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="GWW-ZH-Gro">
-                                <rect key="frame" x="61" y="384" width="611" height="16"/>
+                                <rect key="frame" x="61" y="362" width="611" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="&lt; State &gt;" id="IW5-DP-Dka">
                                     <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -58,7 +60,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gfy-f4-keP">
-                                <rect key="frame" x="18" y="362" width="37" height="16"/>
+                                <rect key="frame" x="18" y="340" width="37" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="URL" id="UTt-ve-jjM">
                                     <font key="font" metaFont="systemBold" size="12"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -66,7 +68,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="499" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="RBf-KP-p6D">
-                                <rect key="frame" x="61" y="340" width="611" height="16"/>
+                                <rect key="frame" x="61" y="318" width="611" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="&lt; None &gt;" id="ocV-SX-8GV">
                                     <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -74,7 +76,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="499" horizontalCompressionResistancePriority="499" verticalCompressionResistancePriority="499" translatesAutoresizingMaskIntoConstraints="NO" id="r18-ej-hCq">
-                                <rect key="frame" x="61" y="362" width="611" height="16"/>
+                                <rect key="frame" x="61" y="340" width="611" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="&lt; No URL &gt;" id="XpI-5v-HMG">
                                     <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -82,17 +84,17 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5R-eN-uqK">
-                                <rect key="frame" x="20" y="20" width="650" height="308"/>
+                                <rect key="frame" x="20" y="20" width="650" height="286"/>
                                 <clipView key="contentView" id="lOO-oQ-w6s">
-                                    <rect key="frame" x="1" y="1" width="648" height="306"/>
+                                    <rect key="frame" x="1" y="1" width="648" height="284"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" id="hOV-5p-g78">
-                                            <rect key="frame" x="0.0" y="0.0" width="648" height="306"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="648" height="284"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="648" height="306"/>
-                                            <size key="maxSize" width="648" height="10000000"/>
+                                            <size key="minSize" width="648" height="284"/>
+                                            <size key="maxSize" width="650" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="&lt; Data &gt;">
                                                     <attributes>
@@ -111,10 +113,30 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="XVQ-eg-f8h">
-                                    <rect key="frame" x="633" y="1" width="16" height="306"/>
+                                    <rect key="frame" x="633" y="1" width="16" height="284"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UmN-S6-I1y">
+                                <rect key="frame" x="18" y="388" width="131" height="18"/>
+                                <buttonCell key="cell" type="check" title="Tracking Disabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6m4-y6-cpO">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="trackingDisabledAction:" target="-2" id="ibX-Jt-zNE"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3wo-tY-S63">
+                                <rect key="frame" x="195" y="388" width="170" height="18"/>
+                                <buttonCell key="cell" type="check" title="Limit Facebook Tracking" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yKq-q7-5d9">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="limitFacebookTrackingAction:" target="-2" id="Mtv-VH-V8g"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="r18-ej-hCq" firstAttribute="trailing" secondItem="GWW-ZH-Gro" secondAttribute="trailing" id="8hc-57-rgA"/>
@@ -122,22 +144,27 @@
                             <constraint firstItem="Kmr-ok-g1v" firstAttribute="leading" secondItem="AUd-Bf-eOC" secondAttribute="leading" constant="20" id="B6E-ch-cDx"/>
                             <constraint firstItem="gQn-0x-f14" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="BVJ-sf-VHa"/>
                             <constraint firstItem="E5R-eN-uqK" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="EmI-j6-GL9"/>
+                            <constraint firstItem="3wo-tY-S63" firstAttribute="centerY" secondItem="UmN-S6-I1y" secondAttribute="centerY" id="Hkk-l4-bad"/>
                             <constraint firstItem="RBf-KP-p6D" firstAttribute="leading" secondItem="GWW-ZH-Gro" secondAttribute="leading" id="I7c-tC-gGg"/>
+                            <constraint firstItem="Kmr-ok-g1v" firstAttribute="leading" secondItem="UmN-S6-I1y" secondAttribute="leading" id="OC7-uv-QRV"/>
                             <constraint firstItem="gfy-f4-keP" firstAttribute="trailing" secondItem="Kmr-ok-g1v" secondAttribute="trailing" id="P6o-qC-HjX"/>
                             <constraint firstItem="gQn-0x-f14" firstAttribute="trailing" secondItem="Kmr-ok-g1v" secondAttribute="trailing" id="PL1-aH-5OC"/>
                             <constraint firstAttribute="trailing" secondItem="GWW-ZH-Gro" secondAttribute="trailing" constant="20" id="TGa-iu-cJB"/>
                             <constraint firstItem="gfy-f4-keP" firstAttribute="top" secondItem="Kmr-ok-g1v" secondAttribute="bottom" constant="6" id="VGE-Io-hdx"/>
+                            <constraint firstItem="3wo-tY-S63" firstAttribute="leading" secondItem="UmN-S6-I1y" secondAttribute="trailing" constant="50" id="XxF-41-AGO"/>
+                            <constraint firstItem="Kmr-ok-g1v" firstAttribute="top" secondItem="UmN-S6-I1y" secondAttribute="bottom" constant="12" id="YIv-oP-Ctv"/>
                             <constraint firstItem="E5R-eN-uqK" firstAttribute="top" secondItem="gQn-0x-f14" secondAttribute="bottom" constant="12" id="Zbg-pN-iEY"/>
                             <constraint firstAttribute="bottom" secondItem="E5R-eN-uqK" secondAttribute="bottom" constant="20" id="bUB-ZM-xlu"/>
                             <constraint firstItem="RBf-KP-p6D" firstAttribute="centerY" secondItem="gQn-0x-f14" secondAttribute="centerY" id="ctj-N3-DWg"/>
                             <constraint firstItem="E5R-eN-uqK" firstAttribute="trailing" secondItem="GWW-ZH-Gro" secondAttribute="trailing" id="es7-pH-HLj"/>
                             <constraint firstItem="gfy-f4-keP" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="gDj-1R-ryK"/>
+                            <constraint firstItem="UmN-S6-I1y" firstAttribute="top" secondItem="AUd-Bf-eOC" secondAttribute="top" constant="16" id="gEW-tO-oww"/>
                             <constraint firstItem="GWW-ZH-Gro" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="trailing" constant="10" id="gm3-pz-pQT"/>
                             <constraint firstItem="gQn-0x-f14" firstAttribute="top" secondItem="gfy-f4-keP" secondAttribute="bottom" constant="6" id="jwu-hu-cmV"/>
                             <constraint firstItem="r18-ej-hCq" firstAttribute="leading" secondItem="GWW-ZH-Gro" secondAttribute="leading" id="mMD-If-nVp"/>
                             <constraint firstItem="r18-ej-hCq" firstAttribute="centerY" secondItem="gfy-f4-keP" secondAttribute="centerY" id="maA-jn-Dxx"/>
                             <constraint firstItem="GWW-ZH-Gro" firstAttribute="centerY" secondItem="Kmr-ok-g1v" secondAttribute="centerY" id="rLc-Hc-vPR"/>
-                            <constraint firstItem="Kmr-ok-g1v" firstAttribute="top" secondItem="AUd-Bf-eOC" secondAttribute="top" constant="20" id="tHU-vu-M81"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3wo-tY-S63" secondAttribute="trailing" constant="20" id="xym-Rw-dOM"/>
                         </constraints>
                     </customView>
                     <customView verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="a3T-f1-7eH">
@@ -193,7 +220,7 @@
                     <constraint firstItem="a3T-f1-7eH" firstAttribute="top" secondItem="cZK-UO-Lya" secondAttribute="top" id="xvL-WK-aUa"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="-267" y="-599"/>
+            <point key="canvasLocation" x="-293" y="-783"/>
         </window>
     </objects>
 </document>
