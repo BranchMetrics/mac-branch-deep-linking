@@ -38,6 +38,7 @@
 
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"tv_OS"]);
+    XCTAssertTrue([device.vendorID bnc_isEqualToMaskedString:@"********-****-****-****-************"]);
 
 #elif TARGET_OS_IOS
 
@@ -52,7 +53,7 @@
 
     XCTAssertTrue(
         device.systemVersion.doubleValue > 8.0 &&
-        device.systemVersion.doubleValue <= 11.0
+        device.systemVersion.doubleValue <= 12.0
     );
     XCTAssertTrue(BNCTestStringMatchesRegex(device.systemBuildVersion, @"^[0-9A-F]*$"));
     XCTAssertTrue(

@@ -626,9 +626,6 @@ exit:
     addString(localIPAddress,       local_ip);
     addString(systemName,           os);
 
-    if (!self.adTrackingIsEnabled)
-        dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
-
     if (!self.deviceIsUnidentified)
         dictionary[@"is_hardware_id_real"] = BNCWireFormatFromBool(YES);
 
@@ -656,9 +653,6 @@ exit:
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
-
-    if (!self.adTrackingIsEnabled)
-        dictionary[@"limit_ad_tracking"] = BNCWireFormatFromBool(YES);
 
     return dictionary;
 }

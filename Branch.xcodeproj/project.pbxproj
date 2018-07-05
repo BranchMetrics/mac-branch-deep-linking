@@ -699,7 +699,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -718,7 +717,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
@@ -993,7 +991,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				TEST_HOST = "$(BranchTestHost)";
 			};
