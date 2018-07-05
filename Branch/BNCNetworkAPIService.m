@@ -36,7 +36,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
                              dictionary:(NSDictionary*)dictionary
                              completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
 - (void) main;
-- (BOOL) asynchronous;
+- (BOOL) isAsynchronous;
 
 @property (strong) id<BNCNetworkServiceProtocol>networkService;
 @property (strong) BNCSettings*settings;
@@ -498,7 +498,7 @@ exit:
     return self;
 }
 
-- (BOOL) asynchronous {
+- (BOOL) isAsynchronous {
     return YES;
 }
 
