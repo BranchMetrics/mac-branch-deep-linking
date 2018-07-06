@@ -84,11 +84,11 @@
 
     // Start Branch:
     BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+        [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
     branch.delegate = self;
-    branch.startSessionBlock = ^(BranchSession * _Nullable session, NSError * _Nullable error) {
+    branch.sessionStartedBlock = ^(BranchSession * _Nullable session, NSError * _Nullable error) {
         // Callback block. Order: 2.
         XCTAssertTrue([NSThread isMainThread]);
         XCTAssertNotNil(session);
@@ -154,11 +154,11 @@
 
     // Start Branch:
     BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+        [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
     branch.delegate = self;
-    branch.startSessionBlock = ^(BranchSession * _Nullable session, NSError * _Nullable error) {
+    branch.sessionStartedBlock = ^(BranchSession * _Nullable session, NSError * _Nullable error) {
         // Callback block. Order: 2.
         XCTAssertTrue([NSThread isMainThread]);
         XCTAssertNil(session);

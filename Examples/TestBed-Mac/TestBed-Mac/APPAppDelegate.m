@@ -19,7 +19,7 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
     BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
+        [[BranchConfiguration alloc] initWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
 
 #if 0
     configuration.useCertificatePinning = NO;

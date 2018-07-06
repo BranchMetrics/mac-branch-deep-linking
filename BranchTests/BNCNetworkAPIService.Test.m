@@ -26,7 +26,7 @@
     // Make sure retries happen and then time out.
 
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
@@ -61,7 +61,7 @@
     // Make sure retries happen and then succeed.
 
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
@@ -102,7 +102,7 @@
     //
 
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
@@ -137,7 +137,6 @@
     //
     // Save operations to the queue. Quit Branch. Start Branch. See if events replay.
     //
-
     {
         __block _Atomic(long) operationCount = 0;
         BNCTestNetworkService.requestHandler =
@@ -147,7 +146,7 @@
             };
 
         Branch*branch = [Branch new];
-        BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+        BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
         configuration.networkServiceClass = BNCTestNetworkService.class;
         [branch startWithConfiguration:configuration];
         branch.networkAPIService.queuePaused = YES;
@@ -164,7 +163,7 @@
     }
 
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
 
     __block long operationCount = 0;
@@ -184,6 +183,85 @@
     // Wait for any extra operation to drain too:
     BNCSleepForTimeInterval(0.5);
     XCTAssertEqual(operationCount, 3);
+}
+
+- (void) testRequestMetadata {
+    Branch*branch = [Branch new];
+    [branch clearAllSettings];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+
+    __block int wtf = 0;
+    __block BOOL foundMetadata = YES;
+    __block _Atomic(long) requestCount = 0;
+    BNCTestNetworkService.requestHandler =
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            wtf++;
+            atomic_fetch_add(&requestCount, 1);
+            NSDictionary*metadata = @{
+                @"key1": @"value1",
+                @"key2": @"value2",
+                @"key3": @"value3"
+            };
+            NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+            if (![dictionary[@"metadata"] isEqualToDictionary:metadata])
+                foundMetadata = NO;
+            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+        };
+
+    branch.requestMetadataDictionary = (id) @{
+        @"key1": @"value1",
+        @"key2": @"value2"
+    };
+    branch.requestMetadataDictionary[@"key3"] = @"value3";
+    [branch startWithConfiguration:configuration];
+//    XCTestExpectation *expectation = [self expectationWithDescription:@"testRequestMetadata"];
+//    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
+//        completion: ^ (NSError * _Nullable error) {
+//            [expectation fulfill];
+//        }
+//    ];
+//  [self waitForExpectationsWithTimeout:3.0 handler:nil];
+    BNCSleepForTimeInterval(5.0);
+    XCTAssertEqual(foundMetadata, YES);
+    XCTAssertEqual(requestCount, 2);
+}
+
+- (void) testInstrumentation {
+    Branch*branch = [Branch new];
+    [branch clearAllSettings];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+
+    __block long instrumentValue;
+    __block _Atomic(long) requestCount = 0;
+    BNCTestNetworkService.requestHandler =
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            long localCount = atomic_fetch_add(&requestCount, 1);
+            if (localCount == 1) {
+                NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+                instrumentValue = [dictionary[@"instrumentation"][@"/v1/install-brtt"] longValue];
+            }
+            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+        };
+
+    branch.requestMetadataDictionary = (id) @{
+        @"key1": @"value1",
+        @"key2": @"value2"
+    };
+    branch.requestMetadataDictionary[@"key3"] = @"value3";
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testInstrumentation"];
+    [branch startWithConfiguration:configuration];
+    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
+        completion: ^ (NSError * _Nullable error) {
+            XCTAssertNil(error);
+            [expectation fulfill];
+        }
+    ];
+    [self waitForExpectationsWithTimeout:3.0 handler:nil];
+    BNCSleepForTimeInterval(0.200);
+    XCTAssertEqual(requestCount, 2);
+    XCTAssertGreaterThan(instrumentValue, 1);
 }
 
 @end

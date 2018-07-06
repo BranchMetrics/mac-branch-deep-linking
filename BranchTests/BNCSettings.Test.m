@@ -111,18 +111,4 @@
     XCTAssertTrue((__bridge void*) realSettings.class == (__bridge void*) BNCSettings.class);
 }
 
-/*  Try not to have a shared instance.
-    
-- (void) testSharedInstance {
-    BNCSettings*settings = [BNCSettings sharedInstance];
-    XCTAssertTrue([settings isKindOfClass:[BNCSettings class]]);
-    XCTAssertTrue([settings isProxy]);
-    Class settingsClass = [settings class];
-    Class proxyClass = NSClassFromString(@"BNCSettingsProxy");
-    XCTAssertTrue((__bridge void*) settingsClass == (__bridge void*) proxyClass);
-    NSString*fpid = settings.deviceFingerprintID; // Make sure that
-    XCTAssertTrue(fpid == nil || fpid != nil);
-}
-*/
-
 @end

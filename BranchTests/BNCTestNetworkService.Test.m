@@ -18,7 +18,7 @@
 @implementation BNCTestNetworkServiceTest
 
 - (void) testTheTestService {
-    BranchConfiguration*config = [BranchConfiguration configurationWithKey:@"key_live_12345"];
+    BranchConfiguration*config = [[BranchConfiguration alloc] initWithKey:@"key_live_12345"];
     config.networkServiceClass = [BNCTestNetworkService class];
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:config];

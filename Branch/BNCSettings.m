@@ -67,26 +67,6 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 
 @implementation BNCSettings
 
-/*
-// TODO:
-+ (instancetype) sharedInstance {
-    // TODO: There's a weird ARC retain count problem here where the proxy is released at the end.
-    // It's duct tape fixed by having sharedInstance have references to both the proxy and object.
-    // It will be nice to really fix this.
-    static __strong BNCSettings*sharedInstance = nil;
-    static __strong BNCSettingsProxy*sharedInstanceProxy = nil;
-    static dispatch_once_t onceToken = 0;
-    dispatch_once(&onceToken, ^ {
-        BNCSettings* settings = [self loadSettings];
-        if (settings) {
-            sharedInstanceProxy = (id) settings;
-            sharedInstance = ((BNCSettingsProxy*)sharedInstanceProxy)->_settings;
-        }
-    });
-    return (BNCSettings*)sharedInstanceProxy;
-}
-*/
-
 + (instancetype) loadSettings {
     @synchronized(self) {
         BNCSettingsProxy*result = nil;
@@ -199,7 +179,10 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 
 - (NSMutableDictionary<NSString*, NSString*>*) requestMetadataDictionary {
     @synchronized(self) {
-        if (!_requestMetadataDictionary) _requestMetadataDictionary = [NSMutableDictionary new];
+        if (!_requestMetadataDictionary)
+            _requestMetadataDictionary = [NSMutableDictionary new];
+        if (![_requestMetadataDictionary isKindOfClass:[NSMutableDictionary class]])
+            _requestMetadataDictionary = [_requestMetadataDictionary mutableCopy];
         [self setNeedsSave];
         return _requestMetadataDictionary;
     }
@@ -208,6 +191,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 - (void) setInstrumentationDictionary:(NSMutableDictionary<NSString*, NSString*>*)dictionary {
     @synchronized(self) {
         _instrumentationDictionary = dictionary;
+        [self setNeedsSave];
     }
 }
 

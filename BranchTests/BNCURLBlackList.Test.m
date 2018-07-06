@@ -30,7 +30,7 @@
 - (void)testListDownLoad {
     XCTestExpectation *expectation = [self expectationWithDescription:@"BlackList Download"];
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     [branch startWithConfiguration:configuration];
     BNCURLBlackList *blackList = [BNCURLBlackList new];
     [blackList refreshBlackListFromServerWithBranch:branch completion:
@@ -93,7 +93,7 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"testDownloadBadURLs"];
 
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     [branch startWithConfiguration:configuration];
 
     BNCURLBlackList *blackList = [BNCURLBlackList new];
@@ -124,7 +124,7 @@
 - (void) testDownloadGoodURLs {
     // Test download list.
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     [branch startWithConfiguration:configuration];
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"testDownloadGoodURLs"];
@@ -146,7 +146,7 @@
 
 - (void) testStandardBlackList {
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
@@ -183,7 +183,7 @@
 
 - (void) testUserBlackList {
     Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     configuration.blackListURLRegex = @[
         @"\\/bob\\/"

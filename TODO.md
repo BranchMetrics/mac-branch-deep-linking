@@ -31,8 +31,8 @@ The Branch SDK for Mac OS X
 * [x] Delegate Tests
 
 ### Request Tests
-* [ ] Intrumentation tests.
-* [ ] Make sure requests have meta-data when set.
+* [x] Intrumentation tests.
+* [x] Make sure requests have metadata when set.
 
 ### Functional Tests
 * [ ] Set logging enabled / disabled.
@@ -40,16 +40,9 @@ The Branch SDK for Mac OS X
 * [ ] Log out.
 * [ ] Make short link.
 * [ ] Make long link.
-
-### Tracking Disabled
 * [ ] Tracking disabled: Test setting persistence, open link work, long links work, else fail.
 
 ## Documentation
-### AppleDoc
-* https://github.com/tomaz/appledoc
-* http://appledoc.gentlebytes.com/appledoc/
-* Example: https://www.cocoanetics.com/2011/11/amazing-apple-like-documentation/
-
 ### Jazzy
 * https://github.com/realm/jazzy
 ```

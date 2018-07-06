@@ -42,16 +42,11 @@
     if (!self.hasValidKey) {
         [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
     }
-    self.useCertificatePinning = YES; //  TODO: YES;
+    self.useCertificatePinning = YES;
     self.branchAPIServiceURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
     self.blackListURLRegex = [NSArray new];
     return self;
-}
-
-+ (BranchConfiguration*) configurationWithKey:(NSString*)key {
-    BranchConfiguration* configuration = [[BranchConfiguration alloc] initWithKey:key];
-    return configuration;
 }
 
 - (instancetype) copyWithZone:(NSZone*)zone {
@@ -93,7 +88,7 @@
 @interface Branch ()
 - (void) startNewSession;
 - (void) endSession;
-@property (readwrite) BNCNetworkAPIService      *networkAPIService;
+@property (atomic, strong, readwrite) BNCNetworkAPIService*networkAPIService;
 @property (atomic, strong) BranchConfiguration  *configuration;
 @property (atomic, strong) BNCSettings          *settings;
 @property (atomic, strong) BNCURLBlackList      *URLBlackList;
@@ -106,6 +101,12 @@
 #pragma mark - Branch
 
 @implementation Branch
+
+- (instancetype) init {
+    self = [super init];
+    self.settings = [BNCSettings loadSettings];
+    return self;
+}
 
 + (instancetype) sharedInstance {
     static Branch*sharedInstance = nil;
@@ -135,7 +136,6 @@
     BNCForceNSDataCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
 
-    self.settings = [BNCSettings loadSettings];
     if (!configuration.isValidConfiguration) {
         [NSException raise:NSInvalidArgumentException
             format:@"Invalid Branch configuration.\n%@", configuration];
@@ -192,7 +192,7 @@
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(applicationDidResignActiveNotification:)
-     name:UIApplicationWillResignActiveNotification
+        name:UIApplicationWillResignActiveNotification
         object:nil];
 
 #endif
@@ -232,13 +232,17 @@
     return self.settings.limitFacebookTracking;
 }
 
-- (void) setEnableLogging:(BOOL)enabled_ {
-    BNCLogLevel level = enabled_ ? BNCLogLevelDebug : BNCLogLevelLog;
-    BNCLogSetDisplayLevel(level);
+- (void) setLoggingEnabled:(BOOL)enabled_ {
+    @synchronized(self) {
+        BNCLogLevel level = enabled_ ? BNCLogLevelDebug : BNCLogLevelWarning;
+        BNCLogSetDisplayLevel(level);
+    }
 }
 
-- (BOOL) enableLogging {
-    return (BNCLogDisplayLevel() < BNCLogLevelLog) ? YES : NO;
+- (BOOL) loggingIsEnabled {
+    @synchronized(self) {
+        return (BNCLogDisplayLevel() < BNCLogLevelWarning) ? YES : NO;
+    }
 }
 
 #pragma mark - Application State Changes
@@ -270,12 +274,12 @@
 
 - (void)applicationWillBecomeActiveNotification:(NSNotification*)notification {
     BNCLogMethodName();
-    [[Branch sharedInstance]  startNewSession];
+    [self startNewSession];
 }
 
 - (void)applicationDidResignActiveNotification:(NSNotification*)notification {
     BNCLogMethodName();
-    [[Branch sharedInstance] endSession];
+    [self endSession];
 }
 
 - (void) notificationObserver:(NSNotification*)notification {
@@ -465,8 +469,8 @@
         return;
     }
 
-    if (self.startSessionBlock)
-        self.startSessionBlock(session, error);
+    if (self.sessionStartedBlock)
+        self.sessionStartedBlock(session, error);
         
     if (error) {
         if ([self.delegate respondsToSelector:@selector(branch:failedToStartSessionWithURL:error:)])
@@ -688,10 +692,10 @@
     return URL;
 }
 
-+ (void) clearAllSettings {
+- (void) clearAllSettings {
     BNCLogDebugSDK(@"[Branch clearAllSettings].");
-    [[[BNCNetworkAPIService alloc] init] clearNetworkQueue];
-    [[[BNCSettings alloc] init] clearAllSettings];
+    [self.networkAPIService clearNetworkQueue];
+    [self.settings clearAllSettings];
     NSString*appGroup = [BNCApplication currentApplication].applicationID;
     if (appGroup.length > 0) {
         BNCKeyChain*keyChain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:appGroup];

@@ -107,8 +107,7 @@
     dictionary = [self mutableDictionaryFromBundleJSONWithKey:@"BranchUniversalObjectJSON"];
     XCTAssertEqualObjects(testDictionary, dictionary);
 
-    BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:configuration];
@@ -217,7 +216,7 @@
         return [BNCTestNetworkService operationWithRequest:request response:@""];
     };
     BranchConfiguration*configuration =
-        [BranchConfiguration configurationWithKey:@"key_live_foo"];
+        [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
     [branch startWithConfiguration:configuration];
@@ -249,7 +248,7 @@
     event.customData[@"rating"] = @"5";
 
     Branch*branch = [[Branch alloc] init];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:BNCTestBranchKey];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:BNCTestBranchKey];
     [branch startWithConfiguration:configuration];
     [branch.networkAPIService clearNetworkQueue];
     XCTAssertEqual(branch.networkAPIService.queueDepth, 0);

@@ -123,13 +123,13 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         dictionary[@"branch_key"] = self.configuration.key;
 
         NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
-        [metadata addEntriesFromDictionary:Branch.sharedInstance.requestMetadataDictionary];
+        [metadata addEntriesFromDictionary:self.settings.requestMetadataDictionary];
         if (dictionary[@"metadata"])
             [metadata addEntriesFromDictionary:dictionary[@"metadata"]];
         if (metadata.count) {
             dictionary[@"metadata"] = metadata;
         }
-        if (self.settings.instrumentationDictionary.count/* && addInstrumentation*/) {
+        if (self.settings.instrumentationDictionary.count) {
             dictionary[@"instrumentation"] = self.settings.instrumentationDictionary;
         }
     }

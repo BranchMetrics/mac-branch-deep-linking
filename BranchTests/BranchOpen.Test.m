@@ -19,10 +19,10 @@
 @implementation BranchOpenTest
 
 - (void) testOpenScheme {
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
-    [Branch clearAllSettings];
+    [branch clearAllSettings];
     [branch startWithConfiguration:configuration];
     branch.limitFacebookTracking = YES;
     
@@ -52,7 +52,7 @@
     };
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"testOpenScheme"];
-    branch.startSessionBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
+    branch.sessionStartedBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
         XCTAssertNil(error);
         XCTAssertNotNil(session);
         NSString*result = session.description;
@@ -67,10 +67,10 @@
 
 - (void) testOpenHTTP {
     NSString*const kTestURL = @"https://testbed-mac.app.link/ODYeswaVWM";
-    [Branch clearAllSettings];
-    BranchConfiguration*configuration = [BranchConfiguration configurationWithKey:@"key_live_foo"];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
     Branch*branch = [[Branch alloc] init];
+    [branch clearAllSettings];
     [branch startWithConfiguration:configuration];
     branch.limitFacebookTracking = YES;
 
@@ -102,7 +102,7 @@
     };
 
     XCTestExpectation *expectation = [self expectationWithDescription:@"testOpenHTTP"];
-    branch.startSessionBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
+    branch.sessionStartedBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
         XCTAssertNil(error);
         XCTAssertNotNil(session);
         NSString*result = session.description;

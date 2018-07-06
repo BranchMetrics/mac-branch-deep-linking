@@ -28,22 +28,14 @@ NS_ASSUME_NONNULL_BEGIN
 */
 - (instancetype) initWithKey:(NSString*)key NS_DESIGNATED_INITIALIZER;
 
-/**This is a convenience method to create a `BranchConfiguration` object.
-
- @param key Your Branch key.
-
- @return Returns an initialized `BranchConfiguration` object.
-*/
-+ (BranchConfiguration*) configurationWithKey:(NSString*)key;
-
 /** Your Branch key. */
-@property (atomic, strong) NSString*    key;
+@property (atomic, strong) NSString*key;
 
 /** Use certificate pinning for extra security. The default is to use certificate pinning. */
 @property (atomic, assign) BOOL useCertificatePinning;
 
 /** The URL to the Branch API servers. */
-@property (atomic, copy)   NSString*    branchAPIServiceURL;
+@property (atomic, copy)   NSString*branchAPIServiceURL;
 
 /**
     This is `Class` for the network service. If you want to use your own underlying network service,
@@ -54,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     You probably don't need to do this.
 */
-@property (atomic, assign) Class        networkServiceClass;
+@property (atomic, assign) Class networkServiceClass;
 
 /**
   Sets an array of regex patterns that match URLs for Branch to ignore.
@@ -69,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  These are ICU standard regular expressions.
 */
-@property (atomic, strong) NSArray<NSString*>* blackListURLRegex;
+@property (atomic, strong) NSArray<NSString*>*blackListURLRegex;
 @end
 
 #pragma mark - Branch
@@ -188,7 +180,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
 
 /** Enables logging to the console for debugging.  Should be set to `NO` for production apps. */
-@property (atomic, assign) BOOL enableLogging;
+@property (atomic, assign, getter=loggingIsEnabled) BOOL loggingEnabled;
 
 /**
  If you are tracking users through Facebook installs and events well as with Branch, setting this property
@@ -203,10 +195,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, weak) id<BranchDelegate> delegate;
 
 /**
- Set the `startSessionBlock` with a call back block if you want to be notified of start of Branch sessions
+ Set the `sessionStartedBlock` with a call back block if you want to be notified of start of Branch sessions
  though a block call back.
 */
-@property (atomic, copy) void (^_Nullable startSessionBlock)(BranchSession*_Nullable session,
+@property (atomic, copy) void (^_Nullable sessionStartedBlock)(BranchSession*_Nullable session,
                                                              NSError*_Nullable error);
 @end
 
