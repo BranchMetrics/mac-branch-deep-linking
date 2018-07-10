@@ -257,7 +257,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     linkProperties.channel = channel;
     linkProperties.stage = @"stage four";
     linkProperties.campaign = @"some campaign";
-    linkProperties.matchDuration = 12.2;
+    linkProperties.matchDuration = 18000;
     // TODO: Control params:
 //    [linkProperties addControlParam:@"$desktop_url" withValue: desktop_url];
 //    [linkProperties addControlParam:@"$ios_url" withValue: ios_url];
