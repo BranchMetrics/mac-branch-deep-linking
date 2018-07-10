@@ -23,6 +23,7 @@ FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 #import <Branch/BranchLinkProperties.h>
 #import <Branch/BranchNetworkServiceProtocol.h>
 #import <Branch/BranchMainClass.h>
+#import <Branch/BranchMutableDictionary.h>
 #import <Branch/BranchSession.h>
 #import <Branch/BranchUniversalObject.h>
 

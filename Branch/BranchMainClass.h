@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 */
 @interface BranchConfiguration : NSObject <NSCopying>
 
+- (instancetype) init NS_UNAVAILABLE;
+
 /**
  @param key Your Branch key.
 
@@ -132,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @warning If the request to logout fails, the session items will not be cleared.
  */
-- (void) logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion;
+- (void) logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable error))completion;
 
 /**
   Generates a Branch short URL that describes the content described in the Branch Universal Object and
@@ -159,7 +161,8 @@ NS_ASSUME_NONNULL_BEGIN
                       linkProperties:(BranchLinkProperties*)linkProperties;
 
 /** Key-value pairs to be included in the metadata on every request. */
-@property (atomic, strong, null_resettable) NSMutableDictionary* requestMetadataDictionary;
+- (NSMutableDictionary*) requestMetadataDictionary;
+- (void) setRequestMetadataDictionary:(NSDictionary*_Nullable)dictionary;
 
 /**
  Disables the Branch SDK from tracking the user. This is useful for GDPR privacy compliance.

@@ -207,6 +207,7 @@
             NSMutableDictionary*rd_ud = [expectedRequest[@"user_data"] mutableCopy];
             rd_ud[@"device_fingerprint_id"] = nil;
             requestDictionary[@"user_data"] = rd_ud;
+            requestDictionary[@"instrumentation"] = nil;
 
             XCTAssertEqualObjects(expectedRequest, requestDictionary);
 
@@ -250,8 +251,7 @@
     Branch*branch = [[Branch alloc] init];
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:BNCTestBranchKey];
     [branch startWithConfiguration:configuration];
-    [branch.networkAPIService clearNetworkQueue];
-    XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
+    BNCSleepForTimeInterval(2.0); // TODO: Make sure the open/install happens first.
     XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
     [branch logEvent:event completion:^ (NSError*error) {
         XCTAssertNil(error);

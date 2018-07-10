@@ -138,19 +138,19 @@
     // Save operations to the queue. Quit Branch. Start Branch. See if events replay.
     //
     {
-        __block _Atomic(long) operationCount = 0;
+        __block _Atomic(long) operationCount1 = 0;
         BNCTestNetworkService.requestHandler =
             ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-                atomic_fetch_add(&operationCount, 1);
+                atomic_fetch_add(&operationCount1, 1);
                 return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
             };
 
         Branch*branch = [Branch new];
+        [branch clearAllSettings];
         BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
         configuration.networkServiceClass = BNCTestNetworkService.class;
         [branch startWithConfiguration:configuration];
         branch.networkAPIService.queuePaused = YES;
-        [branch.networkAPIService clearNetworkQueue];
         XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
         
         [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]];
@@ -158,31 +158,28 @@
         [branch logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]];
 
         BNCSleepForTimeInterval(1.0);
-        long count = atomic_load(&operationCount);
-        XCTAssert(branch.networkAPIService.queueDepth == 3 && count == 0);
+        long count = atomic_load(&operationCount1);
+        XCTAssert(branch.networkAPIService.queueDepth == 4 && count == 0);
     }
 
     Branch*branch = [Branch new];
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
 
-    __block long operationCount = 0;
+    __block _Atomic(long) operationCount2 = 0;
     XCTestExpectation *expectation = [self expectationWithDescription:@"testSaveAndLoadOperations"];
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-            ++operationCount;
-            if (operationCount == 3) {
-                BNCAfterSecondsPerformBlock(0.010, ^{ [expectation fulfill]; });
+            long count = atomic_fetch_add(&operationCount2, 1);
+            if (count == 4) {
+                BNCAfterSecondsPerformBlock(1.00, ^{ [expectation fulfill]; });
             }
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
     [branch startWithConfiguration:configuration];
-
     [self waitForExpectationsWithTimeout:3.0 handler:nil];
-
-    // Wait for any extra operation to drain too:
-    BNCSleepForTimeInterval(0.5);
-    XCTAssertEqual(operationCount, 3);
+    long count = atomic_load(&operationCount2);
+    XCTAssertEqual(count, 4);
 }
 
 - (void) testRequestMetadata {
@@ -191,38 +188,45 @@
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
 
-    __block int wtf = 0;
+    __block long requestCount = 0;
     __block BOOL foundMetadata = YES;
-    __block _Atomic(long) requestCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-            wtf++;
-            atomic_fetch_add(&requestCount, 1);
-            NSDictionary*metadata = @{
-                @"key1": @"value1",
-                @"key2": @"value2",
-                @"key3": @"value3"
-            };
-            NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-            if (![dictionary[@"metadata"] isEqualToDictionary:metadata])
-                foundMetadata = NO;
-            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+            @synchronized(self) {
+                if ([request.HTTPMethod isEqualToString:@"POST"]) {
+                    requestCount++;
+                    NSLog(@"WTF: %ld request: %@.", requestCount, request.URL.path);
+                    NSDictionary*metadata = @{
+                        @"key1": @"value1",
+                        @"key2": @"value2",
+                        @"key3": @"value3"
+                    };
+                    NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+                    NSLog(@"%@", dictionary);
+                    if (![dictionary[@"metadata"] isEqualToDictionary:metadata])
+                        foundMetadata = NO;
+                }
+                return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+            }
         };
 
+    // Set metadata and start branch:
     branch.requestMetadataDictionary = (id) @{
         @"key1": @"value1",
         @"key2": @"value2"
     };
     branch.requestMetadataDictionary[@"key3"] = @"value3";
     [branch startWithConfiguration:configuration];
-//    XCTestExpectation *expectation = [self expectationWithDescription:@"testRequestMetadata"];
-//    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
-//        completion: ^ (NSError * _Nullable error) {
-//            [expectation fulfill];
-//        }
-//    ];
-//  [self waitForExpectationsWithTimeout:3.0 handler:nil];
-    BNCSleepForTimeInterval(5.0);
+
+    BNCSleepForTimeInterval(1.0); // TODO: Fix! Make sure open happens first before event.
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testRequestMetadata"];
+    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
+        completion: ^ (NSError * _Nullable error) {
+            XCTAssertNil(error);
+            [expectation fulfill];
+        }
+    ];
+    [self waitForExpectationsWithTimeout:3.0 handler:nil];
     XCTAssertEqual(foundMetadata, YES);
     XCTAssertEqual(requestCount, 2);
 }
@@ -233,25 +237,25 @@
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
 
-    __block long instrumentValue;
-    __block _Atomic(long) requestCount = 0;
+    __block long ms = 0;
+    __block long requestCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-            long localCount = atomic_fetch_add(&requestCount, 1);
-            if (localCount == 1) {
+            @synchronized(self) {
+                requestCount++;
                 NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-                instrumentValue = [dictionary[@"instrumentation"][@"/v1/install-brtt"] longValue];
+                NSLog(@"WTF: %ld request: %@.", requestCount, request.URL.path);
+                NSLog(@"%@", dictionary);
+                if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+                    ms = [dictionary[@"instrumentation"][@"/v1/install-brtt"] integerValue];
+                }
+                return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
             }
-            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
 
-    branch.requestMetadataDictionary = (id) @{
-        @"key1": @"value1",
-        @"key2": @"value2"
-    };
-    branch.requestMetadataDictionary[@"key3"] = @"value3";
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testInstrumentation"];
     [branch startWithConfiguration:configuration];
+    BNCSleepForTimeInterval(1.0); // TODO: Fix! Make sure open happens first before event.
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testInstrumentation"];
     [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
         completion: ^ (NSError * _Nullable error) {
             XCTAssertNil(error);
@@ -259,9 +263,7 @@
         }
     ];
     [self waitForExpectationsWithTimeout:3.0 handler:nil];
-    BNCSleepForTimeInterval(0.200);
-    XCTAssertEqual(requestCount, 2);
-    XCTAssertGreaterThan(instrumentValue, 1);
+    XCTAssertGreaterThan(ms, 1);
 }
 
 @end

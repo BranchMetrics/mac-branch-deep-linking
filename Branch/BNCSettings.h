@@ -9,6 +9,7 @@
 */
 
 #import "BranchHeader.h"
+#import "BranchMutableDictionary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,9 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy) NSArray<NSString*>*_Nullable URLBlackList;
 
 @property (atomic, strong, null_resettable)
-    NSMutableDictionary<NSString*, NSString*> *requestMetadataDictionary;
+    BranchMutableDictionary<NSString*, NSString*> *requestMetadataDictionary;
 @property (atomic, strong, null_resettable)
-    NSMutableDictionary<NSString*, NSString*> *instrumentationDictionary;
+    BranchMutableDictionary<NSString*, NSString*> *instrumentationDictionary;
 
 @end
 

@@ -39,9 +39,6 @@
 - (instancetype) initWithKey:(NSString *)key {
     self = [super init];
     self.key = [key copy];
-    if (!self.hasValidKey) {
-        [NSException raise:NSInvalidArgumentException format:@"Invalid Branch key '%@'.", key];
-    }
     self.useCertificatePinning = YES;
     self.branchAPIServiceURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
@@ -72,7 +69,7 @@
 }
 
 - (NSString*) description {
-    return [NSString stringWithFormat:@"<%@ %p key: %@ %@ %@>",
+    return [NSString stringWithFormat:@"<%@ %p key: '%@' %@ %@>",
         NSStringFromClass(self.class),
         (void*) self,
         self.key,
@@ -399,7 +396,7 @@
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
 
-    BNCPerformBlockOnMainThreadSync(^ {
+    BNCPerformBlockOnMainThreadAsync(^ {
         [self notifyWillStartSessionWithURL:openURL];
     });
 
@@ -415,7 +412,7 @@
 
 - (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
     if (operation.error) {
-        BNCPerformBlockOnMainThreadSync(^{
+        BNCPerformBlockOnMainThreadAsync(^{
             [self notifyDidStartSession:nil withURL:URL error:operation.error];
         });
         return;
@@ -427,11 +424,11 @@
     BranchUniversalObject*object = [BranchUniversalObject objectWithDictionary:session.data];
     session.linkContent = object;
 
-    BNCPerformBlockOnMainThreadSync(^ {
+    BNCPerformBlockOnMainThreadAsync(^ {
         [self notifyDidStartSession:session withURL:URL error:nil];
     });
     if (session.referringURL) {
-        BNCPerformBlockOnMainThreadSync(^ {
+        BNCPerformBlockOnMainThreadAsync(^ {
             [self notifyDidOpenURLWithSession:session];
         });
     }
@@ -531,7 +528,7 @@
 - (void)setUserIdentity:(NSString*)userID
          completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
     if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
-        if (completion) completion(nil, nil);   // TODO:
+        if (completion) completion(nil, nil);   // TODO: fix the session.
         return;
     }
     // [self initSessionIfNeededAndNotInProgress];
@@ -545,8 +542,10 @@
         dictionary:dictionary
         completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
             BNCPerformBlockOnMainThreadAsync(^{
-                if (!operation.error)
+                if (!operation.error) {
+                    self.settings.userIdentityForDeveloper = userID;
                     operation.session.userIdentityForDeveloper = userID;
+                }
                 if (completion) completion(operation.session, operation.error);
             });
         }
@@ -599,8 +598,8 @@
     return self.settings.requestMetadataDictionary;
 }
 
-- (void) setRequestMetadataDictionary:(NSMutableDictionary *)requestMetadataDictionary {
-    self.settings.requestMetadataDictionary = requestMetadataDictionary;
+- (void) setRequestMetadataDictionary:(NSDictionary*_Nullable)dictionary {
+    [self.settings.requestMetadataDictionary setDictionary:dictionary];
 }
 
 #pragma mark - Links
@@ -694,7 +693,10 @@
 
 - (void) clearAllSettings {
     BNCLogDebugSDK(@"[Branch clearAllSettings].");
-    [self.networkAPIService clearNetworkQueue];
+    if (self.networkAPIService)
+        [self.networkAPIService clearNetworkQueue];
+    else
+        [[[BNCNetworkAPIService alloc] init] clearNetworkQueue];
     [self.settings clearAllSettings];
     NSString*appGroup = [BNCApplication currentApplication].applicationID;
     if (appGroup.length > 0) {

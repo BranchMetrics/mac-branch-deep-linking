@@ -51,7 +51,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 @interface BNCNetworkAPIService ()
 @property (atomic, strong) id<BNCNetworkServiceProtocol> networkService;
 @property (atomic, strong) BranchConfiguration *configuration;
-@property (atomic, strong) BNCSettings* settings;
+@property (atomic, strong) BNCSettings *settings;
 @property (atomic, strong) NSOperationQueue *operationQueue;
 @property (atomic, strong) NSMutableDictionary<NSString*, NSData*> *archivedOperations;
 - (void) saveOperation:(BNCNetworkAPIOperation*)operation;
@@ -109,6 +109,14 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     }
 }
 
+- (NSString*) description {
+    return [NSString stringWithFormat:@"<%@ %p Queued: %ld %@>",
+        NSStringFromClass(self.class),
+        (void*) self,
+        self.queueDepth,
+        self.operationQueue.operations];
+}
+
 #pragma mark - Utilities
 
 - (void) appendV1APIParametersWithDictionary:(NSMutableDictionary*)dictionary {
@@ -120,18 +128,15 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         dictionary[@"sdk"] = [NSString stringWithFormat:@"mac%@", Branch.kitDisplayVersion];
         dictionary[@"ios_extension"] =
             BNCWireFormatFromBool([BNCApplication currentApplication].isApplicationExtension);
-        dictionary[@"branch_key"] = self.configuration.key;
 
-        NSMutableDictionary *metadata = [[NSMutableDictionary alloc] init];
-        [metadata addEntriesFromDictionary:self.settings.requestMetadataDictionary];
-        if (dictionary[@"metadata"])
-            [metadata addEntriesFromDictionary:dictionary[@"metadata"]];
-        if (metadata.count) {
-            dictionary[@"metadata"] = metadata;
-        }
-        if (self.settings.instrumentationDictionary.count) {
-            dictionary[@"instrumentation"] = self.settings.instrumentationDictionary;
-        }
+        // Add metadata:
+        NSMutableDictionary *metadata = [dictionary[@"metadata"] mutableCopy];
+        if (![metadata isKindOfClass:NSMutableDictionary.class]) metadata = [NSMutableDictionary new];
+        [metadata addEntriesFromDictionary:self.configuration.settings.requestMetadataDictionary];
+        if (metadata.count) dictionary[@"metadata"] = metadata;
+        NSDictionary*instrumentation = [self.settings.instrumentationDictionary copy];
+        if (instrumentation.count) dictionary[@"instrumentation"] = instrumentation;
+        dictionary[@"branch_key"] = self.configuration.key;
     }
 }
 
@@ -150,24 +155,14 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         userData[@"sdk_version"] = Branch.kitDisplayVersion;
         dictionary[@"user_data"] = userData;
 
-        // Add instrumentation:
-        if (self.settings.instrumentationDictionary.count/* && addInstrumentation*/) {
-            dictionary[@"instrumentation"] = self.settings.instrumentationDictionary;
-        }
-
+        // Add metadata:
+        NSMutableDictionary *metadata = [dictionary[@"metadata"] mutableCopy];
+        if (![metadata isKindOfClass:NSMutableDictionary.class]) metadata = [NSMutableDictionary new];
+        [metadata addEntriesFromDictionary:self.settings.requestMetadataDictionary];
+        if (metadata.count) dictionary[@"metadata"] = metadata;
+        NSDictionary*instrumentation = self.settings.instrumentationDictionary;
+        if (instrumentation.count) dictionary[@"instrumentation"] = instrumentation;
         dictionary[@"branch_key"] = self.configuration.key;
-    }
-}
-
-- (void) collectInstrumentationMetricsWithOperation:(BNCNetworkAPIOperation*)operation {
-    @synchronized(self) {
-        // Multiplying by negative because startTime happened in the past
-        NSTimeInterval elapsedTime = [operation.startDate timeIntervalSinceNow] * -1000.0;
-        NSString *lastRoundTripTime = [[NSNumber numberWithDouble:floor(elapsedTime)] stringValue];
-        NSString *path = [operation.operation.request.URL path];
-        NSString *brttKey = [NSString stringWithFormat:@"%@-brtt", path];
-        self.settings.instrumentationDictionary = nil;
-        self.settings.instrumentationDictionary[brttKey] = lastRoundTripTime;
     }
 }
 
@@ -244,7 +239,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
             if (!self.archivedOperations[op.identifier]) {
                 self.archivedOperations[op.identifier] = data;
                 op.networkService = self.networkService;
-                op.settings = self.settings;
+                op.settings = self.configuration.settings;
                 op.completion = ^ (BNCNetworkAPIOperation*operation) {
                     __typeof(self) strongSelf = weakSelf;
                     [strongSelf deleteOperation:operation];
@@ -505,9 +500,10 @@ exit:
 - (void) main {
     NSInteger retry = 0;
     NSError*error = nil;
-    NSDate*timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
+    self.startDate = [NSDate date];
+    self.timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
     {
-        if (([timeoutDate timeIntervalSinceNow] < 0) || self.isCancelled)
+        if (([self.timeoutDate timeIntervalSinceNow] < 0) || self.isCancelled)
             goto exit;
 
         do  {
@@ -526,7 +522,7 @@ exit:
                 }
             }
 
-            NSTimeInterval timeout = MIN(20.0, [timeoutDate timeIntervalSinceNow]);
+            NSTimeInterval timeout = MIN(20.0, [self.timeoutDate timeIntervalSinceNow]);
             if (timeout < 0.0) {
                 error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
                 goto exit;
@@ -555,7 +551,7 @@ exit:
                 BNCLogError(@"Bad network interface: %@.", error);
                 goto exit;
             }
-
+            [self collectInstrumentationMetrics];
             if (self.operation.error) {
                 BNCLogError(@"Network service error: %@.", error);
             }
@@ -619,6 +615,17 @@ exit:
         return error;
     }
     return nil;
+}
+
+- (void) collectInstrumentationMetrics {
+    if ([self.operation.request.HTTPMethod isEqualToString:@"POST"]) {
+        NSTimeInterval elapsedTime = [self.startDate timeIntervalSinceNow] * -1000.0;
+        NSString *lastRoundTripTime = [[NSNumber numberWithDouble:floor(elapsedTime)] stringValue];
+        NSString *path = [self.operation.request.URL path];
+        NSString *brttKey = [NSString stringWithFormat:@"%@-brtt", path];
+        self.settings.instrumentationDictionary = nil;
+        self.settings.instrumentationDictionary[brttKey] = lastRoundTripTime;
+    }
 }
 
 + (BOOL) canRetryOperation:(id<BNCNetworkOperationProtocol>)operation {

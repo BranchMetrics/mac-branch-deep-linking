@@ -31,7 +31,7 @@
     __block _Atomic(NSInteger) callCount = 0;
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
         NSInteger count = atomic_fetch_add(&callCount, 1);
-        if (count == 1) {
+        if (count == 0) {
             XCTAssertEqualObjects(request.HTTPMethod, @"POST");
             XCTAssertEqualObjects(request.URL.path, @"/v1/install");
             NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];

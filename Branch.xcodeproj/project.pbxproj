@@ -91,6 +91,12 @@
 		4D67476F20C74E81001639C5 /* BranchUniversalObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189620ADDC5000441881 /* BranchUniversalObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67477920C7B558001639C5 /* BranchMainClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMainClass.m */; };
 		4D70A4B720DDBBBB0083768C /* BNCNetworkAPIService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */; };
+		4D956A8C20F02BC90097D366 /* BranchMainClass.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D956A8B20F02BC90097D366 /* BranchMainClass.Test.m */; };
+		4D956A8F20F3D1E80097D366 /* BranchMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D956A9020F3D1E80097D366 /* BranchMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D956A9120F3D1E80097D366 /* BranchMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D956A8E20F3D1E80097D366 /* BranchMutableDictionary.m */; };
+		4D956A9220F3D1E80097D366 /* BranchMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D956A8E20F3D1E80097D366 /* BranchMutableDictionary.m */; };
+		4D956A9420F3FD1A0097D366 /* BranchMutableDictionary.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D956A9320F3FD1A0097D366 /* BranchMutableDictionary.Test.m */; };
 		4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99771E20AA099D00A63EE1 /* BNCLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D99772920AA099D00A63EE1 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D99772120AA099D00A63EE1 /* BNCThreads.m */; };
 		4D99772A20AA099D00A63EE1 /* NSString+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D99772220AA099D00A63EE1 /* NSString+Branch.h */; };
@@ -175,6 +181,10 @@
 		4D67477420C74E81001639C5 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkAPIService.Test.m; sourceTree = "<group>"; };
 		4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BranchMainClass+Private.h"; sourceTree = "<group>"; };
+		4D956A8B20F02BC90097D366 /* BranchMainClass.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchMainClass.Test.m; sourceTree = "<group>"; };
+		4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchMutableDictionary.h; sourceTree = "<group>"; };
+		4D956A8E20F3D1E80097D366 /* BranchMutableDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchMutableDictionary.m; sourceTree = "<group>"; };
+		4D956A9320F3FD1A0097D366 /* BranchMutableDictionary.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchMutableDictionary.Test.m; sourceTree = "<group>"; };
 		4D99771E20AA099D00A63EE1 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
 		4D99772120AA099D00A63EE1 /* BNCThreads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCThreads.m; sourceTree = "<group>"; };
 		4D99772220AA099D00A63EE1 /* NSString+Branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Branch.h"; sourceTree = "<group>"; };
@@ -338,6 +348,8 @@
 				4DC2232720AA262D005C57D0 /* BranchMainClass.h */,
 				4DC2232820AA262D005C57D0 /* BranchMainClass.m */,
 				4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */,
+				4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */,
+				4D956A8E20F3D1E80097D366 /* BranchMutableDictionary.m */,
 				4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */,
 				4DF818B320AE23BC00441881 /* BranchSession.h */,
 				4DF818B420AE23BC00441881 /* BranchSession.m */,
@@ -381,6 +393,8 @@
 				4DF8189E20ADDCB600441881 /* BranchEvent.Test.m */,
 				4DF8189F20ADDCB600441881 /* BranchEvent.Test.swift */,
 				4D38923920BA18A80013B811 /* BranchLinkProperties.Test.m */,
+				4D956A8B20F02BC90097D366 /* BranchMainClass.Test.m */,
+				4D956A9320F3FD1A0097D366 /* BranchMutableDictionary.Test.m */,
 				4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */,
 				4DDC6FEA20B6348C00A50F39 /* BranchTestHost.xcconfig */,
 				4DF8189D20ADDCB500441881 /* BranchTests-Bridging-Header.h */,
@@ -427,6 +441,7 @@
 				4D9C163E20ACBEF6002BF211 /* BNCApplication.h in Headers */,
 				4D9C164D20ACCD7C002BF211 /* BranchError.h in Headers */,
 				4DF818BA20AF9EB000441881 /* BranchDelegate.h in Headers */,
+				4D956A8F20F3D1E80097D366 /* BranchMutableDictionary.h in Headers */,
 				4D99772620AA099D00A63EE1 /* BNCLog.h in Headers */,
 				4DF818B520AE23BC00441881 /* BranchSession.h in Headers */,
 				4D9C164B20ACCD7C002BF211 /* BNCLocalization.h in Headers */,
@@ -460,6 +475,7 @@
 				4D67476820C74E81001639C5 /* BranchError.h in Headers */,
 				4D67476920C74E81001639C5 /* BranchDelegate.h in Headers */,
 				4D67476A20C74E81001639C5 /* BNCThreads.h in Headers */,
+				4D956A9020F3D1E80097D366 /* BranchMutableDictionary.h in Headers */,
 				4D67476B20C74E81001639C5 /* BNCLog.h in Headers */,
 				4D67476C20C74E81001639C5 /* BranchSession.h in Headers */,
 				4D67476D20C74E81001639C5 /* BNCLocalization.h in Headers */,
@@ -598,6 +614,7 @@
 				4D159DE020B62DD5005A9850 /* BNCTestCase.m in Sources */,
 				4D159DEA20B62DD5005A9850 /* NSString+Branch.Test.m in Sources */,
 				4D3E50C620B916B400C7BF5B /* BranchCommerce.Test.m in Sources */,
+				4D956A9420F3FD1A0097D366 /* BranchMutableDictionary.Test.m in Sources */,
 				4D159DE420B62DD5005A9850 /* Branch.Test.m in Sources */,
 				4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */,
 				4D70A4B720DDBBBB0083768C /* BNCNetworkAPIService.Test.m in Sources */,
@@ -605,6 +622,7 @@
 				4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */,
 				4D159DE220B62DD5005A9850 /* BNCTestCase.Test.m in Sources */,
 				4D323C2220CEEEC2003BCE3F /* BranchEvent.Test.swift in Sources */,
+				4D956A8C20F02BC90097D366 /* BranchMainClass.Test.m in Sources */,
 				4DE667EE20CB7C1D000752E3 /* BNCURLBlackList.Test.m in Sources */,
 				4D159DDF20B62DD5005A9850 /* BNCSettings.Test.m in Sources */,
 			);
@@ -618,6 +636,7 @@
 				4DF818A620ADE1BB00441881 /* BranchCommerce.m in Sources */,
 				4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */,
 				4DF8189A20ADDC5000441881 /* BranchEvent.m in Sources */,
+				4D956A9120F3D1E80097D366 /* BranchMutableDictionary.m in Sources */,
 				4D046E9420C8AD3A0073262B /* NSData+Branch.m in Sources */,
 				4D9C163F20ACBEF6002BF211 /* BNCApplication.m in Sources */,
 				4D9C164F20ACCD7C002BF211 /* BNCKeyChain.m in Sources */,
@@ -650,6 +669,7 @@
 				4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */,
 				4D67474120C74E81001639C5 /* NSString+Branch.m in Sources */,
 				4D67474220C74E81001639C5 /* BranchEvent.m in Sources */,
+				4D956A9220F3D1E80097D366 /* BranchMutableDictionary.m in Sources */,
 				4D046E9520C8AD3A0073262B /* NSData+Branch.m in Sources */,
 				4D67474320C74E81001639C5 /* BNCApplication.m in Sources */,
 				4D67474420C74E81001639C5 /* BNCKeyChain.m in Sources */,

@@ -13,10 +13,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
-    Since the Branch SDK can be shipped as a static library, it can't use the standard Apple
-    string localization mechanism.
+ Since the Branch SDK can be shipped as a static library, it can't use the standard Apple string
+ localization mechanism.
 
-    Use this class to localize the few user-facing string resources the Branch SDK has.
+ Use this class to localize the few user-facing string resources the Branch SDK has.
 */
 @interface BNCLocalization : NSObject
 

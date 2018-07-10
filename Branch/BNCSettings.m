@@ -21,8 +21,8 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
     dispatch_queue_t _saveQueue;
     dispatch_source_t _saveTimer;
     __strong BNCSettingsProxy* _proxy;
-    NSMutableDictionary<NSString*, NSString*>* _requestMetadataDictionary;
-    NSMutableDictionary<NSString*, NSString*>* _instrumentationDictionary;
+    BranchMutableDictionary<NSString*, NSString*>* _requestMetadataDictionary;
+    BranchMutableDictionary<NSString*, NSString*>* _instrumentationDictionary;
 }
 @end
 
@@ -166,23 +166,21 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 - (void) clearAllSettings {
     @synchronized(self) {
         BNCSettings*settings = [[BNCSettings alloc] init];
-        [BNCEncoder copyInstance:self fromInstance:((BNCSettingsProxy*)settings)->_settings ignoring:self.class.ignoreMembers];
+        [BNCEncoder copyInstance:self
+            fromInstance:((BNCSettingsProxy*)settings)->_settings ignoring:self.class.ignoreMembers];
         [self save];
     }
 }
 
 - (void) setRequestMetadataDictionary:(NSMutableDictionary<NSString*, NSString*>*)dictionary {
     @synchronized(self) {
-        _requestMetadataDictionary = dictionary;
+        _requestMetadataDictionary = [BranchMutableDictionary dictionaryWithDictionary:dictionary];
     }
 }
 
 - (NSMutableDictionary<NSString*, NSString*>*) requestMetadataDictionary {
     @synchronized(self) {
-        if (!_requestMetadataDictionary)
-            _requestMetadataDictionary = [NSMutableDictionary new];
-        if (![_requestMetadataDictionary isKindOfClass:[NSMutableDictionary class]])
-            _requestMetadataDictionary = [_requestMetadataDictionary mutableCopy];
+        if (!_requestMetadataDictionary) _requestMetadataDictionary = [BranchMutableDictionary new];
         [self setNeedsSave];
         return _requestMetadataDictionary;
     }
@@ -190,14 +188,13 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 
 - (void) setInstrumentationDictionary:(NSMutableDictionary<NSString*, NSString*>*)dictionary {
     @synchronized(self) {
-        _instrumentationDictionary = dictionary;
-        [self setNeedsSave];
+        _instrumentationDictionary = [BranchMutableDictionary dictionaryWithDictionary:dictionary];
     }
 }
 
 - (NSMutableDictionary<NSString*, NSString*>*) instrumentationDictionary {
     @synchronized(self) {
-        if (!_instrumentationDictionary) _instrumentationDictionary = [NSMutableDictionary new];
+        if (!_instrumentationDictionary) _instrumentationDictionary = [BranchMutableDictionary new];
         [self setNeedsSave];
         return _instrumentationDictionary;
     }

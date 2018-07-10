@@ -35,10 +35,10 @@ The Branch SDK for Mac OS X
 * [x] Make sure requests have metadata when set.
 
 ### Functional Tests
-* [ ] Set logging enabled / disabled.
-* [ ] Set identity.
-* [ ] Log out.
-* [ ] Make short link.
+* [x] Set logging enabled / disabled.
+* [x] Set identity.
+* [x] Log out.
+* [x] Make short link.
 * [ ] Make long link.
 * [ ] Tracking disabled: Test setting persistence, open link work, long links work, else fail.
 

@@ -28,7 +28,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 
 // Forward declare this for older versions of iOS
-@interface NSLocale (BranchAvailability)
+@interface NSLocale (Branch)
 - (NSString*) countryCode;
 - (NSString*) languageCode;
 @end
