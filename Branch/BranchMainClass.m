@@ -168,6 +168,11 @@
         selector:@selector(applicationDidResignActiveNotification:)
         name:NSApplicationDidResignActiveNotification
         object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(applicationDidResignActiveNotification:)
+        name:NSApplicationWillTerminateNotification
+        object:nil];
     [[NSAppleEventManager sharedAppleEventManager]
         setEventHandler:self
         andSelector:@selector(urlAppleEvent:withReplyEvent:)
