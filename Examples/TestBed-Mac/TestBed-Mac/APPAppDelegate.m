@@ -10,6 +10,18 @@
 #import "APPViewController.h"
 #import <Branch/Branch.h>
 #import <Branch/BNCLog.h>
+#import "../../../Branch/BNCThreads.h"
+
+static APPAppDelegate* appDelegate = nil;
+static BNCLogOutputFunctionPtr originalLogHook = NULL;
+
+void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Nullable message);
+void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Nullable message) {
+    [appDelegate processLogMessage:message];
+    if (originalLogHook) {
+        originalLogHook(timestamp, level, message);
+    }
+}
 
 @interface APPAppDelegate ()
 @property (strong, nonatomic) APPViewController*viewController;
@@ -18,6 +30,10 @@
 @implementation APPAppDelegate
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
+    appDelegate = self;
+    originalLogHook = BNCLogOutputFunction();
+    BNCLogSetOutputFunction(APPLogHookFunction);
+
     BranchConfiguration*configuration =
         [[BranchConfiguration alloc] initWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
 
@@ -74,22 +90,45 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     return YES;
 }
 
+- (BOOL) string:(NSString*)string matchesRegex:(NSString*)regex {
+    NSError *error = NULL;
+    NSRegularExpression *ns_regex =
+        [NSRegularExpression regularExpressionWithPattern:regex options:0 error:&error];
+    NSRange range = [ns_regex rangeOfFirstMatchInString:string options:0 range:NSMakeRange(0, string.length)];
+    return (range.location == NSNotFound) ? NO : YES;
+}
+
+- (void) processLogMessage:(NSString *)message {
+    if ([self string:message matchesRegex:
+            @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network start"]) {
+        BNCPerformBlockOnMainThreadAsync(^{
+            self.viewController.requestTextView.string = message;
+        });
+    } else
+    if ([self string:message matchesRegex:
+            @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network finish"]) {
+        BNCPerformBlockOnMainThreadAsync(^{
+            self.viewController.responseTextView.string = message;
+        });
+    }
+}
+
 #pragma mark - Branch Notifications
 
 - (void) branchWillStartSession:(NSNotification*)notification {
+    [self.viewController clearUIFields];
     [self.viewController.window makeKeyAndOrderFront:self];
     self.viewController.stateField.stringValue = notification.name;
     self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
-    self.viewController.errorField.stringValue = @"< No Error >";
-    self.viewController.dataTextView.string    = @"< No Data >";
 }
 
 - (void) branchDidStartSession:(NSNotification*)notification {
+    [self.viewController clearUIFields];
     self.viewController.stateField.stringValue = notification.name;
     self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
     self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";
     BranchSession*session = notification.userInfo[BranchSessionKey];
-    NSString*data = (session && session.data) ? session.data.description : @"< No Data >";
+    NSString*data = (session && session.data) ? session.data.description : @"";
     self.viewController.dataTextView.string = data;
 }
 

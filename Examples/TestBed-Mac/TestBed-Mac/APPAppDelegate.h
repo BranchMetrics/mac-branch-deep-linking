@@ -9,4 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface APPAppDelegate : NSObject <NSApplicationDelegate>
+- (void) processLogMessage:(NSString*)message;
 @end

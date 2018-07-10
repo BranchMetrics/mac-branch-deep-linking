@@ -16,5 +16,9 @@
 @property (weak)   IBOutlet NSTextField *urlField;
 @property (weak)   IBOutlet NSTextField *errorField;
 @property (strong) IBOutlet NSTextView *dataTextView;
+@property (strong) IBOutlet NSTextView *requestTextView;
+@property (strong) IBOutlet NSTextView *responseTextView;
 @property (nonatomic, strong) IBOutlet NSWindow* window;
+
+- (void) clearUIFields;
 @end

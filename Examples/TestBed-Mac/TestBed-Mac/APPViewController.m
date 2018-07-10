@@ -12,6 +12,10 @@
 #import "../../../Branch/BNCApplication.h"
 #import "../../../Branch/BranchMainClass+Private.h"
 
+@interface NSTextView (TestBedMac)
+@property (atomic, copy) NSAttributedString *placeholderAttributedString;
+@end
+
 #pragma mark APPViewController
 
 @interface APPViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
@@ -31,6 +35,12 @@
             owner:controller
             topLevelObjects:nil];
     return (loaded) ? controller : nil;
+}
+
+- (NSAttributedString*) attributedString:(NSString*)string {
+    return [[NSAttributedString alloc] initWithString:string attributes:@{
+        NSForegroundColorAttributeName:  [NSColor lightGrayColor]
+    }];
 }
 
 - (void) awakeFromNib {
@@ -71,6 +81,9 @@
         [Branch sharedInstance].trackingDisabled ? NSControlStateValueOn : NSControlStateValueOff;
     self.limitFacebookTracking.state =
         [Branch sharedInstance].limitFacebookTracking ? NSControlStateValueOn : NSControlStateValueOff;
+    self.requestTextView.placeholderAttributedString = [self attributedString:@"< Server Request >"];
+    self.responseTextView.placeholderAttributedString = [self attributedString:@"< Server Response >"];
+    self.dataTextView.placeholderAttributedString = [self attributedString:@"< Data >"];
 }
 
 - (void) clearUIFields {

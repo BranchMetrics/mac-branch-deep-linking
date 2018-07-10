@@ -4,6 +4,7 @@
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="APPViewController">
@@ -12,6 +13,8 @@
                 <outlet property="dataTextView" destination="hOV-5p-g78" id="GJO-SX-CQY"/>
                 <outlet property="errorField" destination="RBf-KP-p6D" id="m5z-CP-GUL"/>
                 <outlet property="limitFacebookTracking" destination="3wo-tY-S63" id="aBf-ln-xwd"/>
+                <outlet property="requestTextView" destination="sFO-77-XWn" id="Tu4-ak-UzC"/>
+                <outlet property="responseTextView" destination="ema-Xs-4K5" id="yUh-O7-YSA"/>
                 <outlet property="stateField" destination="GWW-ZH-Gro" id="T5O-cr-HnB"/>
                 <outlet property="trackingDisabled" destination="UmN-S6-I1y" id="gE9-3h-GAO"/>
                 <outlet property="urlField" destination="r18-ej-hCq" id="XRu-Dp-NCC"/>
@@ -83,40 +86,162 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <scrollView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5R-eN-uqK">
+                            <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TG3-kb-zIj">
                                 <rect key="frame" x="20" y="20" width="650" height="286"/>
-                                <clipView key="contentView" id="lOO-oQ-w6s">
-                                    <rect key="frame" x="1" y="1" width="648" height="284"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" id="hOV-5p-g78">
-                                            <rect key="frame" x="0.0" y="0.0" width="648" height="284"/>
+                                <subviews>
+                                    <scrollView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5R-eN-uqK">
+                                        <rect key="frame" x="0.0" y="193" width="650" height="93"/>
+                                        <clipView key="contentView" id="lOO-oQ-w6s">
+                                            <rect key="frame" x="1" y="1" width="648" height="91"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" id="hOV-5p-g78">
+                                                    <rect key="frame" x="0.0" y="0.0" width="648" height="91"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="648" height="91"/>
+                                                    <size key="maxSize" width="650" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="&lt; Data &gt;">
+                                                            <attributes>
+                                                                <font key="NSFont" metaFont="system"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </textView>
+                                            </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="648" height="284"/>
-                                            <size key="maxSize" width="650" height="10000000"/>
-                                            <attributedString key="textStorage">
-                                                <fragment content="&lt; Data &gt;">
-                                                    <attributes>
-                                                        <font key="NSFont" metaFont="system"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </textView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="jSJ-hp-FfC">
-                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="XVQ-eg-f8h">
-                                    <rect key="frame" x="633" y="1" width="16" height="284"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="jSJ-hp-FfC">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="XVQ-eg-f8h">
+                                            <rect key="frame" x="633" y="1" width="16" height="91"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                    <scrollView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bPx-gR-6Jc">
+                                        <rect key="frame" x="0.0" y="96" width="650" height="94"/>
+                                        <clipView key="contentView" id="8js-sQ-kdV">
+                                            <rect key="frame" x="1" y="1" width="648" height="92"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="sFO-77-XWn">
+                                                    <rect key="frame" x="0.0" y="0.0" width="648" height="92"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="648" height="92"/>
+                                                    <size key="maxSize" width="650" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="&lt; Server Request &gt;">
+                                                            <attributes>
+                                                                <font key="NSFont" metaFont="system"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="l9j-CN-JeN">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="BTH-W8-1fV">
+                                            <rect key="frame" x="633" y="1" width="16" height="92"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                    <scrollView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPj-Tz-jYc">
+                                        <rect key="frame" x="0.0" y="0.0" width="650" height="93"/>
+                                        <clipView key="contentView" id="8Rn-Bv-Bu4">
+                                            <rect key="frame" x="1" y="1" width="648" height="91"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="ema-Xs-4K5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="648" height="91"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="648" height="91"/>
+                                                    <size key="maxSize" width="650" height="10000000"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment content="&lt; Server Response &gt;">
+                                                            <attributes>
+                                                                <font key="NSFont" size="13" name="HelveticaNeue"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                    <tabStops>
+                                                                        <textTab alignment="left" location="28">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="56">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="84">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="112">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="140">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="168">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="196">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="224">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="252">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="280">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="308">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                        <textTab alignment="left" location="336">
+                                                                            <options/>
+                                                                        </textTab>
+                                                                    </tabStops>
+                                                                </paragraphStyle>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="wPc-kb-16C">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="uSZ-7q-csO">
+                                            <rect key="frame" x="633" y="1" width="16" height="91"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UmN-S6-I1y">
                                 <rect key="frame" x="18" y="388" width="131" height="18"/>
                                 <buttonCell key="cell" type="check" title="Tracking Disabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6m4-y6-cpO">
@@ -143,9 +268,9 @@
                             <constraint firstItem="RBf-KP-p6D" firstAttribute="trailing" secondItem="GWW-ZH-Gro" secondAttribute="trailing" id="9uD-kX-AiJ"/>
                             <constraint firstItem="Kmr-ok-g1v" firstAttribute="leading" secondItem="AUd-Bf-eOC" secondAttribute="leading" constant="20" id="B6E-ch-cDx"/>
                             <constraint firstItem="gQn-0x-f14" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="BVJ-sf-VHa"/>
-                            <constraint firstItem="E5R-eN-uqK" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="EmI-j6-GL9"/>
                             <constraint firstItem="3wo-tY-S63" firstAttribute="centerY" secondItem="UmN-S6-I1y" secondAttribute="centerY" id="Hkk-l4-bad"/>
                             <constraint firstItem="RBf-KP-p6D" firstAttribute="leading" secondItem="GWW-ZH-Gro" secondAttribute="leading" id="I7c-tC-gGg"/>
+                            <constraint firstAttribute="bottom" secondItem="TG3-kb-zIj" secondAttribute="bottom" constant="20" id="JJ7-Pr-1IP"/>
                             <constraint firstItem="Kmr-ok-g1v" firstAttribute="leading" secondItem="UmN-S6-I1y" secondAttribute="leading" id="OC7-uv-QRV"/>
                             <constraint firstItem="gfy-f4-keP" firstAttribute="trailing" secondItem="Kmr-ok-g1v" secondAttribute="trailing" id="P6o-qC-HjX"/>
                             <constraint firstItem="gQn-0x-f14" firstAttribute="trailing" secondItem="Kmr-ok-g1v" secondAttribute="trailing" id="PL1-aH-5OC"/>
@@ -153,17 +278,17 @@
                             <constraint firstItem="gfy-f4-keP" firstAttribute="top" secondItem="Kmr-ok-g1v" secondAttribute="bottom" constant="6" id="VGE-Io-hdx"/>
                             <constraint firstItem="3wo-tY-S63" firstAttribute="leading" secondItem="UmN-S6-I1y" secondAttribute="trailing" constant="50" id="XxF-41-AGO"/>
                             <constraint firstItem="Kmr-ok-g1v" firstAttribute="top" secondItem="UmN-S6-I1y" secondAttribute="bottom" constant="12" id="YIv-oP-Ctv"/>
-                            <constraint firstItem="E5R-eN-uqK" firstAttribute="top" secondItem="gQn-0x-f14" secondAttribute="bottom" constant="12" id="Zbg-pN-iEY"/>
-                            <constraint firstAttribute="bottom" secondItem="E5R-eN-uqK" secondAttribute="bottom" constant="20" id="bUB-ZM-xlu"/>
                             <constraint firstItem="RBf-KP-p6D" firstAttribute="centerY" secondItem="gQn-0x-f14" secondAttribute="centerY" id="ctj-N3-DWg"/>
-                            <constraint firstItem="E5R-eN-uqK" firstAttribute="trailing" secondItem="GWW-ZH-Gro" secondAttribute="trailing" id="es7-pH-HLj"/>
                             <constraint firstItem="gfy-f4-keP" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="gDj-1R-ryK"/>
                             <constraint firstItem="UmN-S6-I1y" firstAttribute="top" secondItem="AUd-Bf-eOC" secondAttribute="top" constant="16" id="gEW-tO-oww"/>
                             <constraint firstItem="GWW-ZH-Gro" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="trailing" constant="10" id="gm3-pz-pQT"/>
+                            <constraint firstItem="TG3-kb-zIj" firstAttribute="top" secondItem="gQn-0x-f14" secondAttribute="bottom" constant="12" id="jsw-1K-ykq"/>
                             <constraint firstItem="gQn-0x-f14" firstAttribute="top" secondItem="gfy-f4-keP" secondAttribute="bottom" constant="6" id="jwu-hu-cmV"/>
+                            <constraint firstItem="TG3-kb-zIj" firstAttribute="trailing" secondItem="GWW-ZH-Gro" secondAttribute="trailing" id="mG6-Bp-Dxh"/>
                             <constraint firstItem="r18-ej-hCq" firstAttribute="leading" secondItem="GWW-ZH-Gro" secondAttribute="leading" id="mMD-If-nVp"/>
                             <constraint firstItem="r18-ej-hCq" firstAttribute="centerY" secondItem="gfy-f4-keP" secondAttribute="centerY" id="maA-jn-Dxx"/>
                             <constraint firstItem="GWW-ZH-Gro" firstAttribute="centerY" secondItem="Kmr-ok-g1v" secondAttribute="centerY" id="rLc-Hc-vPR"/>
+                            <constraint firstItem="TG3-kb-zIj" firstAttribute="leading" secondItem="Kmr-ok-g1v" secondAttribute="leading" id="rmZ-9O-Acl"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3wo-tY-S63" secondAttribute="trailing" constant="20" id="xym-Rw-dOM"/>
                         </constraints>
                     </customView>
@@ -220,7 +345,7 @@
                     <constraint firstItem="a3T-f1-7eH" firstAttribute="top" secondItem="cZK-UO-Lya" secondAttribute="top" id="xvL-WK-aUa"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="-293" y="-783"/>
+            <point key="canvasLocation" x="-309" y="-902"/>
         </window>
     </objects>
 </document>

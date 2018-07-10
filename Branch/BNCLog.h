@@ -70,7 +70,7 @@ extern BNCLogClientInitializeFunctionPtr _Nullable
 
 #pragma mark - Optional Log Output Handlers
 
-///@brief Pre-defined log message handlers --
+///@name Pre-defined log message handlers --
 
 typedef void (*BNCLogOutputFunctionPtr)(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Nullable message);
 
