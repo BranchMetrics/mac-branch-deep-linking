@@ -53,4 +53,17 @@ jazzy \
 
 cd ..
 ln -vsf Documentation/index.html Documentation.html
+
+cp Examples/TestBed-Mac/TestBed-Mac/Assets.xcassets/Branch.imageset/Branch-16.png \
+   Documentation/icon.png
+
+cp Examples/TestBed-Mac/TestBed-Mac/Assets.xcassets/Branch.imageset/Branch-16.png \
+   Documentation/docsets/Branch.docset/icon.png
+
+cp Examples/TestBed-Mac/TestBed-Mac/Assets.xcassets/Branch.imageset/Branch-32.png \
+   Documentation/icon@2x.png
+
+cp Examples/TestBed-Mac/TestBed-Mac/Assets.xcassets/Branch.imageset/Branch-32.png \
+   Documentation/docsets/Branch.docset/icon@2x.png
+
 rm -Rf Temp
