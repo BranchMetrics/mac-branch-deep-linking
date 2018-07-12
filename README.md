@@ -2,14 +2,16 @@
 
 # Branch Metrics for Mac SDK
 
-The Branch SDK for Mac brings universal deep linking to your app. The same `http://` web based Branch link open apps on
-Mac, iOS, and Android so you can have one link that works on all your platforms.
+The Branch SDK for Mac brings universal deep linking to your app. The same `http://` web based
+Branch link open apps on Mac, iOS, and Android so you can have one link that works on all your
+platforms.
 
-Branch links are sophisticated links that adapt to a user's environment and can be configured with journeys and fallback options
+Branch links adapt to a user's environment and can be configured with journeys and fallback options
 so unexpected conditions are handled gracefully.
 
-In addition you can track and analyze your app usage and the effectiveness of sharing virality, marketing campaigns, and cohorts
-with atrribution, influencer, and content breakdowns of your links on the Branch dashboard.
+In addition you can track and analyze your app usage and the effectiveness of sharing virality,
+marketing campaigns, and cohorts with atrribution, influencer, and content breakdowns of your links
+on the Branch dashboard.
 
 ## Contents
 
@@ -44,7 +46,6 @@ with atrribution, influencer, and content breakdowns of your links on the Branch
 * If you need support or help integrating and using Branch, check our [Support Portal](http://support.branch.io).
 * The TestBed-Mac project is a working example the uses Branch. [TestBed-Mac](https://github.com/BranchMetrics/Branch-SDK-Mac/tree/master/Examples/TestBed-Mac).
 
-
 ## Deep Linking on the Mac
 
 The most familiar links look like `http://example.com` which are `http` links that open web pages. These are great for web
@@ -60,21 +61,23 @@ You'll need to choose a unique URI scheme for your Mac app.
 
 ### URI Scheme Considerations
 
-You need to choose an URI scheme that is not already in common use and is likely unique on a Mac. For instance, `web://` is
-probably a bad choice. Many people choose the reverse domain name for their app or use their bundle identifier,
-like `io.branch.cool-app://`.
+You need to choose an URI scheme that is not already in common use and is likely unique on a Mac.
+For instance, `web://` is probably a bad choice. Many people choose the reverse domain name for
+their app or use their bundle identifier, like `io.branch.cool-app://`.
 
-Don't use an app scheme starting with `fb`, `db`, `twitterkit-`, `pin`, or `com.googleusercontent.apps`. These schemes
-are ignored by Branch since they are commonly used by other app kits for oauth and other uses.
+Don't use an app scheme starting with `fb`, `db`, `twitterkit-`, `pin`, or
+`com.googleusercontent.apps`. These schemes are ignored by Branch since they are commonly used by
+other app kits for oauth and other uses.
 
 ### How Branch Deep Linking for Mac Works
 
-A Branch link is an web URL that looks like `https://your-app.app.link/bOsE0bbUtO`. When this link is clicked on a Mac it
-opens a Branch web page that quickly determines if the Mac app can be opened on the user's computer, and if so, Branch
-opens the app with a Mac URI scheme like `your-app-scheme://open?link_click_id=348527481794276288`.
+A Branch link is an web URL that looks like `https://your-app.app.link/bOsE0bbUtO`. When this link
+is clicked on a Mac it opens a Branch web page that quickly determines if the Mac app can be opened
+on the user's computer, and if so, Branch opens the app with a Mac URI scheme like
+`your-app-scheme://open?link_click_id=348527481794276288`.
 
-(If the user doesn't have the app installed Branch can redirect the user to a fallback URL, like an app download page or some
-other configurable place).
+(If the user doesn't have the app installed Branch can redirect the user to a fallback URL, like an
+app download page or some other configurable place).
 
 ## Adding Branch to Your App
 
@@ -90,15 +93,16 @@ Add the Branch.framework as an embedded binary in your app.
 
 You can drag and drop the framework into your app to install it.
 
-In Xcode, click on  your project in the Project Navigator,  select your app in the Targets area, select the 'General' tab up top, and
-scroll down to the 'Embedded Binaries' section. You can drag the Branch.framework bundle from the `Frameworks/macOS` project directory into this area.
+In Xcode, click on  your project in the Project Navigator,  select your app in the Targets area,
+select the 'General' tab up top, and scroll down to the 'Embedded Binaries' section. You can drag
+the Branch.framework bundle from the `Frameworks/macOS` project directory into this area.
 
 ![Add Framework](Documentation/Images/EmbeddedBinary.png "Add Framework")
 
 ### Add Your App Scheme to Your Info.plist
 
-Add your app scheme to your Info.plist file so macOS knows what schemes your app can handle. This example shows
- `testbed-mac` as the app scheme. Add just the scheme and not the `://` part.
+Add your app scheme to your Info.plist file so macOS knows what schemes your app can handle. This
+example shows `testbed-mac` as the app scheme. Add just the scheme and not the `://` part.
 
 ![Add App Scheme](Documentation/Images/InfoPlist.png "Add App Scheme")
 
