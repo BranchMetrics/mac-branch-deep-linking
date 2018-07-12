@@ -68,5 +68,11 @@ cp Documentation/Images/Branch-32.png \
 cp Documentation/Images/Branch-32.png \
    Documentation/Branch.docset/icon@2x.png
 
+ditto Documentation/Images \
+    Documentation/HTMLDocumentation/Documentation/Images
+
+ditto Documentation/Images \
+    Documentation/Branch.docset/Content/Resources/Documents/Documentation/Images
+
 rm Documentation/Branch.tgz
 rm -Rf Temp

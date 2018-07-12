@@ -2,7 +2,7 @@
 
 # Branch Metrics for Mac SDK
 
-The Branch SDK for Mac brings universal deep linking to your app. The same `http://` web based Branch link open apps on 
+The Branch SDK for Mac brings universal deep linking to your app. The same `http://` web based Branch link open apps on
 Mac, iOS, and Android so you can have one link that works on all your platforms.
 
 Branch links are sophisticated links that adapt to a user's environment and can be configured with journeys and fallback options
@@ -18,7 +18,7 @@ with atrribution, influencer, and content breakdowns of your links on the Branch
 2. [Deep Linking on the Mac](#deep-linking-on-the-mac)
    + [URI Scheme Considerations](#uri-scheme-considerations)
    + [How Branch Deep Linking for Mac Works](#how-branch-deep-linking-for-mac-works)
-   
+
 3. [Adding Branch to your App](#adding-branch-to-your-app)
    + [Get a Branch Key](#get-a-branch-key)
    + [Install the Framework](#install-the-framework)
@@ -27,27 +27,27 @@ with atrribution, influencer, and content breakdowns of your links on the Branch
    + [Rejoice](#rejoice)
 
 4. [Branch Reference](#branch-reference)
-  + [Turning on Logging](#turning-on-logging)
-  + [Setting User Identities for Tracking Influencers](#setting-user-identities)
-  + [Logging a User Out](#logout)
-  + [Tracking user actions and events](#tracking-user-actions-and-events)
-  + [Enable and Disable User Tracking](#enable-or-disable-user-tracking)
+   + [Turning on Logging](#turning-on-logging)
+   + [Setting User Identities for Tracking Influencers](#setting-user-identities)
+   + [Logging a User Out](#logout)
+   + [Tracking user actions and events](#tracking-user-actions-and-events)
+   + [Enable and Disable User Tracking](#enable-or-disable-user-tracking)
 
 5. [Branch Universal Objects](#branch-universal-objects)
-  + [Instantiate a Branch Universal Object](#branch-universal-object)
-  + [Tracking user interactions with an object](#tracking-user-interactions-with-an-object)
-  + [Configuring link properties](link-properties-parameters)
-  + [Creating a short link referencing the object](#shortened-links)
+   + [Instantiate a Branch Universal Object](#branch-universal-object)
+   + [Tracking user interactions with an object](#tracking-user-interactions-with-an-object)
+   + [Configuring link properties](link-properties-parameters)
+   + [Creating a short link referencing the object](#shortened-links)
 
 ## Support and Example
 
 * If you need support or help integrating and using Branch, check our [Support Portal](http://support.branch.io).
-* The TestBed-Mac project is a working example the uses Branch. [TestBed-Mac](Examples/TestBed-Mac/TestBed-Mac.xcodeproj).
+* The TestBed-Mac project is a working example the uses Branch. [TestBed-Mac](https://github.com/BranchMetrics/Branch-SDK-Mac/tree/master/Examples/TestBed-Mac).
 
 
 ## Deep Linking on the Mac
 
-The most familiar links look like `http://example.com` which are `http` links that open web pages. These are great for web 
+The most familiar links look like `http://example.com` which are `http` links that open web pages. These are great for web
 pages but don't open Mac apps. Instead, Mac apps open with URI schemes, the first part of a URI.
 
 The parts of a URI are:
@@ -60,20 +60,20 @@ You'll need to choose a unique URI scheme for your Mac app.
 
 ### URI Scheme Considerations
 
-You need to choose an URI scheme that is not already in common use and is likely unique on a Mac. For instance, `web://` is 
-probably a bad choice. Many people choose the reverse domain name for their app or use their bundle identifier, 
+You need to choose an URI scheme that is not already in common use and is likely unique on a Mac. For instance, `web://` is
+probably a bad choice. Many people choose the reverse domain name for their app or use their bundle identifier,
 like `io.branch.cool-app://`.
 
-Don't use an app scheme starting with `fb`, `db`, `twitterkit-`, `pin`, or `com.googleusercontent.apps`. These schemes 
+Don't use an app scheme starting with `fb`, `db`, `twitterkit-`, `pin`, or `com.googleusercontent.apps`. These schemes
 are ignored by Branch since they are commonly used by other app kits for oauth and other uses.
 
 ### How Branch Deep Linking for Mac Works
 
-A Branch link is an web URL that looks like `https://your-app.app.link/bOsE0bbUtO`. When this link is clicked on a Mac it 
-opens a Branch web page that quickly determines if the Mac app can be opened on the user's computer, and if so, Branch 
-opens the app with a Mac URI scheme like `your-app-scheme://open?link_click_id=348527481794276288`. 
+A Branch link is an web URL that looks like `https://your-app.app.link/bOsE0bbUtO`. When this link is clicked on a Mac it
+opens a Branch web page that quickly determines if the Mac app can be opened on the user's computer, and if so, Branch
+opens the app with a Mac URI scheme like `your-app-scheme://open?link_click_id=348527481794276288`.
 
-(If the user doesn't have the app installed Branch can redirect the user to a fallback URL, like an app download page or some 
+(If the user doesn't have the app installed Branch can redirect the user to a fallback URL, like an app download page or some
 other configurable place).
 
 ## Adding Branch to Your App
@@ -86,7 +86,7 @@ You'll need your app scheme to configure your app in the Branch dashboard.
 
 ### Install the Framework
 
-Add the Branch.framework as an embedded binary in your app. 
+Add the Branch.framework as an embedded binary in your app.
 
 You can drag and drop the framework into your app to install it.
 
@@ -122,15 +122,15 @@ this snippet before the final `</dict>` tag. Remember to change `YOUR-APP-SCHEME
 
 ##### _Caution: Your app's URI scheme must be the first scheme defined (item 0) in the list._
 
-The Branch SDK will use the first URI Scheme from your list that does not start with `fb`, `db`, `twitterkit-`, `pin`, or 
-`com.googleusercontent.apps`. These schemes are ignored by Branch since they are commonly used by other app kits for 
+The Branch SDK will use the first URI Scheme from your list that does not start with `fb`, `db`, `twitterkit-`, `pin`, or
+`com.googleusercontent.apps`. These schemes are ignored by Branch since they are commonly used by other app kits for
 oauth and other uses.
 
 ### Add Some Code
 
-Start Branch when your app first starts up.  In your app delegate, start Branch in your  `applicationWillFinishLaunching:` 
+Start Branch when your app first starts up.  In your app delegate, start Branch in your  `applicationWillFinishLaunching:`
 method:
- 
+
 ```objc
 #import <Branch/Branch.h>
 
@@ -154,14 +154,14 @@ method:
 ```
 
 Next, add a notification handler so your app can handle the deep links:
- 
+
 ```objc
 - (void) branchOpenedURLNotification:(NSNotification*)notification {
     // Get the Branch session info:
     BranchSession*session = notification.userInfo[BranchSessionKey];
-    
+
     // Do something with the link!
-    // In this contrived example we'll load a view controller that plays the song that was in the link:  
+    // In this contrived example we'll load a view controller that plays the song that was in the link:
     SongViewController *viewController = [SongViewController loadController];
     viewController.songTitle = branchSession.linkContent.title;
     [viewController.window makeKeyAndOrderFront:self];
@@ -175,7 +175,7 @@ Rejoice! You're just integrated Branch into your app.
 
 ## Branch Reference
 
-### Turning on Logging 
+### **Turning on Logging**
 
 To help debugging your app, you can turn on Branch logging, which logs to the console. Remember to turn it off in your production app.
 
@@ -185,10 +185,10 @@ To help debugging your app, you can turn on Branch logging, which logs to the co
 
 See [**`loggingEnabled`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled)
 
-### Setting User Identities
+### **Setting User Identities**
 
-Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It's 
-helpful if you know your users access your service from different devices. This where we introduce the concept of an 
+Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It's
+helpful if you know your users access your service from different devices. This where we introduce the concept of an
 'user identity'.
 
 #### Method
@@ -197,7 +197,7 @@ helpful if you know your users access your service from different devices. This 
 
 See [**`setUserIdentity:completion:`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:)
 
-### Logout
+### **Logout**
 
 If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the stored parameters get cleared and all events are properly attributed to the right identity.
 
@@ -222,7 +222,7 @@ The `BranchEvent` class can be simple to use. For example:
 ###### Objective-C
 
 ```objc
-[[Branch sharedInstance] 
+[[Branch sharedInstance]
     logEvent:[BranchEvent standardEvent:BranchStandardEventAddToCart]];
 ```
 
@@ -308,7 +308,7 @@ This will prevent any Branch network requests from being sent, except when deep 
 
 In do-not-track mode, you will still be able to create & share links. The links will not have identifiable information and will be long format links. Event tracking won’t pass data back to the server if a user has expressed to not be tracked. You can change this behavior at any time by calling the above function. The trackingDisabled state is saved and persisted across app runs.
 
-## Branch Universal Object 
+## Branch Universal Object
 
 Use a BranchUniversalObject to describe content in your app for deep links, content analytics and indexing.
 

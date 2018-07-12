@@ -321,7 +321,7 @@
         if (url.absoluteString.length) self.delayedOpenURL = url;
         if (self.delayedOpenTimer) return YES;
 
-        NSTimeInterval kOpenDeadline = 0.200; // TODO: Right delay?
+        NSTimeInterval kOpenDeadline = 0.750; // The delay may need to be tweaked.
 
         if (!self.workQueue)
             self.workQueue = dispatch_queue_create("io.branch.sdk.work", DISPATCH_QUEUE_CONCURRENT);

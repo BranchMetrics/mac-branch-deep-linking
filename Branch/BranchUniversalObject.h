@@ -57,6 +57,9 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 
 #pragma mark - BranchContentMetadata
 
+/**
+ BranchContentMetadata describes properties in your Branch Universal Object.
+ */
 @interface BranchContentMetadata : NSObject
 
 @property (nonatomic, strong, nullable) BranchContentSchema contentSchema;
@@ -107,17 +110,34 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 
 - (NSString*_Nonnull) description;
 
+/** An identifier that canonically identifies this content item, like an ISBN number or SKU. */
 @property (nonatomic, strong, nullable) NSString *canonicalIdentifier;
+
+/** A web URL that canonically locates this content item */
 @property (nonatomic, strong, nullable) NSString *canonicalUrl;
+
+/** The title or name of this content item. */
 @property (nonatomic, strong, nullable) NSString *title;
 @property (nonatomic, strong, nullable) NSString *contentDescription;
-@property (nonatomic, strong, nullable) NSString *imageUrl;
-@property (nonatomic, strong, nullable) NSArray<NSString*> *keywords;
-@property (nonatomic, strong, nullable) NSDate   *creationDate;
-@property (nonatomic, strong, nullable) NSDate   *expirationDate;
-@property (nonatomic, assign)           BOOL      locallyIndex;     //!< Index on Spotlight.
-@property (nonatomic, assign)           BOOL      publiclyIndex;    //!< Index on Google, Branch, etc.
 
+/** A URL to an image that should be associated with the item */
+@property (nonatomic, strong, nullable) NSString *imageUrl;
+
+/** An array of keywords that describe the item. */
+@property (nonatomic, strong, nullable) NSArray<NSString*> *keywords;
+
+@property (nonatomic, strong, nullable) NSDate   *creationDate;
+
+/** The date that a link to this item is no longer relevant */
+@property (nonatomic, strong, nullable) NSDate   *expirationDate;
+
+/** Index the content on Spotlight. */
+@property (nonatomic, assign)           BOOL      locallyIndex;
+
+/** Index on Google, Branch, etc. */
+@property (nonatomic, assign)           BOOL      publiclyIndex;
+
+/** Properties that further describe your content. */
 @property (nonatomic, strong, nonnull) BranchContentMetadata *contentMetadata;
 
 @end

@@ -14,7 +14,7 @@
     <a title="BranchContentMetadata Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Branch Docs</a> (20% documented)</p>
+        <p><a href="../index.html">Branch Docs</a> (24% documented)</p>
         <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -296,40 +296,11 @@
             <h1>BranchContentMetadata</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">BranchContentMetadata</span> <span class="p">:</span> <span class="nc">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Type Definitions.html#/c:BranchUniversalObject.h@T@BranchContentSchema">BranchContentSchema</a></span> <span class="n">contentSchema</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="kt">double</span>          <span class="n">quantity</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSDecimalNumber</span> <span class="o">*</span><span class="n">price</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">BNCCurrency</span>     <span class="n">currency</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">sku</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">productName</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">productBrand</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">BNCProductCategory</span> <span class="n">productCategory</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">productVariant</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Type Definitions.html#/c:BranchUniversalObject.h@T@BranchCondition">BranchCondition</a></span> <span class="n">condition</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="kt">double</span>          <span class="n">ratingAverage</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="n">NSInteger</span>       <span class="n">ratingCount</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="kt">double</span>          <span class="n">ratingMax</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="kt">double</span>          <span class="n">rating</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">addressStreet</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">addressCity</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">addressRegion</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">addressCountry</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span>        <span class="o">*</span><span class="n">addressPostalCode</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="kt">double</span>          <span class="n">latitude</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span>           <span class="kt">double</span>          <span class="n">longitude</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>    <span class="n">NSMutableArray</span><span class="o">&lt;</span><span class="n">NSString</span><span class="o">*&gt;</span> <span class="o">*</span><span class="n">imageCaptions</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nonnull</span><span class="p">)</span>    <span class="n">NSMutableDictionary</span><span class="o">&lt;</span><span class="n">NSString</span><span class="o">*</span><span class="p">,</span> <span class="n">NSString</span><span class="o">*&gt;</span> <span class="o">*</span><span class="n">customMetadata</span><span class="p">;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span> <span class="n">dictionary</span><span class="p">;</span>
-<span class="k">+</span> <span class="p">(</span><span class="n">BranchContentMetadata</span><span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span> <span class="nf">contentMetadataWithDictionary</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">dictionary</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">BranchContentMetadata</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>BranchContentMetadata describes properties in your Branch Universal Object.</p>
 
           </section>
           <section class="section task-group-section">
