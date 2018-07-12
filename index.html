@@ -13,7 +13,7 @@
     <a title="Branch  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Branch Docs</a> (20% documented)</p>
+        <p><a href="index.html">Branch Docs</a> (24% documented)</p>
         <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -296,7 +296,7 @@
             <p><a href="https://raw.githubusercontent.com/hyperium/hyper/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT licensed"></a></p>
 <h1 id='branch-metrics-for-mac-sdk' class='heading'>Branch Metrics for Mac SDK</h1>
 
-<p>The Branch SDK for Mac brings universal deep linking to your app. The same <code>http://</code> web based Branch link open apps on 
+<p>The Branch SDK for Mac brings universal deep linking to your app. The same <code>http://</code> web based Branch link open apps on
 Mac, iOS, and Android so you can have one link that works on all your platforms.</p>
 
 <p>Branch links are sophisticated links that adapt to a user&rsquo;s environment and can be configured with journeys and fallback options
@@ -345,11 +345,11 @@ with atrribution, influencer, and content breakdowns of your links on the Branch
 
 <ul>
 <li>If you need support or help integrating and using Branch, check our <a href="http://support.branch.io">Support Portal</a>.</li>
-<li>The TestBed-Mac project is a working example the uses Branch. <a href="Examples/TestBed-Mac/TestBed-Mac.xcodeproj">TestBed-Mac</a>.</li>
+<li>The TestBed-Mac project is a working example the uses Branch. <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/master/Examples/TestBed-Mac">TestBed-Mac</a>.</li>
 </ul>
 <h2 id='deep-linking-on-the-mac' class='heading'>Deep Linking on the Mac</h2>
 
-<p>The most familiar links look like <code>http://example.com</code> which are <code>http</code> links that open web pages. These are great for web 
+<p>The most familiar links look like <code>http://example.com</code> which are <code>http</code> links that open web pages. These are great for web
 pages but don&rsquo;t open Mac apps. Instead, Mac apps open with URI schemes, the first part of a URI.</p>
 
 <p>The parts of a URI are:</p>
@@ -361,19 +361,19 @@ pages but don&rsquo;t open Mac apps. Instead, Mac apps open with URI schemes, th
 <p>You&rsquo;ll need to choose a unique URI scheme for your Mac app.</p>
 <h3 id='uri-scheme-considerations' class='heading'>URI Scheme Considerations</h3>
 
-<p>You need to choose an URI scheme that is not already in common use and is likely unique on a Mac. For instance, <code>web://</code> is 
-probably a bad choice. Many people choose the reverse domain name for their app or use their bundle identifier, 
+<p>You need to choose an URI scheme that is not already in common use and is likely unique on a Mac. For instance, <code>web://</code> is
+probably a bad choice. Many people choose the reverse domain name for their app or use their bundle identifier,
 like <code>io.branch.cool-app://</code>.</p>
 
-<p>Don&rsquo;t use an app scheme starting with <code>fb</code>, <code>db</code>, <code>twitterkit-</code>, <code>pin</code>, or <code>com.googleusercontent.apps</code>. These schemes 
+<p>Don&rsquo;t use an app scheme starting with <code>fb</code>, <code>db</code>, <code>twitterkit-</code>, <code>pin</code>, or <code>com.googleusercontent.apps</code>. These schemes
 are ignored by Branch since they are commonly used by other app kits for oauth and other uses.</p>
 <h3 id='how-branch-deep-linking-for-mac-works' class='heading'>How Branch Deep Linking for Mac Works</h3>
 
-<p>A Branch link is an web URL that looks like <code>https://your-app.app.link/bOsE0bbUtO</code>. When this link is clicked on a Mac it 
-opens a Branch web page that quickly determines if the Mac app can be opened on the user&rsquo;s computer, and if so, Branch 
-opens the app with a Mac URI scheme like <code>your-app-scheme://open?link_click_id=348527481794276288</code>. </p>
+<p>A Branch link is an web URL that looks like <code>https://your-app.app.link/bOsE0bbUtO</code>. When this link is clicked on a Mac it
+opens a Branch web page that quickly determines if the Mac app can be opened on the user&rsquo;s computer, and if so, Branch
+opens the app with a Mac URI scheme like <code>your-app-scheme://open?link_click_id=348527481794276288</code>.</p>
 
-<p>(If the user doesn&rsquo;t have the app installed Branch can redirect the user to a fallback URL, like an app download page or some 
+<p>(If the user doesn&rsquo;t have the app installed Branch can redirect the user to a fallback URL, like an app download page or some
 other configurable place).</p>
 <h2 id='adding-branch-to-your-app' class='heading'>Adding Branch to Your App</h2>
 <h3 id='get-a-branch-key' class='heading'>Get a Branch Key</h3>
@@ -383,7 +383,7 @@ other configurable place).</p>
 <p>You&rsquo;ll need your app scheme to configure your app in the Branch dashboard.</p>
 <h3 id='install-the-framework' class='heading'>Install the Framework</h3>
 
-<p>Add the Branch.framework as an embedded binary in your app. </p>
+<p>Add the Branch.framework as an embedded binary in your app.</p>
 
 <p>You can drag and drop the framework into your app to install it.</p>
 
@@ -414,12 +414,12 @@ this snippet before the final <code>&lt;/dict&gt;</code> tag. Remember to change
 </code></pre>
 <h5 id='em-caution-your-app-39-s-uri-scheme-must-be-the-first-scheme-defined-item-0-in-the-list-em' class='heading'><em>Caution: Your app&rsquo;s URI scheme must be the first scheme defined (item 0) in the list.</em></h5>
 
-<p>The Branch SDK will use the first URI Scheme from your list that does not start with <code>fb</code>, <code>db</code>, <code>twitterkit-</code>, <code>pin</code>, or 
-<code>com.googleusercontent.apps</code>. These schemes are ignored by Branch since they are commonly used by other app kits for 
+<p>The Branch SDK will use the first URI Scheme from your list that does not start with <code>fb</code>, <code>db</code>, <code>twitterkit-</code>, <code>pin</code>, or
+<code>com.googleusercontent.apps</code>. These schemes are ignored by Branch since they are commonly used by other app kits for
 oauth and other uses.</p>
 <h3 id='add-some-code' class='heading'>Add Some Code</h3>
 
-<p>Start Branch when your app first starts up.  In your app delegate, start Branch in your  <code>applicationWillFinishLaunching:</code> 
+<p>Start Branch when your app first starts up.  In your app delegate, start Branch in your  <code>applicationWillFinishLaunching:</code>
 method:</p>
 <pre class="highlight objective_c"><code><span class="cp">#import &lt;Branch/Branch.h&gt;
 </span>
@@ -448,7 +448,7 @@ method:</p>
 </span>    <span class="n">BranchSession</span><span class="o">*</span><span class="n">session</span> <span class="o">=</span> <span class="n">notification</span><span class="p">.</span><span class="n">userInfo</span><span class="p">[</span><span class="nf">BranchSessionKey</span><span class="p">];</span>
 
     <span class="c1">// Do something with the link!
-</span>    <span class="c1">// In this contrived example we'll load a view controller that plays the song that was in the link:  
+</span>    <span class="c1">// In this contrived example we'll load a view controller that plays the song that was in the link:
 </span>    <span class="n">SongViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">[</span><span class="n">SongViewController</span> <span class="nf">loadController</span><span class="p">];</span>
     <span class="n">viewController</span><span class="p">.</span><span class="n">songTitle</span> <span class="o">=</span> <span class="n">branchSession</span><span class="p">.</span><span class="n">linkContent</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
     <span class="p">[</span><span class="n">viewController</span><span class="p">.</span><span class="n">window</span> <span class="nf">makeKeyAndOrderFront</span><span class="p">:</span><span class="n">self</span><span class="p">];</span>
@@ -459,7 +459,7 @@ method:</p>
 
 <p>Rejoice! You&rsquo;re just integrated Branch into your app.</p>
 <h2 id='branch-reference' class='heading'>Branch Reference</h2>
-<h3 id='turning-on-logging' class='heading'>Turning on Logging</h3>
+<h3 id='strong-turning-on-logging-strong' class='heading'><strong>Turning on Logging</strong></h3>
 
 <p>To help debugging your app, you can turn on Branch logging, which logs to the console. Remember to turn it off in your production app.</p>
 <h4 id='property' class='heading'>Property</h4>
@@ -467,17 +467,17 @@ method:</p>
 <p><code><a href="Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled">Branch.loggingEnabled</a></code></p>
 
 <p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled"><strong><code>loggingEnabled</code></strong></a></p>
-<h3 id='setting-user-identities' class='heading'>Setting User Identities</h3>
+<h3 id='strong-setting-user-identities-strong' class='heading'><strong>Setting User Identities</strong></h3>
 
-<p>Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It&rsquo;s 
-helpful if you know your users access your service from different devices. This where we introduce the concept of an 
+<p>Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It&rsquo;s
+helpful if you know your users access your service from different devices. This where we introduce the concept of an
 &lsquo;user identity&rsquo;.</p>
 <h4 id='method' class='heading'>Method</h4>
 
 <p><code>setUserIdentity:completion:</code></p>
 
 <p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:"><strong><code>setUserIdentity:completion:</code></strong></a></p>
-<h3 id='logout' class='heading'>Logout</h3>
+<h3 id='strong-logout-strong' class='heading'><strong>Logout</strong></h3>
 
 <p>If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the stored parameters get cleared and all events are properly attributed to the right identity.</p>
 
@@ -497,7 +497,7 @@ helpful if you know your users access your service from different devices. This 
 
 <p>The <code><a href="Classes/BranchEvent.html">BranchEvent</a></code> class can be simple to use. For example:</p>
 <h6 id='objective-c' class='heading'>Objective-C</h6>
-<pre class="highlight objective_c"><code><span class="p">[[</span><span class="n">Branch</span> <span class="nf">sharedInstance</span><span class="p">]</span> 
+<pre class="highlight objective_c"><code><span class="p">[[</span><span class="n">Branch</span> <span class="nf">sharedInstance</span><span class="p">]</span>
     <span class="nf">logEvent</span><span class="p">:[</span><span class="n">BranchEvent</span> <span class="nf">standardEvent</span><span class="p">:</span><span class="n">BranchStandardEventAddToCart</span><span class="p">]];</span>
 </code></pre>
 <h6 id='swift' class='heading'>Swift</h6>

@@ -1010,295 +1010,225 @@
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 60,
-      "symbol": "BranchContentMetadata",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 62,
+      "line": 65,
       "symbol": "BranchContentMetadata.contentSchema",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 63,
+      "line": 66,
       "symbol": "BranchContentMetadata.quantity",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 64,
+      "line": 67,
       "symbol": "BranchContentMetadata.price",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 65,
+      "line": 68,
       "symbol": "BranchContentMetadata.currency",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 66,
+      "line": 69,
       "symbol": "BranchContentMetadata.sku",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 67,
+      "line": 70,
       "symbol": "BranchContentMetadata.productName",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 68,
+      "line": 71,
       "symbol": "BranchContentMetadata.productBrand",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 69,
+      "line": 72,
       "symbol": "BranchContentMetadata.productCategory",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 70,
+      "line": 73,
       "symbol": "BranchContentMetadata.productVariant",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 71,
+      "line": 74,
       "symbol": "BranchContentMetadata.condition",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 72,
+      "line": 75,
       "symbol": "BranchContentMetadata.ratingAverage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 73,
+      "line": 76,
       "symbol": "BranchContentMetadata.ratingCount",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 74,
+      "line": 77,
       "symbol": "BranchContentMetadata.ratingMax",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 75,
+      "line": 78,
       "symbol": "BranchContentMetadata.rating",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 76,
+      "line": 79,
       "symbol": "BranchContentMetadata.addressStreet",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 77,
+      "line": 80,
       "symbol": "BranchContentMetadata.addressCity",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 78,
+      "line": 81,
       "symbol": "BranchContentMetadata.addressRegion",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 79,
+      "line": 82,
       "symbol": "BranchContentMetadata.addressCountry",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 80,
+      "line": 83,
       "symbol": "BranchContentMetadata.addressPostalCode",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 81,
+      "line": 84,
       "symbol": "BranchContentMetadata.latitude",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 82,
+      "line": 85,
       "symbol": "BranchContentMetadata.longitude",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 83,
+      "line": 86,
       "symbol": "BranchContentMetadata.imageCaptions",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 84,
+      "line": 87,
       "symbol": "BranchContentMetadata.customMetadata",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 86,
+      "line": 89,
       "symbol": "BranchContentMetadata.-dictionary",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 87,
+      "line": 90,
       "symbol": "BranchContentMetadata.+contentMetadataWithDictionary:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 102,
+      "line": 105,
       "symbol": "BranchUniversalObject.-initWithCanonicalIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 103,
+      "line": 106,
       "symbol": "BranchUniversalObject.-initWithTitle:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 105,
+      "line": 108,
       "symbol": "BranchUniversalObject.+objectWithDictionary:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 106,
+      "line": 109,
       "symbol": "BranchUniversalObject.-dictionary",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 108,
+      "line": 111,
       "symbol": "BranchUniversalObject.-description",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 110,
-      "symbol": "BranchUniversalObject.canonicalIdentifier",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 111,
-      "symbol": "BranchUniversalObject.canonicalUrl",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 112,
-      "symbol": "BranchUniversalObject.title",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 113,
+      "line": 121,
       "symbol": "BranchUniversalObject.contentDescription",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 114,
-      "symbol": "BranchUniversalObject.imageUrl",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 115,
-      "symbol": "BranchUniversalObject.keywords",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 116,
+      "line": 129,
       "symbol": "BranchUniversalObject.creationDate",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 117,
-      "symbol": "BranchUniversalObject.expirationDate",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 118,
-      "symbol": "BranchUniversalObject.locallyIndex",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 119,
-      "symbol": "BranchUniversalObject.publiclyIndex",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/Branch-SDK-Mac/Temp/Branch/BranchUniversalObject.h",
-      "line": 121,
-      "symbol": "BranchUniversalObject.contentMetadata",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     }
