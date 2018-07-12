@@ -22,7 +22,7 @@ function current_script_fullpath() {
 }
 
 source_path="$(current_script_fullpath)"
-cd "$(dirname "$source_path")"
+cd "$(dirname "$source_path")"/../..
 
 mkdir Temp
 ditto Branch Temp/Branch
