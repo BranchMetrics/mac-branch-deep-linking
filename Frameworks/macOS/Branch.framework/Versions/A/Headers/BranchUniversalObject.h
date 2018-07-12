@@ -90,6 +90,13 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 
 #pragma mark - BranchUniversalObject
 
+/**
+ Use a BranchUniversalObject to describe content in your app for deep links, content analytics and indexing.
+
+ The properties object describes your content in a standard way so that it can be deep linked, shared, or
+ indexed on spotlight for instance. You can set all the properties associated with the object and then call
+ action methods on it to create a link or index the content on Spotlight.
+ */
 @interface BranchUniversalObject : NSObject
 
 - (nonnull instancetype)initWithCanonicalIdentifier:(nonnull NSString *)canonicalIdentifier;
