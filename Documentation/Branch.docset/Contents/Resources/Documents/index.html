@@ -477,26 +477,31 @@ helpful if you know your users access your service from different devices. This 
 &lsquo;user identity&rsquo;.</p>
 <h4 id='method' class='heading'>Method</h4>
 
-<p><code>Branch.setUserIdentity:completion:</code></p>
+<p><code>[Branch setUserIdentity:completion:]</code></p>
 
-<p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:"><strong><code>setUserIdentity:completion:</code></strong></a></p>
+<p>See <a href="Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:"><strong><code>setUserIdentity:completion:</code></strong></a></p>
 <h3 id='logout' class='heading'>Logout</h3>
 
-<p>If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the stored parameters get cleared and all events are properly attributed to the right identity.</p>
+<p>If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the 
+stored parameters get cleared and all events are properly attributed to the right identity.</p>
 
 <p><strong>Warning</strong>: This call will clear attribution on the device.</p>
 <h4 id='method' class='heading'>Method</h4>
 
-<p><code>Branch.logoutWithCompletion:</code></p>
+<p><code>[Branch logoutWithCompletion:]</code></p>
 
 <p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)logoutWithCompletion:"><strong><code>logoutWithCompletion:</code></strong></a></p>
 <h3 id='tracking-user-actions-and-events' class='heading'>Tracking User Actions and Events</h3>
 
-<p>Use the <code><a href="Classes/BranchEvent.html">BranchEvent</a></code> class to track special user actions or application specific events beyond app installs, opens, and sharing. You can track events such as when a user adds an item to an on-line shopping cart, or searches for a keyword, among others.</p>
+<p>Use the <code><a href="Classes/BranchEvent.html">BranchEvent</a></code> class to track special user actions or application specific events beyond app installs, opens, and 
+sharing. You can track events such as when a user adds an item to an on-line shopping cart, or searches for a keyword, among 
+others.</p>
 
-<p>The <code><a href="Classes/BranchEvent.html">BranchEvent</a></code> interface provides an interface to add contents represented by BranchUniversalObject in order to associate app contents with events.</p>
+<p>The <code><a href="Classes/BranchEvent.html">BranchEvent</a></code> interface provides an interface to add contents represented by BranchUniversalObject in order to associate 
+app contents with events.</p>
 
-<p>Analytics about your app&rsquo;s BranchEvents can be found on the Branch dashboard, and BranchEvents also provide tight integration with many third party analytics providers.</p>
+<p>Analytics about your app&rsquo;s BranchEvents can be found on the Branch dashboard, and BranchEvents also provide tight 
+integration with many third party analytics providers.</p>
 
 <p>The <code><a href="Classes/BranchEvent.html">BranchEvent</a></code> class can be simple to use. For example:</p>
 <h6 id='objective-c' class='heading'>Objective-C</h6>
@@ -561,14 +566,19 @@ event.logEvent()
 <pre class="highlight swift"><code><span class="kt">Branch</span><span class="o">.</span><span class="nf">sharedInstance</span><span class="p">()</span><span class="o">.</span><span class="n">trackingDisabled</span> <span class="o">=</span> <span class="kc">true</span>
 </code></pre>
 
-<p>This will prevent any Branch network requests from being sent, except when deep linking. If someone clicks a Branch link, but does not want to be tracked, we will return the deep linking data back to the app but without capturing any tracking information.</p>
+<p>This will prevent any Branch network requests from being sent, except when deep linking. If someone clicks a Branch link, but 
+does not want to be tracked, we will return the deep linking data back to the app but without capturing any tracking information.</p>
 
-<p>In do-not-track mode, you will still be able to create &amp; share links. The links will not have identifiable information and will be long format links. Event tracking won’t pass data back to the server if a user has expressed to not be tracked. You can change this behavior at any time by calling the above function. The trackingDisabled state is saved and persisted across app runs.</p>
+<p>In do-not-track mode, you will still be able to create &amp; share links. The links will not have identifiable information and will be long 
+format links. Event tracking won’t pass data back to the server if a user has expressed to not be tracked. You can change this 
+behavior at any time by calling the above function. The trackingDisabled state is saved and persisted across app runs.</p>
 <h2 id='branch-universal-object' class='heading'>Branch Universal Object</h2>
 
 <p>Use a BranchUniversalObject to describe content in your app for deep links, content analytics and indexing.</p>
 
-<p>The properties object describes your content in a standard way so that it can be deep linked, shared, or indexed on spotlight for instance. You can set all the properties associated with the object and then call action methods on it to create a link or index the content on Spotlight.</p>
+<p>The properties object describes your content in a standard way so that it can be deep linked, shared, or indexed on spotlight
+for instance. You can set all the properties associated with the object and then call action methods on it to create a link or index 
+the content on Spotlight.</p>
 <h3 id='branch-universal-object-best-practices' class='heading'>Branch Universal Object best practices</h3>
 
 <p>Here are a set of best practices to ensure that your analytics are correct, and your content is ranking on Spotlight effectively.</p>

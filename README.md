@@ -195,29 +195,34 @@ helpful if you know your users access your service from different devices. This 
 
 #### Method
 
-`Branch.setUserIdentity:completion:`
+`[Branch setUserIdentity:completion:]`
 
-See [**`setUserIdentity:completion:`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:)
+See [**`setUserIdentity:completion:`**](Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:)
 
 ### Logout
 
-If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the stored parameters get cleared and all events are properly attributed to the right identity.
+If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the 
+stored parameters get cleared and all events are properly attributed to the right identity.
 
 **Warning**: This call will clear attribution on the device.
 
 #### Method
 
-`Branch.logoutWithCompletion:`
+`[Branch logoutWithCompletion:]`
 
 See [**`logoutWithCompletion:`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)logoutWithCompletion:)
 
 ### Tracking User Actions and Events
 
-Use the `BranchEvent` class to track special user actions or application specific events beyond app installs, opens, and sharing. You can track events such as when a user adds an item to an on-line shopping cart, or searches for a keyword, among others.
+Use the `BranchEvent` class to track special user actions or application specific events beyond app installs, opens, and 
+sharing. You can track events such as when a user adds an item to an on-line shopping cart, or searches for a keyword, among 
+others.
 
-The `BranchEvent` interface provides an interface to add contents represented by BranchUniversalObject in order to associate app contents with events.
+The `BranchEvent` interface provides an interface to add contents represented by BranchUniversalObject in order to associate 
+app contents with events.
 
-Analytics about your app's BranchEvents can be found on the Branch dashboard, and BranchEvents also provide tight integration with many third party analytics providers.
+Analytics about your app's BranchEvents can be found on the Branch dashboard, and BranchEvents also provide tight 
+integration with many third party analytics providers.
 
 The `BranchEvent` class can be simple to use. For example:
 
@@ -306,15 +311,20 @@ In order to comply with privacy requirements, you can disable tracking at the SD
 Branch.sharedInstance().trackingDisabled = true
 ```
 
-This will prevent any Branch network requests from being sent, except when deep linking. If someone clicks a Branch link, but does not want to be tracked, we will return the deep linking data back to the app but without capturing any tracking information.
+This will prevent any Branch network requests from being sent, except when deep linking. If someone clicks a Branch link, but 
+does not want to be tracked, we will return the deep linking data back to the app but without capturing any tracking information.
 
-In do-not-track mode, you will still be able to create & share links. The links will not have identifiable information and will be long format links. Event tracking won’t pass data back to the server if a user has expressed to not be tracked. You can change this behavior at any time by calling the above function. The trackingDisabled state is saved and persisted across app runs.
+In do-not-track mode, you will still be able to create & share links. The links will not have identifiable information and will be long 
+format links. Event tracking won’t pass data back to the server if a user has expressed to not be tracked. You can change this 
+behavior at any time by calling the above function. The trackingDisabled state is saved and persisted across app runs.
 
 ## Branch Universal Object
 
 Use a BranchUniversalObject to describe content in your app for deep links, content analytics and indexing.
 
-The properties object describes your content in a standard way so that it can be deep linked, shared, or indexed on spotlight for instance. You can set all the properties associated with the object and then call action methods on it to create a link or index the content on Spotlight.
+The properties object describes your content in a standard way so that it can be deep linked, shared, or indexed on spotlight
+for instance. You can set all the properties associated with the object and then call action methods on it to create a link or index 
+the content on Spotlight.
 
 ### Branch Universal Object best practices
 
