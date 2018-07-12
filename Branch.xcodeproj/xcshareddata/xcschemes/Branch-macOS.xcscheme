@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D54C07420A6560400C76496"
                BuildableName = "Branch.framework"
-               BlueprintName = "Branch"
+               BlueprintName = "Branch-macOS"
                ReferencedContainer = "container:Branch.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -61,7 +61,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D54C07420A6560400C76496"
             BuildableName = "Branch.framework"
-            BlueprintName = "Branch"
+            BlueprintName = "Branch-macOS"
             ReferencedContainer = "container:Branch.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -88,7 +88,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D54C07420A6560400C76496"
             BuildableName = "Branch.framework"
-            BlueprintName = "Branch"
+            BlueprintName = "Branch-macOS"
             ReferencedContainer = "container:Branch.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -106,7 +106,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D54C07420A6560400C76496"
             BuildableName = "Branch.framework"
-            BlueprintName = "Branch"
+            BlueprintName = "Branch-macOS"
             ReferencedContainer = "container:Branch.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

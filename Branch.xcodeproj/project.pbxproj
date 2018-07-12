@@ -165,7 +165,6 @@
 		4D046E9120C8AD3A0073262B /* NSData+Branch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Branch.m"; sourceTree = "<group>"; };
 		4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Branch.Test.m"; sourceTree = "<group>"; };
 		4D046E9920C8CE740073262B /* BNCTestNetworkService.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCTestNetworkService.Test.m; sourceTree = "<group>"; };
-		4D08A82B20AA7844009BF226 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		4D159DCB20B62D7D005A9850 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D27FF8620B15431002C7EB0 /* BNCSettings.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCSettings.Test.m; sourceTree = "<group>"; };
 		4D27FF8920B222C7002C7EB0 /* BNCPersistence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCPersistence.h; sourceTree = "<group>"; };
@@ -282,7 +281,6 @@
 		4D54C06B20A6560400C76496 = {
 			isa = PBXGroup;
 			children = (
-				4D08A82B20AA7844009BF226 /* TODO.md */,
 				4DBB97A020EAA12A00207F0E /* README.md */,
 				4D54C07720A6560400C76496 /* Branch */,
 				4D54C08220A6560400C76496 /* BranchTests */,
@@ -505,19 +503,20 @@
 			productReference = 4D159DCB20B62D7D005A9850 /* BranchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4D54C07420A6560400C76496 /* Branch */ = {
+		4D54C07420A6560400C76496 /* Branch-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D54C08920A6560400C76496 /* Build configuration list for PBXNativeTarget "Branch" */;
+			buildConfigurationList = 4D54C08920A6560400C76496 /* Build configuration list for PBXNativeTarget "Branch-macOS" */;
 			buildPhases = (
 				4D54C07020A6560400C76496 /* Sources */,
 				4D54C07120A6560400C76496 /* Frameworks */,
 				4D54C07220A6560400C76496 /* Headers */,
+				4D6977E620F6D2C000F36413 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Branch;
+			name = "Branch-macOS";
 			productName = "Branch-SDK-Mac";
 			productReference = 4D54C07520A6560400C76496 /* Branch.framework */;
 			productType = "com.apple.product-type.framework";
@@ -573,7 +572,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4D54C07420A6560400C76496 /* Branch */,
+				4D54C07420A6560400C76496 /* Branch-macOS */,
 				4D67473C20C74E81001639C5 /* Branch-tvOS */,
 				4D159DCA20B62D7D005A9850 /* BranchTests */,
 			);
@@ -591,6 +590,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D6977E620F6D2C000F36413 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/Branch.framework",
+			);
+			outputPaths = (
+				"$(PROJECT_DIR)/Frameworks/macOS/Branch.framework",
+				"$(PROJECT_DIR)/Frameworks/macOS/Branch.framework.dSYM",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "ditto ${TARGET_BUILD_DIR}/Branch.framework ${PROJECT_DIR}/Frameworks/macOS/Branch.framework\nditto ${TARGET_BUILD_DIR}/Branch.framework.dSYM ${PROJECT_DIR}/Frameworks/macOS/Branch.framework.dSYM\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4D159DC720B62D7D005A9850 /* Sources */ = {
@@ -699,7 +717,7 @@
 /* Begin PBXTargetDependency section */
 		4D70A4B920E14D780083768C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D54C07420A6560400C76496 /* Branch */;
+			target = 4D54C07420A6560400C76496 /* Branch-macOS */;
 			targetProxy = 4D70A4B820E14D780083768C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -779,7 +797,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -875,6 +893,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = Branch;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -953,7 +972,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1047,7 +1066,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D54C08920A6560400C76496 /* Build configuration list for PBXNativeTarget "Branch" */ = {
+		4D54C08920A6560400C76496 /* Build configuration list for PBXNativeTarget "Branch-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D54C08A20A6560400C76496 /* Debug */,
