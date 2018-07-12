@@ -7,7 +7,7 @@
     <meta charset='utf-8'>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
-    
+    <link rel="icon" href="icon.png">
   </head>
   <body>
     <a name="//apple_ref/objc/Class/Branch" class="dashAnchor"></a>
@@ -309,9 +309,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(cm)sharedInstance"></a>
-                    <a name="//apple_ref/objc/Method/+sharedInstance" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(cm)sharedInstance">+sharedInstance</a>
+                    <a name="/c:objc(cs)Branch(cpy)sharedInstance"></a>
+                    <a name="//apple_ref/objc/Property/sharedInstance" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(cpy)sharedInstance">sharedInstance</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -326,12 +326,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">instancetype</span><span class="p">)</span><span class="n">sharedInstance</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">atomic</span><span class="p">,</span> <span class="n">class</span><span class="p">)</span> <span class="n">Branch</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">sharedInstance</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">sharedInstance</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="k">var</span> <span class="nv">sharedInstance</span><span class="p">:</span> <span class="kt">Branch</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -344,9 +344,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(cm)bundleIdentifier"></a>
-                    <a name="//apple_ref/objc/Method/+bundleIdentifier" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(cm)bundleIdentifier">+bundleIdentifier</a>
+                    <a name="/c:objc(cs)Branch(cpy)bundleIdentifier"></a>
+                    <a name="//apple_ref/objc/Property/bundleIdentifier" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(cpy)bundleIdentifier">bundleIdentifier</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -361,12 +361,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">bundleIdentifier</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">atomic</span><span class="p">,</span> <span class="n">class</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">bundleIdentifier</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">bundleIdentifier</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="k">var</span> <span class="nv">bundleIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -379,9 +379,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(cm)kitDisplayVersion"></a>
-                    <a name="//apple_ref/objc/Method/+kitDisplayVersion" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(cm)kitDisplayVersion">+kitDisplayVersion</a>
+                    <a name="/c:objc(cs)Branch(cpy)kitDisplayVersion"></a>
+                    <a name="//apple_ref/objc/Property/kitDisplayVersion" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(cpy)kitDisplayVersion">kitDisplayVersion</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -396,12 +396,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">kitDisplayVersion</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">atomic</span><span class="p">,</span> <span class="n">class</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">kitDisplayVersion</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="kd">func</span> <span class="nf">kitDisplayVersion</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="k">var</span> <span class="nv">kitDisplayVersion</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -472,9 +472,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(im)isStarted"></a>
-                    <a name="//apple_ref/objc/Method/-isStarted" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(im)isStarted">-isStarted</a>
+                    <a name="/c:objc(cs)Branch(py)isStarted"></a>
+                    <a name="//apple_ref/objc/Property/isStarted" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(py)isStarted">isStarted</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -489,12 +489,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">isStarted</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">atomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">isStarted</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">isStarted</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isStarted</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -685,9 +685,9 @@ a completion callback, notifying you whether it succeeded or failed.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(im)userIdentityIsSet"></a>
-                    <a name="//apple_ref/objc/Method/-userIdentityIsSet" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(im)userIdentityIsSet">-userIdentityIsSet</a>
+                    <a name="/c:objc(cs)Branch(py)userIdentityIsSet"></a>
+                    <a name="//apple_ref/objc/Property/userIdentityIsSet" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(py)userIdentityIsSet">userIdentityIsSet</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -704,12 +704,12 @@ of installs</em>. If you call setIdentity, this device will have that identity a
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">userIdentityIsSet</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">atomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">userIdentityIsSet</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">userIdentityIsSet</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">userIdentityIsSet</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>

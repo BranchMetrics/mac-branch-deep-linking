@@ -74,13 +74,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Branch : NSObject
 
 /** Returns a pointer to the shared Branch instance. */
-+ (instancetype) sharedInstance;
+@property (class, readonly, strong) Branch *sharedInstance;
 
 /** Returns the bundle identifier of the Branch framework. */
-+ (NSString*) bundleIdentifier;
+@property (class, readonly, strong) NSString *bundleIdentifier;
 
 /** Returns  the display version number of the Branch framework. */
-+ (NSString*) kitDisplayVersion;
+@property (class, readonly, strong) NSString *kitDisplayVersion;
 
 /**
   @param configuration Pass the configuration parameters for your app.
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration;
 
 /** Returns true if the Branch SDK has been started. */
-- (BOOL) isStarted;
+@property (atomic, assign, readonly) BOOL isStarted;
 
 /** Returns true if the passed URL is a URL that will be handled by Branch. */
 - (BOOL) isBranchURL:(NSURL*)url;
@@ -124,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
  of installs*. If you call setIdentity, this device will have that identity associated with this user until
  `logoutWithCompletion` is called. This includes persisting through uninstalls, as we track device id.
 */
-- (BOOL)userIdentityIsSet;
+@property (atomic, assign, readonly) BOOL userIdentityIsSet;
 
 /**
  Clear all of the current user's session items.

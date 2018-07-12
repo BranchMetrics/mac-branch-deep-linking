@@ -7,7 +7,7 @@
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
-    
+    <link rel="icon" href="icon.png">
   </head>
   <body>
     <a title="Branch  Reference"></a>
@@ -296,14 +296,16 @@
             <p><a href="https://raw.githubusercontent.com/hyperium/hyper/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT licensed"></a></p>
 <h1 id='branch-metrics-for-mac-sdk' class='heading'>Branch Metrics for Mac SDK</h1>
 
-<p>The Branch SDK for Mac brings universal deep linking to your app. The same <code>http://</code> web based Branch link open apps on
-Mac, iOS, and Android so you can have one link that works on all your platforms.</p>
+<p>The Branch SDK for Mac brings universal deep linking to your app. The same <code>http://</code> web based
+Branch link open apps on Mac, iOS, and Android so you can have one link that works on all your
+platforms.</p>
 
-<p>Branch links are sophisticated links that adapt to a user&rsquo;s environment and can be configured with journeys and fallback options
+<p>Branch links adapt to a user&rsquo;s environment and can be configured with journeys and fallback options
 so unexpected conditions are handled gracefully.</p>
 
-<p>In addition you can track and analyze your app usage and the effectiveness of sharing virality, marketing campaigns, and cohorts
-with atrribution, influencer, and content breakdowns of your links on the Branch dashboard.</p>
+<p>In addition you can track and analyze your app usage and the effectiveness of sharing virality,
+marketing campaigns, and cohorts with atrribution, influencer, and content breakdowns of your links
+on the Branch dashboard.</p>
 <h2 id='contents' class='heading'>Contents</h2>
 
 <ol>
@@ -319,7 +321,7 @@ with atrribution, influencer, and content breakdowns of your links on the Branch
 <ul>
 <li><a href="#get-a-branch-key">Get a Branch Key</a></li>
 <li><a href="#install-the-framework">Install the Framework</a></li>
-<li><a href="#add-an-app-scheme-to-your-info-plist">Update Your Info.plist</a></li>
+<li><a href="#add-your-app-scheme-to-your-info-plist">Update Your Info.plist</a></li>
 <li><a href="#add-some-code">Add Some Code</a></li>
 <li><a href="#rejoice">Rejoice</a></li>
 </ul></li>
@@ -361,20 +363,22 @@ pages but don&rsquo;t open Mac apps. Instead, Mac apps open with URI schemes, th
 <p>You&rsquo;ll need to choose a unique URI scheme for your Mac app.</p>
 <h3 id='uri-scheme-considerations' class='heading'>URI Scheme Considerations</h3>
 
-<p>You need to choose an URI scheme that is not already in common use and is likely unique on a Mac. For instance, <code>web://</code> is
-probably a bad choice. Many people choose the reverse domain name for their app or use their bundle identifier,
-like <code>io.branch.cool-app://</code>.</p>
+<p>You need to choose an URI scheme that is not already in common use and is likely unique on a Mac.
+For instance, <code>web://</code> is probably a bad choice. Many people choose the reverse domain name for
+their app or use their bundle identifier, like <code>io.branch.cool-app://</code>.</p>
 
-<p>Don&rsquo;t use an app scheme starting with <code>fb</code>, <code>db</code>, <code>twitterkit-</code>, <code>pin</code>, or <code>com.googleusercontent.apps</code>. These schemes
-are ignored by Branch since they are commonly used by other app kits for oauth and other uses.</p>
+<p>Don&rsquo;t use an app scheme starting with <code>fb</code>, <code>db</code>, <code>twitterkit-</code>, <code>pin</code>, or
+<code>com.googleusercontent.apps</code>. These schemes are ignored by Branch since they are commonly used by
+other app kits for oauth and other uses.</p>
 <h3 id='how-branch-deep-linking-for-mac-works' class='heading'>How Branch Deep Linking for Mac Works</h3>
 
-<p>A Branch link is an web URL that looks like <code>https://your-app.app.link/bOsE0bbUtO</code>. When this link is clicked on a Mac it
-opens a Branch web page that quickly determines if the Mac app can be opened on the user&rsquo;s computer, and if so, Branch
-opens the app with a Mac URI scheme like <code>your-app-scheme://open?link_click_id=348527481794276288</code>.</p>
+<p>A Branch link is an web URL that looks like <code>https://your-app.app.link/bOsE0bbUtO</code>. When this link
+is clicked on a Mac it opens a Branch web page that quickly determines if the Mac app can be opened
+on the user&rsquo;s computer, and if so, Branch opens the app with a Mac URI scheme like
+<code>your-app-scheme://open?link_click_id=348527481794276288</code>.</p>
 
-<p>(If the user doesn&rsquo;t have the app installed Branch can redirect the user to a fallback URL, like an app download page or some
-other configurable place).</p>
+<p>(If the user doesn&rsquo;t have the app installed Branch can redirect the user to a fallback URL, like an
+app download page or some other configurable place).</p>
 <h2 id='adding-branch-to-your-app' class='heading'>Adding Branch to Your App</h2>
 <h3 id='get-a-branch-key' class='heading'>Get a Branch Key</h3>
 
@@ -387,14 +391,15 @@ other configurable place).</p>
 
 <p>You can drag and drop the framework into your app to install it.</p>
 
-<p>In Xcode, click on  your project in the Project Navigator,  select your app in the Targets area, select the &lsquo;General&rsquo; tab up top, and
-scroll down to the &lsquo;Embedded Binaries&rsquo; section. You can drag the Branch.framework bundle from the <code>Frameworks/macOS</code> project directory into this area.</p>
+<p>In Xcode, click on  your project in the Project Navigator,  select your app in the Targets area,
+select the &lsquo;General&rsquo; tab up top, and scroll down to the &lsquo;Embedded Binaries&rsquo; section. You can drag
+the Branch.framework bundle from the <code>Frameworks/macOS</code> project directory into this area.</p>
 
 <p><img src="Documentation/Images/EmbeddedBinary.png" alt="Add Framework" title="Add Framework"></p>
 <h3 id='add-your-app-scheme-to-your-info-plist' class='heading'>Add Your App Scheme to Your Info.plist</h3>
 
-<p>Add your app scheme to your Info.plist file so macOS knows what schemes your app can handle. This example shows
- <code>testbed-mac</code> as the app scheme. Add just the scheme and not the <code>://</code> part.</p>
+<p>Add your app scheme to your Info.plist file so macOS knows what schemes your app can handle. This
+example shows <code>testbed-mac</code> as the app scheme. Add just the scheme and not the <code>://</code> part.</p>
 
 <p><img src="Documentation/Images/InfoPlist.png" alt="Add App Scheme" title="Add App Scheme"></p>
 
@@ -459,32 +464,30 @@ method:</p>
 
 <p>Rejoice! You&rsquo;re just integrated Branch into your app.</p>
 <h2 id='branch-reference' class='heading'>Branch Reference</h2>
-<h3 id='strong-turning-on-logging-strong' class='heading'><strong>Turning on Logging</strong></h3>
+<h3 id='turning-on-logging' class='heading'>Turning on Logging</h3>
 
 <p>To help debugging your app, you can turn on Branch logging, which logs to the console. Remember to turn it off in your production app.</p>
 <h4 id='property' class='heading'>Property</h4>
 
 <p><code><a href="Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled">Branch.loggingEnabled</a></code></p>
-
-<p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled"><strong><code>loggingEnabled</code></strong></a></p>
-<h3 id='strong-setting-user-identities-strong' class='heading'><strong>Setting User Identities</strong></h3>
+<h3 id='setting-user-identities' class='heading'>Setting User Identities</h3>
 
 <p>Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It&rsquo;s
 helpful if you know your users access your service from different devices. This where we introduce the concept of an
 &lsquo;user identity&rsquo;.</p>
 <h4 id='method' class='heading'>Method</h4>
 
-<p><code>setUserIdentity:completion:</code></p>
+<p><code>Branch.setUserIdentity:completion:</code></p>
 
 <p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:"><strong><code>setUserIdentity:completion:</code></strong></a></p>
-<h3 id='strong-logout-strong' class='heading'><strong>Logout</strong></h3>
+<h3 id='logout' class='heading'>Logout</h3>
 
 <p>If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the stored parameters get cleared and all events are properly attributed to the right identity.</p>
 
 <p><strong>Warning</strong>: This call will clear attribution on the device.</p>
 <h4 id='method' class='heading'>Method</h4>
 
-<p><code>logoutWithCompletion:</code></p>
+<p><code>Branch.logoutWithCompletion:</code></p>
 
 <p>See <a href="Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)logoutWithCompletion:"><strong><code>logoutWithCompletion:</code></strong></a></p>
 <h3 id='tracking-user-actions-and-events' class='heading'>Tracking User Actions and Events</h3>

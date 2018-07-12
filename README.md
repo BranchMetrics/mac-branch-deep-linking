@@ -24,7 +24,7 @@ on the Branch dashboard.
 3. [Adding Branch to your App](#adding-branch-to-your-app)
    + [Get a Branch Key](#get-a-branch-key)
    + [Install the Framework](#install-the-framework)
-   + [Update Your Info.plist](#add-an-app-scheme-to-your-info-plist)
+   + [Update Your Info.plist](#add-your-app-scheme-to-your-info-plist)
    + [Add Some Code](#add-some-code)
    + [Rejoice](#rejoice)
 
@@ -179,7 +179,7 @@ Rejoice! You're just integrated Branch into your app.
 
 ## Branch Reference
 
-### **Turning on Logging**
+### Turning on Logging
 
 To help debugging your app, you can turn on Branch logging, which logs to the console. Remember to turn it off in your production app.
 
@@ -187,9 +187,7 @@ To help debugging your app, you can turn on Branch logging, which logs to the co
 
 `Branch.loggingEnabled`
 
-See [**`loggingEnabled`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled)
-
-### **Setting User Identities**
+### Setting User Identities
 
 Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It's
 helpful if you know your users access your service from different devices. This where we introduce the concept of an
@@ -197,11 +195,11 @@ helpful if you know your users access your service from different devices. This 
 
 #### Method
 
-`setUserIdentity:completion:`
+`Branch.setUserIdentity:completion:`
 
 See [**`setUserIdentity:completion:`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)setUserIdentity:completion:)
 
-### **Logout**
+### Logout
 
 If you provide a logout function in your app, be sure to clear the user when the logout completes. This will ensure that all the stored parameters get cleared and all events are properly attributed to the right identity.
 
@@ -209,7 +207,7 @@ If you provide a logout function in your app, be sure to clear the user when the
 
 #### Method
 
-`logoutWithCompletion:`
+`Branch.logoutWithCompletion:`
 
 See [**`logoutWithCompletion:`**](Documentation/HTMLDocumentation/Classes/Branch.html#/c:objc(cs)Branch(im)logoutWithCompletion:)
 

@@ -179,7 +179,7 @@
     [branch startWithConfiguration:configuration];
     [self waitForExpectationsWithTimeout:3.0 handler:nil];
     long count = atomic_load(&operationCount2);
-    XCTAssertEqual(count, 4);
+    XCTAssertEqual(count, 6);
 }
 
 - (void) testRequestMetadata {
@@ -246,7 +246,7 @@
                 NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
                 NSLog(@"WTF: %ld request: %@.", requestCount, request.URL.path);
                 NSLog(@"%@", dictionary);
-                if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+                if ([request.URL.path isEqualToString:@"/v2/event"]) {
                     ms = [dictionary[@"instrumentation"][@"/v1/install-brtt"] integerValue];
                 }
                 return [BNCTestNetworkService operationWithRequest:request response:@"{}"];

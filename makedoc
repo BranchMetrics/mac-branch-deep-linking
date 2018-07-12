@@ -47,6 +47,7 @@ jazzy \
     --output ../Documentation/HTMLDocumentation \
     --github_url "https://github.com/BranchMetrics/Branch-SDK-Mac" \
     --github-file-prefix  "https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0" \
+    --head "<link rel=\"icon\" href=\"icon.png\">" \
     --docset-icon ../Documentation/Images/Branch-16.png \
     --docset-path ../Branch.docset
 
@@ -72,7 +73,7 @@ ditto Documentation/Images \
     Documentation/HTMLDocumentation/Documentation/Images
 
 ditto Documentation/Images \
-    Documentation/Branch.docset/Content/Resources/Documents/Documentation/Images
+    Documentation/Branch.docset/Contents/Resources/Documents/Documentation/Images
 
 rm Documentation/Branch.tgz
 rm -Rf Temp
