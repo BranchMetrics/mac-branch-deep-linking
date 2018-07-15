@@ -15,6 +15,8 @@ on the Branch dashboard.
 
 NOTE: This project is still in beta. We support deferred and regular deep linking. We are currently building support for analytics, and this is slated to be released by end of Q3 18. Please send feedback to sahil@branch.io. Happy linking. 
 
+[Online documentation](https://branchmetrics.github.io/mac-branch-deep-linking/index.html)
+
 ## Contents
 
 1. [Support and Example](#support-and-example)
