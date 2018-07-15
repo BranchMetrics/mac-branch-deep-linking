@@ -33,5 +33,5 @@ echo ">>> Pushing version $version to '$git_branch'..." 1>&2
 
 git add --all
 git commit --allow-empty -m "Release ${version}."
-git tag "${version}"
+git tag v"${version}"
 git push --tags origin "$git_branch"
