@@ -35,3 +35,7 @@ git add --all
 git commit --allow-empty -m "Release ${version}."
 git tag v"${version}"
 git push --tags origin "$git_branch"
+
+# Update the online doc sub repo:
+git subtree push --prefix Documentation/HTMLDocumentation origin gh-pages
+
