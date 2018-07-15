@@ -8,27 +8,32 @@ set -euo pipefail
 # https://pandoc.org
 # https://kapeli.com/docsets
 
-function current_script_fullpath() {
-    local scriptfile
-    if (( $BASH_SUBSHELL > 1 ))
+function full_path_of_directory() {
+    local directory_name
+    directory_name="$1"
+    current_directory=$(pwd)
+    while [[ "$(basename "$current_directory")" != "$directory_name" && ${#current_directory} -gt 1 ]]
+    do
+        current_directory=$(dirname "$current_directory")
+    done
+    if (( ${#current_directory} <= 1 ))
     then
-        echo ">>> Error: function '$FUNCNAME' can't be invoked in a sub-shell." 1>&2
+        echo ">>> Error: Path of '$1' not found." 1>&2
         kill -9 -- $$
         exit 1
     fi
-    scriptfile="$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    scriptfile="${scriptfile}"/$(basename "$0")
-    echo "$scriptfile"
+    echo "$current_directory"
 }
 
-source_path="$(current_script_fullpath)"
-cd "$(dirname "$source_path")"/../..
+project_directory="$(full_path_of_directory mac-branch-deep-linking)"
+cd "$project_directory"
 
 mkdir Temp
 ditto Branch Temp/Branch
 ditto Branch.xcodeproj Temp
 ditto LICENSE Temp
 ditto README.md Temp
+ditto CHANGELOG.md Temp
 cd Temp
 
 jazzy \
@@ -54,7 +59,7 @@ jazzy \
 #     --podspec FILEPATH \
 #     --skip-documentation
 
-cd ..
+cd "$project_directory"
 ln -vsf Documentation/HTMLDocumentation/index.html Documentation.html
 
 cp Documentation/Images/Branch-16.png \
