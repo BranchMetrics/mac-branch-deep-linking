@@ -91,6 +91,8 @@
     self.urlField.stringValue = @"";
     self.errorField.stringValue = @"";
     self.dataTextView.string = @"";
+    self.requestTextView.string = @"";
+    self.responseTextView.string = @"";
 }
 
 - (NSString*) errorMessage:(NSError*)error {
@@ -150,17 +152,18 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 }
 
 - (IBAction) setIdentity:(id)sender {
+    [self clearUIFields];
     [[Branch sharedInstance] setUserIdentity:@"Bob" completion:^ (BranchSession*session, NSError*error) {
-        [self clearUIFields];
-        self.stateField.stringValue = [NSString stringWithFormat:@"Set Identity: '%@'", session.userIdentityForDeveloper];
+        self.stateField.stringValue =
+            [NSString stringWithFormat:@"Set Identity: '%@'", session.userIdentityForDeveloper];
         self.errorField.stringValue = [self errorMessage:error];
     }];
 }
 
 - (IBAction) logUserOut:(id)sender {
     BNCLogMethodName();
+    [self clearUIFields];
     [[Branch sharedInstance] logoutWithCompletion:^ (NSError*error) {
-        [self clearUIFields];
         self.stateField.stringValue = @"Log User Out";
         self.errorField.stringValue = [self errorMessage:error];
     }];
@@ -224,8 +227,8 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
         @"Custom_Event_Property_Key2": @"Custom_Event_Property_val2"
     };
     event.contentItems = (NSMutableArray*) @[ buo ];
+    [self clearUIFields];
     [[Branch sharedInstance] logEvent:event completion:^(NSError * _Nullable error) {
-        [self clearUIFields];
         self.stateField.stringValue = event.eventName;
         self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";
     }];
@@ -288,7 +291,6 @@ static NSURL*lastCreatedLink = nil;
         branchShortLinkWithContent:buo
         linkProperties:linkProperties
         completion:^(NSURL * _Nullable shortURL, NSError * _Nullable error) {
-            [self clearUIFields];
             self.errorField.stringValue = [self errorMessage:error];
             self.dataTextView.string = shortURL.absoluteString ?: @"";
             lastCreatedLink = shortURL;
@@ -296,11 +298,11 @@ static NSURL*lastCreatedLink = nil;
 }
 
 - (IBAction) createLongLink:(id)sender {
+    [self clearUIFields];
     BranchLinkProperties *linkProperties = [self createLinkProperties];
     BranchUniversalObject *buo = [self createUniversalObject];
     buo.creationDate = [NSDate date];
     NSURL*url = [[Branch sharedInstance] branchLongLinkWithContent:buo linkProperties:linkProperties];
-    [self clearUIFields];
     self.errorField.stringValue = [self errorMessage:nil];
     self.dataTextView.string = url.absoluteString;
     lastCreatedLink = url;

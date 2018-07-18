@@ -167,13 +167,49 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 }
 
 - (void) postOperationForAPIServiceName:(NSString*)serviceName
-        dictionary:(NSDictionary*)dictionary
+        dictionary:(NSMutableDictionary*)dictionary
         completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion {
 
     serviceName = [serviceName stringByTrimmingCharactersInSet:
         [NSCharacterSet characterSetWithCharactersInString:@" \t\n\\/"]];
     NSString *string = [NSString stringWithFormat:@"%@/%@", self.configuration.branchAPIServiceURL, serviceName];
     NSURL*url = [NSURL URLWithString:string];
+
+    if (self.settings.trackingDisabled) {
+        NSString *endpoint = url.path;
+        if (([endpoint isEqualToString:@"/v1/install"] ||
+             [endpoint isEqualToString:@"/v1/open"]) &&
+             (dictionary[@"external_intent_uri"] != nil ||
+              dictionary[@"universal_link_url"] != nil  ||
+              dictionary[@"spotlight_identitifer"] != nil ||
+              dictionary[@"link_identifier"] != nil)) {
+
+              // Clear any sensitive data:
+              dictionary[@"tracking_disabled"] = BNCWireFormatFromBool(YES);
+              dictionary[@"local_ip"] = nil;
+              dictionary[@"lastest_update_time"] = nil;
+              dictionary[@"previous_update_time"] = nil;
+              dictionary[@"latest_install_time"] = nil;
+              dictionary[@"first_install_time"] = nil;
+              dictionary[@"ios_vendor_id"] = nil;
+              dictionary[@"hardware_id"] = nil;
+              dictionary[@"hardware_id_type"] = nil;
+              dictionary[@"is_hardware_id_real"] = nil;
+              dictionary[@"device_fingerprint_id"] = nil;
+              dictionary[@"identity_id"] = nil;
+              dictionary[@"identity"] = nil;
+              dictionary[@"update"] = nil;
+
+        } else {
+
+            [self.settings clearTrackingInformation];
+            BNCNetworkAPIOperation* operation = [[BNCNetworkAPIOperation alloc] init];
+            operation.error = [NSError branchErrorWithCode:BNCTrackingDisabledError];
+            BNCLogError(@"Network service error: %@.", operation.error);
+            if (completion) completion(operation);
+            return;
+        }
+    }
 
     __weak __typeof(self) weakSelf = self;
     BNCNetworkAPIOperation* networkAPIOperation =

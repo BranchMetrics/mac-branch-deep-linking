@@ -123,7 +123,6 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
 }
 
 - (void) branchDidStartSession:(NSNotification*)notification {
-    [self.viewController clearUIFields];
     self.viewController.stateField.stringValue = notification.name;
     self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
     self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";

@@ -355,6 +355,7 @@
         dispatch_source_cancel(self.delayedOpenTimer);
         self.delayedOpenTimer = nil;
     }
+    if (!openURL && self.trackingDisabled) return;
 
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
@@ -511,7 +512,7 @@
         if (!!self.settings.trackingDisabled == !!trackingDisabled_) return;
         self.settings.trackingDisabled = trackingDisabled_;
         if (trackingDisabled_) {
-            [self.settings clearAllSettings];
+            [self.settings clearTrackingInformation];
             [self.networkAPIService clearNetworkQueue];
             //[self.linkCache clear];
         } else {
@@ -589,6 +590,7 @@
 }
 
 - (void) sendClose {
+    if (self.trackingDisabled) return;
     NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
     dictionary[@"identity_id"] = self.settings.identityID;
     dictionary[@"session_id"] = self.settings.sessionID;
@@ -659,7 +661,7 @@
     addItem(@"stage", linkProperties.stage);
     addItem(@"type", [NSNumber numberWithInteger:linkProperties.linkType].stringValue);
     addItem(@"matchDuration", [NSNumber numberWithInteger:linkProperties.matchDuration].stringValue);
-    addItem(@"source", @"ios"); // TODO: Add new sources.
+    addItem(@"source", @"mac"); // TODO: Add new sources.
 
     NSDictionary*dictionary = content.dictionary;
     if (dictionary.count) {
@@ -696,6 +698,7 @@
     return URL;
 }
 
+// Used for setting up unit tests mostly.
 - (void) clearAllSettings {
     BNCLogDebugSDK(@"[Branch clearAllSettings].");
     if (self.networkAPIService)

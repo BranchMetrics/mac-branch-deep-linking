@@ -137,13 +137,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable error))completion;
 
 /**
-  Generates a Branch short URL that describes the content described in the Branch Universal Object and
-  has the passed link properties.
+ Generates a Branch short URL that describes the content described in the Branch Universal Object and
+ has the passed link properties.
 
-  @param content        The BranchUniversalObject that describes the URL content.
-  @param linkProperties The link properties for the short link.
-  @param completion     The completion block that receives the short URL or an NSError if the operation
-                        fails.
+ A short link will not be able to be generated if networking is not available. In that case create a long
+ link, which is guaranteed to succeed, but can be very long.
+
+ @param content        The BranchUniversalObject that describes the URL content.
+ @param linkProperties The link properties for the short link.
+ @param completion     The completion block that receives the short URL or an NSError if the operation
+                       fails.
 */
 - (void) branchShortLinkWithContent:(BranchUniversalObject*)content
                      linkProperties:(BranchLinkProperties*)linkProperties
@@ -152,10 +155,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Generates a Branch long URL. This method is guaranteed to succeed and is synchronous.
 
-  @param content        The BranchUniversalObject that describes the URL content.
-  @param linkProperties The link properties for the short link.
+ @param content        The BranchUniversalObject that describes the URL content.
+ @param linkProperties The link properties for the short link.
 
-  @return Returns a Branch URL that has the given properties.
+ @return Returns a Branch URL that has the given properties.
 */
 - (NSURL*) branchLongLinkWithContent:(BranchUniversalObject*)content
                       linkProperties:(BranchLinkProperties*)linkProperties;
