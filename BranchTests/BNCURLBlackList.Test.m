@@ -161,8 +161,8 @@
                 NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
                 NSLog(@"URL: %@", request.URL);
                 NSLog(@"d: %@", dictionary);
-                NSString* link = dictionary[@"external_intent_uri"];
-                NSString *pattern =
+                NSString*link = dictionary[@"external_intent_uri"];
+                NSString*pattern =
                     @"^(?i)(?!(http|https):).*(:|:.*\\b)(password|o?auth|o?auth.?token|access|access.?token)\\b";
                     // @"^(?i).+:.*[?].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
                 NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);

@@ -492,6 +492,7 @@
 				4D159DC720B62D7D005A9850 /* Sources */,
 				4D159DC820B62D7D005A9850 /* Frameworks */,
 				4D159DC920B62D7D005A9850 /* Resources */,
+				4D61CA02210646AD0037D104 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -528,6 +529,7 @@
 				4D67473D20C74E81001639C5 /* Sources */,
 				4D67475620C74E81001639C5 /* Frameworks */,
 				4D67475720C74E81001639C5 /* Headers */,
+				4D61CA01210644CA0037D104 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -592,6 +594,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4D61CA01210644CA0037D104 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Build tvOS lib.\"";
+		};
+		4D61CA02210646AD0037D104 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Build tvOS test lib.\" ";
+		};
 		4D6977E620F6D2C000F36413 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -922,7 +950,7 @@
 		4D67477120C74E81001639C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				SDKROOT = appletvos;
 			};
 			name = Debug;
@@ -930,7 +958,7 @@
 		4D67477320C74E81001639C5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				SDKROOT = appletvos;
 			};
 			name = Release;
@@ -1038,7 +1066,7 @@
 		4DFB135720CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.tvOS;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				SDKROOT = appletvos;
 			};
 			name = UnitTests;

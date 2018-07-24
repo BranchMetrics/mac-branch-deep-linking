@@ -1,0 +1,691 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D415FB621063A2C00892A46 /* APPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FB521063A2C00892A46 /* APPAppDelegate.m */; };
+		4D415FB921063A2C00892A46 /* APPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FB821063A2C00892A46 /* APPViewController.m */; };
+		4D415FBC21063A2C00892A46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D415FBA21063A2C00892A46 /* Main.storyboard */; };
+		4D415FBE21063A2E00892A46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D415FBD21063A2E00892A46 /* Assets.xcassets */; };
+		4D415FC121063A2E00892A46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FC021063A2E00892A46 /* main.m */; };
+		4D415FCB21063A2E00892A46 /* TestBed-tvOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FCA21063A2E00892A46 /* TestBed-tvOSTests.m */; };
+		4D415FD621063A2E00892A46 /* TestBed-tvOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FD521063A2E00892A46 /* TestBed-tvOSUITests.m */; };
+		4D61C9FB21063D2B0037D104 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D415FED21063C2300892A46 /* Branch.framework */; };
+		4D61C9FC21063D2B0037D104 /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D415FED21063C2300892A46 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4D415FC721063A2E00892A46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D415FA921063A2C00892A46 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D415FB021063A2C00892A46;
+			remoteInfo = "TestBed-tvOS";
+		};
+		4D415FD221063A2E00892A46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D415FA921063A2C00892A46 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D415FB021063A2C00892A46;
+			remoteInfo = "TestBed-tvOS";
+		};
+		4D415FEA21063C2300892A46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D415FE421063C2300892A46 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D54C07520A6560400C76496;
+			remoteInfo = "Branch-macOS";
+		};
+		4D415FEC21063C2300892A46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D415FE421063C2300892A46 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D67477420C74E81001639C5;
+			remoteInfo = "Branch-tvOS";
+		};
+		4D415FEE21063C2300892A46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D415FE421063C2300892A46 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D159DCB20B62D7D005A9850;
+			remoteInfo = BranchTests;
+		};
+		4D61C9FD21063D2B0037D104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D415FE421063C2300892A46 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D67473C20C74E81001639C5;
+			remoteInfo = "Branch-tvOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4D61C9FF21063D2B0037D104 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4D61C9FC21063D2B0037D104 /* Branch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4D415FB121063A2C00892A46 /* TestBed-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestBed-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D415FB421063A2C00892A46 /* APPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPAppDelegate.h; sourceTree = "<group>"; };
+		4D415FB521063A2C00892A46 /* APPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPAppDelegate.m; sourceTree = "<group>"; };
+		4D415FB721063A2C00892A46 /* APPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPViewController.h; sourceTree = "<group>"; };
+		4D415FB821063A2C00892A46 /* APPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPViewController.m; sourceTree = "<group>"; };
+		4D415FBB21063A2C00892A46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4D415FBD21063A2E00892A46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D415FBF21063A2E00892A46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D415FC021063A2E00892A46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4D415FC621063A2E00892A46 /* TestBed-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D415FCA21063A2E00892A46 /* TestBed-tvOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-tvOSTests.m"; sourceTree = "<group>"; };
+		4D415FCC21063A2E00892A46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D415FD121063A2E00892A46 /* TestBed-tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-tvOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D415FD521063A2E00892A46 /* TestBed-tvOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-tvOSUITests.m"; sourceTree = "<group>"; };
+		4D415FD721063A2E00892A46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D415FE421063C2300892A46 /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
+		4D61CA0721065A9D0037D104 /* TestBed-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TestBed-tvOS.entitlements"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D415FAE21063A2C00892A46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D61C9FB21063D2B0037D104 /* Branch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D415FC321063A2E00892A46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D415FCE21063A2E00892A46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D415FA821063A2C00892A46 = {
+			isa = PBXGroup;
+			children = (
+				4D415FE421063C2300892A46 /* Branch.xcodeproj */,
+				4D415FB321063A2C00892A46 /* TestBed-tvOS */,
+				4D415FC921063A2E00892A46 /* TestBed-tvOSTests */,
+				4D415FD421063A2E00892A46 /* TestBed-tvOSUITests */,
+				4D415FB221063A2C00892A46 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4D415FB221063A2C00892A46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D415FB121063A2C00892A46 /* TestBed-tvOS.app */,
+				4D415FC621063A2E00892A46 /* TestBed-tvOSTests.xctest */,
+				4D415FD121063A2E00892A46 /* TestBed-tvOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4D415FB321063A2C00892A46 /* TestBed-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				4D61CA0721065A9D0037D104 /* TestBed-tvOS.entitlements */,
+				4D415FB421063A2C00892A46 /* APPAppDelegate.h */,
+				4D415FB521063A2C00892A46 /* APPAppDelegate.m */,
+				4D415FB721063A2C00892A46 /* APPViewController.h */,
+				4D415FB821063A2C00892A46 /* APPViewController.m */,
+				4D415FBA21063A2C00892A46 /* Main.storyboard */,
+				4D415FBD21063A2E00892A46 /* Assets.xcassets */,
+				4D415FBF21063A2E00892A46 /* Info.plist */,
+				4D415FC021063A2E00892A46 /* main.m */,
+			);
+			path = "TestBed-tvOS";
+			sourceTree = "<group>";
+		};
+		4D415FC921063A2E00892A46 /* TestBed-tvOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D415FCA21063A2E00892A46 /* TestBed-tvOSTests.m */,
+				4D415FCC21063A2E00892A46 /* Info.plist */,
+			);
+			path = "TestBed-tvOSTests";
+			sourceTree = "<group>";
+		};
+		4D415FD421063A2E00892A46 /* TestBed-tvOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4D415FD521063A2E00892A46 /* TestBed-tvOSUITests.m */,
+				4D415FD721063A2E00892A46 /* Info.plist */,
+			);
+			path = "TestBed-tvOSUITests";
+			sourceTree = "<group>";
+		};
+		4D415FE521063C2300892A46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D415FEB21063C2300892A46 /* Branch.framework */,
+				4D415FED21063C2300892A46 /* Branch.framework */,
+				4D415FEF21063C2300892A46 /* BranchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D415FB021063A2C00892A46 /* TestBed-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D415FDA21063A2E00892A46 /* Build configuration list for PBXNativeTarget "TestBed-tvOS" */;
+			buildPhases = (
+				4D415FAD21063A2C00892A46 /* Sources */,
+				4D415FAE21063A2C00892A46 /* Frameworks */,
+				4D415FAF21063A2C00892A46 /* Resources */,
+				4D61C9FF21063D2B0037D104 /* Embed Frameworks */,
+				4D61CA00210640D50037D104 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D61C9FE21063D2B0037D104 /* PBXTargetDependency */,
+			);
+			name = "TestBed-tvOS";
+			productName = "TestBed-tvOS";
+			productReference = 4D415FB121063A2C00892A46 /* TestBed-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4D415FC521063A2E00892A46 /* TestBed-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D415FDD21063A2E00892A46 /* Build configuration list for PBXNativeTarget "TestBed-tvOSTests" */;
+			buildPhases = (
+				4D415FC221063A2E00892A46 /* Sources */,
+				4D415FC321063A2E00892A46 /* Frameworks */,
+				4D415FC421063A2E00892A46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D415FC821063A2E00892A46 /* PBXTargetDependency */,
+			);
+			name = "TestBed-tvOSTests";
+			productName = "TestBed-tvOSTests";
+			productReference = 4D415FC621063A2E00892A46 /* TestBed-tvOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		4D415FD021063A2E00892A46 /* TestBed-tvOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D415FE021063A2E00892A46 /* Build configuration list for PBXNativeTarget "TestBed-tvOSUITests" */;
+			buildPhases = (
+				4D415FCD21063A2E00892A46 /* Sources */,
+				4D415FCE21063A2E00892A46 /* Frameworks */,
+				4D415FCF21063A2E00892A46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D415FD321063A2E00892A46 /* PBXTargetDependency */,
+			);
+			name = "TestBed-tvOSUITests";
+			productName = "TestBed-tvOSUITests";
+			productReference = 4D415FD121063A2E00892A46 /* TestBed-tvOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4D415FA921063A2C00892A46 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = APP;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Branch;
+				TargetAttributes = {
+					4D415FB021063A2C00892A46 = {
+						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
+					};
+					4D415FC521063A2E00892A46 = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 4D415FB021063A2C00892A46;
+					};
+					4D415FD021063A2E00892A46 = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 4D415FB021063A2C00892A46;
+					};
+				};
+			};
+			buildConfigurationList = 4D415FAC21063A2C00892A46 /* Build configuration list for PBXProject "TestBed-tvOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4D415FA821063A2C00892A46;
+			productRefGroup = 4D415FB221063A2C00892A46 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4D415FE521063C2300892A46 /* Products */;
+					ProjectRef = 4D415FE421063C2300892A46 /* Branch.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				4D415FB021063A2C00892A46 /* TestBed-tvOS */,
+				4D415FC521063A2E00892A46 /* TestBed-tvOSTests */,
+				4D415FD021063A2E00892A46 /* TestBed-tvOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4D415FEB21063C2300892A46 /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D415FEA21063C2300892A46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D415FED21063C2300892A46 /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D415FEC21063C2300892A46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D415FEF21063C2300892A46 /* BranchTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BranchTests.xctest;
+			remoteRef = 4D415FEE21063C2300892A46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4D415FAF21063A2C00892A46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D415FBE21063A2E00892A46 /* Assets.xcassets in Resources */,
+				4D415FBC21063A2C00892A46 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D415FC421063A2E00892A46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D415FCF21063A2E00892A46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D61CA00210640D50037D104 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Build tvOS testbed.\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D415FAD21063A2C00892A46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D415FB921063A2C00892A46 /* APPViewController.m in Sources */,
+				4D415FC121063A2E00892A46 /* main.m in Sources */,
+				4D415FB621063A2C00892A46 /* APPAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D415FC221063A2E00892A46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D415FCB21063A2E00892A46 /* TestBed-tvOSTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D415FCD21063A2E00892A46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D415FD621063A2E00892A46 /* TestBed-tvOSUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4D415FC821063A2E00892A46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D415FB021063A2C00892A46 /* TestBed-tvOS */;
+			targetProxy = 4D415FC721063A2E00892A46 /* PBXContainerItemProxy */;
+		};
+		4D415FD321063A2E00892A46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D415FB021063A2C00892A46 /* TestBed-tvOS */;
+			targetProxy = 4D415FD221063A2E00892A46 /* PBXContainerItemProxy */;
+		};
+		4D61C9FE21063D2B0037D104 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Branch-tvOS";
+			targetProxy = 4D61C9FD21063D2B0037D104 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4D415FBA21063A2C00892A46 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D415FBB21063A2C00892A46 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D415FD821063A2E00892A46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 11.4;
+			};
+			name = Debug;
+		};
+		4D415FD921063A2E00892A46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 11.4;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4D415FDB21063A2E00892A46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "TestBed-tvOS/TestBed-tvOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		4D415FDC21063A2E00892A46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "TestBed-tvOS/TestBed-tvOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+		4D415FDE21063A2E00892A46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestBed-tvOS.app/TestBed-tvOS";
+			};
+			name = Debug;
+		};
+		4D415FDF21063A2E00892A46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestBed-tvOS.app/TestBed-tvOS";
+			};
+			name = Release;
+		};
+		4D415FE121063A2E00892A46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-tvOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-tvOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = "TestBed-tvOS";
+			};
+			name = Debug;
+		};
+		4D415FE221063A2E00892A46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-tvOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-tvOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_TARGET_NAME = "TestBed-tvOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D415FAC21063A2C00892A46 /* Build configuration list for PBXProject "TestBed-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D415FD821063A2E00892A46 /* Debug */,
+				4D415FD921063A2E00892A46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D415FDA21063A2E00892A46 /* Build configuration list for PBXNativeTarget "TestBed-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D415FDB21063A2E00892A46 /* Debug */,
+				4D415FDC21063A2E00892A46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D415FDD21063A2E00892A46 /* Build configuration list for PBXNativeTarget "TestBed-tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D415FDE21063A2E00892A46 /* Debug */,
+				4D415FDF21063A2E00892A46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D415FE021063A2E00892A46 /* Build configuration list for PBXNativeTarget "TestBed-tvOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D415FE121063A2E00892A46 /* Debug */,
+				4D415FE221063A2E00892A46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4D415FA921063A2C00892A46 /* Project object */;
+}

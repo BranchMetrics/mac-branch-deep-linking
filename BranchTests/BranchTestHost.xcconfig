@@ -6,5 +6,15 @@
 //@date          2018
 //@copyright     Copyright © 2018 Branch. All rights reserved.
 
-BranchTestHost  = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac
+// macOS Settings:
+
+//BranchTestHost  = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac
 //BranchTestHost  = $(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)
+
+// tvOS Settings:
+
+SDKROOT                 = appletvos
+SUPPORTED_PLATFORMS     = appletvos appletvsimulator
+//VALID_ARCHS           = arm64
+//VALID_ARCHS           = arm64 i386 x86_64
+BranchTestHost          = $(BUILT_PRODUCTS_DIR)/TestBed-tvOS.app/TestBed-tvOS

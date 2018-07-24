@@ -26,6 +26,7 @@
 }
 
 - (void) testKitDetails {
+    // TODO: Change sdk bundle ID for tvos?
     XCTAssertEqualObjects(Branch.bundleIdentifier, @"io.branch.sdk.mac");
     XCTAssertTrue(Branch.kitDisplayVersion.length >= 5);
     XCTAssertEqualObjects(Branch.kitDisplayVersion,
