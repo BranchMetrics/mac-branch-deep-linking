@@ -15,6 +15,64 @@
 
 @implementation BNCPersistence
 
+#if TARGET_OS_TV
+
+NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
+
++ (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data {
+    @synchronized (BNCPersistenceKey) {
+        if (!name.length) {
+            BNCLogError(@"Name expected.");
+            return [NSError errorWithDomain:NSCocoaErrorDomain code:2 userInfo:@{
+                NSLocalizedDescriptionKey: @"A name was expected.",
+            }];
+        }
+        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary*original = [defaults objectForKey:BNCPersistenceKey];
+        NSMutableDictionary*dictionary =
+            ([original isKindOfClass:NSDictionary.class])
+            ? [original mutableCopy]
+            : [NSMutableDictionary new];
+        dictionary[name] = data;
+        [defaults setObject:dictionary forKey:BNCPersistenceKey];
+        return nil;
+    }
+}
+
++ (NSData*_Nullable) loadDataNamed:(NSString*)name {
+    @synchronized (BNCPersistenceKey) {
+        if (!name.length) {
+            BNCLogError(@"Name expected.");
+            return nil;
+        }
+        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary*original = [defaults objectForKey:BNCPersistenceKey];
+        return original[name];
+    }
+}
+
++ (NSError*_Nullable) removeDataNamed:(NSString *)name {
+    @synchronized (BNCPersistenceKey) {
+        if (!name.length) {
+            BNCLogError(@"Name expected.");
+            return [NSError errorWithDomain:NSCocoaErrorDomain code:2 userInfo:@{
+                NSLocalizedDescriptionKey: @"A name was expected.",
+            }];
+        }
+        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary*original = [defaults objectForKey:BNCPersistenceKey];
+        NSMutableDictionary*dictionary =
+            ([original isKindOfClass:NSDictionary.class])
+            ? [original mutableCopy]
+            : [NSMutableDictionary new];
+        dictionary[name] = nil;
+        [defaults setObject:dictionary forKey:BNCPersistenceKey];
+        return nil;
+    }
+}
+
+#else
+
 + (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data {
     NSError *error = nil;
     NSURL *url = BNCURLForBranchDataDirectory();
@@ -57,6 +115,8 @@
     return error;
 }
 
+#endif
+
 + (id<NSSecureCoding>) unarchiveObjectNamed:(NSString*)name {
     id<NSSecureCoding> object = nil;
     @try {
@@ -94,7 +154,7 @@
 
 #pragma mark - BNCURLForBranchDataDirectory
 
-NSURL* _Null_unspecified BNCCreateDirectoryForBranchURLWithSearchPath_Unthreaded(NSSearchPathDirectory directory) {
+NSURL* _Nullable BNCCreateDirectoryForBranchURLWithSearchPath_Unthreaded(NSSearchPathDirectory directory) {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *URLs = [fileManager URLsForDirectory:directory inDomains:NSUserDomainMask | NSLocalDomainMask];
 

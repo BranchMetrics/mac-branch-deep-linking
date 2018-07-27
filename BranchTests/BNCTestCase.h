@@ -13,6 +13,7 @@
 #import "BNCThreads.h"
 #import "BranchMainClass+Private.h"
 #import "BNCTestNetworkService.h"
+#import "BNCDevice.h"
 
 FOUNDATION_EXPORT NSString*_Nonnull const BNCTestBranchKey;
 

@@ -237,7 +237,6 @@
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
 
-    __block long ms = 0;
     __block long requestCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
@@ -246,8 +245,9 @@
                 NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
                 NSLog(@"WTF: %ld request: %@.", requestCount, request.URL.path);
                 NSLog(@"%@", dictionary);
-                if ([request.URL.path isEqualToString:@"/v2/event"]) {
-                    ms = [dictionary[@"instrumentation"][@"/v1/install-brtt"] integerValue];
+                if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+                    NSString*brtt = dictionary[@"instrumentation"][@"/v1/install-brtt"];
+                    XCTAssertGreaterThan([brtt integerValue], 1);
                 }
                 return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
             }
@@ -263,7 +263,6 @@
         }
     ];
     [self waitForExpectationsWithTimeout:3.0 handler:nil];
-    XCTAssertGreaterThan(ms, 1);
 }
 
 @end

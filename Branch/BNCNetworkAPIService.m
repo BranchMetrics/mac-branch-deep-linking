@@ -9,20 +9,20 @@
 */
 
 #import "BNCNetworkAPIService.h"
-#import "BNCSettings.h"
 #import "BNCApplication.h"
 #import "BNCDevice.h"
-#import "BNCWireFormat.h"
+#import "BNCLocalization.h"
+#import "BNCLog.h"
+#import "BNCPersistence.h"
+#import "BNCSettings.h"
 #import "BNCThreads.h"
-#import "BranchSession.h"
+#import "BNCWireFormat.h"
+#import "BranchDelegate.h"
+#import "BranchError.h"
+#import "BranchEvent.h"
 #import "BranchMainClass.h"
 #import "BranchMainClass+Private.h"
-#import "BNCLog.h"
-#import "BranchDelegate.h"
-#import "BranchEvent.h"
-#import "BranchError.h"
-#import "BNCLocalization.h"
-#import "BNCPersistence.h"
+#import "BranchSession.h"
 #import "NSData+Branch.h"
 
 static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queue";
@@ -113,7 +113,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     return [NSString stringWithFormat:@"<%@ %p Queued: %ld %@>",
         NSStringFromClass(self.class),
         (void*) self,
-        self.queueDepth,
+        (long) self.queueDepth,
         self.operationQueue.operations];
 }
 
@@ -134,8 +134,6 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         if (![metadata isKindOfClass:NSMutableDictionary.class]) metadata = [NSMutableDictionary new];
         [metadata addEntriesFromDictionary:self.configuration.settings.requestMetadataDictionary];
         if (metadata.count) dictionary[@"metadata"] = metadata;
-        NSDictionary*instrumentation = [self.settings.instrumentationDictionary copy];
-        if (instrumentation.count) dictionary[@"instrumentation"] = instrumentation;
         dictionary[@"branch_key"] = self.configuration.key;
     }
 }
@@ -160,8 +158,6 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         if (![metadata isKindOfClass:NSMutableDictionary.class]) metadata = [NSMutableDictionary new];
         [metadata addEntriesFromDictionary:self.settings.requestMetadataDictionary];
         if (metadata.count) dictionary[@"metadata"] = metadata;
-        NSDictionary*instrumentation = self.settings.instrumentationDictionary;
-        if (instrumentation.count) dictionary[@"instrumentation"] = instrumentation;
         dictionary[@"branch_key"] = self.configuration.key;
     }
 }
@@ -551,6 +547,8 @@ exit:
             if (self.dictionary) {
                 NSError *error = nil;
                 self.dictionary[@"retry_number"] = BNCWireFormatFromInteger(retry);
+                NSDictionary*instrumentation = [self.settings.instrumentationDictionary copy];
+                if (instrumentation.count) self.dictionary[@"instrumentation"] = instrumentation;
                 data = [NSJSONSerialization dataWithJSONObject:self.dictionary options:0 error:&error];
                 if (error) {
                     BNCLogError(@"Can't convert to JSON: %@.", error);
@@ -580,14 +578,13 @@ exit:
                         dispatch_semaphore_signal(network_semaphore);
                     }
                 ];
-            [self.operation start];
-            dispatch_semaphore_wait(network_semaphore, DISPATCH_TIME_FOREVER);
             error = [self verifyNetworkOperation:self.operation];
             if (error) {
                 BNCLogError(@"Bad network interface: %@.", error);
                 goto exit;
             }
-            [self collectInstrumentationMetrics];
+            [self.operation start];
+            dispatch_semaphore_wait(network_semaphore, DISPATCH_TIME_FOREVER);
             if (self.operation.error) {
                 BNCLogError(@"Network service error: %@.", error);
             }
@@ -606,6 +603,8 @@ exit:
         error = [NSError branchErrorWithCode:BNCBadRequestError];
         goto exit;
     }
+
+    [self collectInstrumentationMetrics];
     self.session = [BranchSession sessionWithDictionary:dictionary];
 
     if (self.session.linkCreationURL.length)
@@ -619,6 +618,7 @@ exit:
     if (self.session.identityID.length)
         self.settings.identityID = self.session.identityID;
     }
+
 exit:
     self.error = error;
     if (self.completion)
@@ -685,7 +685,7 @@ exit:
 + (NSDictionary*) dictionaryWithJSONData:(NSData*)data
         error:(NSError*_Nullable __autoreleasing *_Nullable)error_ {
     NSError*error = nil;
-    NSDictionary *dictionary = nil;
+    NSDictionary*dictionary = nil;
     @try {
         if ([data isKindOfClass:[NSData class]]) {
             dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];

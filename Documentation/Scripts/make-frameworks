@@ -1,0 +1,91 @@
+#!/bin/bash
+set -euo pipefail
+
+# http://www.mokacoding.com/blog/xcodebuild-destination-options/
+# https://pewpewthespells.com/blog/buildsettings.html
+
+# macOS:
+echo ">>> Building macOS."
+target_path=~/Desktop/f/macOS
+xcodebuild \
+    -project Branch.xcodeproj \
+    -target Branch-macOS \
+    -configuration Debug \
+    -sdk macosx \
+    -quiet \
+    clean build \
+    ARCHS=x86_64 \
+    VALID_ARCHS=x86_64 \
+    TARGET_BUILD_DIR="$target_path"
+file "$target_path"/Branch.framework/Branch
+
+echo ">>> Building tvOS."
+target_path=~/Desktop/f/tvOS-1
+xcodebuild \
+    -project Branch.xcodeproj \
+    -target Branch-tvOS \
+    -configuration Debug \
+    -sdk appletvos \
+    -quiet \
+    clean build \
+    ARCHS=arm64 \
+    VALID_ARCHS=arm64 \
+    TARGET_BUILD_DIR="$target_path"
+file "$target_path"/Branch.framework/Branch
+
+echo ">>> Building tvOS."
+target_path=~/Desktop/f/tvOS-2
+xcodebuild \
+    -project Branch.xcodeproj \
+    -target Branch-tvOS \
+    -configuration Debug \
+    -sdk appletvsimulator \
+    -quiet \
+    clean build \
+    ARCHS=x86_64 \
+    VALID_ARCHS=x86_64 \
+    TARGET_BUILD_DIR="$target_path"
+file "$target_path"/Branch.framework/Branch
+
+
+cat > /dev/null <<JUNK
+    -sdk appletvsimulator \
+    -sdk appletvos \
+
+    -sdk appletvos \
+    -showdestinations
+
+    clean build \
+    only_active_arch=no \
+    ARCHS="arm64 armv7 armv7s" \
+    VALID_ARCHS="arm64 armv7 armv7s"
+
+    -sdk appletvos11.4 \
+
+    ARCHS="arm64 armv7 armv7s i386 x86_64" \
+    VALID_ARCHS="arm64 armv7 armv7s i386 x86_64"
+
+xcodebuild \
+    -project Branch.xcodeproj \
+    -scheme Branch-macOS \
+    -destination 'platform=OS X,arch=x86_64' \
+    -verbose \
+        clean build \
+    ARCHS="i386 x86_64" \
+    VALID_ARCHS="i386 x86_64"
+
+
+    -destination 'platform=OS X,arch=i386 x86_64' \
+    -destination tvOS \
+    -destination platform=tvOS \
+
+xcodebuild \
+    -project Branch.xcodeproj \
+    -scheme Branch-macOS \
+    -showdestinations
+
+arch=x86_64
+
+ -exportPath
+JUNK
+

@@ -1,6 +1,6 @@
 /**
  @file          BranchError.Test.m
- @package       Branch
+ @package       BranchTests
  @brief         Branch error tests.
 
  @author        Edward Smith

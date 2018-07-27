@@ -172,10 +172,7 @@
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
 
-    NSString *url = @"https://myapp.app.link/bob/link?oauth=true";
-    #if TARGET_OS_OSX
-    url = @"testbed-mac://open?link_click_id=348527481794276288&oauth=true";
-    #endif
+    NSString*url = @"testbed-mac://open?link_click_id=348527481794276288&oauth=true";
 
     [branch openURL:[NSURL URLWithString:url]];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];

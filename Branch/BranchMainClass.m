@@ -234,14 +234,14 @@
     return self.settings.limitFacebookTracking;
 }
 
-- (void) setLoggingEnabled:(BOOL)enabled_ {
++ (void) setLoggingEnabled:(BOOL)enabled_ {
     @synchronized(self) {
         BNCLogLevel level = enabled_ ? BNCLogLevelDebug : BNCLogLevelWarning;
         BNCLogSetDisplayLevel(level);
     }
 }
 
-- (BOOL) loggingIsEnabled {
++ (BOOL) loggingIsEnabled {
     @synchronized(self) {
         return (BNCLogDisplayLevel() < BNCLogLevelWarning) ? YES : NO;
     }
@@ -270,6 +270,7 @@
 #endif
 
 - (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
+    // TODO: Remove this.
     BNCLogMethodName();
     BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
 }
@@ -285,6 +286,7 @@
 }
 
 - (void) notificationObserver:(NSNotification*)notification {
+    // TODO: Remove this.
     //BNCLogDebugSDK(@"Notification '%@'.", notification.name);
 }
 

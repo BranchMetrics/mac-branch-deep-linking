@@ -105,7 +105,7 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 - (nonnull instancetype)initWithCanonicalIdentifier:(nonnull NSString *)canonicalIdentifier;
 - (nonnull instancetype)initWithTitle:(nonnull NSString *)title;
 
-+ (BranchUniversalObject*_Nonnull) objectWithDictionary:(NSDictionary*_Null_unspecified)dictionary;
++ (BranchUniversalObject*_Nonnull) objectWithDictionary:(NSDictionary*_Nullable)dictionary;
 - (NSMutableDictionary*_Nonnull) dictionary;
 
 - (NSString*_Nonnull) description;

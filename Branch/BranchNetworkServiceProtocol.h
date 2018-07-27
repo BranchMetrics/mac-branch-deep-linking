@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Creates and returns a new network service.
 @required
-+ (id<BNCNetworkServiceProtocol>) new;
+- (id<BNCNetworkServiceProtocol>) init;
 
 /// Cancel all current and queued network operations.
 @optional

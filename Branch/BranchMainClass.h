@@ -186,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
 
 /** Enables logging to the console for debugging.  Should be set to `NO` for production apps. */
-@property (atomic, assign, getter=loggingIsEnabled) BOOL loggingEnabled;
+@property (atomic, assign, getter=loggingIsEnabled, class) BOOL loggingEnabled;
 
 /**
  If you are tracking users through Facebook installs and events well as with Branch, setting this property

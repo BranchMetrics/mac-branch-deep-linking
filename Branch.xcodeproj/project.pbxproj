@@ -511,7 +511,7 @@
 				4D54C07020A6560400C76496 /* Sources */,
 				4D54C07120A6560400C76496 /* Frameworks */,
 				4D54C07220A6560400C76496 /* Headers */,
-				4D6977E620F6D2C000F36413 /* ShellScript */,
+				4D6977E620F6D2C000F36413 /* Copy Framework */,
 			);
 			buildRules = (
 			);
@@ -620,7 +620,7 @@
 			shellPath = /bin/sh;
 			shellScript = "echo \"Build tvOS test lib.\" ";
 		};
-		4D6977E620F6D2C000F36413 /* ShellScript */ = {
+		4D6977E620F6D2C000F36413 /* Copy Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -628,13 +628,14 @@
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/Branch.framework",
 			);
+			name = "Copy Framework";
 			outputPaths = (
 				"$(PROJECT_DIR)/Frameworks/macOS/Branch.framework",
 				"$(PROJECT_DIR)/Frameworks/macOS/Branch.framework.dSYM",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "ditto ${TARGET_BUILD_DIR}/Branch.framework ${PROJECT_DIR}/Frameworks/macOS/Branch.framework\nditto ${TARGET_BUILD_DIR}/Branch.framework.dSYM ${PROJECT_DIR}/Frameworks/macOS/Branch.framework.dSYM\n";
+			shellScript = "set -eu\n# ditto ${TARGET_BUILD_DIR}/Branch.framework ${PROJECT_DIR}/Frameworks/macOS/Branch.framework\n# ditto ${TARGET_BUILD_DIR}/Branch.framework.dSYM ${PROJECT_DIR}/Frameworks/macOS/Branch.framework.dSYM\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

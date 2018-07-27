@@ -13,9 +13,10 @@
 #import "BNCDevice.h"
 #import "BNCApplication.h"
 
-@interface BNCApplication (BNCTest)
-+ (NSDictionary*) entitlementsDictionary;
-@end
+// TODO: Clean
+//@interface BNCApplication (BNCTest)
+//+ (NSDictionary*) entitlementsDictionary;
+//@end
 
 @interface BNCKeyChainTest : BNCTestCase
 @end
@@ -33,8 +34,7 @@
 
     // Find a signed bundle:
 
-    NSDictionary*dictionary = [BNCApplication entitlementsDictionary];
-    NSString*teamID = dictionary[@"com.apple.developer.team-identifier"];
+    NSString*teamID = [BNCApplication currentApplication].teamID;
     NSString*bundleID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 
     if (teamID.length == 0 || bundleID.length == 0) {
