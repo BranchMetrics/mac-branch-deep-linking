@@ -13,11 +13,6 @@
 #import "BNCDevice.h"
 #import "BNCApplication.h"
 
-// TODO: Clean
-//@interface BNCApplication (BNCTest)
-//+ (NSDictionary*) entitlementsDictionary;
-//@end
-
 @interface BNCKeyChainTest : BNCTestCase
 @end
 

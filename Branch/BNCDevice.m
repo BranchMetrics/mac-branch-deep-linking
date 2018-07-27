@@ -363,115 +363,6 @@ exit:
 
 #endif
 
-/*
-+ (NSString*) userAgentString {
-    // TODO: Fill out with real string.
-
-    // Mac Safari
-    //return @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1 Safari/605.1.15";
-
-    // iOS Safari
-    return
-        @"\"Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) "
-         "Version/11.0 Mobile/15A372 Safari/604.1\"";
-}
-*/
-
-+ (NSString*) userAgentString {
-    return nil;
-}
-
-// #else
-
-#if 0 // TARGET_OS_OSX
-
-+ (NSString*) userAgentString {
-
-    static NSString* brn_browserUserAgentString = nil;
-
-    void (^setBrowserUserAgent)(void) = ^() {
-        @synchronized (self) {
-            if (!brn_browserUserAgentString) {
-                brn_browserUserAgentString =
-                    [[[UIWebView alloc]
-                      initWithFrame:CGRectZero]
-                        stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-                BNCPreferenceHelper *preferences = [BNCPreferenceHelper preferenceHelper];
-                preferences.browserUserAgentString = brn_browserUserAgentString;
-                preferences.lastSystemBuildVersion = self.systemBuildVersion;
-                BNCLogDebugSDK(@"userAgentString: '%@'.", brn_browserUserAgentString);
-            }
-        }
-    };
-
-    NSString* (^browserUserAgent)(void) = ^ NSString* () {
-        @synchronized (self) {
-            return brn_browserUserAgentString;
-        }
-    };
-
-    @synchronized (self) {
-        //    We only get the string once per app run:
-
-        if (brn_browserUserAgentString)
-            return brn_browserUserAgentString;
-
-        //  Did we cache it?
-
-        BNCPreferenceHelper *preferences = [BNCPreferenceHelper preferenceHelper];
-        if (preferences.browserUserAgentString &&
-            preferences.lastSystemBuildVersion &&
-            [preferences.lastSystemBuildVersion isEqualToString:self.systemBuildVersion]) {
-            brn_browserUserAgentString = [preferences.browserUserAgentString copy];
-            return brn_browserUserAgentString;
-        }
-
-        //    Make sure this executes on the main thread.
-        //    Uses an implied lock through dispatch_queues:  This can deadlock if mis-used!
-
-        if (NSThread.isMainThread) {
-            setBrowserUserAgent();
-            return brn_browserUserAgentString;
-        }
-
-    }
-
-    //  Different case for iOS 7.0:
-    if ([UIDevice currentDevice].systemVersion.doubleValue  < 8.0) {
-        BNCLogDebugSDK(@"Getting iOS 7 UserAgent.");
-        dispatch_sync(dispatch_get_main_queue(), ^ {
-            setBrowserUserAgent();
-        });
-        BNCLogDebugSDK(@"Got iOS 7 UserAgent.");
-        return browserUserAgent();
-    }
-
-    //    Wait and yield to prevent deadlock:
-    int retries = 10;
-    int64_t timeoutDelta = (dispatch_time_t)((long double)NSEC_PER_SEC * (long double)0.100);
-    while (!browserUserAgent() && retries > 0) {
-
-        dispatch_block_t agentBlock = dispatch_block_create_with_qos_class(
-            DISPATCH_BLOCK_DETACHED | DISPATCH_BLOCK_ENFORCE_QOS_CLASS,
-            QOS_CLASS_USER_INTERACTIVE,
-            0,  ^ {
-                BNCLogDebugSDK(@"Will set userAgent.");
-                setBrowserUserAgent();
-                BNCLogDebugSDK(@"Did set userAgent.");
-            });
-        dispatch_async(dispatch_get_main_queue(), agentBlock);
-
-        dispatch_time_t timeoutTime = dispatch_time(DISPATCH_TIME_NOW, timeoutDelta);
-        dispatch_block_wait(agentBlock, timeoutTime);
-        retries--;
-    }
-    BNCLogDebugSDK(@"Retries: %d", 10-retries);
-
-    return browserUserAgent();
-}
-
-#endif
-
 #if TARGET_OS_OSX
 
 + (void) updateScreenAttributesWithDevice:(BNCDevice*)device {
@@ -535,7 +426,6 @@ exit:
     device->_netAddress = [self networkAddress];
     device->_country = [self country];
     device->_language = [self language];
-    device->_browserUserAgent = [self userAgentString];
 
     return device;
 }
@@ -614,7 +504,6 @@ exit:
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
     addString(netAddress,           mac_id);
-    addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);
@@ -643,7 +532,6 @@ exit:
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
     addString(netAddress,           mac_id);
-    addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);

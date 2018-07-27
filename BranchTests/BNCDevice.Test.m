@@ -71,7 +71,6 @@
     XCTAssertTrue(device.advertisingID == nil);
     XCTAssertTrue([device.country isEqualToString:@"US"]);
     XCTAssertTrue([device.language isEqualToString:@"en"]);
-    XCTAssertTrue(device.browserUserAgent.length == 0);
     XCTAssertTrue(BNCTestStringMatchesRegex(device.localIPAddress, @"^\\d*\\.\\d*\\.\\d*\\.\\d*$"));
 }
 

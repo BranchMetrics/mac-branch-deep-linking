@@ -157,7 +157,7 @@
         };
 
     [branch startWithConfiguration:configuration];
-    BNCSleepForTimeInterval(1.0); // TODO: Fix Sleep.
+    BNCSleepForTimeInterval(1.0); // TODO: Fix Sleep: open should happen without sleep.
     [branch endSession];
     [self awaitExpectations];
 }

@@ -618,7 +618,7 @@
                          completion:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error))completion {
     if (content == nil || linkProperties == nil) {
         // TODO: Add localized description.
-        NSError*error = [NSError branchErrorWithCode:BNCBadRequestError];
+        NSError*error = [NSError branchErrorWithCode:BNCBadRequestError localizedMessage:@"Bad parameters."];
         if (completion) completion(nil, error);
         return;
     }

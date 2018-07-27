@@ -190,24 +190,6 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
     return firstInstallDate;
 }
 
-#if 0
-// TODO: Add this back at some point.
-// Returns a dictionary of device / identity pairs.
-// @property (atomic, readonly) NSDictionary<NSString*, NSString*>*_Nonnull deviceKeyIdentityValueDictionary;
-- (NSDictionary*) deviceKeyIdentityValueDictionary:(BNCKeyChain*)keychain {
-    @synchronized (self.class) {
-        NSError *error = nil;
-        NSDictionary *deviceDictionary =
-            [keychain retrieveValueForService:kBranchKeychainService
-                key:kBranchKeychainDevicesKey
-                error:&error];
-        if (error) BNCLogWarning(@"While retrieving deviceKeyIdentityValueDictionary: %@.", error);
-        if (!deviceDictionary) deviceDictionary = @{};
-        return deviceDictionary;
-    }
-}
-#endif
-
 + (BNCApplicationUpdateState) updateStateForApplication:(BNCApplication*)application {
 
     NSTimeInterval first_install_time   = application.firstInstallDate.timeIntervalSince1970;

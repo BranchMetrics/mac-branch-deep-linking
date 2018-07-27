@@ -69,7 +69,6 @@
 }
 
 - (void) testApplicationLanguage {
-    // TODO: Write test for checking application language for different language bundles.
     XCTAssertEqualObjects([BNCLocalization applicationLanguage], @"en");
 }
 
