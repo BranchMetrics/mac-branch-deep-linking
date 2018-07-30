@@ -124,6 +124,10 @@
 		4DC2232A20AA262D005C57D0 /* BranchMainClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMainClass.m */; };
 		4DE667EE20CB7C1D000752E3 /* BNCURLBlackList.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE667EB20CB7C1D000752E3 /* BNCURLBlackList.Test.m */; };
 		4DE997CB20E45FC6006F1C94 /* BranchDelegate.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BC20AF9EC000441881 /* BranchDelegate.Test.m */; };
+		4DF34E9E210BC04B00E5D20C /* UIViewController+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF34E9C210BC04B00E5D20C /* UIViewController+Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DF34E9F210BC04B00E5D20C /* UIViewController+Branch.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF34E9C210BC04B00E5D20C /* UIViewController+Branch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DF34EA0210BC04B00E5D20C /* UIViewController+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E9D210BC04B00E5D20C /* UIViewController+Branch.m */; };
+		4DF34EA1210BC04B00E5D20C /* UIViewController+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E9D210BC04B00E5D20C /* UIViewController+Branch.m */; };
 		4DF8189720ADDC5000441881 /* BranchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189120ADDC4F00441881 /* BranchEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DF8189820ADDC5000441881 /* BranchLinkProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189220ADDC4F00441881 /* BranchLinkProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DF8189920ADDC5000441881 /* BranchLinkProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8189320ADDC4F00441881 /* BranchLinkProperties.m */; };
@@ -226,6 +230,8 @@
 		4DC2232B20AA3E27005C57D0 /* Branch.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Branch.Test.m; sourceTree = "<group>"; };
 		4DDC6FEA20B6348C00A50F39 /* BranchTestHost.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BranchTestHost.xcconfig; sourceTree = "<group>"; };
 		4DE667EB20CB7C1D000752E3 /* BNCURLBlackList.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.Test.m; sourceTree = "<group>"; };
+		4DF34E9C210BC04B00E5D20C /* UIViewController+Branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Branch.h"; sourceTree = "<group>"; };
+		4DF34E9D210BC04B00E5D20C /* UIViewController+Branch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Branch.m"; sourceTree = "<group>"; };
 		4DF8189120ADDC4F00441881 /* BranchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchEvent.h; sourceTree = "<group>"; };
 		4DF8189220ADDC4F00441881 /* BranchLinkProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchLinkProperties.h; sourceTree = "<group>"; };
 		4DF8189320ADDC4F00441881 /* BranchLinkProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchLinkProperties.m; sourceTree = "<group>"; };
@@ -358,6 +364,8 @@
 				4D046E9120C8AD3A0073262B /* NSData+Branch.m */,
 				4D99772220AA099D00A63EE1 /* NSString+Branch.h */,
 				4D99772420AA099D00A63EE1 /* NSString+Branch.m */,
+				4DF34E9C210BC04B00E5D20C /* UIViewController+Branch.h */,
+				4DF34E9D210BC04B00E5D20C /* UIViewController+Branch.m */,
 			);
 			path = Branch;
 			sourceTree = "<group>";
@@ -427,6 +435,7 @@
 				4D046E8B20C881480073262B /* BranchNetworkServiceProtocol.h in Headers */,
 				4D27FF8B20B222C7002C7EB0 /* BNCPersistence.h in Headers */,
 				4D9C165E20ACD625002BF211 /* BNCDevice.h in Headers */,
+				4DF34E9E210BC04B00E5D20C /* UIViewController+Branch.h in Headers */,
 				4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */,
 				4DF818B020AE1A9200441881 /* BranchHeader.h in Headers */,
 				4D54C08620A6560400C76496 /* Branch.h in Headers */,
@@ -461,6 +470,7 @@
 				4D67475E20C74E81001639C5 /* BNCPersistence.h in Headers */,
 				4D67475F20C74E81001639C5 /* BNCDevice.h in Headers */,
 				4D67476020C74E81001639C5 /* BNCEncoder.h in Headers */,
+				4DF34E9F210BC04B00E5D20C /* UIViewController+Branch.h in Headers */,
 				4D67476120C74E81001639C5 /* BranchHeader.h in Headers */,
 				4D046E9320C8AD3A0073262B /* NSData+Branch.h in Headers */,
 				4D67476220C74E81001639C5 /* Branch.h in Headers */,
@@ -680,6 +690,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DF8189B20ADDC5000441881 /* BranchUniversalObject.m in Sources */,
+				4DF34EA0210BC04B00E5D20C /* UIViewController+Branch.m in Sources */,
 				4DF818A620ADE1BB00441881 /* BranchCommerce.m in Sources */,
 				4D99772C20AA099D00A63EE1 /* NSString+Branch.m in Sources */,
 				4DF8189A20ADDC5000441881 /* BranchEvent.m in Sources */,
@@ -713,6 +724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D67473E20C74E81001639C5 /* BranchUniversalObject.m in Sources */,
+				4DF34EA1210BC04B00E5D20C /* UIViewController+Branch.m in Sources */,
 				4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */,
 				4D67474120C74E81001639C5 /* NSString+Branch.m in Sources */,
 				4D67474220C74E81001639C5 /* BranchEvent.m in Sources */,

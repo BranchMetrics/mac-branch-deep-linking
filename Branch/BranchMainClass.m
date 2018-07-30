@@ -22,6 +22,7 @@
 #import "BranchError.h"
 #import "NSString+Branch.h"
 #import "NSData+Branch.h"
+#import "UIViewController+Branch.h"
 
 #pragma mark BranchConfiguration
 
@@ -132,6 +133,7 @@
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSDataCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
+    BNCForceUIViewControllerCategoryToLoad();
 
     if (!configuration.isValidConfiguration) {
         [NSException raise:NSInvalidArgumentException
@@ -347,6 +349,17 @@
 
         return YES;
     }
+}
+
+- (BOOL) openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    return [self openURL:url];
+}
+
+- (BOOL) continueUserActivity:(NSUserActivity *)userActivity {
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        return [self openURL:userActivity.webpageURL];
+    }
+    return NO;
 }
 
 - (void) delayedOpen {

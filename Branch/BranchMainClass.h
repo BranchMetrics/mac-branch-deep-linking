@@ -105,6 +105,36 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL) openURL:(NSURL*_Nullable)url;
 
 /**
+ Open a URL with Branch.
+
+ This should be called from an iOS or tvOS application delegate method
+ `- (BOOL) openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options;`.
+
+ @param url     The URL passed by the OS.
+ @param options The options passed by the OS.
+
+ @return Returns `true` if Branch can handle this URL, `false` otherwise.
+*/
+- (BOOL) openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options;
+
+/**
+ Opens a URL that was passed in an app continuation.
+
+ This should be called from your application's delegate method
+ ```
+- (BOOL)application:(UIApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+  restorationHandler:(void (^)(NSArray *))restorationHandler
+```
+
+so that Branch can handle the passed URL.
+
+ @param userActivity The `NSUserActivity` that was passed to your application.
+ @return Returns `true` if Branch can handle the passed URL, `false` otherwise.
+*/
+- (BOOL) continueUserActivity:(NSUserActivity *)userActivity;
+
+/**
  Set the user's identity to an ID used by your system, so that it is identifiable by you elsewhere. Receive
  a completion callback, notifying you whether it succeeded or failed.
 

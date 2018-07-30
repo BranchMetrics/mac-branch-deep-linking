@@ -26,6 +26,7 @@ FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 #import <Branch/BranchMutableDictionary.h>
 #import <Branch/BranchSession.h>
 #import <Branch/BranchUniversalObject.h>
+#import <Branch/UIViewController+Branch.h>
 
 // Exposed private headers:
 #import <Branch/BNCLog.h>

@@ -7,15 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D415FB621063A2C00892A46 /* APPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FB521063A2C00892A46 /* APPAppDelegate.m */; };
-		4D415FB921063A2C00892A46 /* APPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FB821063A2C00892A46 /* APPViewController.m */; };
 		4D415FBC21063A2C00892A46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D415FBA21063A2C00892A46 /* Main.storyboard */; };
 		4D415FBE21063A2E00892A46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D415FBD21063A2E00892A46 /* Assets.xcassets */; };
 		4D415FC121063A2E00892A46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FC021063A2E00892A46 /* main.m */; };
 		4D415FCB21063A2E00892A46 /* TestBed-tvOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FCA21063A2E00892A46 /* TestBed-tvOSTests.m */; };
 		4D415FD621063A2E00892A46 /* TestBed-tvOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D415FD521063A2E00892A46 /* TestBed-tvOSUITests.m */; };
+		4D51DF5F210F906D0082F062 /* TBToggleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D51DF5E210F906D0082F062 /* TBToggleButton.m */; };
+		4D51DF63210F99370082F062 /* TBTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D51DF62210F99370082F062 /* TBTextViewController.xib */; };
+		4D51DF65210F9D3D0082F062 /* TBWaitingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D51DF64210F9D3D0082F062 /* TBWaitingView.xib */; };
 		4D61C9FB21063D2B0037D104 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D415FED21063C2300892A46 /* Branch.framework */; };
 		4D61C9FC21063D2B0037D104 /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D415FED21063C2300892A46 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4DDC180C210BDC4B0090DFFA /* TBBranchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC180B210BDC4B0090DFFA /* TBBranchViewController.xib */; };
+		4DF34E91210B8CF100E5D20C /* TBWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E80210B8CEF00E5D20C /* TBWaitingView.m */; };
+		4DF34E93210B8CF100E5D20C /* TBDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E82210B8CF000E5D20C /* TBDetailViewController.m */; };
+		4DF34E94210B8CF100E5D20C /* TBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E84210B8CF000E5D20C /* TBSettings.m */; };
+		4DF34E95210B8CF100E5D20C /* TBTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E85210B8CF000E5D20C /* TBTextViewController.m */; };
+		4DF34E96210B8CF100E5D20C /* TBTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E86210B8CF000E5D20C /* TBTableData.m */; };
+		4DF34E97210B8CF100E5D20C /* TBBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E88210B8CF000E5D20C /* TBBranchViewController.m */; };
+		4DF34E9A210B8CF100E5D20C /* TBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF34E8C210B8CF000E5D20C /* TBAppDelegate.m */; };
+		4DF34EA5210BD7E400E5D20C /* TBDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF34EA4210BD7E400E5D20C /* TBDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,10 +89,6 @@
 
 /* Begin PBXFileReference section */
 		4D415FB121063A2C00892A46 /* TestBed-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestBed-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D415FB421063A2C00892A46 /* APPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPAppDelegate.h; sourceTree = "<group>"; };
-		4D415FB521063A2C00892A46 /* APPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPAppDelegate.m; sourceTree = "<group>"; };
-		4D415FB721063A2C00892A46 /* APPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPViewController.h; sourceTree = "<group>"; };
-		4D415FB821063A2C00892A46 /* APPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPViewController.m; sourceTree = "<group>"; };
 		4D415FBB21063A2C00892A46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4D415FBD21063A2E00892A46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D415FBF21063A2E00892A46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,7 +100,28 @@
 		4D415FD521063A2E00892A46 /* TestBed-tvOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TestBed-tvOSUITests.m"; sourceTree = "<group>"; };
 		4D415FD721063A2E00892A46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D415FE421063C2300892A46 /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
+		4D51DF5D210F906D0082F062 /* TBToggleButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBToggleButton.h; sourceTree = "<group>"; };
+		4D51DF5E210F906D0082F062 /* TBToggleButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TBToggleButton.m; sourceTree = "<group>"; };
+		4D51DF62210F99370082F062 /* TBTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TBTextViewController.xib; sourceTree = "<group>"; };
+		4D51DF64210F9D3D0082F062 /* TBWaitingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TBWaitingView.xib; sourceTree = "<group>"; };
 		4D61CA0721065A9D0037D104 /* TestBed-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TestBed-tvOS.entitlements"; sourceTree = "<group>"; };
+		4DDC180B210BDC4B0090DFFA /* TBBranchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TBBranchViewController.xib; sourceTree = "<group>"; };
+		4DF34E7E210B8CEF00E5D20C /* TBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBSettings.h; sourceTree = "<group>"; };
+		4DF34E80210B8CEF00E5D20C /* TBWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBWaitingView.m; sourceTree = "<group>"; };
+		4DF34E82210B8CF000E5D20C /* TBDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBDetailViewController.m; sourceTree = "<group>"; };
+		4DF34E83210B8CF000E5D20C /* TBDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBDetailViewController.h; sourceTree = "<group>"; };
+		4DF34E84210B8CF000E5D20C /* TBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBSettings.m; sourceTree = "<group>"; };
+		4DF34E85210B8CF000E5D20C /* TBTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBTextViewController.m; sourceTree = "<group>"; };
+		4DF34E86210B8CF000E5D20C /* TBTableData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBTableData.m; sourceTree = "<group>"; };
+		4DF34E87210B8CF000E5D20C /* TBBranchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBBranchViewController.h; sourceTree = "<group>"; };
+		4DF34E88210B8CF000E5D20C /* TBBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBBranchViewController.m; sourceTree = "<group>"; };
+		4DF34E89210B8CF000E5D20C /* TBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBAppDelegate.h; sourceTree = "<group>"; };
+		4DF34E8B210B8CF000E5D20C /* TBBranchViewController-Old.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TBBranchViewController-Old.xib"; sourceTree = "<group>"; };
+		4DF34E8C210B8CF000E5D20C /* TBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBAppDelegate.m; sourceTree = "<group>"; };
+		4DF34E8D210B8CF000E5D20C /* TBTableData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBTableData.h; sourceTree = "<group>"; };
+		4DF34E8E210B8CF000E5D20C /* TBWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBWaitingView.h; sourceTree = "<group>"; };
+		4DF34E8F210B8CF100E5D20C /* TBTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBTextViewController.h; sourceTree = "<group>"; };
+		4DF34EA4210BD7E400E5D20C /* TBDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TBDetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,15 +174,32 @@
 		4D415FB321063A2C00892A46 /* TestBed-tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				4D61CA0721065A9D0037D104 /* TestBed-tvOS.entitlements */,
-				4D415FB421063A2C00892A46 /* APPAppDelegate.h */,
-				4D415FB521063A2C00892A46 /* APPAppDelegate.m */,
-				4D415FB721063A2C00892A46 /* APPViewController.h */,
-				4D415FB821063A2C00892A46 /* APPViewController.m */,
-				4D415FBA21063A2C00892A46 /* Main.storyboard */,
 				4D415FBD21063A2E00892A46 /* Assets.xcassets */,
 				4D415FBF21063A2E00892A46 /* Info.plist */,
 				4D415FC021063A2E00892A46 /* main.m */,
+				4D415FBA21063A2C00892A46 /* Main.storyboard */,
+				4DF34E89210B8CF000E5D20C /* TBAppDelegate.h */,
+				4DF34E8C210B8CF000E5D20C /* TBAppDelegate.m */,
+				4DF34E8B210B8CF000E5D20C /* TBBranchViewController-Old.xib */,
+				4DF34E87210B8CF000E5D20C /* TBBranchViewController.h */,
+				4DF34E88210B8CF000E5D20C /* TBBranchViewController.m */,
+				4DDC180B210BDC4B0090DFFA /* TBBranchViewController.xib */,
+				4DF34E83210B8CF000E5D20C /* TBDetailViewController.h */,
+				4DF34E82210B8CF000E5D20C /* TBDetailViewController.m */,
+				4DF34EA4210BD7E400E5D20C /* TBDetailViewController.xib */,
+				4DF34E7E210B8CEF00E5D20C /* TBSettings.h */,
+				4DF34E84210B8CF000E5D20C /* TBSettings.m */,
+				4DF34E8D210B8CF000E5D20C /* TBTableData.h */,
+				4DF34E86210B8CF000E5D20C /* TBTableData.m */,
+				4DF34E8F210B8CF100E5D20C /* TBTextViewController.h */,
+				4DF34E85210B8CF000E5D20C /* TBTextViewController.m */,
+				4D51DF62210F99370082F062 /* TBTextViewController.xib */,
+				4D51DF5D210F906D0082F062 /* TBToggleButton.h */,
+				4D51DF5E210F906D0082F062 /* TBToggleButton.m */,
+				4DF34E8E210B8CF000E5D20C /* TBWaitingView.h */,
+				4DF34E80210B8CEF00E5D20C /* TBWaitingView.m */,
+				4D51DF64210F9D3D0082F062 /* TBWaitingView.xib */,
+				4D61CA0721065A9D0037D104 /* TestBed-tvOS.entitlements */,
 			);
 			path = "TestBed-tvOS";
 			sourceTree = "<group>";
@@ -332,6 +376,10 @@
 			files = (
 				4D415FBE21063A2E00892A46 /* Assets.xcassets in Resources */,
 				4D415FBC21063A2C00892A46 /* Main.storyboard in Resources */,
+				4D51DF63210F99370082F062 /* TBTextViewController.xib in Resources */,
+				4D51DF65210F9D3D0082F062 /* TBWaitingView.xib in Resources */,
+				4DF34EA5210BD7E400E5D20C /* TBDetailViewController.xib in Resources */,
+				4DDC180C210BDC4B0090DFFA /* TBBranchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,9 +420,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D415FB921063A2C00892A46 /* APPViewController.m in Sources */,
+				4DF34E97210B8CF100E5D20C /* TBBranchViewController.m in Sources */,
+				4DF34E95210B8CF100E5D20C /* TBTextViewController.m in Sources */,
+				4D51DF5F210F906D0082F062 /* TBToggleButton.m in Sources */,
+				4DF34E91210B8CF100E5D20C /* TBWaitingView.m in Sources */,
+				4DF34E96210B8CF100E5D20C /* TBTableData.m in Sources */,
+				4DF34E9A210B8CF100E5D20C /* TBAppDelegate.m in Sources */,
+				4DF34E93210B8CF100E5D20C /* TBDetailViewController.m in Sources */,
+				4DF34E94210B8CF100E5D20C /* TBSettings.m in Sources */,
 				4D415FC121063A2E00892A46 /* main.m in Sources */,
-				4D415FB621063A2C00892A46 /* APPAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
