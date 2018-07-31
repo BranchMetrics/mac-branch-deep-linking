@@ -19,7 +19,8 @@ NSDate *global_previous_update_time = nil;
 NSDate *next_previous_update_time = nil;
 
 @interface TBAppDelegate () <UISplitViewControllerDelegate>
-@property (nonatomic, strong) TBBranchViewController *branchViewController;
+@property (nonatomic, strong) TBBranchViewController*branchViewController;
+@property (nonatomic, strong) UISplitViewController*splitViewController;
 @end
 
 #pragma mark - TBAppDelegate
@@ -115,10 +116,40 @@ continueUserActivity:(NSUserActivity *)userActivity
 
 #pragma mark - View Controllers
 
+
+- (void)handleBranchDeepLinkSession:(BranchSession*)session error:(NSError*)error {
+    if (error) {
+        [self showDataViewControllerWithTitle:@"Error"
+            message:@"Error opening Branch link"
+            object:@{@"Error": error.description}];
+    } else {
+        [self showDataViewControllerWithTitle:@"Opened URL"
+            message:session.referringURL.absoluteString
+            object:session.data];
+    }
+}
+
+- (void) showDataViewControllerWithTitle:(NSString*)title
+                                 message:(NSString*)message
+                                  object:(id<NSObject>)dictionaryOrArray {
+
+    TBDetailViewController *dataViewController =
+        [[TBDetailViewController alloc] initWithData:dictionaryOrArray];
+    dataViewController.title = title;
+    dataViewController.message = message;
+
+    // Manage the display mode button
+//    dataViewController.navigationItem.leftBarButtonItem =
+//        self.splitViewController.displayModeButtonItem;
+//    dataViewController.navigationItem.leftItemsSupplementBackButton = YES;
+
+    [self.splitViewController showDetailViewController:dataViewController sender:self];
+}
+
 - (void)initializeViewControllers {
 
     // Set the split view delegate:
-    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+    self.splitViewController = (UISplitViewController *)self.window.rootViewController;
 
     self.branchViewController = [TBBranchViewController new];
     UINavigationController *masterViewController =
@@ -130,47 +161,14 @@ continueUserActivity:(NSUserActivity *)userActivity
     UINavigationController *detailNavigationViewController =
         [[UINavigationController alloc] initWithRootViewController:detailViewController];
 
-    splitViewController.viewControllers = @[masterViewController, detailNavigationViewController];
+    self.splitViewController.viewControllers = @[masterViewController, detailNavigationViewController];
 
     // Set up the navigation controller button:
-    detailNavigationViewController.topViewController.navigationItem.leftBarButtonItem =
-        splitViewController.displayModeButtonItem;
+//    detailNavigationViewController.topViewController.navigationItem.leftBarButtonItem =
+//        splitViewController.displayModeButtonItem;
+//    splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
 
-    splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-    splitViewController.delegate = self;
-}
-
-- (void)handleBranchDeepLinkSession:(BranchSession*)session error:(NSError*)error {
-    UIViewController *viewController = nil;
-    if (error) {
-        NSLog(@"Error handling deep link! Error: %@.", error);
-        TBTextViewController *tvc = [[TBTextViewController alloc] initWithText:error.description];
-        tvc.title = @"Error";
-        tvc.message = @"Link Open Error";
-        viewController = tvc;
-    } else {
-        NSLog(@"Received deeplink with params: %@", session.data);
-        TBDetailViewController *dataViewController =
-            [[TBDetailViewController alloc] initWithData:session.data];
-        dataViewController.title = @"Link Opened";
-        dataViewController.message = session.data[@"~referring_link"];
-        if (!dataViewController.message)
-            dataViewController.message = session.data[@"+non_branch_link"];
-        if (dataViewController.message.length == 0)
-            dataViewController.message = @"< No URL >";
-        viewController = dataViewController;
-     }
-
-    UINavigationController *nav =
-        [[UINavigationController alloc] initWithRootViewController:viewController];
-    nav.navigationBar.topItem.title = viewController.title;
-    nav.navigationBar.topItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc]
-            initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-            target:self
-            action:@selector(dismissLinkViewAction:)];
-
-    [self presentModalViewController:nav];
+    self.splitViewController.delegate = self;
 }
 
 static inline dispatch_time_t BNCDispatchTimeFromSeconds(NSTimeInterval seconds) {

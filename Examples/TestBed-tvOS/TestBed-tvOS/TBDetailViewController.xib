@@ -25,11 +25,30 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GUE-bX-W5O">
-                    <rect key="frame" x="0.0" y="84" width="1920" height="996"/>
+                    <rect key="frame" x="0.0" y="100" width="1920" height="980"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Sample text" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOb-sX-2bO">
+                            <rect key="frame" x="0.0" y="-42" width="1920" height="1080"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <accessibility key="accessibilityConfiguration" label="Data"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="iVI-So-49h">
+                            <rect key="frame" x="0.0" y="-42" width="1920" height="1080"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="Gcn-97-xmR"/>
+                                <outlet property="delegate" destination="-1" id="T9w-DM-898"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zoL-6R-tuT">
-                    <rect key="frame" x="0.0" y="0.0" width="1920" height="84"/>
+                    <rect key="frame" x="0.0" y="0.0" width="1920" height="100"/>
                     <subviews>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xBi-Cu-mYo">
                             <rect key="frame" x="760" y="8" width="400" height="41"/>
@@ -47,12 +66,9 @@
                             </connections>
                         </segmentedControl>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LaM-L9-0Ud">
-                            <rect key="frame" x="8" y="56" width="1904" height="20"/>
+                            <rect key="frame" x="8" y="56" width="1904" height="36"/>
                             <accessibility key="accessibilityConfiguration" label="Message"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="Rsg-qU-8i6"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -82,24 +98,5 @@
             <nil key="simulatedBottomBarMetrics"/>
             <point key="canvasLocation" x="190" y="-472"/>
         </view>
-        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="iVI-So-49h">
-            <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-            <connections>
-                <outlet property="dataSource" destination="-1" id="Gcn-97-xmR"/>
-                <outlet property="delegate" destination="-1" id="T9w-DM-898"/>
-            </connections>
-            <point key="canvasLocation" x="1004" y="839"/>
-        </tableView>
-        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Sample text" textAlignment="natural" id="MOb-sX-2bO">
-            <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <accessibility key="accessibilityConfiguration" label="Data"/>
-            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-            <textInputTraits key="textInputTraits"/>
-            <point key="canvasLocation" x="298" y="699"/>
-        </textView>
     </objects>
 </document>

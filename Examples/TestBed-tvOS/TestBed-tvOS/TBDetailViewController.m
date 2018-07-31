@@ -208,16 +208,22 @@
 #pragma mark - Controls
 
 - (IBAction)segmentViewChangedAction:(id)sender {
-    UIView*view = self.textView;
+    UIView*newView = nil;
+    UIView*oldView = nil;
     if (self.viewTypeSegment.selectedSegmentIndex == 0) {
-        view = self.tableView;
+        newView = self.tableView;
+        oldView = self.textView;
         [TBSettings shared].usePrettyDisplay = YES;
     } else {
+        newView = self.textView;
+        oldView = self.tableView;
         [TBSettings shared].usePrettyDisplay = NO;
     }
-    view.frame = self.contentView.bounds;
-    [self.contentView addSubview:view];
-    [self.contentView bringSubviewToFront:view];
+    newView.frame = self.contentView.bounds;
+    [self.contentView addSubview:newView];
+    [self.contentView bringSubviewToFront:newView];
+    oldView.hidden = YES;
+    newView.hidden = NO;
 }
 
 #pragma mark - Table View Delegates

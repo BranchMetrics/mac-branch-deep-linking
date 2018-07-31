@@ -22,13 +22,22 @@
             <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="O9a-hK-g5y">
-                    <rect key="frame" x="710" y="13" width="437" height="1067"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="7" sectionFooterHeight="7" translatesAutoresizingMaskIntoConstraints="NO" id="O9a-hK-g5y">
+                    <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="8WT-6P-aqL"/>
+                        <outlet property="delegate" destination="-1" id="5ot-vq-G7H"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="O9a-hK-g5y" secondAttribute="trailing" id="Nyq-WL-fq2"/>
+                <constraint firstItem="O9a-hK-g5y" firstAttribute="leading" secondItem="QFY-gg-HDT" secondAttribute="leading" id="Opp-B7-SNf"/>
+                <constraint firstAttribute="bottom" secondItem="O9a-hK-g5y" secondAttribute="bottom" id="cMm-OL-3J9"/>
+                <constraint firstItem="O9a-hK-g5y" firstAttribute="top" secondItem="QFY-gg-HDT" secondAttribute="top" id="lGb-5V-LDa"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="GWF-sw-T3S"/>
             <point key="canvasLocation" x="-365" y="-144"/>
         </view>

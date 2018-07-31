@@ -13,7 +13,6 @@
 #import "TBTextViewController.h"
 #import "TBWaitingView.h"
 #import "TBSettings.h"
-#import "TBToggleButton.h"
 
 @import Branch;
 #import "../../../Branch/BranchMainClass+Private.h"
@@ -77,11 +76,11 @@ static NSString* TBStringFromObject(id<NSObject> object) {
         [self.tableData addRowWithTitle:title selector:@selector(selector_) style:rowStyle];
 
     section(@"Session");
-    tableRow = row(@"Tracking Disabled", TBRowStyleToggle, trackingDisabled:);
+    tableRow = row(@"Disable Tracking", TBRowStyleToggle, trackingDisabled:);
     tableRow.integerValue = Branch.sharedInstance.trackingIsDisabled;
     self.trackingDisabledPath = [self.tableData indexPathForRow:tableRow];
 
-    tableRow = row(@"Limit Facebook Tracking", TBRowStyleToggle, toggleFacebookAppTrackingAction:)
+    tableRow = row(@"Limit Facebook", TBRowStyleToggle, toggleFacebookAppTrackingAction:)
     tableRow.integerValue = Branch.sharedInstance.limitFacebookTracking;
     self.facebookIndexPath = [self.tableData indexPathForRow:tableRow];
 
@@ -214,14 +213,7 @@ static NSString* TBStringFromObject(id<NSObject> object) {
         cell.detailTextLabel.text = row.value;
     } else
     if (row.rowStyle == TBRowStyleToggle) {
-        TBToggleButton*sw = [TBToggleButton toggleButton];
-        sw.on = row.integerValue;
-        if (row.userInfo & 1)
-            sw.onTintColor = [UIColor greenColor];
-        else
-            sw.onTintColor = [UIColor redColor];
-        [sw addTarget:self action:row.selector forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = sw;
+        cell.detailTextLabel.text = (row.integerValue) ? @"True" : @"False";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return cell;
@@ -231,7 +223,7 @@ static NSString* TBStringFromObject(id<NSObject> object) {
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TBTableRow *row = [self.tableData rowForIndexPath:indexPath];
     BNCLogDebug(@"Selected index %ld:%ld: %@.", (long)indexPath.section, (long)indexPath.row, row.title);
-    if (row.rowStyle != TBRowStyleToggle && row.selector) {
+    if (row.selector) {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self performSelector:row.selector withObject:row];
@@ -252,9 +244,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     dataViewController.message = message;
 
     // Manage the display mode button
-    dataViewController.navigationItem.leftBarButtonItem =
-        self.splitViewController.displayModeButtonItem;
-    //dataViewController.navigationItem.leftItemsSupplementBackButton = YES;
+//    dataViewController.navigationItem.leftBarButtonItem =
+//        self.splitViewController.displayModeButtonItem;
+//    dataViewController.navigationItem.leftItemsSupplementBackButton = YES;
 
     [self.splitViewController showDetailViewController:dataViewController sender:self];
 }
@@ -319,11 +311,14 @@ static NSString* global_createdBranchURLString = nil;
                 sender.value = (shortURL) ? shortURL.absoluteString : error.description;
                 global_createdBranchURLString = shortURL.absoluteString;
                 [self.tableView reloadData];
-                TBTextViewController *tvc = [TBTextViewController new];
-                tvc.text = shortURL.absoluteString;
-                tvc.message = @"Branch Link";
-                tvc.navigationItem.title = @"Branch Link";
-                [self.navigationController pushViewController:tvc animated:YES];
+                NSDictionary*dictionary = nil;
+                if (error)
+                    dictionary = @{ @"Error": error.description };
+                else
+                    dictionary = @{ @"Short URL": shortURL.absoluteString };
+                [self showDataViewControllerWithTitle:@"Branch Link"
+                    message:@"Short URL"
+                    object:dictionary];
         }
     ];
 }
@@ -429,21 +424,33 @@ static NSString* global_createdBranchURLString = nil;
     [Branch.sharedInstance logEvent:[BranchEvent standardEvent:BranchStandardEventCompleteTutorial]
         completion:^(NSError * _Nullable error) {
             [TBWaitingView hide];
-            [self showDataViewControllerWithTitle:@"Standard Event"
-                message:@"Standard Event Sent"
-                object:@{@"Error": error.localizedDescription}];
+            if (error) {
+                [self showDataViewControllerWithTitle:@"Standard Event"
+                    message:@"Standard Event Error"
+                    object:@{@"Error": error.localizedDescription}];
+            } else {
+                [self showDataViewControllerWithTitle:@"Standard Event"
+                    message:@"Standard Event Sent"
+                    object:@{@"Event": BranchStandardEventCompleteTutorial}];
+            }
         }
     ];
 }
 
 - (IBAction) sendCustomEvent:(id)sender {
     [TBWaitingView showWithMessage:@"Sending event..." activityIndicator:YES disableTouches:YES];
-    [Branch.sharedInstance logEvent:[BranchEvent customEventWithName:@"Custom Event"]
+    [Branch.sharedInstance logEvent:[BranchEvent customEventWithName:@"Custom_Event"]
         completion:^(NSError * _Nullable error) {
             [TBWaitingView hide];
-            [self showDataViewControllerWithTitle:@"Custom Event"
-                message:@"Custom Event Sent"
-                object:@{@"Error": error.localizedDescription}];
+            if (error) {
+                [self showDataViewControllerWithTitle:@"Custom Event"
+                    message:@"Custom Event Error"
+                    object:@{@"Error": error.localizedDescription}];
+            } else {
+                [self showDataViewControllerWithTitle:@"Custom Event"
+                    message:@"Custom Event Sent"
+                    object:@{@"Event": @"Custom_Event"}];
+            }
         }
     ];
 }
@@ -465,11 +472,9 @@ static NSString* global_createdBranchURLString = nil;
 
 - (IBAction) showCurrentViewController:(id)send {
     UIViewController *vc = [UIViewController bnc_currentViewController];
-    TBTextViewController *tvc =
-        [[TBTextViewController alloc] initWithText:[NSString stringWithFormat:@"%@", vc]];
-    tvc.navigationItem.title = @"View Controller";
-    tvc.message = @"Current View Controller";
-    [self.navigationController pushViewController:tvc animated:YES];
+    [self showDataViewControllerWithTitle:@"View Controller"
+        message:@"Current View Controller"
+        object:@{@"ViewController": NSStringFromClass(vc.class)}];
 }
 
 - (IBAction) stressTestOpen:(id)sender {
@@ -513,15 +518,22 @@ static NSString* global_createdBranchURLString = nil;
     Branch.sharedInstance.limitFacebookTracking = !Branch.sharedInstance.limitFacebookTracking;
     TBTableRow *row = [self.tableData rowForIndexPath:self.facebookIndexPath];
     row.integerValue = Branch.sharedInstance.limitFacebookTracking;
+    [self.tableData updateTableView:self.tableView row:row];
+
+    NSString *message = @"Facebook tracking enabled.";
+    if (Branch.sharedInstance.limitFacebookTracking) message = @"Facebook tracking disabled.";
+    [TBWaitingView showWithMessage:message forSeconds:-1];
 }
 
 - (void) trackingDisabled:(id)sender {
     Branch.sharedInstance.trackingDisabled = !Branch.sharedInstance.trackingDisabled;
-    NSString *message = @"User tracking enabled.";
-    if (Branch.sharedInstance.trackingDisabled) message = @"User tracking disabled.";
-    [self showAlertWithTitle:nil message:message];
     TBTableRow *row = [self.tableData rowForIndexPath:self.trackingDisabledPath];
     row.integerValue = Branch.sharedInstance.trackingDisabled;
+    [self.tableData updateTableView:self.tableView row:row];
+
+    NSString *message = @"User tracking enabled.";
+    if (Branch.sharedInstance.trackingDisabled) message = @"User tracking disabled.";
+    [TBWaitingView showWithMessage:message forSeconds:-1];
 }
 
 #pragma mark - App Dates / Update State
