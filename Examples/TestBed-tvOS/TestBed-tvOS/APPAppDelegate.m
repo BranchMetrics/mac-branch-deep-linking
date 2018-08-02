@@ -1,9 +1,9 @@
 //
 //  APPAppDelegate.m
-//  TestBed-Mac
+//  TestBed-tvOS
 //
-//  Created by Edward Smith on 5/15/18.
-//  Copyright © 2018 Edward Smith. All rights reserved.
+//  Created by Edward Smith on 8/1/18.
+//  Copyright © 2018 Branch. All rights reserved.
 //
 
 #import "APPAppDelegate.h"
@@ -24,17 +24,16 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
 }
 
 @interface APPAppDelegate ()
-@property (strong, nonatomic) APPViewController*viewController;
 @end
 
 @implementation APPAppDelegate
 
-- (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     appDelegate = self;
     originalLogHook = BNCLogOutputFunction();
     BNCLogSetOutputFunction(APPLogHookFunction);
     BNCLogSetDisplayLevel(BNCLogLevelAll);
-    
+
     BranchConfiguration*configuration =
         [[BranchConfiguration alloc] initWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
 
@@ -71,23 +70,13 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
         selector:@selector(branchOpenedURLNotification:)
         name:BranchDidOpenURLWithSessionNotification
         object:nil];
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    self.viewController = [APPViewController loadController];
-    [self.viewController.window makeKeyAndOrderFront:self];
-}
-
-- (BOOL)application:(NSApplication *)application
-willContinueUserActivityWithType:(NSString *)userActivityType {
-    BNCLogMethodName();
     return YES;
 }
 
-- (BOOL)application:(NSApplication *)application
+- (BOOL)application:(UIApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
         restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    BNCLogMethodName();
+    [Branch.sharedInstance continueUserActivity:userActivity];
     return YES;
 }
 
@@ -103,13 +92,13 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     if ([self string:message matchesRegex:
             @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network start"]) {
         BNCPerformBlockOnMainThreadAsync(^{
-            self.viewController.requestTextView.string = message;
+            self.viewController.requestTextView.text = message;
         });
     } else
     if ([self string:message matchesRegex:
             @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network finish"]) {
         BNCPerformBlockOnMainThreadAsync(^{
-            self.viewController.responseTextView.string = message;
+            self.viewController.responseTextView.text = message;
         });
     }
 }
@@ -118,22 +107,28 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
 
 - (void) branchWillStartSession:(NSNotification*)notification {
     [self.viewController clearUIFields];
-    [self.viewController.window makeKeyAndOrderFront:self];
-    self.viewController.stateField.stringValue = notification.name;
-    self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
+    self.viewController.stateField.text = notification.name;
+    
+    NSURL*url = notification.userInfo[BranchURLKey];
+    if (url) self.viewController.urlField.text = url.absoluteString;
 }
 
 - (void) branchDidStartSession:(NSNotification*)notification {
-    self.viewController.stateField.stringValue = notification.name;
-    self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
-    self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";
+    self.viewController.stateField.text = notification.name;
+
+    NSURL*url = notification.userInfo[BranchURLKey];
+    if (url) self.viewController.urlField.text = url.absoluteString;
+
+    NSError*error = notification.userInfo[BranchErrorKey];
+    self.viewController.errorField.text = error.localizedDescription;
+
     BranchSession*session = notification.userInfo[BranchSessionKey];
     NSString*data = (session && session.data) ? session.data.description : @"";
-    self.viewController.dataTextView.string = data;
+    self.viewController.dataTextView.text = data;
 }
 
 - (void) branchOpenedURLNotification:(NSNotification*)notification {
-    self.viewController.stateField.stringValue = notification.name;
+    self.viewController.stateField.text = notification.name;
 }
 
 @end

@@ -1,0 +1,13 @@
+//@file          BranchTests-tvOS.xcconfig
+//@package       Branch
+//@brief         An xcconfig file for configuring the Branch framework TEST_HOST for tvOS.
+//
+//@author        Edward
+//@date          2018
+//@copyright     Copyright © 2018 Branch. All rights reserved.
+
+SDKROOT                 = appletvos
+SUPPORTED_PLATFORMS     = appletvos appletvsimulator
+////VALID_ARCHS           = arm64
+////VALID_ARCHS           = arm64 i386 x86_64
+BranchTestHost          = $(BUILT_PRODUCTS_DIR)/TestBed-tvOS.app/TestBed-tvOS

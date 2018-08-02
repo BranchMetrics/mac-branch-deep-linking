@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return Returns `true` if Branch can handle this URL, `false` otherwise.
 */
-- (BOOL) openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options;
+- (BOOL) openURL:(NSURL *)url options:(NSDictionary</*UIApplicationOpenURLOptionsKey*/NSString*, id> *)options;
 
 /**
  Opens a URL that was passed in an app continuation.

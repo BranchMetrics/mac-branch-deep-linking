@@ -351,7 +351,7 @@
     }
 }
 
-- (BOOL) openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+- (BOOL) openURL:(NSURL *)url options:(NSDictionary</*UIApplicationOpenURLOptionsKey*/NSString*, id> *)options {
     return [self openURL:url];
 }
 
