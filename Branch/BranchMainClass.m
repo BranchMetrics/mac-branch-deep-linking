@@ -272,7 +272,7 @@
 #endif
 
 - (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
-    // TODO: Remove this.
+    // TODO: Remove this?
     BNCLogMethodName();
     BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
 }

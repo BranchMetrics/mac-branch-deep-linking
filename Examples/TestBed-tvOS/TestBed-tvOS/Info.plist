@@ -28,5 +28,15 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>branchuitest</string>
+                <string>fb123</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>
