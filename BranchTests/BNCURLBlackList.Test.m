@@ -167,7 +167,7 @@
                     // @"^(?i).+:.*[?].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
                 NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
                 XCTAssertEqualObjects(link, pattern);
-            //    BNCAfterSecondsPerformBlockOnMainThread(0.2, ^{ [expectation fulfill]; });
+                BNCAfterSecondsPerformBlockOnMainThread(0.2, ^{ [expectation fulfill]; });
             }
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
