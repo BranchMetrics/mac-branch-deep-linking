@@ -83,6 +83,12 @@
 
 #pragma mark - Branch
 
+typedef NS_ENUM(NSInteger, BNCSessionState) {
+    BNCSessionStateUninitialized = 0,
+    BNCSessionStateInitializing,
+    BNCSessionStateInitialized
+};
+
 @interface Branch ()
 - (void) startNewSession;
 - (void) endSession;
@@ -94,6 +100,7 @@
 @property (atomic, strong) NSURL                *delayedOpenURL;
 @property (atomic, strong) dispatch_source_t    delayedOpenTimer;
 @property (atomic, strong) dispatch_queue_t     workQueue;
+@property (atomic, assign) BNCSessionState      sessionState;
 @end
 
 #pragma mark - Branch
@@ -317,13 +324,9 @@
     return (linkIdentifier.length > 0) ? YES : NO;
 }
 
-- (BOOL) openURL:(NSURL *)url {
+- (void) startDelayedOpenTimer {
     @synchronized(self) {
-        if (url != nil && ![self isBranchURL:url]) {
-            return NO;
-        }
-        if (url.absoluteString.length) self.delayedOpenURL = url;
-        if (self.delayedOpenTimer) return YES;
+        if (self.delayedOpenTimer) return;
 
         NSTimeInterval kOpenDeadline = 0.750; // The delay may need to be tweaked.
 
@@ -331,7 +334,7 @@
             self.workQueue = dispatch_queue_create("io.branch.sdk.work", DISPATCH_QUEUE_CONCURRENT);
 
         self.delayedOpenTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.workQueue);
-        if (!self.delayedOpenTimer) return YES;
+        if (!self.delayedOpenTimer) return;
 
         dispatch_time_t startTime = BNCDispatchTimeFromSeconds(kOpenDeadline);
         dispatch_source_set_timer(
@@ -346,12 +349,25 @@
             [strongSelf delayedOpen];
         });
         dispatch_resume(self.delayedOpenTimer);
-
-        return YES;
     }
 }
 
-- (BOOL) openURL:(NSURL *)url options:(NSDictionary</*UIApplicationOpenURLOptionsKey*/NSString*, id> *)options {
+- (BOOL) openURL:(NSURL *)url {
+    @synchronized(self) {
+        if (url.absoluteString.length) {
+            self.delayedOpenURL = url;
+            [self startDelayedOpenTimer];
+        } else
+        if (self.sessionState == BNCSessionStateUninitialized) {
+            self.sessionState = BNCSessionStateInitializing;
+            [self startDelayedOpenTimer];
+        }
+        return [self isBranchURL:url];
+    }
+}
+
+- (BOOL) openURL:(NSURL *)url
+         options:(NSDictionary</*UIApplicationOpenURLOptionsKey*/NSString*, id> *)options {
     return [self openURL:url];
 }
 
@@ -360,6 +376,28 @@
         return [self openURL:userActivity.webpageURL];
     }
     return NO;
+}
+
+- (NSURL*) URLWithSchemeSubstitution:(NSURL*)URL {
+    BOOL needsSubstitution = NO;
+    BNCApplication*application = [BNCApplication currentApplication];
+    if (application.defaultURLScheme && [URL.scheme isEqualToString:application.defaultURLScheme]) {
+        NSString*urlDomain = URL.host;
+        for (NSString*domain in application.associatedDomains) {
+            if ([domain hasPrefix:@"applinks:"]) {
+                NSString*nakedDomain = [domain substringFromIndex:9];
+                if ([urlDomain isEqualToString:nakedDomain]) {
+                    needsSubstitution = YES;
+                    break;
+                }
+            }
+        }
+    }
+    if (!needsSubstitution) return URL;
+    NSString*newURL =
+        [NSString stringWithFormat:@"https%@",
+            [URL.absoluteString substringFromIndex:application.defaultURLScheme.length]];
+    return [NSURL URLWithString:newURL];
 }
 
 - (void) delayedOpen {
@@ -372,6 +410,7 @@
     }
     if (!openURL && self.trackingDisabled) return;
 
+    self.sessionState = BNCSessionStateInitializing;
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 
@@ -392,12 +431,13 @@
     if (blackListPattern != nil) {
         dictionary[@"external_intent_uri"] = blackListPattern;
     } else {
+        openURL = [self URLWithSchemeSubstitution:openURL];
         NSString*scheme = openURL.scheme;
         if ([scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"]) {
-            dictionary[@"universal_link_url"] = openURL.absoluteString;
+            dictionary[@"universal_link_url"] = BNCWireFormatFromURL(openURL);
         } else
         if (scheme.length > 0) {
-            dictionary[@"external_intent_uri"] = openURL.absoluteString;
+            dictionary[@"external_intent_uri"] = BNCWireFormatFromURL(openURL);
             NSURLComponents*components = [NSURLComponents componentsWithString:openURL.absoluteString];
             for (NSURLQueryItem*item in components.queryItems) {
                 if ([item.name isEqualToString:@"link_click_id"]) {
@@ -433,12 +473,13 @@
 
 - (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
     if (operation.error) {
+        self.sessionState = BNCSessionStateUninitialized;
         BNCPerformBlockOnMainThreadAsync(^{
             [self notifyDidStartSession:nil withURL:URL error:operation.error];
         });
         return;
     }
-
+    self.sessionState = BNCSessionStateInitialized;
     BranchSession*session = operation.session;
     BranchLinkProperties*linkProperties = [BranchLinkProperties linkPropertiesWithDictionary:session.data];
     session.linkProperties = linkProperties;
@@ -611,6 +652,7 @@
     dictionary[@"session_id"] = self.settings.sessionID;
     dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    self.sessionState = BNCSessionStateUninitialized;
     [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
         dictionary:dictionary
         completion:nil];

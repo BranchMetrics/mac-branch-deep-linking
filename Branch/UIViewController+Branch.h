@@ -11,6 +11,7 @@
 #import "BranchHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 #if TARGET_OS_TV || TARGET_OS_IOS
 
 @interface UIViewController (Branch)
@@ -20,5 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 #endif
+
 void BNCForceUIViewControllerCategoryToLoad(void) __attribute__((constructor));
+
 NS_ASSUME_NONNULL_END

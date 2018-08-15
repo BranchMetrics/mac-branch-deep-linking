@@ -67,7 +67,15 @@
             @"title":       @"Open Last Link",
             @"detail":      @"Open the link the was just created.",
             @"selector":    @"openLink:",
-        },
+        },@{
+            @"title":       @"Branchster (Scheme)",
+            @"detail":      @"Open Branch Monster Factory.",
+            @"selector":    @"openBranchsterScheme:",
+        },@{
+            @"title":       @"Branchster (Universal)",
+            @"detail":      @"Open Branch Monster Factory.",
+            @"selector":    @"openBranchsterUniversal:",
+        }
     ];
 
     [self configureTextView:self.dataTextView placeholder:@"< Data >"];
@@ -340,6 +348,28 @@ static NSURL*lastCreatedLink = nil;
     [Branch sharedInstance].limitFacebookTracking = ![Branch sharedInstance].limitFacebookTracking;
     [self.tableView reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:1 inSection:0] ]
         withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (IBAction) openBranchsterScheme:(id)sender {
+    NSURL*URL = [NSURL URLWithString:@"branchsters://branchster.app.link/hNM6YVlQnP"];
+    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:nil];
+}
+
+- (IBAction) openBranchsterUniversal:(id)sender {
+    NSURL*URL = [NSURL URLWithString:@"https://branchster.app.link/hNM6YVlQnP"];
+    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:^ (BOOL success) {
+        if (success) return;
+        UIAlertController* alert =
+            [UIAlertController alertControllerWithTitle:@"Open Failed"
+                message:[NSString stringWithFormat:@"Can't open the URL '%@'.", URL.absoluteString]
+                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction*defaultAction =
+            [UIAlertAction actionWithTitle:@"OK"
+                style:UIAlertActionStyleDefault
+                handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
 }
 
 @end
