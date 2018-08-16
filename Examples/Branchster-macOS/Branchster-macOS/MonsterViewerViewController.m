@@ -37,10 +37,9 @@
 
 @implementation MonsterViewerViewController
 
-+ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster {
++ (MonsterViewerViewController*) viewController {
     MonsterViewerViewController*controller = [[MonsterViewerViewController alloc] init];
     [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:controller topLevelObjects:nil];
-    controller.monster = monster;
     return controller;
 }
 

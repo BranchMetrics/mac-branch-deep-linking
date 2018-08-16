@@ -12,7 +12,7 @@
 @implementation BranchUniversalObject (MonsterHelpers)
 
 - (void)setIsMonster:(BOOL)value {
-    self.contentMetadata.customMetadata[@"monster"] = (value) ? @"true" : @"false";
+    self.contentMetadata.customMetadata[@"monster"] = (value) ? @"true" : nil;
 }
 
 - (BOOL) isMonster {
@@ -20,6 +20,7 @@
 }
 
 - (void)setMonsterName:(NSString *)name {
+    self.title = name;
     self.contentMetadata.customMetadata[@"monster_name"] = name;
 }
 
@@ -57,14 +58,13 @@
         [self monsterName]];
 }
 
-+ (BranchUniversalObject *)emptyMonster {
-    BranchUniversalObject *empty =
-        [[BranchUniversalObject alloc] initWithTitle:@"Jingles Bingleheimer"];
-    [empty setIsMonster:YES];
-    [empty setFaceIndex:0];
-    [empty setBodyIndex:0];
-    [empty setColorIndex:0];
-    [empty setMonsterName:@""];
++ (BranchUniversalObject *)newEmptyMonster {
+    BranchUniversalObject *empty = [[BranchUniversalObject alloc] initWithTitle:@""];
+    empty.isMonster = YES;
+    empty.faceIndex = 0;
+    empty.bodyIndex = 0;
+    empty.colorIndex = 0;
+    empty.monsterName = @"New Monster";
     return empty;
 }
 

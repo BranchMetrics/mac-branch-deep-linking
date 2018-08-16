@@ -28,7 +28,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BranchConfiguration*configuration =
         [[BranchConfiguration alloc] initWithKey:@"key_live_hkDytPACtipny3N9XmnbZlapBDdj4WIL"];
     [[Branch sharedInstance] startWithConfiguration:configuration];
-
     return YES;
 }
 

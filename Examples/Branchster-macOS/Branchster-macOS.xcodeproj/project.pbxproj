@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D07BC842124D7BA009EF635 /* MonsterViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */; };
+		4D07BC8A2125F543009EF635 /* MonsterWindowController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */; };
+		4D07BC9121261C21009EF635 /* MonsterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D07BC9021261C21009EF635 /* MonsterWindowController.m */; };
 		4D12D92521248008005C544C /* MonsterCreatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12D92421248008005C544C /* MonsterCreatorViewController.xib */; };
 		4D12D936212487D0005C544C /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D12D930212487A6005C544C /* Branch.framework */; };
 		4D12D937212487D0005C544C /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D12D930212487A6005C544C /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -70,6 +73,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonsterViewerViewController.xib; sourceTree = "<group>"; };
+		4D07BC872124DDC0009EF635 /* Branchster-macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-macOS.entitlements"; sourceTree = "<group>"; };
+		4D07BC892125F543009EF635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MonsterWindowController.storyboard; sourceTree = "<group>"; };
+		4D07BC8F21261C21009EF635 /* MonsterWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonsterWindowController.h; sourceTree = "<group>"; };
+		4D07BC9021261C21009EF635 /* MonsterWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonsterWindowController.m; sourceTree = "<group>"; };
 		4D12D92421248008005C544C /* MonsterCreatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonsterCreatorViewController.xib; sourceTree = "<group>"; };
 		4D12D929212487A6005C544C /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
 		4D1E61A3212491F0006FF777 /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
@@ -144,6 +152,7 @@
 				4D679CF421233DDC0041D7C5 /* Assets.xcassets */,
 				4D1E61A9212491F0006FF777 /* BranchInfoViewController.h */,
 				4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */,
+				4D07BC872124DDC0009EF635 /* Branchster-macOS.entitlements */,
 				4D679CFC21233DDC0041D7C5 /* Branchster.entitlements */,
 				4D1E61AF212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.h */,
 				4D1E61AA212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.m */,
@@ -159,6 +168,10 @@
 				4D1E61AC212491F0006FF777 /* MonsterPartsFactory.m */,
 				4D1E61A8212491F0006FF777 /* MonsterViewerViewController.h */,
 				4D1E61A6212491F0006FF777 /* MonsterViewerViewController.m */,
+				4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */,
+				4D07BC8F21261C21009EF635 /* MonsterWindowController.h */,
+				4D07BC9021261C21009EF635 /* MonsterWindowController.m */,
+				4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */,
 				4D1E61A7212491F0006FF777 /* SplashViewController.h */,
 				4D1E61AD212491F0006FF777 /* SplashViewController.m */,
 				4D773EB5212473E10002D3A3 /* SplashViewController.xib */,
@@ -199,6 +212,11 @@
 				TargetAttributes = {
 					4D679CEA21233DDB0041D7C5 = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -256,6 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D12D92521248008005C544C /* MonsterCreatorViewController.xib in Resources */,
+				4D07BC8A2125F543009EF635 /* MonsterWindowController.storyboard in Resources */,
+				4D07BC842124D7BA009EF635 /* MonsterViewerViewController.xib in Resources */,
 				4D679CF521233DDC0041D7C5 /* Assets.xcassets in Resources */,
 				4D773EB6212473E10002D3A3 /* SplashViewController.xib in Resources */,
 				4D679CF821233DDC0041D7C5 /* Main.storyboard in Resources */,
@@ -271,6 +291,7 @@
 			files = (
 				4D679CFB21233DDC0041D7C5 /* main.m in Sources */,
 				4D1E61B2212491F1006FF777 /* MonsterViewerViewController.m in Sources */,
+				4D07BC9121261C21009EF635 /* MonsterWindowController.m in Sources */,
 				4D1E61B7212491F1006FF777 /* BranchInfoViewController.m in Sources */,
 				4D1E61B1212491F1006FF777 /* ImageCollectionViewCell.m in Sources */,
 				4D1E61B6212491F1006FF777 /* SplashViewController.m in Sources */,
@@ -292,6 +313,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D07BC892125F543009EF635 /* Base */,
+			);
+			name = MonsterWindowController.storyboard;
+			sourceTree = "<group>";
+		};
 		4D679CF621233DDC0041D7C5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -416,7 +445,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
@@ -434,7 +463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;

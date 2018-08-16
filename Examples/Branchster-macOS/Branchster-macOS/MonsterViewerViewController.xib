@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MonsterViewerViewController">
+            <connections>
+                <outlet property="botLayerOneColor" destination="YA8-bA-ArB" id="Jyb-oA-DHS"/>
+                <outlet property="botLayerThreeFace" destination="yu1-J7-0Dl" id="78p-W0-MZZ"/>
+                <outlet property="botLayerTwoBody" destination="jwc-kP-ZKI" id="py8-gj-1m0"/>
+                <outlet property="cmdChange" destination="Gh6-mq-lR3" id="tlo-12-jPh"/>
+                <outlet property="txtDescription" destination="fln-cp-DXK" id="hWc-47-IYG"/>
+                <outlet property="txtName" destination="838-Yi-fci" id="TBg-R6-p9g"/>
+                <outlet property="view" destination="1DW-GF-ftg" id="Lcx-U1-fEC"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="1DW-GF-ftg">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="620"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="YA8-bA-ArB">
+                    <rect key="frame" x="284" y="175" width="200" height="270"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jwc-kP-ZKI">
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="270"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="z8T-B4-rvE"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yu1-J7-0Dl">
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="270"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="b73-l6-ZFg"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="jwc-kP-ZKI" secondAttribute="trailing" id="2aQ-51-54w"/>
+                        <constraint firstAttribute="height" constant="270" id="AEa-fJ-7Eo"/>
+                        <constraint firstAttribute="width" constant="200" id="EMF-SK-zqw"/>
+                        <constraint firstItem="yu1-J7-0Dl" firstAttribute="leading" secondItem="YA8-bA-ArB" secondAttribute="leading" id="LSM-b9-tKx"/>
+                        <constraint firstItem="yu1-J7-0Dl" firstAttribute="top" secondItem="YA8-bA-ArB" secondAttribute="top" id="qUL-Wc-59C"/>
+                        <constraint firstAttribute="bottom" secondItem="jwc-kP-ZKI" secondAttribute="bottom" id="sQp-2c-R5b"/>
+                        <constraint firstItem="jwc-kP-ZKI" firstAttribute="leading" secondItem="YA8-bA-ArB" secondAttribute="leading" id="unY-re-SUY"/>
+                        <constraint firstAttribute="bottom" secondItem="yu1-J7-0Dl" secondAttribute="bottom" id="vmH-at-Ihs"/>
+                        <constraint firstItem="jwc-kP-ZKI" firstAttribute="top" secondItem="YA8-bA-ArB" secondAttribute="top" id="vqm-Nc-V6a"/>
+                        <constraint firstAttribute="trailing" secondItem="yu1-J7-0Dl" secondAttribute="trailing" id="z3I-Xt-3SZ"/>
+                    </constraints>
+                </customView>
+                <textField verticalHuggingPriority="751" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fln-cp-DXK">
+                    <rect key="frame" x="157" y="69" width="454" height="86"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="450" id="xc1-Zz-enx"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="IbX-qZ-itQ">
+                        <font key="font" metaFont="system"/>
+                        <string key="title">Professor Krain is very busy and very hungry.  He prefers to work alone and is impatient with hierarchies and politics.  Although he’s not particularly social, he has a razor sharp wit (and claws), and is actually very fun to be around. But hide your food. Those donuts you were saving for tomorrow? Gone. Those leftovers from the picnic? Done. An unstoppable force, Professor Krane gets hungry often, so watch out.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gh6-mq-lR3">
+                    <rect key="frame" x="318" y="9" width="132" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="Qdu-qb-4l7"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="838-Yi-fci">
+                    <rect key="frame" x="292" y="489" width="185" height="87"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Bingles Jingleheimer" id="dm5-vN-EpD">
+                        <font key="font" metaFont="system" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Gh6-mq-lR3" secondAttribute="bottom" constant="16" id="1Xl-RA-r79"/>
+                <constraint firstItem="Gh6-mq-lR3" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="2cF-Be-JHQ"/>
+                <constraint firstItem="fln-cp-DXK" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="3Fj-1J-tbq"/>
+                <constraint firstItem="YA8-bA-ArB" firstAttribute="centerY" secondItem="1DW-GF-ftg" secondAttribute="centerY" id="6xF-uf-nKs"/>
+                <constraint firstItem="YA8-bA-ArB" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="Woo-Sn-Tjy"/>
+                <constraint firstItem="838-Yi-fci" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="XkV-5D-6dI"/>
+                <constraint firstItem="YA8-bA-ArB" firstAttribute="top" secondItem="838-Yi-fci" secondAttribute="bottom" constant="44" id="fRn-yF-oWr"/>
+                <constraint firstItem="Gh6-mq-lR3" firstAttribute="top" secondItem="fln-cp-DXK" secondAttribute="bottom" constant="32" id="gOK-Hr-u6J"/>
+                <constraint firstItem="fln-cp-DXK" firstAttribute="top" secondItem="YA8-bA-ArB" secondAttribute="bottom" constant="20" id="kML-22-hbn"/>
+                <constraint firstItem="838-Yi-fci" firstAttribute="top" secondItem="1DW-GF-ftg" secondAttribute="top" constant="44" id="o8a-JS-ZNB"/>
+            </constraints>
+            <point key="canvasLocation" x="980" y="665"/>
+        </customView>
+    </objects>
+</document>

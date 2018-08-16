@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,44 +15,47 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view wantsLayer="YES" id="Vy7-xt-ilx">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="544"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pgU-H3-gzK">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="544"/>
+                    <rect key="frame" x="0.0" y="8" width="600" height="752"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="splashfactory" id="O5N-ed-9OT"/>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ymA-XK-j7C">
-                    <rect key="frame" x="221" y="318" width="100" height="100"/>
+                    <rect key="frame" x="296" y="525" width="125" height="100"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="rCG-Oc-6MG"/>
-                        <constraint firstAttribute="width" constant="100" id="yr9-Nh-75i"/>
+                        <constraint firstAttribute="width" constant="125" id="yr9-Nh-75i"/>
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="400" id="I1n-9D-M7C"/>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XsG-Jy-u6D">
-                    <rect key="frame" x="160" y="438" width="161" height="106"/>
+                    <rect key="frame" x="260" y="620" width="161" height="140"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="140" id="DFL-Xk-BYB"/>
+                    </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="branchster" id="GCw-Fy-HrI"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sxz-ba-zRX">
-                    <rect key="frame" x="154" y="281" width="169" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Loading Branchster parts..." id="uFK-mD-B4g">
-                        <font key="font" metaFont="system"/>
+                    <rect key="frame" x="222" y="456" width="201" height="19"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading Branchster parts..." id="uFK-mD-B4g">
+                        <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="pgU-H3-gzK" secondAttribute="bottom" id="5nF-cL-Pwf"/>
+                <constraint firstAttribute="bottom" secondItem="pgU-H3-gzK" secondAttribute="bottom" constant="8" id="5nF-cL-Pwf"/>
                 <constraint firstItem="ymA-XK-j7C" firstAttribute="trailing" secondItem="XsG-Jy-u6D" secondAttribute="trailing" id="6Ht-cn-fLA"/>
-                <constraint firstItem="pgU-H3-gzK" firstAttribute="top" secondItem="Vy7-xt-ilx" secondAttribute="top" id="8Nh-SM-ldb"/>
-                <constraint firstItem="XsG-Jy-u6D" firstAttribute="centerX" secondItem="Vy7-xt-ilx" secondAttribute="centerX" id="Ia5-WC-39o"/>
+                <constraint firstItem="pgU-H3-gzK" firstAttribute="top" secondItem="Vy7-xt-ilx" secondAttribute="top" constant="40" id="8Nh-SM-ldb"/>
+                <constraint firstItem="XsG-Jy-u6D" firstAttribute="centerX" secondItem="Vy7-xt-ilx" secondAttribute="centerX" constant="40" id="Ia5-WC-39o"/>
                 <constraint firstItem="sxz-ba-zRX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vy7-xt-ilx" secondAttribute="leading" id="LQ0-eM-H7G"/>
-                <constraint firstItem="XsG-Jy-u6D" firstAttribute="top" secondItem="Vy7-xt-ilx" secondAttribute="top" id="SZo-qs-NIu"/>
+                <constraint firstItem="XsG-Jy-u6D" firstAttribute="top" secondItem="Vy7-xt-ilx" secondAttribute="top" constant="40" id="SZo-qs-NIu"/>
                 <constraint firstAttribute="trailing" secondItem="pgU-H3-gzK" secondAttribute="trailing" id="Ydw-w0-JjQ"/>
-                <constraint firstItem="sxz-ba-zRX" firstAttribute="top" secondItem="ymA-XK-j7C" secondAttribute="bottom" constant="20" id="YuR-da-02G"/>
-                <constraint firstItem="ymA-XK-j7C" firstAttribute="top" secondItem="XsG-Jy-u6D" secondAttribute="bottom" constant="20" id="dTr-H3-krM"/>
+                <constraint firstItem="sxz-ba-zRX" firstAttribute="top" secondItem="ymA-XK-j7C" secondAttribute="bottom" constant="50" id="YuR-da-02G"/>
+                <constraint firstItem="ymA-XK-j7C" firstAttribute="top" secondItem="XsG-Jy-u6D" secondAttribute="bottom" constant="-5" id="dTr-H3-krM"/>
                 <constraint firstItem="pgU-H3-gzK" firstAttribute="leading" secondItem="Vy7-xt-ilx" secondAttribute="leading" id="uEN-vm-d1W"/>
                 <constraint firstItem="sxz-ba-zRX" firstAttribute="trailing" secondItem="XsG-Jy-u6D" secondAttribute="trailing" id="wrW-XW-9R8"/>
             </constraints>
@@ -60,6 +64,7 @@
                     <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="23" y="53"/>
         </view>
     </objects>
     <resources>

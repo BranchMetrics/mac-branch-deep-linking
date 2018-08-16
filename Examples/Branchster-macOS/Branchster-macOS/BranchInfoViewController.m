@@ -24,11 +24,10 @@
 }
 
 -(IBAction) openWebAction:(id)sender {
-    NSURL *url = [NSURL URLWithString:@"https://branch.io"];
+    NSURL *URL = [NSURL URLWithString:@"https://branch.io"];
     NSError*error = nil;
-    [[NSWorkspace sharedWorkspace] openURL:url options:0 configuration:@{} error:&error];
+    [[NSWorkspace sharedWorkspace] openURL:URL options:0 configuration:@{} error:&error];
     if (!error) return;
-
     NSAlert*alert = [NSAlert alertWithError:error];
     [alert runModal];
 }

@@ -16,7 +16,6 @@
 @interface MonsterCreatorViewController () <NSCollectionViewDataSource, NSCollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet NSTextField *monsterName;
-
 @property (weak, nonatomic) IBOutlet NSView *botViewLayerOne;
 @property (weak, nonatomic) IBOutlet NSCollectionView *botViewLayerTwo;
 @property (weak, nonatomic) IBOutlet NSCollectionView *botViewLayerThree;
@@ -35,10 +34,9 @@
 
 @implementation MonsterCreatorViewController
 
-+ (MonsterCreatorViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster {
++ (MonsterCreatorViewController*) viewController {
     MonsterCreatorViewController*controller = [[MonsterCreatorViewController alloc] init];
     [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:controller topLevelObjects:nil];
-    controller.monster = monster;
     return controller;
 }
 
@@ -46,7 +44,7 @@
     [super viewDidLoad];
 
     if (!self.monster)
-        self.monster = [BranchUniversalObject emptyMonster];
+        self.monster = [BranchUniversalObject newEmptyMonster];
 
     for (int i = 0; i < [self.colorViews count]; i++) {
         NSButton *currView = [self.colorViews objectAtIndex:i];
@@ -69,24 +67,32 @@
     
     self.botViewLayerTwo.delegate = self;
     self.botViewLayerTwo.dataSource = self;
-    [self.botViewLayerTwo registerClass:[ImageCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.botViewLayerTwo registerClass:[ImageCollectionViewCell class] forItemWithIdentifier:@"cell"];
     
     self.botViewLayerThree.delegate = self;
     self.botViewLayerThree.dataSource = self;
-    [self.botViewLayerThree registerClass:[ImageCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.botViewLayerThree registerClass:[ImageCollectionViewCell class] forItemWithIdentifier:@"cell"];
     
-    self.monsterName.stringValue = self.monster monsterName;
+    self.monsterName.stringValue = self.monster.monsterName;
+}
+
+- (void) updateBody {
+    [self.botViewLayerTwo
+        scrollToItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:self.bodyIndex inSection:0]]
+        scrollPosition:NSCollectionViewScrollPositionCenteredHorizontally];
+}
+
+- (void) updateFace {
+    [self.botViewLayerThree
+        scrollToItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:self.faceIndex inSection:0]]
+        scrollPosition:NSCollectionViewScrollPositionCenteredVertically];
 }
 
 - (void)viewDidLayoutSubviews {
     self.bodyIndex = [self.monster bodyIndex];
     self.faceIndex = [self.monster faceIndex];
-    [self.botViewLayerTwo scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.bodyIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-        animated:NO];
-    [self.botViewLayerThree scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.faceIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-        animated:NO];
+    [self updateBody];
+    [self updateFace];
 }
 
 - (IBAction)cmdLeftClick:(id)sender {
@@ -94,10 +100,7 @@
     if (self.bodyIndex == -1)
         self.bodyIndex = [MonsterPartsFactory sizeOfBodyArray] - 1;
     [self.monster setBodyIndex:self.bodyIndex];
-    [self.botViewLayerTwo
-        scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.bodyIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-        animated:YES];
+    [self updateBody];
 }
 
 - (IBAction)cmdRightClick:(id)sender {
@@ -105,9 +108,7 @@
     if (self.bodyIndex == [MonsterPartsFactory sizeOfBodyArray])
         self.bodyIndex = 0;
     [self.monster setBodyIndex:self.bodyIndex];
-    [self.botViewLayerTwo scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.bodyIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-        animated:YES];
+    [self updateBody];
 }
 
 - (IBAction)cmdUpClick:(id)sender {
@@ -115,9 +116,7 @@
     if (self.faceIndex == -1)
         self.faceIndex = [MonsterPartsFactory sizeOfFaceArray] - 1;
     [self.monster setFaceIndex:self.faceIndex];
-    [self.botViewLayerThree scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.faceIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-        animated:YES];
+    [self updateFace];
 }
 
 - (IBAction)cmdDownClick:(id)sender {
@@ -125,9 +124,7 @@
     if (self.faceIndex == [MonsterPartsFactory sizeOfFaceArray])
         self.faceIndex = 0;
     [self.monster setFaceIndex:self.faceIndex];
-    [self.botViewLayerThree scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.faceIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-        animated:YES];
+    [self updateFace];
 }
 
 - (IBAction)cmdColorClick:(id)sender {
@@ -170,17 +167,14 @@
 }
 
 - (NSCollectionViewItem*)collectionView:(NSCollectionView*)collectionView
-                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ImageCollectionViewCell *cell = (ImageCollectionViewCell *)
-        [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    
+    itemForRepresentedObjectAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    ImageCollectionViewCell *cell = (id) [collectionView makeItemWithIdentifier:@"cell" forIndexPath:indexPath];
     if ([collectionView isEqual:self.botViewLayerTwo]) {
-        NSImage *bodyImage = [MonsterPartsFactory imageForBody:indexPath.row];
+        NSImage *bodyImage = [MonsterPartsFactory imageForBody:indexPath.item];
         [cell.imageView setImage:bodyImage];
     } else {
-        NSImage *faceImage = [MonsterPartsFactory imageForFace:indexPath.row];
+        NSImage *faceImage = [MonsterPartsFactory imageForFace:indexPath.item];
         [cell.imageView setImage:faceImage];
-        [cell bringSubviewToFront:cell.imageView];
     }
     
     return cell;
@@ -197,24 +191,20 @@
 
 - (IBAction)openTestBedScheme:(id)sender {
     NSURL*URL = [NSURL URLWithString:@"testbed-mac://testbed-mac.app.link/KUfCVJ7LnP"];
-    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:nil];
+    NSError*error = nil;
+    [[NSWorkspace sharedWorkspace] openURL:URL options:0 configuration:@{} error:&error];
+    if (!error) return;
+    NSAlert*alert = [NSAlert alertWithError:error];
+    [alert runModal];
 }
 
 - (IBAction)openTestBedUniversal:(id)sender {
     NSURL*URL = [NSURL URLWithString:@"https://testbed-mac.app.link/KUfCVJ7LnP"];
-    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:^ (BOOL success) {
-        if (success) return;
-        UIAlertController* alert =
-            [UIAlertController alertControllerWithTitle:@"Open Failed"
-                message:[NSString stringWithFormat:@"Can't open the URL '%@'.", URL.absoluteString]
-                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction*defaultAction =
-            [UIAlertAction actionWithTitle:@"OK"
-                style:UIAlertActionStyleDefault
-                handler:nil];
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-    }];
+    NSError*error = nil;
+    [[NSWorkspace sharedWorkspace] openURL:URL options:0 configuration:@{} error:&error];
+    if (!error) return;
+    NSAlert*alert = [NSAlert alertWithError:error];
+    [alert runModal];
 }
 
 @end

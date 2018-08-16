@@ -16,8 +16,14 @@
 
 @implementation SplashViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
++ (SplashViewController*) viewController {
+    SplashViewController*controller = [[SplashViewController alloc] init];
+    [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:controller topLevelObjects:nil];
+    return controller;
+}
+
+- (void)viewDidAppear {
+    [super viewDidAppear];
 
     self.loadingMessages = @[
         @"Loading Branchster parts",

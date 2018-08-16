@@ -11,7 +11,7 @@
 
 @interface BranchUniversalObject (MonsterHelpers)
 
-+ (BranchUniversalObject *)emptyMonster;
++ (BranchUniversalObject *)newEmptyMonster;
 
 @property (nonatomic, assign) BOOL isMonster;
 @property (nonatomic, strong) NSString *monsterName;

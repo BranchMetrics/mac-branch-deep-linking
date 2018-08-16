@@ -10,7 +10,7 @@
 @import Branch;
 
 @interface MonsterViewerViewController : NSViewController
-+ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster;
++ (MonsterViewerViewController*) viewController;
 @property (nonatomic, strong) BranchUniversalObject *monster;
 @end
 

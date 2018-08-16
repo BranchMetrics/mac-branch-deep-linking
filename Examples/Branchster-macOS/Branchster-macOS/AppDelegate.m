@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MonsterWindowController.h"
+#import "BranchUniversalObject+MonsterHelpers.h"
 @import Branch;
 
 @interface AppDelegate ()
@@ -15,24 +17,56 @@
 @implementation AppDelegate
 
 - (void) applicationWillFinishLaunching:(NSNotification *)notification {
+//    [[NSNotificationCenter defaultCenter]
+//        addObserver:self
+//        selector:@selector(logMessageNotification:)
+//        name:nil
+//        object:nil];
+
     [[NSNotificationCenter defaultCenter]
         addObserver:self
-        selector:@selector(branchDidStartSession:)
+        selector:@selector(branchDidStartSessionNotification:)
         name:BranchDidStartSessionNotification
         object:nil];
+    BranchConfiguration*configuration =
+        [[BranchConfiguration alloc] initWithKey:@"key_live_hkDytPACtipny3N9XmnbZlapBDdj4WIL"];
+    [Branch.sharedInstance startWithConfiguration:configuration];
+
+    [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
+    [MonsterWindowController newWindowWithMonster:nil];
 }
 
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
+- (void) logMessageNotification:(NSNotification*)notification {
+    BNCLogDebug(@"%@", notification.name);
 }
-- (void) branchDidStartSession:(NSNotification*)notification {
-    self.viewController.stateField.stringValue = notification.name;
-    self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
-    self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";
+
+- (void) branchDidStartSessionNotification:(NSNotification*)notification {
     BranchSession*session = notification.userInfo[BranchSessionKey];
-    NSString*data = (session && session.data) ? session.data.description : @"";
-    self.viewController.dataTextView.string = data;
+    BranchUniversalObject*monster = session.linkContent;
+
+    static BOOL isFirstTime = YES;
+    if (isFirstTime) {
+        isFirstTime = NO;
+        if (!monster.isMonster) monster = [BranchUniversalObject newEmptyMonster];
+    }
+    if (!monster.isMonster) return;
+
+    // Find a window for the monster:
+    for (NSWindow*window in [NSApplication sharedApplication].windows) {
+        MonsterWindowController*controller = window.windowController;
+        if ([controller isKindOfClass:MonsterWindowController.class] && controller.monster == nil) {
+            controller.monster = monster;
+            return;
+        }
+    }
+
+    // No windows are available. Make a new one.
+    if (monster.isMonster)
+        [MonsterWindowController newWindowWithMonster:monster];
+}
+
+- (IBAction) newDocument:(id)sender {
+    [MonsterWindowController newWindowWithMonster:[BranchUniversalObject newEmptyMonster]];
 }
 
 @end
