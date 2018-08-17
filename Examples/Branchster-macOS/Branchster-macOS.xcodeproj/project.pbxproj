@@ -20,6 +20,7 @@
 		4D1E61B5212491F1006FF777 /* MonsterPartsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61AC212491F0006FF777 /* MonsterPartsFactory.m */; };
 		4D1E61B6212491F1006FF777 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61AD212491F0006FF777 /* SplashViewController.m */; };
 		4D1E61B7212491F1006FF777 /* BranchInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */; };
+		4D29DC7E2126928E004AC050 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D29DC7D2126928E004AC050 /* ImageCollectionViewCell.xib */; };
 		4D679CF021233DDB0041D7C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D679CEF21233DDB0041D7C5 /* AppDelegate.m */; };
 		4D679CF521233DDC0041D7C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D679CF421233DDC0041D7C5 /* Assets.xcassets */; };
 		4D679CF821233DDC0041D7C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D679CF621233DDC0041D7C5 /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		4D1E61AE212491F0006FF777 /* MonsterCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterCreatorViewController.h; sourceTree = "<group>"; };
 		4D1E61AF212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BranchUniversalObject+MonsterHelpers.h"; sourceTree = "<group>"; };
 		4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchInfoViewController.m; sourceTree = "<group>"; };
+		4D29DC7D2126928E004AC050 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		4D679CEB21233DDB0041D7C5 /* Branchster-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Branchster-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D679CEE21233DDB0041D7C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4D679CEF21233DDB0041D7C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				4D1E61AA212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.m */,
 				4D1E61A5212491F0006FF777 /* ImageCollectionViewCell.h */,
 				4D1E61A3212491F0006FF777 /* ImageCollectionViewCell.m */,
+				4D29DC7D2126928E004AC050 /* ImageCollectionViewCell.xib */,
 				4D679CF921233DDC0041D7C5 /* Info.plist */,
 				4D679CFA21233DDC0041D7C5 /* main.m */,
 				4D679CF621233DDC0041D7C5 /* Main.storyboard */,
@@ -276,6 +279,7 @@
 				4D12D92521248008005C544C /* MonsterCreatorViewController.xib in Resources */,
 				4D07BC8A2125F543009EF635 /* MonsterWindowController.storyboard in Resources */,
 				4D07BC842124D7BA009EF635 /* MonsterViewerViewController.xib in Resources */,
+				4D29DC7E2126928E004AC050 /* ImageCollectionViewCell.xib in Resources */,
 				4D679CF521233DDC0041D7C5 /* Assets.xcassets in Resources */,
 				4D773EB6212473E10002D3A3 /* SplashViewController.xib in Resources */,
 				4D679CF821233DDC0041D7C5 /* Main.storyboard in Resources */,

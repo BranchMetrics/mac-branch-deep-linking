@@ -11,7 +11,7 @@
                 <outlet property="botLayerOneColor" destination="YA8-bA-ArB" id="Jyb-oA-DHS"/>
                 <outlet property="botLayerThreeFace" destination="yu1-J7-0Dl" id="78p-W0-MZZ"/>
                 <outlet property="botLayerTwoBody" destination="jwc-kP-ZKI" id="py8-gj-1m0"/>
-                <outlet property="cmdChange" destination="Gh6-mq-lR3" id="tlo-12-jPh"/>
+                <outlet property="cmdChange" destination="Gh6-mq-lR3" id="VeA-mD-WzP"/>
                 <outlet property="txtDescription" destination="fln-cp-DXK" id="hWc-47-IYG"/>
                 <outlet property="txtName" destination="838-Yi-fci" id="TBg-R6-p9g"/>
                 <outlet property="view" destination="1DW-GF-ftg" id="Lcx-U1-fEC"/>
@@ -19,12 +19,12 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="1DW-GF-ftg">
-            <rect key="frame" x="0.0" y="0.0" width="768" height="620"/>
+        <customView wantsLayer="YES" id="1DW-GF-ftg">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="652"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="YA8-bA-ArB">
-                    <rect key="frame" x="284" y="175" width="200" height="270"/>
+                <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YA8-bA-ArB">
+                    <rect key="frame" x="284" y="191" width="200" height="270"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jwc-kP-ZKI">
                             <rect key="frame" x="0.0" y="0.0" width="200" height="270"/>
@@ -49,7 +49,7 @@
                     </constraints>
                 </customView>
                 <textField verticalHuggingPriority="751" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fln-cp-DXK">
-                    <rect key="frame" x="157" y="69" width="454" height="86"/>
+                    <rect key="frame" x="157" y="69" width="454" height="102"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="450" id="xc1-Zz-enx"/>
                     </constraints>
@@ -65,31 +65,34 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="Qdu-qb-4l7"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
+                    <buttonCell key="cell" type="push" title="Change Monster" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="cmdChangeClick:" target="-2" id="n6i-m5-eUY"/>
+                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="838-Yi-fci">
-                    <rect key="frame" x="292" y="489" width="185" height="87"/>
+                    <rect key="frame" x="266" y="491" width="236" height="31"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Bingles Jingleheimer" id="dm5-vN-EpD">
-                        <font key="font" metaFont="system" size="20"/>
+                        <font key="font" metaFont="system" size="26"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Gh6-mq-lR3" secondAttribute="bottom" constant="16" id="1Xl-RA-r79"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Gh6-mq-lR3" secondAttribute="bottom" constant="16" id="1Xl-RA-r79"/>
                 <constraint firstItem="Gh6-mq-lR3" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="2cF-Be-JHQ"/>
                 <constraint firstItem="fln-cp-DXK" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="3Fj-1J-tbq"/>
                 <constraint firstItem="YA8-bA-ArB" firstAttribute="centerY" secondItem="1DW-GF-ftg" secondAttribute="centerY" id="6xF-uf-nKs"/>
                 <constraint firstItem="YA8-bA-ArB" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="Woo-Sn-Tjy"/>
                 <constraint firstItem="838-Yi-fci" firstAttribute="centerX" secondItem="1DW-GF-ftg" secondAttribute="centerX" id="XkV-5D-6dI"/>
-                <constraint firstItem="YA8-bA-ArB" firstAttribute="top" secondItem="838-Yi-fci" secondAttribute="bottom" constant="44" id="fRn-yF-oWr"/>
+                <constraint firstItem="YA8-bA-ArB" firstAttribute="top" secondItem="838-Yi-fci" secondAttribute="bottom" constant="30" id="fRn-yF-oWr"/>
                 <constraint firstItem="Gh6-mq-lR3" firstAttribute="top" secondItem="fln-cp-DXK" secondAttribute="bottom" constant="32" id="gOK-Hr-u6J"/>
                 <constraint firstItem="fln-cp-DXK" firstAttribute="top" secondItem="YA8-bA-ArB" secondAttribute="bottom" constant="20" id="kML-22-hbn"/>
-                <constraint firstItem="838-Yi-fci" firstAttribute="top" secondItem="1DW-GF-ftg" secondAttribute="top" constant="44" id="o8a-JS-ZNB"/>
+                <constraint firstItem="838-Yi-fci" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1DW-GF-ftg" secondAttribute="top" constant="44" id="o8a-JS-ZNB"/>
             </constraints>
             <point key="canvasLocation" x="980" y="665"/>
         </customView>

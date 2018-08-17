@@ -16,12 +16,6 @@
 
 @implementation SplashViewController
 
-+ (SplashViewController*) viewController {
-    SplashViewController*controller = [[SplashViewController alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:controller topLevelObjects:nil];
-    return controller;
-}
-
 - (void)viewDidAppear {
     [super viewDidAppear];
 

@@ -20,6 +20,7 @@
 }
 
 - (void)setMonsterName:(NSString *)name {
+    if (!name) name = @"";
     self.title = name;
     self.contentMetadata.customMetadata[@"monster_name"] = name;
 }
@@ -64,7 +65,7 @@
     empty.faceIndex = 0;
     empty.bodyIndex = 0;
     empty.colorIndex = 0;
-    empty.monsterName = @"New Monster";
+    empty.monsterName = @"";
     return empty;
 }
 

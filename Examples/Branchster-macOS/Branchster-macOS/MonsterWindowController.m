@@ -45,7 +45,7 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
     self.pageController.delegate = self;
     self.pageController.view.frame = kFrameRect;
     self.pageController.arrangedObjects = @[
-        [SplashViewController viewController]
+        [SplashViewController new]
     ];
 }
 
@@ -55,8 +55,8 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
 
     if (self.pageController.arrangedObjects.count != 2) {
         self.pageController.arrangedObjects = @[
-            [MonsterCreatorViewController viewController],
-            [MonsterViewerViewController viewController]
+            [MonsterCreatorViewController new],
+            [MonsterViewerViewController new]
         ];
     }
     for (NSViewController*controller in self.pageController.arrangedObjects) {
@@ -96,6 +96,14 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
 - (void) close {
     [super close];
     self.myself = nil;
+}
+
+- (IBAction) viewMonster:(id)sender {
+    self.pageController.selectedIndex = 1;
+}
+
+- (IBAction) editMonster:(id)sender {
+    self.pageController.selectedIndex = 0;
 }
 
 @end

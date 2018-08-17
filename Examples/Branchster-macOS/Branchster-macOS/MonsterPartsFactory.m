@@ -30,11 +30,11 @@
     static NSArray *bodyArray;
     if (bodyArray) return bodyArray;
     bodyArray = @[
-        @"0body.png",
-        @"1body.png",
-        @"2body.png",
-        @"3body.png",
-        @"4body.png"
+        @"0body",
+        @"1body",
+        @"2body",
+        @"3body",
+        @"4body"
     ];
     return bodyArray;
 }
@@ -43,11 +43,11 @@
     static NSArray *faceArray;
     if (faceArray) return faceArray;
     faceArray = @[
-        @"face0.png",
-        @"face1.png",
-        @"face2.png",
-        @"face3.png",
-        @"face4.png"
+        @"face0",
+        @"face1",
+        @"face2",
+        @"face3",
+        @"face4"
     ];
     return faceArray;
 }

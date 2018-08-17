@@ -10,12 +10,19 @@
 
 @implementation ImageCollectionViewCell
 
-- (instancetype) init {
+/*
+- (void) loadView {
+    [super loadView];
+}
+*/
+/*
+- (instancetype) initWi {
     self = [super init];
     if (!self) return self;
     self.view.layer.backgroundColor = [NSColor clearColor].CGColor;
     return self;
 }
+*/
 
 /*
 - (id)initWithFrame:(CGRect)frame {

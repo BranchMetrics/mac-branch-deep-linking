@@ -12,4 +12,7 @@
 @interface MonsterWindowController : NSWindowController
 + (MonsterWindowController*) newWindowWithMonster:(BranchUniversalObject*)monster;
 @property (nonatomic, strong) BranchUniversalObject*monster;
+
+- (IBAction) viewMonster:(id)sender;
+- (IBAction) editMonster:(id)sender;
 @end;

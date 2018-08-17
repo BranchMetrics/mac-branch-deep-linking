@@ -9,5 +9,4 @@
 @import AppKit;
 
 @interface SplashViewController : NSViewController
-+ (SplashViewController*) viewController;
 @end

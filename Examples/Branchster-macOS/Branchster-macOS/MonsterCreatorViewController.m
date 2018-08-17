@@ -34,14 +34,8 @@
 
 @implementation MonsterCreatorViewController
 
-+ (MonsterCreatorViewController*) viewController {
-    MonsterCreatorViewController*controller = [[MonsterCreatorViewController alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:controller topLevelObjects:nil];
-    return controller;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear {
+    [super viewWillAppear];
 
     if (!self.monster)
         self.monster = [BranchUniversalObject newEmptyMonster];
@@ -60,7 +54,10 @@
         currView.target = self;
     }
         
-    [self.cmdDone.layer setCornerRadius:3.0f];
+    self.cmdDone.layer.cornerRadius = 3.0f;
+    self.cmdDone.layer.backgroundColor = [MonsterPartsFactory colorForIndex:0].CGColor;
+    self.cmdDone.layer.borderColor = NSColor.blackColor.CGColor;
+    self.cmdDone.layer.borderWidth = 1.0f;
     
     self.botViewLayerOne.layer.backgroundColor =
         [MonsterPartsFactory colorForIndex:[self.monster colorIndex]].CGColor;
@@ -68,24 +65,46 @@
     self.botViewLayerTwo.delegate = self;
     self.botViewLayerTwo.dataSource = self;
     [self.botViewLayerTwo registerClass:[ImageCollectionViewCell class] forItemWithIdentifier:@"cell"];
+    self.botViewLayerTwo.backgroundColors = @[ NSColor.clearColor ];
+    self.botViewLayerTwo.enclosingScrollView.backgroundColor = NSColor.clearColor;
+
+    self.botViewLayerTwo.enclosingScrollView.horizontalScroller.enabled = NO;
+    self.botViewLayerTwo.enclosingScrollView.verticalScroller.enabled = NO;
+
+    self.botViewLayerTwo.enclosingScrollView.horizontalScroller.hidden = YES;
+    self.botViewLayerTwo.enclosingScrollView.verticalScroller.hidden = YES;
+    self.botViewLayerTwo.enclosingScrollView.hasVerticalScroller = NO;
+    self.botViewLayerTwo.enclosingScrollView.hasHorizontalScroller = NO;
+    self.botViewLayerTwo.enclosingScrollView.autohidesScrollers = NO;
     
     self.botViewLayerThree.delegate = self;
     self.botViewLayerThree.dataSource = self;
     [self.botViewLayerThree registerClass:[ImageCollectionViewCell class] forItemWithIdentifier:@"cell"];
-    
+    self.botViewLayerThree.backgroundColors = @[ NSColor.clearColor ];
+    self.botViewLayerThree.enclosingScrollView.backgroundColor = NSColor.clearColor;
+
     self.monsterName.stringValue = self.monster.monsterName;
+}
+
+- (void) viewDidAppear {
+    [super viewDidAppear];
+    [self.monsterName becomeFirstResponder];
 }
 
 - (void) updateBody {
     [self.botViewLayerTwo
         scrollToItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:self.bodyIndex inSection:0]]
-        scrollPosition:NSCollectionViewScrollPositionCenteredHorizontally];
+        scrollPosition:
+            NSCollectionViewScrollPositionCenteredHorizontally |
+            NSCollectionViewScrollPositionCenteredVertically];
 }
 
 - (void) updateFace {
     [self.botViewLayerThree
         scrollToItemsAtIndexPaths:[NSSet setWithObject:[NSIndexPath indexPathForItem:self.faceIndex inSection:0]]
-        scrollPosition:NSCollectionViewScrollPositionCenteredVertically];
+        scrollPosition:
+            NSCollectionViewScrollPositionCenteredHorizontally |
+            NSCollectionViewScrollPositionCenteredVertically];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -150,9 +169,11 @@
     } else {
         self.monster.monsterName = @"Bingles Jingleheimer";
     }
+    [NSApplication.sharedApplication sendAction:@selector(viewMonster:) to:nil from:self];
 }
 
-- (NSInteger)collectionView:(NSCollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(NSCollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
     if ([collectionView isEqual:self.botViewLayerTwo]) {
         return [MonsterPartsFactory sizeOfBodyArray];
     } else {
@@ -163,12 +184,14 @@
 - (CGSize)collectionView:(NSCollectionView *)collectionView
                   layout:(NSCollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.botViewLayerOne.frame.size.width, self.botViewLayerOne.frame.size.height);
+    CGRect bounds = self.botViewLayerOne.bounds;
+    return bounds.size;
 }
 
 - (NSCollectionViewItem*)collectionView:(NSCollectionView*)collectionView
     itemForRepresentedObjectAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    ImageCollectionViewCell *cell = (id) [collectionView makeItemWithIdentifier:@"cell" forIndexPath:indexPath];
+    ImageCollectionViewCell *cell =
+        (id) [collectionView makeItemWithIdentifier:@"cell" forIndexPath:indexPath];
     if ([collectionView isEqual:self.botViewLayerTwo]) {
         NSImage *bodyImage = [MonsterPartsFactory imageForBody:indexPath.item];
         [cell.imageView setImage:bodyImage];
@@ -176,18 +199,8 @@
         NSImage *faceImage = [MonsterPartsFactory imageForFace:indexPath.item];
         [cell.imageView setImage:faceImage];
     }
-    
     return cell;
 }
-
-/*
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    MonsterViewerViewController *receiver = (MonsterViewerViewController *)[segue destinationViewController];
-    receiver.monster = self.monster;
-}
-*/
 
 - (IBAction)openTestBedScheme:(id)sender {
     NSURL*URL = [NSURL URLWithString:@"testbed-mac://testbed-mac.app.link/KUfCVJ7LnP"];

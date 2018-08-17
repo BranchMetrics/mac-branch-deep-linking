@@ -16,10 +16,6 @@
 
 @property (strong, nonatomic) NSDictionary *monsterMetadata;
 
-@property (strong, nonatomic) NSString *monsterName;
-@property (strong, nonatomic) NSString *monsterDescription;
-@property (strong, nonatomic) NSDecimalNumber *price;
-
 @property (weak, nonatomic) IBOutlet NSView *botLayerOneColor;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerTwoBody;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerThreeFace;
@@ -37,53 +33,49 @@
 
 @implementation MonsterViewerViewController
 
-+ (MonsterViewerViewController*) viewController {
-    MonsterViewerViewController*controller = [[MonsterViewerViewController alloc] init];
-    [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:controller topLevelObjects:nil];
-    return controller;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.cmdChange.layer setCornerRadius:3.0];
+    [self.cmdInfo.layer setCornerRadius:3.0];
+}
+
+- (void) viewWillAppear {
+    [super viewWillAppear];
+    [self updateView];
+}
+
+- (void) updateView {
     self.botLayerOneColor.layer.backgroundColor =
         [MonsterPartsFactory colorForIndex:[self.monster colorIndex]].CGColor;
     [self.botLayerTwoBody setImage:[MonsterPartsFactory imageForBody:[self.monster bodyIndex]]];
     [self.botLayerThreeFace setImage:[MonsterPartsFactory imageForFace:[self.monster faceIndex]]];
-    
-    self.monsterName = [self.monster monsterName];
-    if (!self.monsterName) self.monsterName = @"None";
 
+    self.txtName.stringValue = self.monster. monsterName;
+    self.txtDescription.stringValue = self.monster.monsterDescription;
+
+    /*
     NSInteger priceInt = arc4random_uniform(4) + 1;
     NSString *priceString = [NSString stringWithFormat:@"%1.2f", (float)priceInt];
     _price = [NSDecimalNumber decimalNumberWithString:priceString];
+    */
 
-    self.monsterDescription = [self.monster monsterDescription];
-    
-    self.txtName.stringValue = self.monsterName;
-    self.txtDescription.stringValue = self.monsterDescription;
-    
+
     self.monsterMetadata = @{
-        @"color_index": @([self.monster colorIndex]),
-        @"body_index":  @([self.monster bodyIndex]),
-        @"face_index":  @([self.monster faceIndex]),
-        @"monster_name":self.monsterName
+        @"color_index":     @([self.monster colorIndex]),
+        @"body_index":      @([self.monster bodyIndex]),
+        @"face_index":      @([self.monster faceIndex]),
+        @"monster_name":    self.monster.monsterName
     };
 
-    [self.cmdChange.layer setCornerRadius:3.0];
-    [self.cmdInfo.layer setCornerRadius:3.0];
-    
 /*
     [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
         NSLog(@"Monster %@ was viewed.  params: %@", self.monster.monsterName, params);
     }];
 */
-    [self setViewingMonster:self.monster];  // Not awesome, but it triggers the setter
 }
 
 - (void) viewDidAppear {
     [super viewDidAppear];
-    if (self.monsterName.length <= 0) self.monsterName = @"Nameless Monster";
 /*
     [[Branch getInstance] userCompletedAction:@"Product View" withState:@{
         @"sku":      self.monsterName,
@@ -91,22 +83,20 @@
         @"currency": @"USD"
     }];
     BranchUniversalObject*buo = [[BranchUniversalObject alloc] initWithTitle:self.monsterName];
-    buo.cate
     [Branch.sharedInstance logEvent:event];
 */
 }
 
--(void) setViewingMonster: (BranchUniversalObject *)monster {
-    _monster = monster;
-    
+- (void) updateMonsterMetaData {
+
     //and every time it gets set, I need to create a new url
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"monster_sharing";
     linkProperties.channel = @"twitter";
 
-    monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monsterName];
-    monster.contentDescription = self.monsterDescription;
-    monster.imageUrl =
+    self.monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monster.monsterName];
+    self.monster.contentDescription = self.monster.monsterDescription;
+    self.monster.imageUrl =
         [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png",
             (short)[self.monster colorIndex],
             (short)[self.monster bodyIndex],
@@ -164,25 +154,23 @@
 */
 
 - (IBAction)cmdChangeClick:(id)sender {
-    //[self.navigationController popViewControllerAnimated:YES];
+    [NSApplication.sharedApplication sendAction:@selector(editMonster:) to:nil from:self];
 }
 
 
-- (NSDictionary *)prepareFBDict:(NSString *)url {
-    return [[NSDictionary alloc] initWithObjects:@[
-                                                   [NSString stringWithFormat:@"My Branchster: %@", self.monsterName],
-                                                   self.monsterDescription,
-                                                   self.monsterDescription,
-                                                   url,
-                                                   [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png", (short)[self.monster colorIndex], (short)[self.monster bodyIndex], (short)[self.monster faceIndex]]]
-                                         forKeys:@[
-                                                   @"name",
-                                                   @"caption",
-                                                   @"description",
-                                                   @"link",
-                                                   @"picture"]];
+- (NSDictionary*) facebookDictionaryWithURL:(NSURL*)URL {
+    NSMutableDictionary*dictionary = [NSMutableDictionary new];
+    dictionary[@"name"] = [NSString stringWithFormat:@"My Branchster] =%@", self.monster.monsterName];
+    dictionary[@"caption"] = self.monster.monsterDescription;
+    dictionary[@"description"] = self.monster.monsterDescription;
+    dictionary[@"link"] = URL.absoluteString;
+    dictionary[@"picture"] =
+        [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png",
+            (short)self.monster.colorIndex, (short)self.monster.bodyIndex, (short)self.monster.faceIndex];
+    return dictionary;
 }
 
+/*
 // This function serves to dynamically generate the dictionary parameters to embed in the Branch link
 // These are the parameters that will be available in the callback of init user session if
 // a user clicked the link and was deep linked
@@ -206,6 +194,7 @@
                                                   @"$og_description",
                                                   @"$og_image_url"]];
 }
+*/
 
 /*
 - (void)viewDidLayoutSubviews {
