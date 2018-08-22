@@ -19,6 +19,7 @@
 		4D046E9520C8AD3A0073262B /* NSData+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9120C8AD3A0073262B /* NSData+Branch.m */; };
 		4D046E9720C8B5B20073262B /* NSData+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */; };
 		4D046E9A20C8CE740073262B /* BNCTestNetworkService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9920C8CE740073262B /* BNCTestNetworkService.Test.m */; };
+		4D0E5119212DD86A000DA56B /* UIViewController+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E5118212DD86A000DA56B /* UIViewController+Branch.Test.m */; };
 		4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */; };
 		4D159DD920B62DD5005A9850 /* BNCDevice.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C166220AD090F002BF211 /* BNCDevice.Test.m */; };
 		4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818C220B031EB00441881 /* BNCEncoder.Test.m */; };
@@ -177,6 +178,7 @@
 		4D046E9920C8CE740073262B /* BNCTestNetworkService.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCTestNetworkService.Test.m; sourceTree = "<group>"; };
 		4D0B753C211209F900A06D97 /* BranchTestHost-macOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BranchTestHost-macOS.xcconfig"; sourceTree = "<group>"; };
 		4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BranchTestHost-tvOS.xcconfig"; sourceTree = "<group>"; };
+		4D0E5118212DD86A000DA56B /* UIViewController+Branch.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Branch.Test.m"; sourceTree = "<group>"; };
 		4D159DCB20B62D7D005A9850 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D27FF8620B15431002C7EB0 /* BNCSettings.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCSettings.Test.m; sourceTree = "<group>"; };
 		4D27FF8920B222C7002C7EB0 /* BNCPersistence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCPersistence.h; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 				4D54C08520A6560400C76496 /* Info.plist */,
 				4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */,
 				4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */,
+				4D0E5118212DD86A000DA56B /* UIViewController+Branch.Test.m */,
 			);
 			path = BranchTests;
 			sourceTree = "<group>";
@@ -676,6 +679,7 @@
 				4D159DE920B62DD5005A9850 /* BranchUniversalObject.Test.m in Sources */,
 				4D159DE620B62DD5005A9850 /* BranchError.Test.m in Sources */,
 				4D38923A20BA18A80013B811 /* BranchLinkProperties.Test.m in Sources */,
+				4D0E5119212DD86A000DA56B /* UIViewController+Branch.Test.m in Sources */,
 				4D046E8F20C8A27C0073262B /* BNCTestNetworkService.m in Sources */,
 				4DE997CB20E45FC6006F1C94 /* BranchDelegate.Test.m in Sources */,
 				4D159DDD20B62DD5005A9850 /* BNCLog.Test.m in Sources */,
