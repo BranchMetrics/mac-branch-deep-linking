@@ -6,4 +6,4 @@
 //@date          June 2018
 //@copyright     Copyright © 2018 Branch. All rights reserved.
 
-BranchTestHost  = $(BUILT_PRODUCTS_DIR)/TestBed-Mac.app/Contents/MacOS/TestBed-Mac
+BranchTestHost  = $(BUILT_PRODUCTS_DIR)/TestBed-macOS.app/Contents/MacOS/TestBed-macOS

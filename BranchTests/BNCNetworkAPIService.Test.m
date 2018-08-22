@@ -130,7 +130,8 @@
     [self waitForExpectationsWithTimeout:90.0 handler:nil];
     NSTimeInterval howLong = - [startDate timeIntervalSinceNow];
     long count = atomic_load(&retryCount);
-    XCTAssertTrue(count == 1 && howLong < 60.0);
+    XCTAssertEqual(count, 1);
+    XCTAssertLessThan(howLong, 60.0);
 }
 
 - (void) testSaveAndLoadOperations {
@@ -159,7 +160,8 @@
 
         BNCSleepForTimeInterval(1.0);
         long count = atomic_load(&operationCount1);
-        XCTAssert(branch.networkAPIService.queueDepth == 4 && count == 0);
+        XCTAssertEqual(branch.networkAPIService.queueDepth, 4);
+        XCTAssertEqual(count, 0);
     }
 
     Branch*branch = [Branch new];
@@ -177,7 +179,7 @@
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
     [branch startWithConfiguration:configuration];
-    [self waitForExpectationsWithTimeout:3.0 handler:nil];
+    [self waitForExpectationsWithTimeout:120.0 handler:nil];
     long count = atomic_load(&operationCount2);
     XCTAssertEqual(count, 6);
 }

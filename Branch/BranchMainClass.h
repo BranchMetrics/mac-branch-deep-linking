@@ -235,7 +235,7 @@ so that Branch can handle the passed URL.
  though a block call back.
 */
 @property (atomic, copy) void (^_Nullable sessionStartedBlock)(BranchSession*_Nullable session,
-                                                             NSError*_Nullable error);
+                                                               NSError*_Nullable error);
 @end
 
 NS_ASSUME_NONNULL_END

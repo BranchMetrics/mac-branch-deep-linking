@@ -80,6 +80,15 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    [Branch.sharedInstance openURL:url options:options];
+    return YES;
+}
+
+#pragma mark - Display Log Messages
+
 - (BOOL) string:(NSString*)string matchesRegex:(NSString*)regex {
     NSError *error = NULL;
     NSRegularExpression *ns_regex =

@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D07BC842124D7BA009EF635 /* MonsterViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */; };
+		4D07BC8A2125F543009EF635 /* MonsterWindowController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */; };
+		4D07BC9121261C21009EF635 /* MonsterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D07BC9021261C21009EF635 /* MonsterWindowController.m */; };
+		4D12D92521248008005C544C /* MonsterCreatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12D92421248008005C544C /* MonsterCreatorViewController.xib */; };
+		4D12D936212487D0005C544C /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D12D930212487A6005C544C /* Branch.framework */; };
+		4D12D937212487D0005C544C /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D12D930212487A6005C544C /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D1E61B1212491F1006FF777 /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61A3212491F0006FF777 /* ImageCollectionViewCell.m */; };
+		4D1E61B2212491F1006FF777 /* MonsterViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61A6212491F0006FF777 /* MonsterViewerViewController.m */; };
+		4D1E61B3212491F1006FF777 /* BranchUniversalObject+MonsterHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61AA212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.m */; };
+		4D1E61B4212491F1006FF777 /* MonsterCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61AB212491F0006FF777 /* MonsterCreatorViewController.m */; };
+		4D1E61B5212491F1006FF777 /* MonsterPartsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61AC212491F0006FF777 /* MonsterPartsFactory.m */; };
+		4D1E61B6212491F1006FF777 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61AD212491F0006FF777 /* SplashViewController.m */; };
+		4D1E61B7212491F1006FF777 /* BranchInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */; };
+		4D29DC7E2126928E004AC050 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D29DC7D2126928E004AC050 /* ImageCollectionViewCell.xib */; };
+		4D679CF021233DDB0041D7C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D679CEF21233DDB0041D7C5 /* AppDelegate.m */; };
+		4D679CF521233DDC0041D7C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D679CF421233DDC0041D7C5 /* Assets.xcassets */; };
+		4D679CF821233DDC0041D7C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D679CF621233DDC0041D7C5 /* Main.storyboard */; };
+		4D679CFB21233DDC0041D7C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D679CFA21233DDC0041D7C5 /* main.m */; };
+		4D773EB6212473E10002D3A3 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D773EB5212473E10002D3A3 /* SplashViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4D12D92F212487A6005C544C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D12D929212487A6005C544C /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D54C07520A6560400C76496;
+			remoteInfo = "Branch-macOS";
+		};
+		4D12D931212487A6005C544C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D12D929212487A6005C544C /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D67477420C74E81001639C5;
+			remoteInfo = "Branch-tvOS";
+		};
+		4D12D933212487A6005C544C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D12D929212487A6005C544C /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D159DCB20B62D7D005A9850;
+			remoteInfo = BranchTests;
+		};
+		4D12D938212487D0005C544C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D12D929212487A6005C544C /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D54C07420A6560400C76496;
+			remoteInfo = "Branch-macOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4D12D93A212487D1005C544C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4D12D937212487D0005C544C /* Branch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonsterViewerViewController.xib; sourceTree = "<group>"; };
+		4D07BC872124DDC0009EF635 /* Branchster-macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-macOS.entitlements"; sourceTree = "<group>"; };
+		4D07BC892125F543009EF635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MonsterWindowController.storyboard; sourceTree = "<group>"; };
+		4D07BC8F21261C21009EF635 /* MonsterWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonsterWindowController.h; sourceTree = "<group>"; };
+		4D07BC9021261C21009EF635 /* MonsterWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonsterWindowController.m; sourceTree = "<group>"; };
+		4D12D92421248008005C544C /* MonsterCreatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonsterCreatorViewController.xib; sourceTree = "<group>"; };
+		4D12D929212487A6005C544C /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
+		4D1E61A3212491F0006FF777 /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
+		4D1E61A4212491F0006FF777 /* MonsterPartsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterPartsFactory.h; sourceTree = "<group>"; };
+		4D1E61A5212491F0006FF777 /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+		4D1E61A6212491F0006FF777 /* MonsterViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterViewerViewController.m; sourceTree = "<group>"; };
+		4D1E61A7212491F0006FF777 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
+		4D1E61A8212491F0006FF777 /* MonsterViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterViewerViewController.h; sourceTree = "<group>"; };
+		4D1E61A9212491F0006FF777 /* BranchInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchInfoViewController.h; sourceTree = "<group>"; };
+		4D1E61AA212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BranchUniversalObject+MonsterHelpers.m"; sourceTree = "<group>"; };
+		4D1E61AB212491F0006FF777 /* MonsterCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterCreatorViewController.m; sourceTree = "<group>"; };
+		4D1E61AC212491F0006FF777 /* MonsterPartsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterPartsFactory.m; sourceTree = "<group>"; };
+		4D1E61AD212491F0006FF777 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
+		4D1E61AE212491F0006FF777 /* MonsterCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterCreatorViewController.h; sourceTree = "<group>"; };
+		4D1E61AF212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BranchUniversalObject+MonsterHelpers.h"; sourceTree = "<group>"; };
+		4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchInfoViewController.m; sourceTree = "<group>"; };
+		4D29DC7D2126928E004AC050 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		4D679CEB21233DDB0041D7C5 /* Branchster-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Branchster-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D679CEE21233DDB0041D7C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4D679CEF21233DDB0041D7C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4D679CF421233DDC0041D7C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D679CF721233DDC0041D7C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4D679CF921233DDC0041D7C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D679CFA21233DDC0041D7C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4D679CFC21233DDC0041D7C5 /* Branchster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Branchster.entitlements; sourceTree = "<group>"; };
+		4D773EB5212473E10002D3A3 /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D679CE821233DDB0041D7C5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D12D936212487D0005C544C /* Branch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D12D92A212487A6005C544C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D12D930212487A6005C544C /* Branch.framework */,
+				4D12D932212487A6005C544C /* Branch.framework */,
+				4D12D934212487A6005C544C /* BranchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4D679CE221233DDB0041D7C5 = {
+			isa = PBXGroup;
+			children = (
+				4D12D929212487A6005C544C /* Branch.xcodeproj */,
+				4D679CED21233DDB0041D7C5 /* Branchster-macOS */,
+				4D679CEC21233DDB0041D7C5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4D679CEC21233DDB0041D7C5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D679CEB21233DDB0041D7C5 /* Branchster-macOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4D679CED21233DDB0041D7C5 /* Branchster-macOS */ = {
+			isa = PBXGroup;
+			children = (
+				4D679CEE21233DDB0041D7C5 /* AppDelegate.h */,
+				4D679CEF21233DDB0041D7C5 /* AppDelegate.m */,
+				4D679CF421233DDC0041D7C5 /* Assets.xcassets */,
+				4D1E61A9212491F0006FF777 /* BranchInfoViewController.h */,
+				4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */,
+				4D07BC872124DDC0009EF635 /* Branchster-macOS.entitlements */,
+				4D679CFC21233DDC0041D7C5 /* Branchster.entitlements */,
+				4D1E61AF212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.h */,
+				4D1E61AA212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.m */,
+				4D1E61A5212491F0006FF777 /* ImageCollectionViewCell.h */,
+				4D1E61A3212491F0006FF777 /* ImageCollectionViewCell.m */,
+				4D29DC7D2126928E004AC050 /* ImageCollectionViewCell.xib */,
+				4D679CF921233DDC0041D7C5 /* Info.plist */,
+				4D679CFA21233DDC0041D7C5 /* main.m */,
+				4D679CF621233DDC0041D7C5 /* Main.storyboard */,
+				4D1E61AE212491F0006FF777 /* MonsterCreatorViewController.h */,
+				4D1E61AB212491F0006FF777 /* MonsterCreatorViewController.m */,
+				4D12D92421248008005C544C /* MonsterCreatorViewController.xib */,
+				4D1E61A4212491F0006FF777 /* MonsterPartsFactory.h */,
+				4D1E61AC212491F0006FF777 /* MonsterPartsFactory.m */,
+				4D1E61A8212491F0006FF777 /* MonsterViewerViewController.h */,
+				4D1E61A6212491F0006FF777 /* MonsterViewerViewController.m */,
+				4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */,
+				4D07BC8F21261C21009EF635 /* MonsterWindowController.h */,
+				4D07BC9021261C21009EF635 /* MonsterWindowController.m */,
+				4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */,
+				4D1E61A7212491F0006FF777 /* SplashViewController.h */,
+				4D1E61AD212491F0006FF777 /* SplashViewController.m */,
+				4D773EB5212473E10002D3A3 /* SplashViewController.xib */,
+			);
+			path = "Branchster-macOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D679CEA21233DDB0041D7C5 /* Branchster-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D679CFF21233DDC0041D7C5 /* Build configuration list for PBXNativeTarget "Branchster-macOS" */;
+			buildPhases = (
+				4D679CE721233DDB0041D7C5 /* Sources */,
+				4D679CE821233DDB0041D7C5 /* Frameworks */,
+				4D679CE921233DDB0041D7C5 /* Resources */,
+				4D12D93A212487D1005C544C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D12D939212487D0005C544C /* PBXTargetDependency */,
+			);
+			name = "Branchster-macOS";
+			productName = "Branchster-macOS";
+			productReference = 4D679CEB21233DDB0041D7C5 /* Branchster-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4D679CE321233DDB0041D7C5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Branch;
+				TargetAttributes = {
+					4D679CEA21233DDB0041D7C5 = {
+						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 4D679CE621233DDB0041D7C5 /* Build configuration list for PBXProject "Branchster-macOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4D679CE221233DDB0041D7C5;
+			productRefGroup = 4D679CEC21233DDB0041D7C5 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4D12D92A212487A6005C544C /* Products */;
+					ProjectRef = 4D12D929212487A6005C544C /* Branch.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				4D679CEA21233DDB0041D7C5 /* Branchster-macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4D12D930212487A6005C544C /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D12D92F212487A6005C544C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D12D932212487A6005C544C /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D12D931212487A6005C544C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D12D934212487A6005C544C /* BranchTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BranchTests.xctest;
+			remoteRef = 4D12D933212487A6005C544C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4D679CE921233DDB0041D7C5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D12D92521248008005C544C /* MonsterCreatorViewController.xib in Resources */,
+				4D07BC8A2125F543009EF635 /* MonsterWindowController.storyboard in Resources */,
+				4D07BC842124D7BA009EF635 /* MonsterViewerViewController.xib in Resources */,
+				4D29DC7E2126928E004AC050 /* ImageCollectionViewCell.xib in Resources */,
+				4D679CF521233DDC0041D7C5 /* Assets.xcassets in Resources */,
+				4D773EB6212473E10002D3A3 /* SplashViewController.xib in Resources */,
+				4D679CF821233DDC0041D7C5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D679CE721233DDB0041D7C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D679CFB21233DDC0041D7C5 /* main.m in Sources */,
+				4D1E61B2212491F1006FF777 /* MonsterViewerViewController.m in Sources */,
+				4D07BC9121261C21009EF635 /* MonsterWindowController.m in Sources */,
+				4D1E61B7212491F1006FF777 /* BranchInfoViewController.m in Sources */,
+				4D1E61B1212491F1006FF777 /* ImageCollectionViewCell.m in Sources */,
+				4D1E61B6212491F1006FF777 /* SplashViewController.m in Sources */,
+				4D1E61B5212491F1006FF777 /* MonsterPartsFactory.m in Sources */,
+				4D679CF021233DDB0041D7C5 /* AppDelegate.m in Sources */,
+				4D1E61B4212491F1006FF777 /* MonsterCreatorViewController.m in Sources */,
+				4D1E61B3212491F1006FF777 /* BranchUniversalObject+MonsterHelpers.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4D12D939212487D0005C544C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Branch-macOS";
+			targetProxy = 4D12D938212487D0005C544C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D07BC892125F543009EF635 /* Base */,
+			);
+			name = MonsterWindowController.storyboard;
+			sourceTree = "<group>";
+		};
+		4D679CF621233DDC0041D7C5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D679CF721233DDC0041D7C5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D679CFD21233DDC0041D7C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4D679CFE21233DDC0041D7C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4D679D0021233DDC0041D7C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "Branchster-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.Branchster-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4D679D0121233DDC0041D7C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "Branchster-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.Branchster-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D679CE621233DDB0041D7C5 /* Build configuration list for PBXProject "Branchster-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D679CFD21233DDC0041D7C5 /* Debug */,
+				4D679CFE21233DDC0041D7C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D679CFF21233DDC0041D7C5 /* Build configuration list for PBXNativeTarget "Branchster-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D679D0021233DDC0041D7C5 /* Debug */,
+				4D679D0121233DDC0041D7C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4D679CE321233DDB0041D7C5 /* Project object */;
+}
