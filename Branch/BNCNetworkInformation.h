@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, BNCInetAddressType) {
 };
 
 @interface BNCNetworkInformation : NSObject
-+ (BNCNetworkInformation*) local;
++ (BNCNetworkInformation*_Nullable) local;
 + (NSArray<BNCNetworkInformation*>*) areaEntries;
 + (NSArray<BNCNetworkInformation*>*) currentInterfaces;
 @property (nonatomic, readonly, strong) NSString*interface;

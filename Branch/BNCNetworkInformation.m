@@ -199,11 +199,21 @@ exit:
 }
 
 + (BNCNetworkInformation*) local {
+    uint8_t const kLocalAddress[] = { 0xfe, 0x80 };
     NSArray*areaEntries = [self areaEntries];
     NSArray*localEntries = [self currentInterfaces];
-    for (BNCNetworkInformation*ae in areaEntries) {
-        for (BNCNetworkInformation*le in localEntries) {
+    for (BNCNetworkInformation*le in localEntries) {
+        for (BNCNetworkInformation*ae in areaEntries) {
             if (ae.inetAddress && le.inetAddress && [ae.inetAddress isEqualToData:le.inetAddress]) {
+                le.address = ae.address;
+                le.displayAddress = ae.displayAddress;
+                return le;
+            } else
+            if (ae.inetAddress.length == 16 &&
+                le.inetAddress.length == 16 &&
+                memcmp([ae.inetAddress bytes], kLocalAddress, 2) == 0 &&
+                memcmp([le.inetAddress bytes], kLocalAddress, 2) == 0 &&
+                memcmp([le.inetAddress bytes] + 8, [ae.inetAddress bytes] + 8, 8) == 0) {
                 le.address = ae.address;
                 le.displayAddress = ae.displayAddress;
                 return le;
