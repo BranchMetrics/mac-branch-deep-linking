@@ -14,30 +14,16 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D67473C20C74E81001639C5"
-               BuildableName = "Branch.framework"
-               BlueprintName = "Branch-tvOS"
-               ReferencedContainer = "container:Branch.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
-               BuildableName = "BranchTests.xctest"
-               BlueprintName = "BranchTests"
-               ReferencedContainer = "container:Branch.xcodeproj">
+               BlueprintIdentifier = "4D13603C21124EFA00D0E4B8"
+               BuildableName = "TestBed-tvOS.app"
+               BlueprintName = "TestBed-tvOS"
+               ReferencedContainer = "container:TestBed-tvOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "UnitTests"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       enableThreadSanitizer = "YES"
@@ -46,23 +32,33 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D13605C21124EFD00D0E4B8"
+               BuildableName = "TestBed-tvOSUITests.xctest"
+               BlueprintName = "TestBed-tvOSUITests"
+               ReferencedContainer = "container:TestBed-tvOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
                BuildableName = "BranchTests.xctest"
                BlueprintName = "BranchTests"
-               ReferencedContainer = "container:Branch.xcodeproj">
+               ReferencedContainer = "container:../../Branch.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4D67473C20C74E81001639C5"
-            BuildableName = "Branch.framework"
-            BlueprintName = "Branch-tvOS"
-            ReferencedContainer = "container:Branch.xcodeproj">
+            BlueprintIdentifier = "4D13603C21124EFA00D0E4B8"
+            BuildableName = "TestBed-tvOS.app"
+            BlueprintName = "TestBed-tvOS"
+            ReferencedContainer = "container:TestBed-tvOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -83,15 +79,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4D67473C20C74E81001639C5"
-            BuildableName = "Branch.framework"
-            BlueprintName = "Branch-tvOS"
-            ReferencedContainer = "container:Branch.xcodeproj">
+            BlueprintIdentifier = "4D13603C21124EFA00D0E4B8"
+            BuildableName = "TestBed-tvOS.app"
+            BlueprintName = "TestBed-tvOS"
+            ReferencedContainer = "container:TestBed-tvOS.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -101,15 +98,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4D67473C20C74E81001639C5"
-            BuildableName = "Branch.framework"
-            BlueprintName = "Branch-tvOS"
-            ReferencedContainer = "container:Branch.xcodeproj">
+            BlueprintIdentifier = "4D13603C21124EFA00D0E4B8"
+            BuildableName = "TestBed-tvOS.app"
+            BlueprintName = "TestBed-tvOS"
+            ReferencedContainer = "container:TestBed-tvOS.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

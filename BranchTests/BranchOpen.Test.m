@@ -42,14 +42,14 @@
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
             }
-            if ([[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
+            if (YES) { // [[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
                 XCTAssert([test[@"mac_id"] hasPrefix:@"mac_"]);
                 test[@"mac_id"] = nil;
-            } else
+            }
             if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
                 XCTAssert(test[@"idfv"]);
                 test[@"idfv"] = nil;
-                test[@"idfa"] = nil;
+                // test[@"idfa"] = nil;
             }
             XCTAssert(test.count == 0, @"Found keys: %@.", test);
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
@@ -101,14 +101,14 @@
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
             }
-            if ([[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
+            if (YES) { // [[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
                 XCTAssert([test[@"mac_id"] hasPrefix:@"mac_"]);
                 test[@"mac_id"] = nil;
-            } else
+            }
             if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
                 XCTAssert(test[@"idfv"]);
                 test[@"idfv"] = nil;
-                test[@"idfa"] = nil;
+                // test[@"idfa"] = nil;
             }
             XCTAssert(test.count == 0, @"Found keys: %@.", test);
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];

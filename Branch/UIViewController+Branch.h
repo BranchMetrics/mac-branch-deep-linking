@@ -11,14 +11,16 @@
 #import "BranchHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
-#if TARGET_OS_TV || TARGET_OS_IOS
 
+#if TARGET_OS_TV || TARGET_OS_IOS
 @interface UIViewController (Branch)
 + (UIWindow*_Nullable) bnc_currentWindow;
 + (UIViewController*_Nullable) bnc_currentViewController;
 - (UIViewController*_Nonnull)  bnc_currentViewController;
 @end
-
 #endif
-void BNCForceUIViewControllerCategoryToLoad(void) __attribute__((constructor));
+
+FOUNDATION_EXPORT void BNCForceUIViewControllerCategoryToLoad(void)
+    __attribute__((constructor));
+
 NS_ASSUME_NONNULL_END
