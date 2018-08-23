@@ -75,7 +75,7 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
 
 - (BOOL)application:(UIApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
-        restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+          restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>>*_Nullable restorableObjects))restorationHandler {
     [Branch.sharedInstance continueUserActivity:userActivity];
     return YES;
 }

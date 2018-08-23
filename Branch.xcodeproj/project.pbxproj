@@ -582,6 +582,7 @@
 				TargetAttributes = {
 					4D159DCA20B62D7D005A9850 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 					};
 					4D54C07420A6560400C76496 = {
@@ -790,10 +791,11 @@
 /* Begin XCBuildConfiguration section */
 		4D159DD320B62D7D005A9850 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */;
+			baseConfigurationReference = 4D0B753C211209F900A06D97 /* BranchTestHost-macOS.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUNDLE_LOADER = "$(BranchTestHost)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -803,6 +805,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BranchTestHost)";
 			};
 			name = Debug;
@@ -821,6 +824,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BranchTestHost)";
 			};
 			name = Release;
@@ -858,7 +862,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
@@ -933,7 +937,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
@@ -1033,7 +1037,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3.1.2;
@@ -1096,6 +1100,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BranchTestHost)";
 			};
 			name = UnitTests;

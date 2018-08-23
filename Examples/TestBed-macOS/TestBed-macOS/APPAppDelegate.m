@@ -86,7 +86,7 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
 
 - (BOOL)application:(NSApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
-        restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+ restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObjects))restorationHandler {
     BNCLogMethodName();
     return YES;
 }

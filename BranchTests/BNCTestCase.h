@@ -24,6 +24,8 @@ FOUNDATION_EXPORT NSString*_Nonnull const BNCTestBranchKey;
     } \
 }
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex);
 
 #define XCTAssertStringMatchesRegex(string, regex) \
@@ -38,9 +40,11 @@ extern BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex);
 
 // Load Resources from the test bundle:
 
-- (NSString*)stringFromBundleWithKey:(NSString*)key;
-- (NSString*)stringFromBundleJSONWithKey:(NSString *)key;
-- (NSMutableDictionary*)mutableDictionaryFromBundleJSONWithKey:(NSString*)key;
+- (NSString*_Nullable)stringFromBundleWithKey:(NSString*)key;
+- (NSString*_Nullable)stringFromBundleJSONWithKey:(NSString *)key;
+- (NSMutableDictionary*_Nullable)mutableDictionaryFromBundleJSONWithKey:(NSString*)key;
 
 + (BOOL) breakpointsAreEnabledInTests;
 @end
+
+NS_ASSUME_NONNULL_END

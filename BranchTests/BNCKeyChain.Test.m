@@ -21,7 +21,7 @@
 - (void)testKeyChain {
     NSError *error = nil;
     NSString*value = nil;
-    NSArray *array, *array1, *array2;
+    NSArray *array, *array1;
     NSString*const kServiceName = @"Service";
     NSString*const kServiceName2 = @"Service2";
     double systemVersion = [BNCDevice currentDevice].systemVersion.doubleValue;
@@ -93,8 +93,10 @@
     error = [keychain storeValue:@"4xyz123" forService:kServiceName2 key:@"key4"];
     XCTAssertTrue(error == nil);
     array1 = [keychain retrieveKeysWithService:kServiceName2 error:&error];
-    array2 = @[ @"key3", @"key4" ];
-    XCTAssertTrue([array1 isEqualToArray:array2] && error == errSecSuccess);
+    XCTAssertNil(error);
+    NSSet*s1 = [NSSet setWithArray:array1];
+    NSSet*s2 = [NSSet setWithArray:@[ @"key3", @"key4" ]];
+    XCTAssertEqualObjects(s1, s2);
 }
 
 @end
