@@ -84,12 +84,25 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     return YES;
 }
 
+#if defined(MAC_OS_X_VERSION_10_14) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_14
+
 - (BOOL)application:(NSApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
  restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObjects))restorationHandler {
     BNCLogMethodName();
     return YES;
 }
+
+#else
+
+- (BOOL)application:(NSApplication *)application
+        continueUserActivity:(NSUserActivity *)userActivity
+        restorationHandler:(void(^)(NSArray *restorableObjects))restorationHandler {
+    BNCLogMethodName();
+    return YES;
+}
+
+#endif
 
 - (BOOL) string:(NSString*)string matchesRegex:(NSString*)regex {
     NSError *error = NULL;
