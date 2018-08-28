@@ -9,31 +9,4 @@
 #import "ImageCollectionViewCell.h"
 
 @implementation ImageCollectionViewCell
-
-/*
-- (void) loadView {
-    [super loadView];
-}
-*/
-/*
-- (instancetype) initWi {
-    self = [super init];
-    if (!self) return self;
-    self.view.layer.backgroundColor = [NSColor clearColor].CGColor;
-    return self;
-}
-*/
-
-/*
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self && !self.imageView) {
-        self.imageView = [[NSImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        [self addSubview:self.imageView];
-        [self setBackgroundColor:[UIColor clearColor]];
-    }
-    return self;
-}
-*/
-
 @end

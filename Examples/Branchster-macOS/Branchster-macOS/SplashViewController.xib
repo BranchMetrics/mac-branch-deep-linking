@@ -38,9 +38,9 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="branchster" id="GCw-Fy-HrI"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sxz-ba-zRX">
-                    <rect key="frame" x="222" y="456" width="201" height="19"/>
+                    <rect key="frame" x="199" y="451" width="224" height="24"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Loading Branchster parts..." id="uFK-mD-B4g">
-                        <font key="font" metaFont="system" size="16"/>
+                        <font key="font" size="16" name="Verdana"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                     </textFieldCell>

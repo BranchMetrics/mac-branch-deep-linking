@@ -11,6 +11,7 @@
 #import "ImageCollectionViewCell.h"
 #import "MonsterViewerViewController.h"
 #import "BranchUniversalObject+MonsterHelpers.h"
+#import "MonsterWindowController.h"
 @import Branch;
 
 @interface MonsterCreatorViewController () <NSCollectionViewDataSource, NSCollectionViewDelegate>
@@ -19,8 +20,8 @@
 @property (weak, nonatomic) IBOutlet NSView *botViewLayerOne;
 @property (weak, nonatomic) IBOutlet NSCollectionView *botViewLayerTwo;
 @property (weak, nonatomic) IBOutlet NSCollectionView *botViewLayerThree;
+@property (weak, nonatomic) IBOutlet NSStackView *colorStackView;
 
-@property (strong, nonatomic) IBOutletCollection(NSButton) NSArray*colorViews;
 @property (weak, nonatomic) IBOutlet NSButton *cmdRightArrow;
 @property (weak, nonatomic) IBOutlet NSButton *cmdLeftArrow;
 @property (weak, nonatomic) IBOutlet NSButton *cmdDownArrow;
@@ -32,6 +33,8 @@
 
 #pragma mark - MonsterCreatorViewController
 
+CGFloat const kBorderWidth = 3.0f;
+
 @implementation MonsterCreatorViewController
 
 - (void)viewWillAppear {
@@ -40,18 +43,20 @@
     if (!self.monster)
         self.monster = [BranchUniversalObject newEmptyMonster];
 
-    for (int i = 0; i < [self.colorViews count]; i++) {
-        NSButton *currView = [self.colorViews objectAtIndex:i];
-        currView.layer.backgroundColor = [MonsterPartsFactory colorForIndex:i].CGColor;
+    NSInteger i = 0;
+    for (NSButton*button in self.colorStackView.subviews) {
+        if (![button isKindOfClass:NSButton.class]) continue;
+        button.layer.backgroundColor = [MonsterPartsFactory colorForIndex:i].CGColor;
         if (i == [self.monster colorIndex])
-            [currView.layer setBorderWidth:2.0f];
+            [button.layer setBorderWidth:kBorderWidth];
         else
-            [currView.layer setBorderWidth:0.0f];
-        currView.layer.borderColor = [NSColor colorWithWhite:0.3 alpha:1.0].CGColor;
-        currView.layer.cornerRadius = currView.frame.size.width/2;
+            [button.layer setBorderWidth:0.0f];
+        button.layer.borderColor = [NSColor colorWithWhite:0.3 alpha:1.0].CGColor;
+        button.layer.cornerRadius = button.frame.size.width/2;
 
-        currView.action = @selector(cmdColorClick:);
-        currView.target = self;
+        button.action = @selector(cmdColorClick:);
+        button.target = self;
+        ++i;
     }
         
     self.cmdDone.layer.cornerRadius = 3.0f;
@@ -68,15 +73,6 @@
     self.botViewLayerTwo.backgroundColors = @[ NSColor.clearColor ];
     self.botViewLayerTwo.enclosingScrollView.backgroundColor = NSColor.clearColor;
 
-    self.botViewLayerTwo.enclosingScrollView.horizontalScroller.enabled = NO;
-    self.botViewLayerTwo.enclosingScrollView.verticalScroller.enabled = NO;
-
-    self.botViewLayerTwo.enclosingScrollView.horizontalScroller.hidden = YES;
-    self.botViewLayerTwo.enclosingScrollView.verticalScroller.hidden = YES;
-    self.botViewLayerTwo.enclosingScrollView.hasVerticalScroller = NO;
-    self.botViewLayerTwo.enclosingScrollView.hasHorizontalScroller = NO;
-    self.botViewLayerTwo.enclosingScrollView.autohidesScrollers = NO;
-    
     self.botViewLayerThree.delegate = self;
     self.botViewLayerThree.dataSource = self;
     [self.botViewLayerThree registerClass:[ImageCollectionViewCell class] forItemWithIdentifier:@"cell"];
@@ -88,6 +84,8 @@
 
 - (void) viewDidAppear {
     [super viewDidAppear];
+    [self updateBody];
+    [self updateFace];
     [self.monsterName becomeFirstResponder];
 }
 
@@ -148,19 +146,19 @@
 
 - (IBAction)cmdColorClick:(id)sender {
     NSButton *currColorButton = (NSButton *)sender;
-    int selected = 0;
-    for (int i = 0; i < [self.colorViews count]; i++) {
-        NSButton *button = (NSButton *)[self.colorViews objectAtIndex:i];
+    int i = 0, selected = 0;
+    for (NSButton*button in self.colorStackView.subviews) {
+        if (![button isKindOfClass:NSButton.class]) continue;
         [button.layer setBorderWidth:0.0f];
         if ([button isEqual:currColorButton]) {
             selected = i;
         }
+        ++i;
     }
-    
     [self.monster setColorIndex:selected];
     self.botViewLayerOne.layer.backgroundColor = [MonsterPartsFactory colorForIndex:selected].CGColor;
     currColorButton.state = NSControlStateValueOn;
-    [currColorButton.layer setBorderWidth:2.0f];
+    [currColorButton.layer setBorderWidth:kBorderWidth];
 }
 
 - (IBAction)cmdFinishedClick:(id)sender {
@@ -184,7 +182,7 @@
 - (CGSize)collectionView:(NSCollectionView *)collectionView
                   layout:(NSCollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGRect bounds = self.botViewLayerOne.bounds;
+    CGRect bounds = NSInsetRect(self.botViewLayerOne.bounds, -4.0, -4.0);
     return bounds.size;
 }
 

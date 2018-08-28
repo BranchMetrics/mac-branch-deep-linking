@@ -2,7 +2,7 @@
 //  MonsterWindowController.m
 //  Branchster-macOS
 //
-//  Created by Edward on 8/16/18.
+//  Created by Edward Smith on 8/16/18.
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
@@ -33,13 +33,19 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
     [super awakeFromNib];
 
     self.myself = self;
-    self.shouldCascadeWindows = YES;
     self.window.collectionBehavior = NSWindowCollectionBehaviorMoveToActiveSpace;
-
     self.window.backgroundColor = [NSColor whiteColor];
-    CGRect r = self.window.frame;
-    r.size = kFrameRect.size;
-    [self.window setFrame:r display:YES];
+
+    static CGRect lastWindowRect = { 0.0, 0.0, 0.0, 0.0 };
+    static NSPoint lastTopLeft;
+    if (CGRectEqualToRect(lastWindowRect, NSZeroRect)) {
+        lastWindowRect.origin = self.window.frame.origin;
+        lastWindowRect.size = kFrameRect.size;
+        lastTopLeft.x = lastWindowRect.origin.x;
+        lastTopLeft.y = lastWindowRect.origin.y + lastWindowRect.size.height;
+    }
+    [self.window setFrame:lastWindowRect display:YES];
+    lastTopLeft = [self.window cascadeTopLeftFromPoint:lastTopLeft];
 
     self.pageController = (id) self.contentViewController;
     self.pageController.delegate = self;
@@ -50,9 +56,9 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
 }
 
 - (void) setMonster:(BranchUniversalObject *)monster {
+    if (_monster) [_monster removeObserver:self forKeyPath:@"monsterName"];
     _monster = monster;
     if (!_monster) return;
-
     if (self.pageController.arrangedObjects.count != 2) {
         self.pageController.arrangedObjects = @[
             [MonsterCreatorViewController new],
@@ -64,6 +70,16 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
             [(id)controller setMonster:self.monster];
     }
     [self.window makeKeyAndOrderFront:nil];
+    if (_monster) [_monster addObserver:self forKeyPath:@"monsterName" options:0 context:0];
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath
+        ofObject:(id)object
+        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+        context:(void *)context {
+    NSString*title = self.monster.monsterName;
+    if (title.length <= 0) title = @"Branch Monster Factory";
+    self.window.title = title;
 }
 
 - (NSPageControllerObjectIdentifier)pageController:(NSPageController *)pageController
@@ -80,15 +96,7 @@ static CGRect kFrameRect = { 0.0, 0.0, 600.0, 800.0 };
             break;
         }
     }
-
-    // Set debug frame colors:
-    self.window.contentView.layer.borderColor = [NSColor greenColor].CGColor;
-    self.window.contentView.layer.borderWidth = 2.0;
-    self.pageController.view.layer.borderColor = [NSColor redColor].CGColor;
-    self.pageController.view.layer.borderWidth = 4.0;
-    controller.view.layer.borderColor = [NSColor blueColor].CGColor;
-    controller.view.layer.borderWidth = 1.0f;
-
+    if (!controller) controller = self.pageController.arrangedObjects.firstObject;
     controller.view.frame = kFrameRect;
     return controller;
 }

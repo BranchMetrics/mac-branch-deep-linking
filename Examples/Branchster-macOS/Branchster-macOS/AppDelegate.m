@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  Branchster-macOS
 //
-//  Created by Edward on 8/14/18.
+//  Created by Edward Smith on 8/14/18.
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
@@ -17,12 +17,6 @@
 @implementation AppDelegate
 
 - (void) applicationWillFinishLaunching:(NSNotification *)notification {
-//    [[NSNotificationCenter defaultCenter]
-//        addObserver:self
-//        selector:@selector(logMessageNotification:)
-//        name:nil
-//        object:nil];
-
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(branchDidStartSessionNotification:)
@@ -34,10 +28,6 @@
 
     [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
     [MonsterWindowController newWindowWithMonster:nil];
-}
-
-- (void) logMessageNotification:(NSNotification*)notification {
-    BNCLogDebug(@"%@", notification.name);
 }
 
 - (void) branchDidStartSessionNotification:(NSNotification*)notification {

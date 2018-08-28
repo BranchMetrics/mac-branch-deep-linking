@@ -11,6 +11,7 @@
 #import "BranchInfoViewController.h"
 #import "MonsterViewerViewController.h"
 #import "MonsterPartsFactory.h"
+#import "MonsterWindowController.h"
 
 @interface MonsterViewerViewController () // <UITextViewDelegate>
 
@@ -52,13 +53,6 @@
 
     self.txtName.stringValue = self.monster. monsterName;
     self.txtDescription.stringValue = self.monster.monsterDescription;
-
-    /*
-    NSInteger priceInt = arc4random_uniform(4) + 1;
-    NSString *priceString = [NSString stringWithFormat:@"%1.2f", (float)priceInt];
-    _price = [NSDecimalNumber decimalNumberWithString:priceString];
-    */
-
 
     self.monsterMetadata = @{
         @"color_index":     @([self.monster colorIndex]),
@@ -176,62 +170,23 @@
 // a user clicked the link and was deep linked
 - (NSDictionary *)prepareBranchDict {
     return [[NSDictionary alloc] initWithObjects:@[
-                                                  [NSNumber numberWithInteger:[self.monster colorIndex]],
-                                                  [NSNumber numberWithInteger:[self.monster bodyIndex]],
-                                                  [NSNumber numberWithInteger:[self.monster faceIndex]],
-                                                  self.monsterName,
-                                                  @"true",
-                                                  [NSString stringWithFormat:@"My Branchster: %@", self.monsterName],
-                                                  self.monsterDescription,
-                                                  [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png", (short)[self.monster colorIndex], (short)[self.monster bodyIndex], (short)[self.monster faceIndex]]]
-                                        forKeys:@[
-                                                  @"color_index",
-                                                  @"body_index",
-                                                  @"face_index",
-                                                  @"monster_name",
-                                                  @"monster",
-                                                  @"$og_title",
-                                                  @"$og_description",
-                                                  @"$og_image_url"]];
-}
-*/
-
-/*
-- (void)viewDidLayoutSubviews {
-    [self adjustMonsterPicturesForScreenSize];
-}
-
-- (void)adjustMonsterPicturesForScreenSize {
-    [self.botLayerOneColor setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.botLayerTwoBody setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.botLayerThreeFace setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.txtDescription setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.cmdChange setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-    CGRect screenSize = [[UIScreen mainScreen] bounds];
-    CGFloat widthRatio = self.botLayerOneColor.frame.size.width/self.botLayerOneColor.frame.size.height;
-    CGFloat newHeight = screenSize.size.height;
-        newHeight = newHeight * MONSTER_HEIGHT;
-    CGFloat newWidth = widthRatio * newHeight;
-    CGRect newFrame = CGRectMake(
-        (screenSize.size.width-newWidth)/2,
-        self.botLayerOneColor.frame.origin.y,
-        newWidth,
-        newHeight
-    );
-    
-    self.botLayerOneColor.frame = newFrame;
-    self.botLayerTwoBody.frame = newFrame;
-    self.botLayerThreeFace.frame = newFrame;
-    
-    CGRect textFrame = self.txtDescription.frame;
-    textFrame.origin.y  = newFrame.origin.y + newFrame.size.height + 8;
-    self.txtDescription.frame = textFrame;
-    
-    CGRect cmdFrame = self.cmdChange.frame;
-        cmdFrame.origin.x = newFrame.origin.x + newFrame.size.width;
-    self.cmdChange.frame = cmdFrame;
-    [self.view layoutSubviews];
+      [NSNumber numberWithInteger:[self.monster colorIndex]],
+      [NSNumber numberWithInteger:[self.monster bodyIndex]],
+      [NSNumber numberWithInteger:[self.monster faceIndex]],
+      self.monsterName,
+      @"true",
+      [NSString stringWithFormat:@"My Branchster: %@", self.monsterName],
+      self.monsterDescription,
+      [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png", (short)[self.monster colorIndex], (short)[self.monster bodyIndex], (short)[self.monster faceIndex]]]
+forKeys:@[
+      @"color_index",
+      @"body_index",
+      @"face_index",
+      @"monster_name",
+      @"monster",
+      @"$og_title",
+      @"$og_description",
+      @"$og_image_url"]];
 }
 */
 

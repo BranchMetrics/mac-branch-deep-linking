@@ -2,7 +2,7 @@
 //  main.m
 //  Branchster-macOS
 //
-//  Created by Edward on 8/14/18.
+//  Created by Edward Smith on 8/14/18.
 //  Copyright © 2018 Branch. All rights reserved.
 //
 

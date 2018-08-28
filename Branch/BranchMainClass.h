@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, assign, readonly) BOOL isStarted;
 
 /** Returns true if the passed URL is a URL that will be handled by Branch. */
-- (BOOL) isBranchURL:(NSURL*)url;
+- (BOOL) isBranchURL:(NSURL*_Nullable)url;
 
 /**
  Open a URL with Branch.  This will start a new Branch session.

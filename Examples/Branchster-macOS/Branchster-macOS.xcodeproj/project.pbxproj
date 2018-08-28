@@ -26,6 +26,7 @@
 		4D679CF821233DDC0041D7C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D679CF621233DDC0041D7C5 /* Main.storyboard */; };
 		4D679CFB21233DDC0041D7C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D679CFA21233DDC0041D7C5 /* main.m */; };
 		4D773EB6212473E10002D3A3 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D773EB5212473E10002D3A3 /* SplashViewController.xib */; };
+		4DC0135E21346AE300E1403D /* MScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC0135D21346AE300E1403D /* MScroller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,8 +104,9 @@
 		4D679CF721233DDC0041D7C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4D679CF921233DDC0041D7C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D679CFA21233DDC0041D7C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4D679CFC21233DDC0041D7C5 /* Branchster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Branchster.entitlements; sourceTree = "<group>"; };
 		4D773EB5212473E10002D3A3 /* SplashViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
+		4DC0135C21346AE300E1403D /* MScroller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MScroller.h; sourceTree = "<group>"; };
+		4DC0135D21346AE300E1403D /* MScroller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MScroller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +157,6 @@
 				4D1E61A9212491F0006FF777 /* BranchInfoViewController.h */,
 				4D1E61B0212491F1006FF777 /* BranchInfoViewController.m */,
 				4D07BC872124DDC0009EF635 /* Branchster-macOS.entitlements */,
-				4D679CFC21233DDC0041D7C5 /* Branchster.entitlements */,
 				4D1E61AF212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.h */,
 				4D1E61AA212491F0006FF777 /* BranchUniversalObject+MonsterHelpers.m */,
 				4D1E61A5212491F0006FF777 /* ImageCollectionViewCell.h */,
@@ -175,6 +176,8 @@
 				4D07BC8F21261C21009EF635 /* MonsterWindowController.h */,
 				4D07BC9021261C21009EF635 /* MonsterWindowController.m */,
 				4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */,
+				4DC0135C21346AE300E1403D /* MScroller.h */,
+				4DC0135D21346AE300E1403D /* MScroller.m */,
 				4D1E61A7212491F0006FF777 /* SplashViewController.h */,
 				4D1E61AD212491F0006FF777 /* SplashViewController.m */,
 				4D773EB5212473E10002D3A3 /* SplashViewController.xib */,
@@ -302,6 +305,7 @@
 				4D1E61B5212491F1006FF777 /* MonsterPartsFactory.m in Sources */,
 				4D679CF021233DDB0041D7C5 /* AppDelegate.m in Sources */,
 				4D1E61B4212491F1006FF777 /* MonsterCreatorViewController.m in Sources */,
+				4DC0135E21346AE300E1403D /* MScroller.m in Sources */,
 				4D1E61B3212491F1006FF777 /* BranchUniversalObject+MonsterHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
