@@ -10,9 +10,7 @@
 @import Branch;
 
 @interface BranchUniversalObject (MonsterHelpers)
-
 + (BranchUniversalObject *)newEmptyMonster;
-
 @property (nonatomic, assign) BOOL isMonster;
 @property (nonatomic, strong) NSString *monsterName;
 @property (nonatomic, assign) NSInteger faceIndex;

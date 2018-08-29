@@ -14,6 +14,7 @@
                 <outlet property="botLayerTwoBody" destination="jwc-kP-ZKI" id="py8-gj-1m0"/>
                 <outlet property="cmdChange" destination="Gh6-mq-lR3" id="VeA-mD-WzP"/>
                 <outlet property="shareButton" destination="Xvz-lY-auT" id="cEI-Ln-TFd"/>
+                <outlet property="shareTextField" destination="ee6-M9-6VD" id="SSi-WF-ImO"/>
                 <outlet property="txtDescription" destination="fln-cp-DXK" id="hWc-47-IYG"/>
                 <outlet property="txtName" destination="838-Yi-fci" id="TBg-R6-p9g"/>
                 <outlet property="txtURL" destination="ee6-M9-6VD" id="72n-Hq-abt"/>
@@ -30,7 +31,7 @@
                     <rect key="frame" x="284" y="404" width="200" height="270"/>
                     <subviews>
                         <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1S-gE-C9T">
-                            <rect key="frame" x="5" y="7" width="190" height="257"/>
+                            <rect key="frame" x="5" y="8" width="190" height="256"/>
                         </customView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jwc-kP-ZKI">
                             <rect key="frame" x="0.0" y="0.0" width="200" height="270"/>
@@ -71,14 +72,14 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gh6-mq-lR3">
-                    <rect key="frame" x="44" y="868" width="180" height="35"/>
+                    <rect key="frame" x="44" y="869" width="180" height="34"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="180" id="Qdu-qb-4l7"/>
                         <constraint firstAttribute="height" constant="32" id="v5a-M4-1J9"/>
                     </constraints>
-                    <buttonCell key="cell" type="roundTextured" title="&lt;&lt; Change Monster" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
+                    <buttonCell key="cell" type="smallSquare" title="&lt;&lt; Change Monster" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingMiddle" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" size="12" name="Verdana-Bold"/>
                     </buttonCell>
                     <connections>
                         <action selector="cmdChangeClick:" target="-2" id="n6i-m5-eUY"/>

@@ -30,26 +30,33 @@
 - (void) branchDidStartSessionNotification:(NSNotification*)notification {
     BranchSession*session = notification.userInfo[BranchSessionKey];
     BranchUniversalObject*monster = session.linkContent;
+    MonsterWindowController*controller = nil;
 
     static BOOL isFirstTime = YES;
     if (isFirstTime) {
         isFirstTime = NO;
-        if (!monster.isMonster) monster = [BranchUniversalObject newEmptyMonster];
+        if (!monster.isMonster) {
+            controller = NSApplication.sharedApplication.windows.firstObject.windowController;
+            controller.monster = [BranchUniversalObject newEmptyMonster];
+            [controller editMonster:self];
+            return;
+        }
     }
     if (!monster.isMonster) return;
 
     // Find a window for the monster:
     for (NSWindow*window in [NSApplication sharedApplication].windows) {
-        MonsterWindowController*controller = window.windowController;
-        if ([controller isKindOfClass:MonsterWindowController.class] && controller.monster == nil) {
-            controller.monster = monster;
-            return;
+        if ([window.windowController isKindOfClass:MonsterWindowController.class] && controller.monster == nil) {
+            controller = window.windowController;
+            break;
         }
     }
 
     // No windows are available. Make a new one.
-    if (monster.isMonster)
-        [MonsterWindowController newWindowWithMonster:monster];
+    if (!controller)
+        controller = [MonsterWindowController newWindowWithMonster:monster];
+    controller.monster = monster;
+    [controller viewMonster:self];
 }
 
 - (IBAction) newDocument:(id)sender {

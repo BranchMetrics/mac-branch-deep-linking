@@ -13,21 +13,20 @@
 #import "MonsterPartsFactory.h"
 #import "MonsterWindowController.h"
 
-@interface MonsterViewerViewController () // <UITextViewDelegate>
+@interface MonsterViewerViewController () <NSSharingServicePickerDelegate>
 
-@property (strong, nonatomic) NSDictionary *monsterMetadata;
-@property (weak, nonatomic) IBOutlet NSView *botLayerOneColor;
+@property (strong, nonatomic) NSDictionary       *monsterMetadata;
+@property (weak, nonatomic) IBOutlet NSView      *botLayerOneColor;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerTwoBody;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerThreeFace;
 @property (weak, nonatomic) IBOutlet NSTextField *txtName;
 @property (weak, nonatomic) IBOutlet NSTextField *txtURL;
 @property (weak, nonatomic) IBOutlet NSTextField *txtDescription;
+@property (weak, nonatomic) IBOutlet NSTextField *shareTextField;
 @property (weak, nonatomic) IBOutlet NSButton    *shareButton;
 @property (weak, nonatomic) IBOutlet NSButton    *cmdChange;
 @property (weak, nonatomic) IBOutlet NSButton    *cmdInfo;
-
-@property (strong, nonatomic) IBOutlet NSTextView *shareTextView;
-@property NSString *shareURL;
+@property NSURL*monsterURL;
 @end
 
 #pragma mark - MonsterViewerViewController
@@ -47,6 +46,8 @@
     self.shareButton.layer.borderColor = [NSColor lightGrayColor].CGColor;
     CGRect r = self.shareButton.bounds;
     self.shareButton.layer.cornerRadius = r.size.height / 2.0;
+    [self.shareButton sendActionOn:NSLeftMouseDownMask];
+    self.shareTextField.stringValue = @"";
 }
 
 - (void) viewWillAppear {
@@ -79,6 +80,7 @@
 
 - (void) viewDidAppear {
     [super viewDidAppear];
+    [self updateMonsterMetaData];
 /*
     [[Branch getInstance] userCompletedAction:@"Product View" withState:@{
         @"sku":      self.monsterName,
@@ -91,11 +93,10 @@
 }
 
 - (void) updateMonsterMetaData {
-
-    //and every time it gets set, I need to create a new url
+    // When the monster changes create a new URL:
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"monster_sharing";
-    linkProperties.channel = @"twitter";
+    linkProperties.channel = @"mac-app";
 
     self.monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monster.monsterName];
     self.monster.contentDescription = self.monster.monsterDescription;
@@ -104,21 +105,31 @@
             (short)[self.monster colorIndex],
             (short)[self.monster bodyIndex],
             (short)[self.monster faceIndex]];
-//    [self.monster getShortUrlWithLinkProperties:linkProperties andCallback:^(NSString *url, NSError *error) {
-//        if (!error) {
-//            self.shareURL = url;
-//            NSLog(@"new monster url created:  %@", self.shareURL);
-//            self.shareTextView.text = url;
-//        }
-//    }];
-}
+    self.monsterURL = nil;
+    self.shareTextField.stringValue = @"";
+    [Branch.sharedInstance branchShortLinkWithContent:self.monster linkProperties:linkProperties completion:
+        ^(NSURL * _Nullable shortURL, NSError * _Nullable error) {
+        if (!error && shortURL) {
+            self.monsterURL = shortURL;
+            self.shareTextField.stringValue = shortURL.absoluteString;
+        }
 
-// https://stackoverflow.com/questions/11815077/how-to-show-the-share-button-in-mountain-lion
-// https://developer.apple.com/design/human-interface-guidelines/macos/extensions/share-extensions/
+    }];
+}
 
 -(IBAction) showShareSheetAction:(id)sender {
+    if (!self.monsterURL) return;
+    NSMutableArray*items = [NSMutableArray new];
+    if (self.monster.title.length) [items addObject:self.monster.title];
+    [items addObject:self.monsterURL];
+    NSSharingServicePicker *sharingServicePicker =
+        [[NSSharingServicePicker alloc] initWithItems:items];
+    sharingServicePicker.delegate = self;
+    [sharingServicePicker showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 }
+
 /*
+{
     if (self.monsterName.length <= 0) self.monsterName = @"Nameless Monster";
 
     BNCCommerceEvent *commerceEvent = [[BNCCommerceEvent alloc] init];
