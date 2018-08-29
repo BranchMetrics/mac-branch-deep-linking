@@ -16,15 +16,15 @@
 @interface MonsterViewerViewController () // <UITextViewDelegate>
 
 @property (strong, nonatomic) NSDictionary *monsterMetadata;
-
 @property (weak, nonatomic) IBOutlet NSView *botLayerOneColor;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerTwoBody;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerThreeFace;
 @property (weak, nonatomic) IBOutlet NSTextField *txtName;
+@property (weak, nonatomic) IBOutlet NSTextField *txtURL;
 @property (weak, nonatomic) IBOutlet NSTextField *txtDescription;
-
-@property (weak, nonatomic) IBOutlet NSButton *cmdChange;
-@property (weak, nonatomic) IBOutlet NSButton *cmdInfo;
+@property (weak, nonatomic) IBOutlet NSButton    *shareButton;
+@property (weak, nonatomic) IBOutlet NSButton    *cmdChange;
+@property (weak, nonatomic) IBOutlet NSButton    *cmdInfo;
 
 @property (strong, nonatomic) IBOutlet NSTextView *shareTextView;
 @property NSString *shareURL;
@@ -38,6 +38,15 @@
     [super viewDidLoad];
     [self.cmdChange.layer setCornerRadius:3.0];
     [self.cmdInfo.layer setCornerRadius:3.0];
+    self.shareButton.image = [NSImage imageNamed:NSImageNameShareTemplate];
+    CGSize s = self.shareButton.image.size;
+    s.height *= 1.4f;
+    s.width *= 1.4f;
+    self.shareButton.image.size = s;
+    self.shareButton.layer.borderWidth = 1.5f;
+    self.shareButton.layer.borderColor = [NSColor lightGrayColor].CGColor;
+    CGRect r = self.shareButton.bounds;
+    self.shareButton.layer.cornerRadius = r.size.height / 2.0;
 }
 
 - (void) viewWillAppear {
@@ -104,8 +113,12 @@
 //    }];
 }
 
+// https://stackoverflow.com/questions/11815077/how-to-show-the-share-button-in-mountain-lion
+// https://developer.apple.com/design/human-interface-guidelines/macos/extensions/share-extensions/
+
+-(IBAction) showShareSheetAction:(id)sender {
+}
 /*
--(IBAction)shareSheet:(id)sender {
     if (self.monsterName.length <= 0) self.monsterName = @"Nameless Monster";
 
     BNCCommerceEvent *commerceEvent = [[BNCCommerceEvent alloc] init];
@@ -150,7 +163,6 @@
 - (IBAction)cmdChangeClick:(id)sender {
     [NSApplication.sharedApplication sendAction:@selector(editMonster:) to:nil from:self];
 }
-
 
 - (NSDictionary*) facebookDictionaryWithURL:(NSURL*)URL {
     NSMutableDictionary*dictionary = [NSMutableDictionary new];

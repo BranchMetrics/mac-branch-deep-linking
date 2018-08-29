@@ -37,10 +37,10 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yez-po-Ygg">
-                    <rect key="frame" x="343" y="113" width="207" height="39"/>
-                    <buttonCell key="cell" type="push" title="Open TestBed (Universal)" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q5Z-Y9-skm">
+                    <rect key="frame" x="349" y="118" width="169" height="31"/>
+                    <buttonCell key="cell" type="roundTextured" title="Open TestBed (Universal)" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q5Z-Y9-skm">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" size="13" name="Verdana"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="openTestBedUniversal:" target="-2" id="UjX-HT-eIz"/>
@@ -201,13 +201,13 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TFM-j3-URq">
-                    <rect key="frame" x="118" y="113" width="207" height="39"/>
+                    <rect key="frame" x="150" y="118" width="169" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="gp7-st-r8o"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" title="Open TestBed (Scheme)" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="fZ3-lV-yA0" userLabel="TestBed (Scheme)">
+                    <buttonCell key="cell" type="roundTextured" title="Open TestBed (Scheme)" bezelStyle="texturedRounded" alignment="center" borderStyle="border" inset="2" id="fZ3-lV-yA0" userLabel="TestBed (Scheme)">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" size="13" name="Verdana"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="openTestBedScheme:" target="-2" id="ihB-py-2ra"/>

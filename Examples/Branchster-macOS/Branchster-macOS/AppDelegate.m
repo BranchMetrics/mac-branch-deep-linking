@@ -11,9 +11,6 @@
 #import "BranchUniversalObject+MonsterHelpers.h"
 @import Branch;
 
-@interface AppDelegate ()
-@end
-
 @implementation AppDelegate
 
 - (void) applicationWillFinishLaunching:(NSNotification *)notification {
