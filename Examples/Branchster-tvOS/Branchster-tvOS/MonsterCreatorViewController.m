@@ -13,18 +13,19 @@
 #import "BranchUniversalObject+MonsterHelpers.h"
 @import Branch;
 
-@interface MonsterCreatorViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
-
-@property (weak, nonatomic) IBOutlet UITextField *monsterName;
-
-@property (weak, nonatomic) IBOutlet UIView *botViewLayerOne;
-@property (weak, nonatomic) IBOutlet UICollectionView *botViewLayerTwo;
-@property (weak, nonatomic) IBOutlet UICollectionView *botViewLayerThree;
-
+@interface MonsterCreatorViewController ()
+    <UICollectionViewDataSource,
+     UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UITextField        *monsterName;
+@property (weak, nonatomic) IBOutlet UIView             *botViewLayerOne;
+@property (weak, nonatomic) IBOutlet UICollectionView   *botViewLayerTwo;
+@property (weak, nonatomic) IBOutlet UICollectionView   *botViewLayerThree;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray*colorViews;
-@property (weak, nonatomic) IBOutlet UIButton *cmdRightArrow;
-@property (weak, nonatomic) IBOutlet UIButton *cmdLeftArrow;
+
+@property (weak, nonatomic) IBOutlet UIButton *cmdUpArrow;
 @property (weak, nonatomic) IBOutlet UIButton *cmdDownArrow;
+@property (weak, nonatomic) IBOutlet UIButton *cmdLeftArrow;
+@property (weak, nonatomic) IBOutlet UIButton *cmdRightArrow;
 @property (weak, nonatomic) IBOutlet UIButton *cmdDone;
 
 @property (nonatomic) NSInteger bodyIndex;
@@ -52,20 +53,20 @@
     for (int i = 0; i < [self.colorViews count]; i++) {
         UIButton *currView = [self.colorViews objectAtIndex:i];
         currView.layer.backgroundColor = [MonsterPartsFactory colorForIndex:i].CGColor;
+        //currView.backgroundColor = [MonsterPartsFactory colorForIndex:i];
+
         if (i == [self.monster colorIndex])
             [currView.layer setBorderWidth:2.0f];
         else
             [currView.layer setBorderWidth:0.0f];
         currView.layer.borderColor = [UIColor colorWithWhite:0.3 alpha:1.0].CGColor;
-        currView.layer.cornerRadius = currView.frame.size.width/2;
+        //currView.layer.cornerRadius = currView.frame.size.width/2.0f;
 
         [currView addTarget:self
             action:@selector(cmdColorClick:)
             forControlEvents:UIControlEventPrimaryActionTriggered];
     }
         
-    [self.cmdDone.layer setCornerRadius:3.0f];
-    
     self.botViewLayerOne.layer.backgroundColor =
         [MonsterPartsFactory colorForIndex:[self.monster colorIndex]].CGColor;
     
@@ -98,7 +99,9 @@
     [self.monster setBodyIndex:self.bodyIndex];
     [self.botViewLayerTwo
         scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.bodyIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+        atScrollPosition:
+            UICollectionViewScrollPositionCenteredHorizontally |
+            UICollectionViewScrollPositionCenteredVertically
         animated:YES];
 }
 
@@ -108,7 +111,9 @@
         self.bodyIndex = 0;
     [self.monster setBodyIndex:self.bodyIndex];
     [self.botViewLayerTwo scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.bodyIndex inSection:0]
-        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+        atScrollPosition:
+            UICollectionViewScrollPositionCenteredHorizontally |
+            UICollectionViewScrollPositionCenteredVertically
         animated:YES];
 }
 

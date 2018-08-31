@@ -12,7 +12,7 @@
 #import "MonsterViewerViewController.h"
 #import "MonsterPartsFactory.h"
 
-@interface MonsterViewerViewController () // <UITextViewDelegate>
+@interface MonsterViewerViewController ()
 
 @property (strong, nonatomic) NSDictionary *monsterMetadata;
 
@@ -25,11 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *botLayerThreeFace;
 @property (weak, nonatomic) IBOutlet UITextField *txtName;
 @property (weak, nonatomic) IBOutlet UITextField *txtDescription;
-
-@property (weak, nonatomic) IBOutlet UIButton *cmdChange;
-@property (weak, nonatomic) IBOutlet UIButton *cmdInfo;
-
-@property (weak, nonatomic) IBOutlet UITextView *shareTextView;
+@property (weak, nonatomic) IBOutlet UIButton    *cmdInfo;
+@property (weak, nonatomic) IBOutlet UITextView  *shareTextView;
 @property NSString *shareURL;
 @end
 
@@ -73,7 +70,6 @@
         @"monster_name":self.monsterName
     };
 
-    [self.cmdChange.layer setCornerRadius:3.0];
     [self.cmdInfo.layer setCornerRadius:3.0];
     
 /*

@@ -85,7 +85,6 @@
 		4D94DBB02122280A00E1CA33 /* BranchInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchInfoViewController.h; sourceTree = "<group>"; };
 		4D94DBB12122280A00E1CA33 /* MonsterViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterViewerViewController.h; sourceTree = "<group>"; };
 		4D94DBB22122280B00E1CA33 /* MonsterViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterViewerViewController.m; sourceTree = "<group>"; };
-		4D94DBB62122282100E1CA33 /* Branchsters.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Branchsters.entitlements; sourceTree = "<group>"; };
 		4D94DBB7212228A100E1CA33 /* BranchUniversalObject+MonsterHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BranchUniversalObject+MonsterHelpers.m"; sourceTree = "<group>"; };
 		4D94DBB8212228A100E1CA33 /* MonsterPartsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterPartsFactory.h; sourceTree = "<group>"; };
 		4D94DBB9212228A100E1CA33 /* MonsterPartsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterPartsFactory.m; sourceTree = "<group>"; };
@@ -132,7 +131,6 @@
 				4D94DBB02122280A00E1CA33 /* BranchInfoViewController.h */,
 				4D94DBAD2122280A00E1CA33 /* BranchInfoViewController.m */,
 				4D773EB2212396890002D3A3 /* Branchster-tvOS.entitlements */,
-				4D94DBB62122282100E1CA33 /* Branchsters.entitlements */,
 				4D94DBBA212228A200E1CA33 /* BranchUniversalObject+MonsterHelpers.h */,
 				4D94DBB7212228A100E1CA33 /* BranchUniversalObject+MonsterHelpers.m */,
 				4D94DBC0212228ED00E1CA33 /* ImageCollectionViewCell.h */,
