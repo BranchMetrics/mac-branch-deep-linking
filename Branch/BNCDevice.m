@@ -249,7 +249,7 @@
         if ([sharedManager respondsToSelector:advertisingIdentifierSelector]) {
             NSUUID *uuid = [sharedManager performSelector:advertisingIdentifierSelector];
             device->_advertisingID = [uuid UUIDString];
-            // limit ad tracking is enabled. iOS 10+
+            // Check if limit ad tracking is enabled. iOS 10+
             if ([device->_advertisingID isEqualToString:@"00000000-0000-0000-0000-000000000000"]) {
                 device->_advertisingID = nil;
             }

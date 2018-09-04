@@ -168,6 +168,7 @@
         "first_install_time" : 1528395638204,
         "hardware_id" : "0b18c003-7a77-4211-ed86-853a7a8778f9",
         "hardware_id_type" : "vendor_id",
+        "idfa" : "A5FE8593-0D54-4A27-9396-52F8FD203EA4",
         "ios_bundle_id" : "blue.shimmering.TestBed-Mac",
         "ios_team_id" : "WRWLR8VRUH",
         "is_hardware_id_real" : true,

@@ -35,6 +35,7 @@
             XCTAssertEqualObjects(request.HTTPMethod, @"POST");
             XCTAssertEqualObjects(request.URL.path, @"/v1/install");
             NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
+            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
             NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
             for (NSString*key in truth) {
                 XCTAssertNotNil(test[key], @"No key '%@'!", key);
@@ -94,6 +95,7 @@
             truth[@"external_intent_uri"] = nil;
             truth[@"link_identifier"] = nil;
             truth[@"universal_link_url"] = kTestURL;
+            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
             NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
             for (NSString*key in truth) {
                 XCTAssertNotNil(test[key], @"No key '%@'!", key);

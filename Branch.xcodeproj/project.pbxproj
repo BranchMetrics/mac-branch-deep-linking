@@ -791,7 +791,7 @@
 /* Begin XCBuildConfiguration section */
 		4D159DD320B62D7D005A9850 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D0B753C211209F900A06D97 /* BranchTestHost-macOS.xcconfig */;
+			baseConfigurationReference = 4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				BUNDLE_LOADER = "$(BranchTestHost)";

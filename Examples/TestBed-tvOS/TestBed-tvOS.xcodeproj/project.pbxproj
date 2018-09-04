@@ -14,6 +14,7 @@
 		4D13604D21124EFD00D0E4B8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D13604C21124EFD00D0E4B8 /* main.m */; };
 		4D13606221124EFD00D0E4B8 /* TestBed_tvOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D13606121124EFD00D0E4B8 /* TestBed_tvOSUITests.m */; };
 		4D13607221137C9C00D0E4B8 /* APPTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D13607121137C9C00D0E4B8 /* APPTextView.m */; };
+		4D2BF37A213EF56B00D7CDD1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2BF379213EF56B00D7CDD1 /* AdSupport.framework */; };
 		4D3841B42113D77000181D5C /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3841B12113D75300181D5C /* Branch.framework */; };
 		4D3841B52113D77000181D5C /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3841B12113D75300181D5C /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		4D13606321124EFD00D0E4B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D13607021137C9C00D0E4B8 /* APPTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPTextView.h; sourceTree = "<group>"; };
 		4D13607121137C9C00D0E4B8 /* APPTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPTextView.m; sourceTree = "<group>"; };
+		4D2BF379213EF56B00D7CDD1 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4D3841A82113D75300181D5C /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
 		4D3841BA2113D92000181D5C /* TestBed-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TestBed-tvOS.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2BF37A213EF56B00D7CDD1 /* AdSupport.framework in Frameworks */,
 				4D3841B42113D77000181D5C /* Branch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +121,7 @@
 				4D13605521124EFD00D0E4B8 /* TestBed-tvOSTests */,
 				4D13606021124EFD00D0E4B8 /* TestBed-tvOSUITests */,
 				4D13603E21124EFA00D0E4B8 /* Products */,
+				4D2BF376213EF56B00D7CDD1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,6 +168,14 @@
 				4D13606321124EFD00D0E4B8 /* Info.plist */,
 			);
 			path = "TestBed-tvOSUITests";
+			sourceTree = "<group>";
+		};
+		4D2BF376213EF56B00D7CDD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D2BF379213EF56B00D7CDD1 /* AdSupport.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4D3841A92113D75300181D5C /* Products */ = {

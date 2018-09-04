@@ -44,6 +44,7 @@ extern BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex);
 - (NSString*_Nullable)stringFromBundleJSONWithKey:(NSString *)key;
 - (NSMutableDictionary*_Nullable)mutableDictionaryFromBundleJSONWithKey:(NSString*)key;
 
+- (BOOL) testDeviceSupportsIDFA;
 + (BOOL) breakpointsAreEnabledInTests;
 @end
 

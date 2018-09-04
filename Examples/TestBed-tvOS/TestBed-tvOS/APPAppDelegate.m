@@ -73,12 +73,25 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
     return YES;
 }
 
+#if __TV_OS_VERSION_MAX_ALLOWED < __TVOS_12_0
+
 - (BOOL)application:(UIApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
           restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>>*_Nullable restorableObjects))restorationHandler {
     [Branch.sharedInstance continueUserActivity:userActivity];
     return YES;
 }
+
+#else
+
+- (BOOL)application:(UIApplication *)application
+        continueUserActivity:(NSUserActivity *)userActivity
+          restorationHandler:(void(^)(NSArray*_Nullable restorableObjects))restorationHandler {
+    [Branch.sharedInstance continueUserActivity:userActivity];
+    return YES;
+}
+
+#endif
 
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url

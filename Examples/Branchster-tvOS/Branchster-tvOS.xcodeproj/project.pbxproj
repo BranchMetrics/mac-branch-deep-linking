@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */; };
 		4D94DB772122087200E1CA33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DB762122087200E1CA33 /* AppDelegate.m */; };
 		4D94DB7D2122087200E1CA33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D94DB7B2122087200E1CA33 /* Main.storyboard */; };
 		4D94DB7F2122087400E1CA33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D94DB7E2122087400E1CA33 /* Assets.xcassets */; };
@@ -68,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4D773EB2212396890002D3A3 /* Branchster-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-tvOS.entitlements"; sourceTree = "<group>"; };
 		4D94DB722122087200E1CA33 /* Branchster-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Branchster-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D94DB752122087200E1CA33 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */,
 				4D94DBA521220B4300E1CA33 /* Branch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,12 +108,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D2BF36C213EEC3A00D7CDD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4D94DB692122087200E1CA33 = {
 			isa = PBXGroup;
 			children = (
 				4D94DB882122093700E1CA33 /* Branch.xcodeproj */,
 				4D94DB742122087200E1CA33 /* Branchster-tvOS */,
 				4D94DB732122087200E1CA33 /* Products */,
+				4D2BF36C213EEC3A00D7CDD1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
