@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */; };
+		4D80E36C214048CF00A52CB7 /* MButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D80E36B214048CF00A52CB7 /* MButton.m */; };
 		4D94DB772122087200E1CA33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DB762122087200E1CA33 /* AppDelegate.m */; };
 		4D94DB7D2122087200E1CA33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D94DB7B2122087200E1CA33 /* Main.storyboard */; };
 		4D94DB7F2122087400E1CA33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D94DB7E2122087400E1CA33 /* Assets.xcassets */; };
@@ -71,6 +72,8 @@
 /* Begin PBXFileReference section */
 		4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4D773EB2212396890002D3A3 /* Branchster-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-tvOS.entitlements"; sourceTree = "<group>"; };
+		4D80E36A214048CF00A52CB7 /* MButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MButton.h; sourceTree = "<group>"; };
+		4D80E36B214048CF00A52CB7 /* MButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MButton.m; sourceTree = "<group>"; };
 		4D94DB722122087200E1CA33 /* Branchster-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Branchster-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D94DB752122087200E1CA33 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4D94DB762122087200E1CA33 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				4D94DBB22122280B00E1CA33 /* MonsterViewerViewController.m */,
 				4D94DBAA212227EF00E1CA33 /* SplashViewController.h */,
 				4D94DBAB212227F000E1CA33 /* SplashViewController.m */,
+				4D80E36A214048CF00A52CB7 /* MButton.h */,
+				4D80E36B214048CF00A52CB7 /* MButton.m */,
 			);
 			path = "Branchster-tvOS";
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				4D94DB772122087200E1CA33 /* AppDelegate.m in Sources */,
 				4D94DBB32122280B00E1CA33 /* BranchInfoViewController.m in Sources */,
 				4D94DBB42122280B00E1CA33 /* MonsterCreatorViewController.m in Sources */,
+				4D80E36C214048CF00A52CB7 /* MButton.m in Sources */,
 				4D94DBBB212228A200E1CA33 /* BranchUniversalObject+MonsterHelpers.m in Sources */,
 				4D94DBC2212228ED00E1CA33 /* ImageCollectionViewCell.m in Sources */,
 				4D94DBAC212227F000E1CA33 /* SplashViewController.m in Sources */,
@@ -424,7 +430,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Image";
 				CODE_SIGN_ENTITLEMENTS = "Branchster-tvOS/Branchster-tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
@@ -443,7 +449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Image";
 				CODE_SIGN_ENTITLEMENTS = "Branchster-tvOS/Branchster-tvOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;

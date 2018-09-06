@@ -52,21 +52,25 @@
 
     for (int i = 0; i < [self.colorViews count]; i++) {
         UIButton *currView = [self.colorViews objectAtIndex:i];
-        currView.layer.backgroundColor = [MonsterPartsFactory colorForIndex:i].CGColor;
-        //currView.backgroundColor = [MonsterPartsFactory colorForIndex:i];
+        currView.backgroundColor = [MonsterPartsFactory colorForIndex:i];
 
         if (i == [self.monster colorIndex])
             [currView.layer setBorderWidth:2.0f];
         else
             [currView.layer setBorderWidth:0.0f];
         currView.layer.borderColor = [UIColor colorWithWhite:0.3 alpha:1.0].CGColor;
-        //currView.layer.cornerRadius = currView.frame.size.width/2.0f;
 
         [currView addTarget:self
             action:@selector(cmdColorClick:)
             forControlEvents:UIControlEventPrimaryActionTriggered];
     }
-        
+
+    self.cmdUpArrow.backgroundColor = UIColor.whiteColor;
+    self.cmdDownArrow.backgroundColor = UIColor.whiteColor;
+    self.cmdLeftArrow.backgroundColor = UIColor.whiteColor;
+    self.cmdRightArrow.backgroundColor = UIColor.whiteColor;
+    self.cmdDone.backgroundColor = [MonsterPartsFactory colorForIndex:5];
+
     self.botViewLayerOne.layer.backgroundColor =
         [MonsterPartsFactory colorForIndex:[self.monster colorIndex]].CGColor;
     
@@ -151,8 +155,8 @@
     
     [self.monster setColorIndex:selected];
     [self.botViewLayerOne setBackgroundColor:[MonsterPartsFactory colorForIndex:selected]];
-    [currColorButton setSelected:YES];
-    [currColorButton.layer setBorderWidth:2.0f];
+    // [currColorButton setSelected:YES];
+    currColorButton.layer.borderWidth = 2.0f;
 }
 
 - (IBAction)cmdFinishedClick:(id)sender {

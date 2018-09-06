@@ -58,20 +58,17 @@
     NSString *priceString = [NSString stringWithFormat:@"%1.2f", (float)priceInt];
     _price = [NSDecimalNumber decimalNumberWithString:priceString];
 
-    self.monsterDescription = [self.monster monsterDescription];
-    
-    [self.txtName setText:self.monsterName];
-    [self.txtDescription setText:self.monsterDescription];
-    
+    self.txtName.text = self.monsterName;
+    self.monsterDescription = self.monster.monsterDescription;
+    self.txtDescription.text = self.monsterDescription;
     self.monsterMetadata = @{
         @"color_index": @([self.monster colorIndex]),
         @"body_index":  @([self.monster bodyIndex]),
         @"face_index":  @([self.monster faceIndex]),
         @"monster_name":self.monsterName
     };
+    self.cmdInfo.backgroundColor = [MonsterPartsFactory colorForIndex:5];
 
-    [self.cmdInfo.layer setCornerRadius:3.0];
-    
 /*
     [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
         NSLog(@"Monster %@ was viewed.  params: %@", self.monster.monsterName, params);

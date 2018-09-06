@@ -7,10 +7,12 @@
 //
 
 #import "BranchInfoViewController.h"
+#import "MonsterPartsFactory.h"
 @import Branch;
 
 @interface BranchInfoViewController ()
 @property (nonatomic, weak) IBOutlet UILabel *versionLabel;
+@property (nonatomic, weak) IBOutlet UIButton *infoButton;
 @end
 
 @implementation BranchInfoViewController
@@ -21,6 +23,7 @@
         [NSString stringWithFormat:@"%@ / %@",
             [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"],
             Branch.kitDisplayVersion];
+    self.infoButton.backgroundColor = [MonsterPartsFactory colorForIndex:5];
 }
 
 -(IBAction) openWebAction:(id)sender {

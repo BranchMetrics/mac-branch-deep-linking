@@ -165,25 +165,30 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="aQ6-Ed-IGx">
                                 <rect key="frame" x="828" y="497" width="265" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9X-NO-Klj">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9X-NO-Klj" customClass="MButton">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="Ult-KW-YJZ"/>
                                             <constraint firstAttribute="height" constant="40" id="hUR-rm-kIT"/>
                                         </constraints>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="up"/>
                                         <state key="highlighted" image="up_pressed.png"/>
+                                        <state key="focused" image="up"/>
                                         <connections>
                                             <action selector="cmdUpClick:" destination="f91-o7-ldo" eventType="primaryActionTriggered" id="jS7-T9-pSm"/>
                                             <action selector="cmdUpClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="u5V-mo-L16"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnX-JG-dxK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QnX-JG-dxK" customClass="MButton">
                                         <rect key="frame" x="75" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="2Qh-Kq-ftB"/>
                                             <constraint firstAttribute="height" constant="40" id="H9Y-7q-oJM"/>
                                         </constraints>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="down"/>
                                         <state key="highlighted" image="down_pressed.png"/>
                                         <connections>
@@ -191,24 +196,28 @@
                                             <action selector="cmdDownClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="wYI-LI-pYB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czw-po-buU">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czw-po-buU" customClass="MButton">
                                         <rect key="frame" x="150" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="FCO-uw-5Hq"/>
                                             <constraint firstAttribute="width" constant="40" id="sIM-NW-6l1"/>
                                         </constraints>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="left"/>
                                         <state key="highlighted" image="left_pressed.png"/>
                                         <connections>
                                             <action selector="cmdLeftClick:" destination="f91-o7-ldo" eventType="primaryActionTriggered" id="Guv-KB-MKP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNm-7h-E4O">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sNm-7h-E4O" customClass="MButton">
                                         <rect key="frame" x="225" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="Rrl-fO-9qh"/>
                                             <constraint firstAttribute="height" constant="40" id="ifS-lN-Dsu"/>
                                         </constraints>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="right"/>
                                         <state key="highlighted" image="right_pressed.png"/>
                                         <connections>
@@ -220,7 +229,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="8Lg-8u-4Lw">
                                 <rect key="frame" x="733" y="597" width="455" height="35"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfK-j7-KsJ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfK-j7-KsJ" customClass="MButton">
                                         <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -231,7 +240,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="BtQ-0D-KFa"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvU-Qa-Fzu">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvU-Qa-Fzu" customClass="MButton">
                                         <rect key="frame" x="60" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -242,7 +251,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="hbf-Z7-Np9"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oat-0w-ByZ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oat-0w-ByZ" customClass="MButton">
                                         <rect key="frame" x="120" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -253,7 +262,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="x0B-1t-aaj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxt-7w-umc">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxt-7w-umc" customClass="MButton">
                                         <rect key="frame" x="180" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -264,7 +273,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="zbW-Ll-5ks"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0z-jJ-a9o">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0z-jJ-a9o" customClass="MButton">
                                         <rect key="frame" x="240" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -275,7 +284,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="EBS-qc-jYc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5V-gr-hMS">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z5V-gr-hMS" customClass="MButton">
                                         <rect key="frame" x="300" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -286,7 +295,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="NI4-As-DMp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7i-CD-dat">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7i-CD-dat" customClass="MButton">
                                         <rect key="frame" x="360" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -297,7 +306,7 @@
                                             <action selector="cmdColorClick:" destination="f91-o7-ldo" eventType="touchUpInside" id="7Al-A3-0iC"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6R-J2-n5o">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R6R-J2-n5o" customClass="MButton">
                                         <rect key="frame" x="420" y="0.0" width="35" height="35"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -310,13 +319,14 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Name Your Branchster" textAlignment="center" minimumFontSize="14" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="qej-xs-CUn" userLabel="Monster Name">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name Your Branchster" textAlignment="center" minimumFontSize="14" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="qej-xs-CUn" userLabel="Monster Name">
                                 <rect key="frame" x="737" y="712" width="446" height="46"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" textContentType="name"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9y-sv-g95">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t9y-sv-g95" customClass="MButton">
                                 <rect key="frame" x="830" y="818" width="260" height="58"/>
+                                <color key="backgroundColor" red="0.26449495550000002" green="0.76746886969999994" blue="0.89348369839999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="260" id="56b-bY-jep"/>
                                 </constraints>
@@ -331,7 +341,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C8i-bV-cEs">
-                                <rect key="frame" x="1533" y="912" width="297" height="70"/>
+                                <rect key="frame" x="1533" y="902" width="297" height="70"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="TestBed (Universal)"/>
@@ -340,7 +350,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qtr-zb-RyP">
-                                <rect key="frame" x="1533" y="812" width="297" height="70"/>
+                                <rect key="frame" x="1533" y="802" width="297" height="70"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
                                 <state key="normal" title="TestBed (Scheme)"/>
@@ -365,7 +375,7 @@
                             <constraint firstItem="aQ6-Ed-IGx" firstAttribute="centerX" secondItem="7Dj-Lb-qQj" secondAttribute="centerX" id="a24-lG-CmB"/>
                             <constraint firstItem="C8i-bV-cEs" firstAttribute="trailing" secondItem="qtr-zb-RyP" secondAttribute="trailing" id="hTN-ts-YHD"/>
                             <constraint firstItem="FgB-vw-gjI" firstAttribute="trailing" secondItem="qtr-zb-RyP" secondAttribute="trailing" id="pkQ-xn-vC4"/>
-                            <constraint firstItem="qtr-zb-RyP" firstAttribute="centerY" secondItem="t9y-sv-g95" secondAttribute="centerY" id="r3q-gh-Vls"/>
+                            <constraint firstItem="qtr-zb-RyP" firstAttribute="centerY" secondItem="t9y-sv-g95" secondAttribute="centerY" constant="-10" id="r3q-gh-Vls"/>
                             <constraint firstItem="C8i-bV-cEs" firstAttribute="top" secondItem="qtr-zb-RyP" secondAttribute="bottom" constant="30" id="wof-Tp-qhS"/>
                             <constraint firstItem="XN8-bU-Prz" firstAttribute="top" secondItem="7Dj-Lb-qQj" secondAttribute="topMargin" id="yMb-uv-516"/>
                             <constraint firstItem="FgB-vw-gjI" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="t9y-sv-g95" secondAttribute="bottom" constant="20" id="zBx-1q-EWF"/>
@@ -415,9 +425,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLF-7l-pgr">
-                                <rect key="frame" x="826" y="973" width="268" height="47"/>
+                                <rect key="frame" x="780" y="973" width="360" height="47"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ADP-jk-gla"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="360" id="ADP-jk-gla"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Share Your Monster!"/>
@@ -454,7 +464,7 @@
                                     <constraint firstItem="Sn0-rD-282" firstAttribute="leading" secondItem="SLu-r7-vXZ" secondAttribute="leading" id="uDr-1T-oVH"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4B5-bE-Ots">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4B5-bE-Ots" customClass="MButton">
                                 <rect key="frame" x="1590" y="968" width="200" height="58"/>
                                 <color key="backgroundColor" red="0.31764705879999999" green="0.51372549020000002" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -576,7 +586,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3xf-i8-OkO">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3xf-i8-OkO" customClass="MButton">
                                 <rect key="frame" x="793" y="760" width="335" height="48"/>
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.34509803921568627" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="contentEdgeInsets" minX="30" minY="10" maxX="30" maxY="10"/>
@@ -614,6 +624,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="infoButton" destination="3xf-i8-OkO" id="72a-5x-TQc"/>
                         <outlet property="versionLabel" destination="U2X-Js-vZi" id="EUw-Mw-lC5"/>
                     </connections>
                 </viewController>
