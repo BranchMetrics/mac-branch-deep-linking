@@ -408,7 +408,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         dispatch_source_cancel(self.delayedOpenTimer);
         self.delayedOpenTimer = nil;
     }
-    if (!openURL && self.trackingDisabled) return;
+    if (!openURL && self.userTrackingIsDisabled) return;
 
     self.sessionState = BNCSessionStateInitializing;
     BNCApplication*application = [BNCApplication currentApplication];
@@ -563,12 +563,12 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 #pragma mark - User Tracking
 
-- (void) setTrackingDisabled:(BOOL)trackingDisabled_ {
+- (void) setUserTrackingDisabled:(BOOL)trackingDisabled_ {
     @synchronized(self) {
-        if (!!self.settings.trackingDisabled == !!trackingDisabled_) return;
-        self.settings.trackingDisabled = trackingDisabled_;
+        if (!!self.settings.userTrackingDisabled == !!trackingDisabled_) return;
+        self.settings.userTrackingDisabled = trackingDisabled_;
         if (trackingDisabled_) {
-            [self.settings clearTrackingInformation];
+            [self.settings clearUserIdentifyingInformation];
             [self.networkAPIService clearNetworkQueue];
             //[self.linkCache clear];
         } else {
@@ -578,9 +578,9 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     }
 }
 
-- (BOOL) trackingIsDisabled {
+- (BOOL) userTrackingIsDisabled {
     @synchronized(self) {
-        return self.settings.trackingDisabled;
+        return self.settings.userTrackingDisabled;
     }
 }
 
@@ -646,7 +646,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 }
 
 - (void) sendClose {
-    if (self.trackingDisabled) return;
+    if (self.userTrackingIsDisabled) return;
     NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
     dictionary[@"identity_id"] = self.settings.identityID;
     dictionary[@"session_id"] = self.settings.sessionID;
@@ -658,7 +658,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         completion:nil];
 }
 
-- (NSMutableDictionary*) requestMetadataDictionary {
+- (NSMutableDictionary*_Nonnull) requestMetadataDictionary {
     return self.settings.requestMetadataDictionary;
 }
 
@@ -738,7 +738,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     else
         baseURL = [[NSMutableString alloc] initWithFormat:@"https://bnc.lt/a/%@", self.configuration.key];
 
-    if (self.trackingIsDisabled) {
+    if (self.userTrackingIsDisabled) {
         NSString *id_string = [NSString stringWithFormat:@"%%24identity_id=%@", self.settings.identityID];
         NSRange range = [baseURL rangeOfString:id_string];
         if (range.location != NSNotFound) {

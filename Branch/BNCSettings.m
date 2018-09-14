@@ -200,7 +200,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
     }
 }
 
-- (void) clearTrackingInformation {
+- (void) clearUserIdentifyingInformation {
     @synchronized(self) {
         /* Don't clear these:
         self.deviceFingerprintID = nil;

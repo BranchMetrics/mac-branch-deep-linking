@@ -127,7 +127,7 @@
 }
 
 - (void) testSetTrackingDisabled {
-    self.branch.trackingDisabled = YES;
+    self.branch.userTrackingDisabled = YES;
     Branch*branch = self.branch;
     XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinks"];
     [branch setUserIdentity:@"Bob" completion:^(BranchSession * _Nullable session, NSError * _Nullable error) {
@@ -136,7 +136,7 @@
         [expectation fulfill];
     }];
     [self awaitExpectations];
-    self.branch.trackingDisabled = NO;
+    self.branch.userTrackingDisabled = NO;
 }
 
 - (void) testSendClose {

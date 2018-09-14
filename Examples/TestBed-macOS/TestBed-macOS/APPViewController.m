@@ -78,7 +78,7 @@
     [self.actionItemCollection registerNib:nib
         forItemWithIdentifier:NSStringFromClass(APPActionItemView.class)];
     self.trackingDisabled.state =
-        [Branch sharedInstance].trackingDisabled ? NSControlStateValueOn : NSControlStateValueOff;
+        [Branch sharedInstance].userTrackingIsDisabled ? NSControlStateValueOn : NSControlStateValueOff;
     self.limitFacebookTracking.state =
         [Branch sharedInstance].limitFacebookTracking ? NSControlStateValueOn : NSControlStateValueOff;
     self.requestTextView.placeholderAttributedString = [self attributedString:@"< Server Request >"];
@@ -313,7 +313,7 @@ static NSURL*lastCreatedLink = nil;
 }
 
 - (IBAction)trackingDisabledAction:(id)sender {
-    [Branch sharedInstance].trackingDisabled = (self.trackingDisabled.state == NSControlStateValueOn);
+    [Branch sharedInstance].userTrackingDisabled = (self.trackingDisabled.state == NSControlStateValueOn);
 }
 
 - (IBAction)limitFacebookTrackingAction:(id)sender {

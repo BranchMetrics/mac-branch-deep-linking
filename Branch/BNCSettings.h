@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype) loadSettings;
 - (instancetype) init NS_DESIGNATED_INITIALIZER;
 - (void) clearAllSettings;
-- (void) clearTrackingInformation;
+- (void) clearUserIdentifyingInformation;
 - (void) setNeedsSave;
 - (void) save;
 @property (atomic, copy)   void (^_Nullable settingsSavedBlock)(BNCSettings*settings, NSError*_Nullable error);
@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy)   NSString*_Nullable   sessionID;
 @property (atomic, copy)   NSString*_Nullable   linkCreationURL;
 @property (atomic, assign) BOOL                 limitFacebookTracking;
-@property (atomic, assign) BOOL                 trackingDisabled;
+@property (atomic, assign) BOOL                 userTrackingDisabled;
 
 // URL Black list settings:
 

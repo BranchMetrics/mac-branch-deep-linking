@@ -194,8 +194,7 @@ so that Branch can handle the passed URL.
                       linkProperties:(BranchLinkProperties*)linkProperties;
 
 /** Key-value pairs to be included in the metadata on every request. */
-- (NSMutableDictionary*) requestMetadataDictionary;
-- (void) setRequestMetadataDictionary:(NSDictionary*_Nullable)dictionary;
+@property (atomic,strong,null_resettable) NSMutableDictionary<NSString*, NSString*>*requestMetadataDictionary;
 
 /**
  Disables the Branch SDK from tracking the user. This is useful for GDPR privacy compliance.
@@ -213,7 +212,7 @@ so that Branch can handle the passed URL.
  + User rewards and credits will not work.
  + Setting a user identity and logging a user identity out will not work.
 */
-@property (atomic, assign, getter=trackingIsDisabled) BOOL trackingDisabled;
+@property (atomic, assign, getter=userTrackingIsDisabled) BOOL userTrackingDisabled;
 
 /** Enables logging to the console for debugging.  Should be set to `NO` for production apps. */
 @property (atomic, assign, getter=loggingIsEnabled, class) BOOL loggingEnabled;

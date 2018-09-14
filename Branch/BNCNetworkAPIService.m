@@ -171,7 +171,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     NSString *string = [NSString stringWithFormat:@"%@/%@", self.configuration.branchAPIServiceURL, serviceName];
     NSURL*url = [NSURL URLWithString:string];
 
-    if (self.settings.trackingDisabled) {
+    if (self.settings.userTrackingDisabled) {
         NSString *endpoint = url.path;
         if (([endpoint isEqualToString:@"/v1/install"] ||
              [endpoint isEqualToString:@"/v1/open"]) &&
@@ -198,7 +198,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 
         } else {
 
-            [self.settings clearTrackingInformation];
+            [self.settings clearUserIdentifyingInformation];
             BNCNetworkAPIOperation* operation = [[BNCNetworkAPIOperation alloc] init];
             operation.error = [NSError branchErrorWithCode:BNCTrackingDisabledError];
             BNCLogError(@"Network service error: %@.", operation.error);
