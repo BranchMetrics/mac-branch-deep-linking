@@ -40,13 +40,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy)   NSString*branchAPIServiceURL;
 
 /**
-    This is `Class` for the network service. If you want to use your own underlying network service,
-    set the `Class` of the service here before you start Branch. The class most conform to the
-    `BranchNetworkServiceProtocol` defined here:
+ This is `Class` for the network service. If you want to use your own underlying network service,
+ set the `Class` of the service here before you start Branch. The class most conform to the
+ `BranchNetworkServiceProtocol` defined here:
 
-    @see `Branch/BranchNetworkServiceProtocol.h`
+ @see `Branch/BranchNetworkServiceProtocol.h`
 
-    You probably don't need to do this.
+ You probably don't need to do this.
 */
 @property (atomic, assign) Class networkServiceClass;
 
@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param  url    The URL to open.
 
- @return BOOL   Returns true if it is a Branch link and an attempt will be made to open the link.
+ @return Returns true if it is a Branch link and an attempt will be made to open the link.
  */
 - (BOOL) openURL:(NSURL*_Nullable)url;
 

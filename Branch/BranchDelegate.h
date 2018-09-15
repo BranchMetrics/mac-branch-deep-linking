@@ -30,7 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
  ```objc
  [Branch sharedInstance].delegate = delegateInstance;
  ```
-
 */
 @protocol BranchDelegate <NSObject>
 
