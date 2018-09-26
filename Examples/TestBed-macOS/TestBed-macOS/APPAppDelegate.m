@@ -84,7 +84,7 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
     return YES;
 }
 
-#if defined(MAC_OS_X_VERSION_10_14) && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_14
+#if defined(MAC_OS_X_VERSION_10_14)
 
 - (BOOL)application:(NSApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
