@@ -16,7 +16,7 @@
 
 @interface MonsterCreatorViewController () <NSCollectionViewDataSource, NSCollectionViewDelegate>
 
-@property (weak, nonatomic) IBOutlet NSTextField *monsterName;
+@property (weak, nonatomic) IBOutlet NSTextField *monsterNameTextField;
 @property (weak, nonatomic) IBOutlet NSView *botViewLayerOne;
 @property (weak, nonatomic) IBOutlet NSCollectionView *botViewLayerTwo;
 @property (weak, nonatomic) IBOutlet NSCollectionView *botViewLayerThree;
@@ -79,14 +79,14 @@ CGFloat const kBorderWidth = 3.0f;
     self.botViewLayerThree.backgroundColors = @[ NSColor.clearColor ];
     self.botViewLayerThree.enclosingScrollView.backgroundColor = NSColor.clearColor;
 
-    self.monsterName.stringValue = self.monster.monsterName;
+    self.monsterNameTextField.stringValue = self.monster.monsterName;
 }
 
 - (void) viewDidAppear {
     [super viewDidAppear];
     [self updateBody];
     [self updateFace];
-    [self.monsterName becomeFirstResponder];
+    [self.monsterNameTextField becomeFirstResponder];
 }
 
 - (void) updateBody {
@@ -162,11 +162,9 @@ CGFloat const kBorderWidth = 3.0f;
 }
 
 - (IBAction)cmdFinishedClick:(id)sender {
-    if ([self.monsterName.stringValue length]) {
-        self.monster.monsterName = self.monsterName.stringValue;
-    } else {
-        self.monster.monsterName = @"Bingles Jingleheimer";
-    }
+    if (self.monsterNameTextField.stringValue.length == 0)
+        self.monsterNameTextField.stringValue = @"Bingles Jingleheimer";
+    self.monster.monsterName = self.monsterNameTextField.stringValue;
     [NSApplication.sharedApplication sendAction:@selector(viewMonster:) to:nil from:self];
 }
 

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -71,15 +70,15 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gh6-mq-lR3">
-                    <rect key="frame" x="44" y="869" width="180" height="34"/>
+                <button wantsLayer="YES" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Gh6-mq-lR3">
+                    <rect key="frame" x="38" y="863" width="192" height="43"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="180" id="Qdu-qb-4l7"/>
                         <constraint firstAttribute="height" constant="32" id="v5a-M4-1J9"/>
                     </constraints>
-                    <buttonCell key="cell" type="smallSquare" title="&lt;&lt; Change Monster" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingMiddle" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
+                    <buttonCell key="cell" type="push" title="&lt;&lt; Change Monster" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingMiddle" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6hh-oI-cox">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" size="12" name="Verdana-Bold"/>
+                        <font key="font" size="14" name="Verdana"/>
                     </buttonCell>
                     <connections>
                         <action selector="cmdChangeClick:" target="-2" id="n6i-m5-eUY"/>

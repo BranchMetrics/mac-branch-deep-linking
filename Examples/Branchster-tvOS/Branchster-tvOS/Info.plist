@@ -28,15 +28,19 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>branchsters</string>
-                <string>fb288726397999326</string>
-            </array>
-        </dict>
-    </array>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>io.branch.Branchster</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>branchsters</string>
+				<string>fb288726397999326</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

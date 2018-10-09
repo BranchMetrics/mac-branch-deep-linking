@@ -37,6 +37,10 @@
 	<string>Copyright © 2018 Branch. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>io.branch.Branchster</string>
+	</array>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

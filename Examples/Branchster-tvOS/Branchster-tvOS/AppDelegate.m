@@ -33,7 +33,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 - (BOOL)application:(UIApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
-        restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+        restorationHandler:(void (^)(NSArray<id <UIUserActivityRestoring>>
+            *restorableObjects))restorationHandler {
     [Branch.sharedInstance continueUserActivity:userActivity];
     return YES;
 }

@@ -15,7 +15,6 @@
 
 @interface MonsterViewerViewController () <NSSharingServicePickerDelegate>
 
-@property (strong, nonatomic) NSDictionary       *monsterMetadata;
 @property (weak, nonatomic) IBOutlet NSView      *botLayerOneColor;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerTwoBody;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerThreeFace;
@@ -26,7 +25,10 @@
 @property (weak, nonatomic) IBOutlet NSButton    *shareButton;
 @property (weak, nonatomic) IBOutlet NSButton    *cmdChange;
 @property (weak, nonatomic) IBOutlet NSButton    *cmdInfo;
-@property NSURL*monsterURL;
+
+@property (strong) NSURL*monsterURL;
+@property (strong) NSDictionary*monsterDictionary;
+@property (strong) NSUserActivity*activity;
 @end
 
 #pragma mark - MonsterViewerViewController
@@ -53,6 +55,11 @@
 - (void) viewWillAppear {
     [super viewWillAppear];
     [self updateView];
+    /*
+    [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
+        NSLog(@"Monster %@ was viewed.  params: %@", self.monster.monsterName, params);
+    }];
+    */
 }
 
 - (void) updateView {
@@ -60,27 +67,13 @@
         [MonsterPartsFactory colorForIndex:[self.monster colorIndex]].CGColor;
     [self.botLayerTwoBody setImage:[MonsterPartsFactory imageForBody:[self.monster bodyIndex]]];
     [self.botLayerThreeFace setImage:[MonsterPartsFactory imageForFace:[self.monster faceIndex]]];
-
     self.txtName.stringValue = self.monster. monsterName;
     self.txtDescription.stringValue = self.monster.monsterDescription;
-
-    self.monsterMetadata = @{
-        @"color_index":     @([self.monster colorIndex]),
-        @"body_index":      @([self.monster bodyIndex]),
-        @"face_index":      @([self.monster faceIndex]),
-        @"monster_name":    self.monster.monsterName
-    };
-
-/*
-    [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
-        NSLog(@"Monster %@ was viewed.  params: %@", self.monster.monsterName, params);
-    }];
-*/
+    self.shareTextField.stringValue = self.monsterURL ? self.monsterURL.absoluteString : @"";
 }
 
 - (void) viewDidAppear {
     [super viewDidAppear];
-    [self updateMonsterMetaData];
 /*
     [[Branch getInstance] userCompletedAction:@"Product View" withState:@{
         @"sku":      self.monsterName,
@@ -92,29 +85,49 @@
 */
 }
 
-- (void) updateMonsterMetaData {
-    // When the monster changes create a new URL:
+- (IBAction)cmdChangeClick:(id)sender {
+    [NSApplication.sharedApplication sendAction:@selector(editMonster:) to:nil from:self];
+}
+
+-(void) setMonster:(BranchUniversalObject *)monster {
+    _monster = monster;
+    if (_monster == nil) return;
+    self.monsterDictionary = @{
+        @"color_index": @(self.monster.colorIndex),
+        @"body_index":  @(self.monster.bodyIndex),
+        @"face_index":  @(self.monster.faceIndex),
+        @"monster_name":self.monster.monsterName
+    };
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"monster_sharing";
-    linkProperties.channel = @"mac-app";
-
-    self.monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monster.monsterName];
-    self.monster.contentDescription = self.monster.monsterDescription;
-    self.monster.imageUrl =
+    linkProperties.channel = @"Branch Monster Factory";
+    monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monster.monsterName];
+    monster.contentDescription = self.monster.monsterDescription;
+    monster.imageUrl =
         [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png",
-            (short)[self.monster colorIndex],
-            (short)[self.monster bodyIndex],
-            (short)[self.monster faceIndex]];
+            (short)self.monster.colorIndex,
+            (short)self.monster.bodyIndex,
+            (short)self.monster.faceIndex];
     self.monsterURL = nil;
     self.shareTextField.stringValue = @"";
-    [Branch.sharedInstance branchShortLinkWithContent:self.monster linkProperties:linkProperties completion:
-        ^(NSURL * _Nullable shortURL, NSError * _Nullable error) {
-        if (!error && shortURL) {
+    [Branch.sharedInstance
+        branchShortLinkWithContent:self.monster
+                     linkProperties:linkProperties
+                         completion:^ (NSURL*_Nullable shortURL, NSError*_Nullable error) {
+            if (error || shortURL == nil) {
+                NSString *message = error.localizedDescription;
+                if (message.length <= 0) message = @"No link returned.";
+                NSAlert*alert = [[NSAlert alloc] init];
+                alert.messageText = @"Can't Create Link";
+                alert.informativeText = message;
+                [alert addButtonWithTitle:@"OK"];
+                [alert runModal];
+                return;
+            }
             self.monsterURL = shortURL;
             self.shareTextField.stringValue = shortURL.absoluteString;
-        }
-
-    }];
+            [self publishUserActivityURL:shortURL];
+        }];
 }
 
 -(IBAction) showShareSheetAction:(id)sender {
@@ -128,89 +141,20 @@
     [sharingServicePicker showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 }
 
-/*
-{
-    if (self.monsterName.length <= 0) self.monsterName = @"Nameless Monster";
-
-    BNCCommerceEvent *commerceEvent = [[BNCCommerceEvent alloc] init];
-    commerceEvent.revenue = self.price;
-    commerceEvent.currency = @"USD";
-
-    BranchUniversalObject*buo = [[BranchUniversalObject alloc] initWithTitle:self.monsterName];
-    buo.contentMetadata.sku = self.monsterName;
-    buo.contentMetadata.price = self.price;
-    buo.contentMetadata.quantity = 1.0;
-    buo.contentMetadata.variant = @"X-Tra Hairy";
-    buo.contentMetadata.brand = @"Branch";
-    buo.category = BNCProductCategoryAnimalSupplies;
-    buo.contentMetadata.name = self.monsterName;
-
-    BranchEvent*event = [BranchEvent standardEvent:BranchStandardEventAddToCart];
-
-    [[Branch getInstance] userCompletedAction:BNCAddToCartEvent withState:@{
-        @"sku":      self.monsterName,
-        @"price":    self.price,
-        @"currency": @"USD"
-    }];
-
-    [self.monster
-        showShareSheetWithShareText:@"Share Your Monster!"
-        completion:^(NSString * _Nullable activityType, BOOL completed) {
-            if (completed) {
-               // [[Branch getInstance] userCompletedAction:BNCAddToCartEvent];
-                [[Branch getInstance] sendCommerceEvent:commerceEvent
-                                               metadata:nil
-                                         withCompletion:^ (NSDictionary *response, NSError *error) {
-                                             if (error) {  }
-                                         }];
-            }
-        }];
-    
-    [UIMenuController sharedMenuController].menuVisible = NO;
-    [self.shareTextView resignFirstResponder];
+- (void) publishUserActivityURL:(NSURL*)URL {
+    if (self.activity) return;
+    self.activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
+    self.activity.title = self.monster.monsterName;
+    self.activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
+    self.activity.userInfo = @{ @"branch": URL };
+    self.activity.eligibleForSearch = YES;
+    self.activity.eligibleForHandoff = YES;
+    self.activity.eligibleForPublicIndexing = YES;
+    self.activity.webpageURL = URL;
+// iOS Only:
+//    self.activity.eligibleForPrediction = YES;
+//    self.activity.suggestedInvocationPhrase = @"Show Monster";
+    [self.activity becomeCurrent];
 }
-*/
-
-- (IBAction)cmdChangeClick:(id)sender {
-    [NSApplication.sharedApplication sendAction:@selector(editMonster:) to:nil from:self];
-}
-
-- (NSDictionary*) facebookDictionaryWithURL:(NSURL*)URL {
-    NSMutableDictionary*dictionary = [NSMutableDictionary new];
-    dictionary[@"name"] = [NSString stringWithFormat:@"My Branchster] =%@", self.monster.monsterName];
-    dictionary[@"caption"] = self.monster.monsterDescription;
-    dictionary[@"description"] = self.monster.monsterDescription;
-    dictionary[@"link"] = URL.absoluteString;
-    dictionary[@"picture"] =
-        [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png",
-            (short)self.monster.colorIndex, (short)self.monster.bodyIndex, (short)self.monster.faceIndex];
-    return dictionary;
-}
-
-/*
-// This function serves to dynamically generate the dictionary parameters to embed in the Branch link
-// These are the parameters that will be available in the callback of init user session if
-// a user clicked the link and was deep linked
-- (NSDictionary *)prepareBranchDict {
-    return [[NSDictionary alloc] initWithObjects:@[
-      [NSNumber numberWithInteger:[self.monster colorIndex]],
-      [NSNumber numberWithInteger:[self.monster bodyIndex]],
-      [NSNumber numberWithInteger:[self.monster faceIndex]],
-      self.monsterName,
-      @"true",
-      [NSString stringWithFormat:@"My Branchster: %@", self.monsterName],
-      self.monsterDescription,
-      [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png", (short)[self.monster colorIndex], (short)[self.monster bodyIndex], (short)[self.monster faceIndex]]]
-forKeys:@[
-      @"color_index",
-      @"body_index",
-      @"face_index",
-      @"monster_name",
-      @"monster",
-      @"$og_title",
-      @"$og_description",
-      @"$og_image_url"]];
-}
-*/
 
 @end
