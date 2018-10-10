@@ -69,7 +69,7 @@
 */
 }
 
--(void) setMonster:(BranchUniversalObject *)monster {
+- (void) setMonster:(BranchUniversalObject *)monster {
     _monster = monster;
     self.monsterDictionary = @{
         @"color_index": @(self.monster.colorIndex),

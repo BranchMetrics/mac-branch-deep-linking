@@ -55,6 +55,7 @@
 - (void) viewWillAppear {
     [super viewWillAppear];
     [self updateView];
+    [self updateMonster];
     /*
     [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
         NSLog(@"Monster %@ was viewed.  params: %@", self.monster.monsterName, params);
@@ -89,9 +90,8 @@
     [NSApplication.sharedApplication sendAction:@selector(editMonster:) to:nil from:self];
 }
 
--(void) setMonster:(BranchUniversalObject *)monster {
-    _monster = monster;
-    if (_monster == nil) return;
+- (void) updateMonster {
+    if (self.monster == nil || !self.monster.isMonster) return;
     self.monsterDictionary = @{
         @"color_index": @(self.monster.colorIndex),
         @"body_index":  @(self.monster.bodyIndex),
@@ -101,9 +101,9 @@
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"monster_sharing";
     linkProperties.channel = @"Branch Monster Factory";
-    monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monster.monsterName];
-    monster.contentDescription = self.monster.monsterDescription;
-    monster.imageUrl =
+    self.monster.title = [NSString stringWithFormat:@"My Branchster: %@", self.monster.monsterName];
+    self.monster.contentDescription = self.monster.monsterDescription;
+    self.monster.imageUrl =
         [NSString stringWithFormat:@"https://s3-us-west-1.amazonaws.com/branchmonsterfactory/%hd%hd%hd.png",
             (short)self.monster.colorIndex,
             (short)self.monster.bodyIndex,
@@ -130,7 +130,7 @@
         }];
 }
 
--(IBAction) showShareSheetAction:(id)sender {
+- (IBAction) showShareSheetAction:(id)sender {
     if (!self.monsterURL) return;
     NSMutableArray*items = [NSMutableArray new];
     if (self.monster.title.length) [items addObject:self.monster.title];
@@ -142,19 +142,20 @@
 }
 
 - (void) publishUserActivityURL:(NSURL*)URL {
-    if (self.activity) return;
-    self.activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
-    self.activity.title = self.monster.monsterName;
-    self.activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
-    self.activity.userInfo = @{ @"branch": URL };
-    self.activity.eligibleForSearch = YES;
-    self.activity.eligibleForHandoff = YES;
-    self.activity.eligibleForPublicIndexing = YES;
-    self.activity.webpageURL = URL;
+    __auto_type activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
+    activity.title = self.monster.monsterName;
+    activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
+    activity.userInfo = @{ @"branch": URL };
+    activity.requiredUserInfoKeys = [NSSet setWithArray:@[ @"branch" ]];
+    activity.eligibleForSearch = YES;
+    activity.eligibleForHandoff = YES;
+    activity.eligibleForPublicIndexing = YES;
+//    self.activity.webpageURL = URL;
 // iOS Only:
 //    self.activity.eligibleForPrediction = YES;
 //    self.activity.suggestedInvocationPhrase = @"Show Monster";
-    [self.activity becomeCurrent];
+    self.userActivity = activity;
+    [self.userActivity becomeCurrent];
 }
 
 @end

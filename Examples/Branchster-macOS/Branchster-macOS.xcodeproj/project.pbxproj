@@ -58,6 +58,13 @@
 			remoteGlobalIDString = 4D54C07420A6560400C76496;
 			remoteInfo = "Branch-macOS";
 		};
+		4D8C4B07216D567A00E3DB1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D12D929212487A6005C544C /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D170FBB216D1CC00083D6B6;
+			remoteInfo = "Branch-iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -126,6 +133,7 @@
 			children = (
 				4D12D930212487A6005C544C /* Branch.framework */,
 				4D12D932212487A6005C544C /* Branch.framework */,
+				4D8C4B08216D567A00E3DB1C /* Branch.framework */,
 				4D12D934212487A6005C544C /* BranchTests.xctest */,
 			);
 			name = Products;
@@ -220,7 +228,7 @@
 						CreatedOnToolsVersion = 9.4.1;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -270,6 +278,13 @@
 			fileType = wrapper.cfbundle;
 			path = BranchTests.xctest;
 			remoteRef = 4D12D933212487A6005C544C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D8C4B08216D567A00E3DB1C /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D8C4B07216D567A00E3DB1C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -453,8 +468,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "Branchster-macOS/Info.plist";
@@ -462,8 +476,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.branch.Branchsters;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branchsters-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "io branch Branchsters Mac Dev";
 			};
 			name = Debug;
 		};
@@ -471,8 +486,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "Branchster-macOS/Info.plist";
@@ -480,7 +494,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.branch.Branchsters;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.Branchsters-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

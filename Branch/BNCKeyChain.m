@@ -142,7 +142,10 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
     id value = nil;
     if (valueData) {
         @try {
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             value = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData*)valueData];
+            #pragma clang diagnostic pop
         }
         @catch (id) {
             value = nil;
@@ -163,7 +166,10 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
 
     NSData* valueData = nil;
     @try {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         valueData = [NSKeyedArchiver archivedDataWithRootObject:value];
+        #pragma clang diagnostic pop
     }
     @catch(id) {
         valueData = nil;

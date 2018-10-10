@@ -227,9 +227,12 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 
 - (void) saveOperation:(BNCNetworkAPIOperation *)operation {
     @synchronized(self) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSData*data = [NSKeyedArchiver archivedDataWithRootObject:operation];
         self.archivedOperations[operation.identifier] = data;
         [self saveArchivedOperations];
+        #pragma clang diagnostic pop
     }
 }
 
@@ -260,7 +263,10 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
                 continue;
             BNCNetworkAPIOperation*op = nil;
             @try {
+                #pragma clang diagnostic push
+                #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 op = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                #pragma clang diagnostic pop
             }
             @catch (id e) {
                 BNCLogError(@"Can't unarchive network operation: %@.", e);
@@ -531,6 +537,7 @@ exit:
 
 - (void) main {
     NSInteger retry = 0;
+    NSTimeInterval retryWaitTime = 1.0;
     NSError*error = nil;
     self.startDate = [NSDate date];
     self.timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
@@ -541,12 +548,15 @@ exit:
         do  {
             if (retry > 0) {
                 // Wait before retrying to avoid flooding the network.
-                BNCSleepForTimeInterval(1.0);
+                BNCSleepForTimeInterval(retryWaitTime);
+                retryWaitTime *= 1.5f;
             }
             NSData *data = nil;
             if (self.dictionary) {
                 NSError *error = nil;
-                self.dictionary[@"retry_number"] = BNCWireFormatFromInteger(retry);
+                // TODO: ???
+                //self.dictionary[@"retry_number"] = BNCWireFormatFromInteger(retry);
+                self.dictionary[@"retryNumber"] = BNCWireFormatFromInteger(retry);
                 NSDictionary*instrumentation = [self.settings.instrumentationDictionary copy];
                 if (instrumentation.count) self.dictionary[@"instrumentation"] = instrumentation;
                 data = [NSJSONSerialization dataWithJSONObject:self.dictionary options:0 error:&error];
@@ -559,6 +569,10 @@ exit:
             NSTimeInterval timeout = MIN(20.0, [self.timeoutDate timeIntervalSinceNow]);
             if (timeout < 0.0) {
                 error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
+                goto exit;
+            }
+            if (self.isCancelled) {
+                error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
                 goto exit;
             }
 
@@ -591,7 +605,7 @@ exit:
 
             retry++;
 
-        } while (!self.isCancelled && [self.class canRetryOperation:self.operation]);
+        } while (!self.isCancelled && [self.class canRetryOperation:self.operation] && retry < 5);
 
     error = [self.class errorWithOperation:self.operation];
     if (error) goto exit;

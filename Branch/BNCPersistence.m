@@ -122,7 +122,10 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
     @try {
         NSData* data = [self loadDataNamed:name];
         if (!data) return nil;
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        #pragma clang diagnostic pop
     }
     @catch(id e) {
         BNCLogError(@"Can't unarchive '%@': %@.", name, e);
@@ -134,8 +137,11 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
 + (NSError*) archiveObject:(id<NSSecureCoding>)object named:(NSString*)name {
     NSError*error = nil;
     @try {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSData*data = [NSKeyedArchiver archivedDataWithRootObject:object];
         error = [BNCPersistence saveDataNamed:name data:data];
+        #pragma clang diagnostic pop
     }
     @catch (id exception) {
         if (error) {
