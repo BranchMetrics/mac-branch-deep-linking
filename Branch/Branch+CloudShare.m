@@ -14,10 +14,10 @@
 #import "BNCEncoder.h"
 #import "BNCLog.h"
 
-NSString*const BranchCloundShareNotification;
-NSString*const BranchCloundShareItemKey;
+NSString*const BranchCloundShareNotification = @"BranchCloundShareNotification";
+NSString*const BranchCloundShareItemKey      = @"BranchCloundShareItemKey";
 
-static NSString*const BranchCloudShareKey = @"io.branch.sdk.CloudShare";
+static NSString*const BranchCloudShareKey     = @"io.branch.sdk.CloudShare";
 static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 
 @implementation BranchCloudShareItem
@@ -50,6 +50,7 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 @property (strong) BranchCloudShareItem*cloudShareItem;
 @property (strong) NSUserActivity*userActivity;
 @property (strong) NSDate*lastUpdateDate;
+@property (strong) NSTimer*timer;
 @end
 
 @implementation BNCCloudShare
@@ -71,10 +72,20 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
         object:nil];
     self.cloudStore = [NSUbiquitousKeyValueStore defaultStore];
     [self.cloudStore synchronize];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 repeats:YES block:^(NSTimer*_Nonnull timer) {
+        [self.cloudStore synchronize];
+    }];
+}
+
+- (void) stop {
+    [self.timer invalidate];
+    self.timer = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.cloudStore = nil;
 }
 
 - (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self stop];
 }
 
 - (void) updateItem:(BranchCloudShareItem *)item {
