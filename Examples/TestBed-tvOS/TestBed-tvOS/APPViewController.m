@@ -142,7 +142,7 @@
     NSString*value = @"";
     switch (indexPath.row) {
     case 0:
-        value = [Branch sharedInstance].trackingDisabled ? @"True" : @"False";
+        value = [Branch sharedInstance].userTrackingDisabled ? @"True" : @"False";
         break;
     case 1:
         value = [Branch sharedInstance].limitFacebookTracking ? @"True" : @"False";
@@ -339,7 +339,7 @@ static NSURL*lastCreatedLink = nil;
 
 
 - (IBAction)disableTrackingAction:(id)sender {
-    [Branch sharedInstance].trackingDisabled = ![Branch sharedInstance].trackingDisabled;
+    [Branch sharedInstance].userTrackingDisabled = ![Branch sharedInstance].userTrackingDisabled;
     [self.tableView reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ]
         withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -351,12 +351,18 @@ static NSURL*lastCreatedLink = nil;
 }
 
 - (IBAction) openBranchsterScheme:(id)sender {
+    [self clearUIFields];
     NSURL*URL = [NSURL URLWithString:@"branchsters://branchster.app.link/hNM6YVlQnP"];
-    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:nil];
+    [self openURL:URL];
 }
 
 - (IBAction) openBranchsterUniversal:(id)sender {
+    [self clearUIFields];
     NSURL*URL = [NSURL URLWithString:@"https://branchster.app.link/hNM6YVlQnP"];
+    [self openURL:URL];
+}
+
+- (void) openURL:(NSURL*)URL {
     [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:^ (BOOL success) {
         if (success) return;
         UIAlertController* alert =

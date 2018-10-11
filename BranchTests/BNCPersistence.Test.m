@@ -22,20 +22,21 @@
 }
 
 - (void) testSaveLoadRemove {
-    [BNCPersistence removeDataNamed:@"io.branch.sdk.test"];
+    BNCPersistence*persistence = [[BNCPersistence alloc] initWithAppGroup:@"io.branch.sdk.unit.tests"];
+    [persistence removeDataNamed:@"io.branch.sdk.test"];
 
     NSString*s = @"Howdy!";
     NSData*sd = [s dataUsingEncoding:NSUTF8StringEncoding];
-    NSError*error = [BNCPersistence saveDataNamed:@"io.branch.sdk.test" data:sd];
+    NSError*error = [persistence saveDataNamed:@"io.branch.sdk.test" data:sd];
     XCTAssertNil(error);
 
-    NSData*td = [BNCPersistence loadDataNamed:@"io.branch.sdk.test"];
+    NSData*td = [persistence loadDataNamed:@"io.branch.sdk.test"];
     XCTAssertEqualObjects(sd, td);
 
-    error = [BNCPersistence removeDataNamed:@"io.branch.sdk.test"];
+    error = [persistence removeDataNamed:@"io.branch.sdk.test"];
     XCTAssertNil(error);
 
-    td = [BNCPersistence loadDataNamed:@"io.branch.sdk.test"];
+    td = [persistence loadDataNamed:@"io.branch.sdk.test"];
     XCTAssertNil(td);
 }
 

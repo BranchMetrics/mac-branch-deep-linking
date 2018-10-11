@@ -8,4 +8,4 @@
 
 SDKROOT                 = appletvos
 SUPPORTED_PLATFORMS     = appletvos appletvsimulator
-BranchTestHost          = $(BUILT_PRODUCTS_DIR)/TestBed-tvOS.app/TestBed-tvOS
+TEST_HOST               = $(BUILT_PRODUCTS_DIR)/TestBed-tvOS.app/TestBed-tvOS

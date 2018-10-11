@@ -73,7 +73,7 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
     return YES;
 }
 
-#if __TV_OS_VERSION_MAX_ALLOWED < __TVOS_12_0
+#if defined(__TVOS_12_0) && __TV_OS_VERSION_MAX_ALLOWED >= __TVOS_12_0
 
 - (BOOL)application:(UIApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity

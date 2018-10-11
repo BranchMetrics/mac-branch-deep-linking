@@ -23,7 +23,7 @@
         ignoreIvars = [NSSet setWithArray:ignoreIvarsArray];
 
     uint count = 0;
-    Class class = object_getClass(instance);
+    Class class = [instance class];
     Ivar *ivars = class_copyIvarList(class, &count);
     for (uint i = 0; i < count; ++i) {
         Ivar ivar = ivars[i];
@@ -88,7 +88,7 @@
         ignoreIvars = [NSSet setWithArray:ignoreIvarsArray];
 
     uint count = 0;
-    Class class = object_getClass(instance);
+    Class class = [instance class];
     Ivar *ivars = class_copyIvarList(class, &count);
     for (uint i = 0; i < count; ++i) {
         const char* encoding = ivar_getTypeEncoding(ivars[i]);
@@ -145,6 +145,8 @@
              ignoring:(NSArray<NSString*>*_Nullable)ignoreIvarsArray {
     NSError*error = nil;
     @try {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSMutableData*data = [[NSMutableData alloc] init];
         NSKeyedArchiver*archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
         [BNCEncoder encodeInstance:fromInstance withCoder:archiver ignoring:ignoreIvarsArray];
@@ -152,6 +154,7 @@
         NSKeyedUnarchiver*unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         unarchiver.requiresSecureCoding = YES;
         [BNCEncoder decodeInstance:toInstance withCoder:unarchiver ignoring:ignoreIvarsArray];
+        #pragma clang diagnostic pop
     }
     @catch (id e) {
         NSString*message = [NSString stringWithFormat:@"Can't copy '%@': %@.", fromInstance, e];

@@ -27,6 +27,12 @@
     [MonsterWindowController newWindowWithMonster:nil];
 }
 
+- (BOOL)application:(NSApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+  restorationHandler:(void (^)(NSArray<id<NSUserActivityRestoring>> *restorableObjects))restorationHandler {
+  return [Branch.sharedInstance continueUserActivity:userActivity];
+}
+
 - (void) branchDidStartSessionNotification:(NSNotification*)notification {
     BranchSession*session = notification.userInfo[BranchSessionKey];
     BranchUniversalObject*monster = session.linkContent;
@@ -44,17 +50,7 @@
     }
     if (!monster.isMonster) return;
 
-    // Find a window for the monster:
-    for (NSWindow*window in [NSApplication sharedApplication].windows) {
-        if ([window.windowController isKindOfClass:MonsterWindowController.class] && controller.monster == nil) {
-            controller = window.windowController;
-            break;
-        }
-    }
-
-    // No windows are available. Make a new one.
-    if (!controller)
-        controller = [MonsterWindowController newWindowWithMonster:monster];
+    if (!controller) controller = [MonsterWindowController newWindowWithMonster:monster];
     controller.monster = monster;
     [controller viewMonster:self];
 }

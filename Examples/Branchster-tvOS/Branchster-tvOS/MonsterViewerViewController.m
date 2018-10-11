@@ -12,7 +12,7 @@
 #import "MonsterViewerViewController.h"
 #import "MonsterPartsFactory.h"
 
-@interface MonsterViewerViewController ()
+@interface MonsterViewerViewController () <NSUserActivityDelegate>
 @property (weak, nonatomic) IBOutlet UIView      *botLayerOneColor;
 @property (weak, nonatomic) IBOutlet UIImageView *botLayerTwoBody;
 @property (weak, nonatomic) IBOutlet UIImageView *botLayerThreeFace;
@@ -69,7 +69,7 @@
 */
 }
 
--(void) setMonster:(BranchUniversalObject *)monster {
+- (void) setMonster:(BranchUniversalObject *)monster {
     _monster = monster;
     self.monsterDictionary = @{
         @"color_index": @(self.monster.colorIndex),
@@ -116,25 +116,53 @@
 }
 
 - (IBAction)shareAction:(id)sender {
-    BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
-    linkProperties.feature = @"sharing";
-    linkProperties.channel = @"viral share";
+/*
+    UIActivityItem*item = [[UIActivityItem alloc] init];
 
+    UIAlertController* alert =
+        [UIAlertController alertControllerWithTitle:@"Open Failed"
+            message:[NSString stringWithFormat:@"Can't open the URL '%@'.", URL.absoluteString]
+            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction*defaultAction =
+        [UIAlertAction actionWithTitle:@"OK"
+            style:UIAlertActionStyleDefault
+            handler:nil];
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+*/
 }
 
 - (void) publishUserActivityURL:(NSURL*)URL {
-    if (self.activity) return;
+    self.monsterURL = URL;
     self.activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
     self.activity.title = self.monster.monsterName;
     self.activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
-    self.activity.userInfo = @{ @"branch": URL };
+    self.activity.requiredUserInfoKeys = [NSSet setWithArray:@[ @"branch" ]];
+//    self.activity.userInfo = @{ @"branch": URL };
+    [self.activity addUserInfoEntriesFromDictionary:@{ @"branch": URL }];
     self.activity.eligibleForSearch = YES;
     self.activity.eligibleForHandoff = YES;
     self.activity.eligibleForPublicIndexing = YES;
-    self.activity.webpageURL = URL;
+//  self.activity.webpageURL = URL;
+// iOS Only:
 //    self.activity.eligibleForPrediction = YES;
 //    self.activity.suggestedInvocationPhrase = @"Show Monster";
-    [self.activity becomeCurrent];
+    self.activity.delegate = self;
+    self.userActivity = self.activity;
+    [self.userActivity becomeCurrent];
+//  [self.userActivity needsSave];
+}
+
+- (void)userActivityWasContinued:(NSUserActivity *)userActivity {
+    BNCLogMethodName();
+    BNCLogDebug(@"%@", userActivity.userInfo);
+}
+
+- (void)userActivityWillSave:(NSUserActivity *)userActivity {
+    BNCLogMethodName();
+    BNCLogDebug(@"before userInfo %@", userActivity.userInfo);
+    [userActivity addUserInfoEntriesFromDictionary:@{ @"branch": self.monsterURL }];
+    BNCLogDebug(@" after userInfo %@", userActivity.userInfo);
 }
 
 /*

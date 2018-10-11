@@ -117,7 +117,7 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
 }
 
 - (BOOL) testDeviceSupportsIDFA {
-    #if TARGET_OS_OSX && (!defined(__MAC_10_14) || __MAC_OS_X_VERSION_MAX_ALLOWED < __MAC_10_14)
+    #if TARGET_OS_OSX && (!defined(__MAC_10_14_1) || __MAC_OS_X_VERSION_MAX_ALLOWED < __MAC_10_14_1)
         return NO;
     #else
         return YES;

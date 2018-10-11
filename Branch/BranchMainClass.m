@@ -374,6 +374,12 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 - (BOOL) continueUserActivity:(NSUserActivity *)userActivity {
     if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         return [self openURL:userActivity.webpageURL];
+    } else {
+        NSURL*branchURL = userActivity.userInfo[@"branch"];
+        if ([branchURL isKindOfClass:NSURL.class]) {
+            [self openURL:branchURL];
+            return YES;
+        }
     }
     return NO;
 }
@@ -755,7 +761,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return URL;
 }
 
-// Used for setting up unit tests mostly.
+// Useful for unit tests mostly.
 - (void) clearAllSettings {
     BNCLogDebugSDK(@"[Branch clearAllSettings].");
     if (self.networkAPIService)

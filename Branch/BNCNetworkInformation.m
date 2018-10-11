@@ -18,7 +18,7 @@
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 
-#if TARGET_OS_TV
+#if TARGET_OS_TV || TARGET_OS_IPHONE
     #import "../Vendor/route.h"
 #else
     #import <net/route.h>

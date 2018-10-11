@@ -87,8 +87,8 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
 #if defined(MAC_OS_X_VERSION_10_14)
 
 - (BOOL)application:(NSApplication *)application
-        continueUserActivity:(NSUserActivity *)userActivity
- restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObjects))restorationHandler {
+continueUserActivity:(NSUserActivity *)userActivity
+restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObjects))restorationHandler {
     BNCLogMethodName();
     return YES;
 }
@@ -96,8 +96,8 @@ willContinueUserActivityWithType:(NSString *)userActivityType {
 #else
 
 - (BOOL)application:(NSApplication *)application
-        continueUserActivity:(NSUserActivity *)userActivity
-        restorationHandler:(void(^)(NSArray *restorableObjects))restorationHandler {
+continueUserActivity:(NSUserActivity *)userActivity
+restorationHandler:(void(^)(NSArray *restorableObjects))restorationHandler {
     BNCLogMethodName();
     return YES;
 }

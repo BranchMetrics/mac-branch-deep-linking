@@ -38,6 +38,7 @@
             atomic_fetch_add(&retryCount, 1);
             BNCTestNetworkOperation*operation = [BNCTestNetworkService operationWithRequest:request response:nil];
             operation.HTTPStatusCode = 500;
+            BNCSleepForTimeInterval(15.0);
             return operation;
         };
 
