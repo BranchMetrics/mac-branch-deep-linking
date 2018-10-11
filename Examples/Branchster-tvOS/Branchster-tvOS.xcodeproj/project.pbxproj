@@ -177,9 +177,9 @@
 		4D94DB892122093700E1CA33 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				4D0F11C9216EC95F0008080A /* Branch.framework */,
 				4D94DB8F2122093700E1CA33 /* Branch.framework */,
 				4D94DB912122093700E1CA33 /* Branch.framework */,
-				4D0F11C9216EC95F0008080A /* Branch.framework */,
 				4D94DB932122093700E1CA33 /* BranchTests.xctest */,
 			);
 			name = Products;
@@ -219,7 +219,13 @@
 					4D94DB712122087200E1CA33 = {
 						CreatedOnToolsVersion = 9.4.1;
 						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};

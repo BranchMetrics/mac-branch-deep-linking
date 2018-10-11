@@ -9,7 +9,10 @@
 */
 
 #import <Branch/BranchMainClass.h>
-@class BNCNetworkAPIService, BNCSettings;
+@class
+     BNCNetworkAPIService
+    ,BNCSettings
+    ;
 
 NS_ASSUME_NONNULL_BEGIN
 

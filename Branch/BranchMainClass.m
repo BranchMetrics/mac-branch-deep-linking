@@ -20,9 +20,11 @@
 #import "BNCURLBlackList.h"
 #import "BNCKeyChain.h"
 #import "BranchError.h"
+#import "Branch+CloudShare.h"
 #import "NSString+Branch.h"
 #import "NSData+Branch.h"
 #import "UIViewController+Branch.h"
+@class BNCCloudShare;
 
 #pragma mark BranchConfiguration
 
@@ -101,6 +103,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 @property (atomic, strong) dispatch_source_t    delayedOpenTimer;
 @property (atomic, strong) dispatch_queue_t     workQueue;
 @property (atomic, assign) BNCSessionState      sessionState;
+@property (atomic, strong) BNCCloudShare        *cloudShare;
 @end
 
 #pragma mark - Branch
@@ -137,6 +140,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
     // These function references force the linker to load the categories just in case it forgot.
+    BNCForceBranchCloudShareToLoad();
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSDataCategoryToLoad();
     BNCForceNSStringCategoryToLoad();

@@ -132,6 +132,7 @@
 */
 }
 
+/*
 - (void) publishUserActivityURL:(NSURL*)URL {
     self.monsterURL = URL;
     self.activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
@@ -152,17 +153,17 @@
     [self.userActivity becomeCurrent];
 //  [self.userActivity needsSave];
 }
+*/
 
-- (void)userActivityWasContinued:(NSUserActivity *)userActivity {
-    BNCLogMethodName();
-    BNCLogDebug(@"%@", userActivity.userInfo);
-}
-
-- (void)userActivityWillSave:(NSUserActivity *)userActivity {
-    BNCLogMethodName();
-    BNCLogDebug(@"before userInfo %@", userActivity.userInfo);
-    [userActivity addUserInfoEntriesFromDictionary:@{ @"branch": self.monsterURL }];
-    BNCLogDebug(@" after userInfo %@", userActivity.userInfo);
+- (void) publishUserActivityURL:(NSURL*)URL {
+    self.monsterURL = URL;
+    BranchCloudShareItem*item = [BranchCloudShareItem new];
+    item.activityID = @"io.branch.Branchster";
+    item.contentTitle = self.monster.monsterName;
+    item.contentKeywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
+    item.contentURL = URL;
+    item.originatingApplicationName = @"Branchster tvOS";
+    [Branch.sharedInstance updateCloudShareItem:item];
 }
 
 /*

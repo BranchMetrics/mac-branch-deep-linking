@@ -152,6 +152,12 @@
 		4D67476F20C74E81001639C5 /* BranchUniversalObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF8189620ADDC5000441881 /* BranchUniversalObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D67477920C7B558001639C5 /* BranchMainClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2232820AA262D005C57D0 /* BranchMainClass.m */; };
 		4D70A4B720DDBBBB0083768C /* BNCNetworkAPIService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */; };
+		4D819E09216FD957003E3D08 /* Branch+CloudShare.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D819E07216FD957003E3D08 /* Branch+CloudShare.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D819E0A216FD957003E3D08 /* Branch+CloudShare.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D819E07216FD957003E3D08 /* Branch+CloudShare.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D819E0B216FD957003E3D08 /* Branch+CloudShare.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D819E07216FD957003E3D08 /* Branch+CloudShare.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D819E0C216FD957003E3D08 /* Branch+CloudShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D819E08216FD957003E3D08 /* Branch+CloudShare.m */; };
+		4D819E0D216FD957003E3D08 /* Branch+CloudShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D819E08216FD957003E3D08 /* Branch+CloudShare.m */; };
+		4D819E0E216FD957003E3D08 /* Branch+CloudShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D819E08216FD957003E3D08 /* Branch+CloudShare.m */; };
 		4D956A8C20F02BC90097D366 /* BranchMainClass.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D956A8B20F02BC90097D366 /* BranchMainClass.Test.m */; };
 		4D956A8F20F3D1E80097D366 /* BranchMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D956A9020F3D1E80097D366 /* BranchMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -248,6 +254,8 @@
 		4D67477420C74E81001639C5 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D70A4B620DDBBBB0083768C /* BNCNetworkAPIService.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkAPIService.Test.m; sourceTree = "<group>"; };
 		4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BranchMainClass+Private.h"; sourceTree = "<group>"; };
+		4D819E07216FD957003E3D08 /* Branch+CloudShare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Branch+CloudShare.h"; sourceTree = "<group>"; };
+		4D819E08216FD957003E3D08 /* Branch+CloudShare.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Branch+CloudShare.m"; sourceTree = "<group>"; };
 		4D956A8B20F02BC90097D366 /* BranchMainClass.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchMainClass.Test.m; sourceTree = "<group>"; };
 		4D956A8D20F3D1E80097D366 /* BranchMutableDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchMutableDictionary.h; sourceTree = "<group>"; };
 		4D956A8E20F3D1E80097D366 /* BranchMutableDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchMutableDictionary.m; sourceTree = "<group>"; };
@@ -416,6 +424,8 @@
 				4D54C07820A6560400C76496 /* Branch.h */,
 				4DF818AB20AE19FD00441881 /* Branch.m */,
 				4DC2232120AA10EC005C57D0 /* Branch.modulemap */,
+				4D819E07216FD957003E3D08 /* Branch+CloudShare.h */,
+				4D819E08216FD957003E3D08 /* Branch+CloudShare.m */,
 				4DF818A520ADE1BB00441881 /* BranchCommerce.h */,
 				4DF818A420ADE1BB00441881 /* BranchCommerce.m */,
 				4DF818B820AF9EAF00441881 /* BranchDelegate.h */,
@@ -532,6 +542,7 @@
 				4D170FAA216D1CC00083D6B6 /* BNCKeyChain.h in Headers */,
 				4D170FAB216D1CC00083D6B6 /* BNCApplication.h in Headers */,
 				4D170FAC216D1CC00083D6B6 /* BranchError.h in Headers */,
+				4D819E09216FD957003E3D08 /* Branch+CloudShare.h in Headers */,
 				4D170FAD216D1CC00083D6B6 /* BranchDelegate.h in Headers */,
 				4D170FAE216D1CC00083D6B6 /* BNCThreads.h in Headers */,
 				4D170FAF216D1CC00083D6B6 /* BNCNetworkInformation.h in Headers */,
@@ -568,6 +579,7 @@
 				4D99772D20AA099D00A63EE1 /* BNCThreads.h in Headers */,
 				4D9C164C20ACCD7C002BF211 /* BNCKeyChain.h in Headers */,
 				4D9C163E20ACBEF6002BF211 /* BNCApplication.h in Headers */,
+				4D819E0A216FD957003E3D08 /* Branch+CloudShare.h in Headers */,
 				4D9C164D20ACCD7C002BF211 /* BranchError.h in Headers */,
 				4DF818BA20AF9EB000441881 /* BranchDelegate.h in Headers */,
 				4DB9FCC8212CA94D0070D293 /* BNCNetworkInformation.h in Headers */,
@@ -604,6 +616,7 @@
 				4D67476620C74E81001639C5 /* BNCKeyChain.h in Headers */,
 				4D67476720C74E81001639C5 /* BNCApplication.h in Headers */,
 				4D67476820C74E81001639C5 /* BranchError.h in Headers */,
+				4D819E0B216FD957003E3D08 /* Branch+CloudShare.h in Headers */,
 				4D67476920C74E81001639C5 /* BranchDelegate.h in Headers */,
 				4D67476A20C74E81001639C5 /* BNCThreads.h in Headers */,
 				4DB9FCC9212CA94D0070D293 /* BNCNetworkInformation.h in Headers */,
@@ -847,6 +860,7 @@
 				4D170F83216D1CC00083D6B6 /* BNCApplication.m in Sources */,
 				4D170F84216D1CC00083D6B6 /* BNCKeyChain.m in Sources */,
 				4D170F85216D1CC00083D6B6 /* BNCNetworkAPIService.m in Sources */,
+				4D819E0C216FD957003E3D08 /* Branch+CloudShare.m in Sources */,
 				4D170F86216D1CC00083D6B6 /* BNCLocalization.m in Sources */,
 				4D170F87216D1CC00083D6B6 /* BNCSettings.m in Sources */,
 				4D170F88216D1CC00083D6B6 /* BranchDelegate.m in Sources */,
@@ -882,6 +896,7 @@
 				4D9C163F20ACBEF6002BF211 /* BNCApplication.m in Sources */,
 				4D9C164F20ACCD7C002BF211 /* BNCKeyChain.m in Sources */,
 				4D9C163720ACB790002BF211 /* BNCNetworkAPIService.m in Sources */,
+				4D819E0D216FD957003E3D08 /* Branch+CloudShare.m in Sources */,
 				4D9C164A20ACCD7C002BF211 /* BNCLocalization.m in Sources */,
 				4D9C163B20ACB914002BF211 /* BNCSettings.m in Sources */,
 				4DF818BB20AF9EB000441881 /* BranchDelegate.m in Sources */,
@@ -917,6 +932,7 @@
 				4D67474320C74E81001639C5 /* BNCApplication.m in Sources */,
 				4D67474420C74E81001639C5 /* BNCKeyChain.m in Sources */,
 				4D67474520C74E81001639C5 /* BNCNetworkAPIService.m in Sources */,
+				4D819E0E216FD957003E3D08 /* Branch+CloudShare.m in Sources */,
 				4D67474620C74E81001639C5 /* BNCLocalization.m in Sources */,
 				4D67474720C74E81001639C5 /* BNCSettings.m in Sources */,
 				4D67474820C74E81001639C5 /* BranchDelegate.m in Sources */,
@@ -984,6 +1000,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -995,6 +1012,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -1006,6 +1024,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -1178,6 +1197,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -1186,6 +1206,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -1296,6 +1317,7 @@
 			buildSettings = {
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = UnitTests;
 		};

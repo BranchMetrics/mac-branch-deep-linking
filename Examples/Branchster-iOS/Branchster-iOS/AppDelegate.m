@@ -24,15 +24,20 @@
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BNCLogSetDisplayLevel(BNCLogLevelAll);
     self.justLaunched = YES;
-
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(branchDidStartSessionNotification:)
         name:BranchDidStartSessionNotification
         object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchCloudShareNotification:)
+        name:BranchCloundShareNotification
+        object:nil];
     BranchConfiguration*configuration =
         [[BranchConfiguration alloc] initWithKey:@"key_live_hkDytPACtipny3N9XmnbZlapBDdj4WIL"];
     [[Branch sharedInstance] startWithConfiguration:configuration];
+    [Branch.sharedInstance startCloudShareNotifications];
 
     // Optional: Set our own identitier for this user at Branch.
     // This could be an account number our other userID. It only needs to be set once.
@@ -93,35 +98,58 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     }
 }
 
+- (void) branchCloudShareNotification:(NSNotification*)notification {
+    BranchCloudShareItem*item = notification.userInfo[BranchCloundShareItemKey];
+    if (!item) return;
+
+    __auto_type message =
+        [NSString stringWithFormat:@"There's a new scary monster!\nShow %@?", item.contentTitle];
+
+    UIAlertController* alert =
+        [UIAlertController alertControllerWithTitle:@"Show Monster?"
+            message:message
+            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:
+        [UIAlertAction actionWithTitle:@"OK"
+            style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * _Nonnull action) {
+                [Branch.sharedInstance openURL:item.contentURL];
+            }]];
+    [alert addAction:
+        [UIAlertAction actionWithTitle:@"Cancel"
+            style:UIAlertActionStyleCancel
+            handler:nil]];
+    [UIViewController.bnc_currentViewController presentViewController:alert animated:YES completion:nil];
+}
+
 #if 0
     [branch initSessionWithLaunchOptions:launchOptions
         andRegisterDeepLinkHandlerUsingBranchUniversalObject:
-            ^ (BranchUniversalObject *BUO, BranchLinkProperties *linkProperties, NSError *error) {
-
-                if (linkProperties.controlParams[@"$3p"] &&
-                    linkProperties.controlParams[@"$web_only"]) {
-                    NSURL *url = [NSURL URLWithString:linkProperties.controlParams[@"$original_url"]];
-                    if (url) {
-                        [[NSNotificationCenter defaultCenter]
-                           postNotificationName:@"pushWebView"
-                           object:self
-                           userInfo:@{@"URL": url}];
-                   }
-                } else
-                if (BUO && BUO.contentMetadata.customMetadata[@"monster"]) {
-                    self.initialMonster = BUO;
+        ^ (BranchUniversalObject *BUO, BranchLinkProperties *linkProperties, NSError *error) {
+            if (linkProperties.controlParams[@"$3p"] &&
+                linkProperties.controlParams[@"$web_only"]) {
+                NSURL *url = [NSURL URLWithString:linkProperties.controlParams[@"$original_url"]];
+                if (url) {
                     [[NSNotificationCenter defaultCenter]
-                        postNotificationName:@"pushEditAndViewerViews"
-                        object:nil];
-                } else
-                if (self.justLaunched) {
-                    self.initialMonster = [self emptyMonster];
-                    [[NSNotificationCenter defaultCenter]
-                        postNotificationName:@"pushEditView"
-                        object:nil];
-                    self.justLaunched = NO;
-                }
-            }];
-
+                       postNotificationName:@"pushWebView"
+                       object:self
+                       userInfo:@{@"URL": url}];
+               }
+            } else
+            if (BUO && BUO.contentMetadata.customMetadata[@"monster"]) {
+                self.initialMonster = BUO;
+                [[NSNotificationCenter defaultCenter]
+                    postNotificationName:@"pushEditAndViewerViews"
+                    object:nil];
+            } else
+            if (self.justLaunched) {
+                self.initialMonster = [self emptyMonster];
+                [[NSNotificationCenter defaultCenter]
+                    postNotificationName:@"pushEditView"
+                    object:nil];
+                self.justLaunched = NO;
+            }
+        }];
 #endif
+
 @end

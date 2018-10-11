@@ -25,9 +25,15 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         selector:@selector(branchDidStartSessionNotification:)
         name:BranchDidStartSessionNotification
         object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchCloudShareNotification:)
+        name:BranchCloundShareNotification
+        object:nil];
     BranchConfiguration*configuration =
         [[BranchConfiguration alloc] initWithKey:@"key_live_hkDytPACtipny3N9XmnbZlapBDdj4WIL"];
     [[Branch sharedInstance] startWithConfiguration:configuration];
+    [Branch.sharedInstance startCloudShareNotifications];
     return YES;
 }
 
@@ -73,6 +79,30 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if (isFirstTime) {
         [self editMonster:BranchUniversalObject.emptyMonster];
     }
+}
+
+- (void) branchCloudShareNotification:(NSNotification*)notification {
+    BranchCloudShareItem*item = notification.userInfo[BranchCloundShareItemKey];
+    if (!item) return;
+
+    __auto_type message =
+        [NSString stringWithFormat:@"There's a new scary monster!\nShow %@?", item.contentTitle];
+
+    UIAlertController* alert =
+        [UIAlertController alertControllerWithTitle:@"Show Monster?"
+            message:message
+            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:
+        [UIAlertAction actionWithTitle:@"OK"
+            style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * _Nonnull action) {
+                [Branch.sharedInstance openURL:item.contentURL];
+            }]];
+    [alert addAction:
+        [UIAlertAction actionWithTitle:@"Cancel"
+            style:UIAlertActionStyleCancel
+            handler:nil]];
+    [UIViewController.bnc_currentViewController presentViewController:alert animated:YES completion:nil];
 }
 
 @end
