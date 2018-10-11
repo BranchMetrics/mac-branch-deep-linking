@@ -54,6 +54,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 @property (atomic, strong) BNCSettings *settings;
 @property (atomic, strong) NSOperationQueue *operationQueue;
 @property (atomic, strong) NSMutableDictionary<NSString*, NSData*> *archivedOperations;
+@property (atomic, strong) BNCPersistence*persistence;
 - (void) saveOperation:(BNCNetworkAPIOperation*)operation;
 - (void) deleteOperation:(BNCNetworkAPIOperation*)operation;
 - (void) loadOperations;
@@ -69,6 +70,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     self.configuration = configuration;
     self.settings = self.configuration.settings;
     self.networkService = [configuration.networkServiceClass new];
+    self.persistence = [[BNCPersistence alloc] initWithAppGroup:BNCApplication.currentApplication.bundleID];
     if (self.configuration.useCertificatePinning) {
         NSError*error = [self.networkService pinSessionToPublicSecKeyRefs:self.class.publicSecKeyRefs];
         if (error) {
@@ -244,14 +246,14 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 }
 - (void) saveArchivedOperations {
     @synchronized(self) {
-        [BNCPersistence archiveObject:self.archivedOperations named:BNCNetworkQueueFilename];
+        [self.persistence archiveObject:self.archivedOperations named:BNCNetworkQueueFilename];
     }
 }
 
 - (void) loadOperations {
     @synchronized(self) {
         self.archivedOperations = [NSMutableDictionary new];
-        NSDictionary*d = [BNCPersistence unarchiveObjectNamed:BNCNetworkQueueFilename];
+        NSDictionary*d = [self.persistence unarchiveObjectNamed:BNCNetworkQueueFilename];
         if (![d isKindOfClass:NSDictionary.class]) return;
         // Start the operations:
         __weak __typeof(self) weakSelf = self;
@@ -291,7 +293,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 - (void) clearNetworkQueue {
     @synchronized(self) {
         self.archivedOperations = [NSMutableDictionary new];
-        [BNCPersistence removeDataNamed:BNCNetworkQueueFilename];
+        [self.persistence removeDataNamed:BNCNetworkQueueFilename];
         if ([self.networkService respondsToSelector:@selector(cancelAllOperations)])
             [self.networkService cancelAllOperations];
         [self.operationQueue cancelAllOperations];
@@ -605,7 +607,7 @@ exit:
 
             retry++;
 
-        } while (!self.isCancelled && [self.class canRetryOperation:self.operation] && retry < 5);
+        } while (!self.isCancelled && [self.class canRetryOperation:self.operation] && retry <= 5);
 
     error = [self.class errorWithOperation:self.operation];
     if (error) goto exit;

@@ -7,7 +7,6 @@
 //
 
 @import Branch;
-#import "NetworkProgressBar.h"
 #import "SplashViewController.h"
 #import "WebViewController.h"
 #import "AppDelegate.h"

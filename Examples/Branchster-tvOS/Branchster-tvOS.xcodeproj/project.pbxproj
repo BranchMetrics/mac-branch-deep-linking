@@ -25,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4D0F11C8216EC95F0008080A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D170FBB216D1CC00083D6B6;
+			remoteInfo = "Branch-iOS";
+		};
 		4D94DB8E2122093700E1CA33 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
@@ -153,6 +160,8 @@
 				4D94DB802122087400E1CA33 /* Info.plist */,
 				4D94DB812122087400E1CA33 /* main.m */,
 				4D94DB7B2122087200E1CA33 /* Main.storyboard */,
+				4D80E36A214048CF00A52CB7 /* MButton.h */,
+				4D80E36B214048CF00A52CB7 /* MButton.m */,
 				4D94DBAE2122280A00E1CA33 /* MonsterCreatorViewController.h */,
 				4D94DBAF2122280A00E1CA33 /* MonsterCreatorViewController.m */,
 				4D94DBB8212228A100E1CA33 /* MonsterPartsFactory.h */,
@@ -161,8 +170,6 @@
 				4D94DBB22122280B00E1CA33 /* MonsterViewerViewController.m */,
 				4D94DBAA212227EF00E1CA33 /* SplashViewController.h */,
 				4D94DBAB212227F000E1CA33 /* SplashViewController.m */,
-				4D80E36A214048CF00A52CB7 /* MButton.h */,
-				4D80E36B214048CF00A52CB7 /* MButton.m */,
 			);
 			path = "Branchster-tvOS";
 			sourceTree = "<group>";
@@ -172,6 +179,7 @@
 			children = (
 				4D94DB8F2122093700E1CA33 /* Branch.framework */,
 				4D94DB912122093700E1CA33 /* Branch.framework */,
+				4D0F11C9216EC95F0008080A /* Branch.framework */,
 				4D94DB932122093700E1CA33 /* BranchTests.xctest */,
 			);
 			name = Products;
@@ -243,6 +251,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		4D0F11C9216EC95F0008080A /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D0F11C8216EC95F0008080A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4D94DB8F2122093700E1CA33 /* Branch.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;

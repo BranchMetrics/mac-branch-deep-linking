@@ -11,13 +11,10 @@
 @import Branch;
 #import "BranchUniversalObject+MonsterHelpers.h"
 #import "BranchInfoViewController.h"
-#import "NetworkProgressBar.h"
 #import "MonsterViewerViewController.h"
 #import "MonsterPartsFactory.h"
 
 @interface MonsterViewerViewController () /*<UITextViewDelegate>*/
-
-@property (strong, nonatomic) NetworkProgressBar *progressBar;
 
 @property (strong, nonatomic) NSString *monsterName;
 @property (strong, nonatomic) NSString *monsterDescription;
@@ -75,17 +72,9 @@ static CGFloat MONSTER_HEIGHT = 0.4f;
     [self.cmdChange.layer setCornerRadius:3.0];
     [self.cmdInfo.layer setCornerRadius:3.0];
     
-    self.progressBar =
-        [[NetworkProgressBar alloc] initWithFrame:self.view.frame andMessage:@"preparing your Branchster.."];
-    [self.progressBar show];
-    [self.view addSubview:self.progressBar];
-    
-    
 //    [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
 //        NSLog(@"Monster %@ was viewed.  params: %@", self.viewingMonster.getMonsterName, params);
 //    }];
-
-    [self.progressBar hide];
 }
 
 - (void) viewDidAppear:(BOOL)animated {

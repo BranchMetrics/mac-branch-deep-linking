@@ -11,15 +11,32 @@
 #import "BNCPersistence.h"
 #import "BNCLog.h"
 
-#pragma mark BNCPersistence
+@interface BNCPersistence ()
+- (NSURL*) URLForDataNamed:(NSString*)name;
+@property (strong) NSString*appGroup;
+@end
 
 @implementation BNCPersistence
+
+- (instancetype) initWithAppGroup:(NSString *)appGroup_ {
+    self = [super init];
+    if (!self) return self;
+    self.appGroup = ([appGroup_ length]) ? appGroup_ : @"AppGroup";
+    return self;
+}
+
+- (NSURL*) URLForDataNamed:(NSString*)name {
+    NSURL *url = BNCURLForBranchDataDirectory();
+    url = [url URLByAppendingPathComponent:self.appGroup isDirectory:YES];
+    url = [url URLByAppendingPathComponent:name isDirectory:NO];
+    return url;
+}
 
 #if TARGET_OS_TV
 
 NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
 
-+ (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data {
+- (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data {
     @synchronized (BNCPersistenceKey) {
         if (!name.length) {
             BNCLogError(@"Name expected.");
@@ -39,7 +56,7 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
     }
 }
 
-+ (NSData*_Nullable) loadDataNamed:(NSString*)name {
+- (NSData*_Nullable) loadDataNamed:(NSString*)name {
     @synchronized (BNCPersistenceKey) {
         if (!name.length) {
             BNCLogError(@"Name expected.");
@@ -51,7 +68,7 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
     }
 }
 
-+ (NSError*_Nullable) removeDataNamed:(NSString *)name {
+- (NSError*_Nullable) removeDataNamed:(NSString *)name {
     @synchronized (BNCPersistenceKey) {
         if (!name.length) {
             BNCLogError(@"Name expected.");
@@ -73,16 +90,16 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
 
 #else
 
-+ (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data {
+- (NSError*_Nullable) saveDataNamed:(NSString*)name data:(NSData*)data {
     NSError *error = nil;
-    NSURL *url = BNCURLForBranchDataDirectory();
-    url = [url URLByAppendingPathComponent:name isDirectory:NO];
+    NSURL*url = [self URLForDataNamed:name];
     NSURL*urlPath = [url URLByDeletingLastPathComponent];
     [[NSFileManager defaultManager]
         createDirectoryAtURL:urlPath
         withIntermediateDirectories:YES
         attributes:nil
         error:&error];
+    // This error may not be fatal:
     if (error) BNCLogError(@"Can't create directory: %@.", error);
     error = nil;
     [data writeToURL:url options:NSDataWritingAtomic error:&error];
@@ -90,10 +107,9 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
     return error;
 }
 
-+ (NSData*_Nullable) loadDataNamed:(NSString*)name {
-    NSError *error = nil;
-    NSURL *url = BNCURLForBranchDataDirectory();
-    url = [url URLByAppendingPathComponent:name isDirectory:NO];
+- (NSData*_Nullable) loadDataNamed:(NSString*)name {
+    NSError*error = nil;
+    NSURL*url = [self URLForDataNamed:name];
     NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&error];
     if (error) {
         BNCLogWarning(@"Failed to read '%@': %@.", url, error);
@@ -101,10 +117,9 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
     return data;
 }
 
-+ (NSError*_Nullable) removeDataNamed:(NSString *)name {
+- (NSError*_Nullable) removeDataNamed:(NSString *)name {
     NSError *error = nil;
-    NSURL *url = BNCURLForBranchDataDirectory();
-    url = [url URLByAppendingPathComponent:name isDirectory:NO];
+    NSURL*url = [self URLForDataNamed:name];
     [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
     if (error) {
         if (error.code == NSFileNoSuchFileError)
@@ -117,7 +132,7 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
 
 #endif
 
-+ (id<NSSecureCoding>) unarchiveObjectNamed:(NSString*)name {
+- (id<NSSecureCoding>) unarchiveObjectNamed:(NSString*)name {
     id<NSSecureCoding> object = nil;
     @try {
         NSData* data = [self loadDataNamed:name];
@@ -134,13 +149,13 @@ NSString*_Nonnull const BNCPersistenceKey = @"io.branch.sdk.mac";
     return object;
 }
 
-+ (NSError*) archiveObject:(id<NSSecureCoding>)object named:(NSString*)name {
+- (NSError*) archiveObject:(id<NSSecureCoding>)object named:(NSString*)name {
     NSError*error = nil;
     @try {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSData*data = [NSKeyedArchiver archivedDataWithRootObject:object];
-        error = [BNCPersistence saveDataNamed:name data:data];
+        error = [self saveDataNamed:name data:data];
         #pragma clang diagnostic pop
     }
     @catch (id exception) {
@@ -196,7 +211,7 @@ NSURL* _Nonnull BNCURLForBranchDirectory_Unthreaded() {
         if (URL) return URL;
     }
 
-    //  Worst case backup plan:
+    // Worst case backup plan:
     NSString *path = [@"~/Library/io.branch" stringByExpandingTildeInPath];
     NSURL *branchURL = [NSURL fileURLWithPath:path isDirectory:YES];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -213,7 +228,7 @@ NSURL* _Nonnull BNCURLForBranchDirectory_Unthreaded() {
     return branchURL;
 }
 
-NSURL* _Nonnull BNCURLForBranchDataDirectory() {
+NSURL*_Nonnull BNCURLForBranchDataDirectory() {
     static NSURL *urlForBranchDirectory = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^ {

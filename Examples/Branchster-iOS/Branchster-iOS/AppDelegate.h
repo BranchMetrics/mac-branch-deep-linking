@@ -13,4 +13,3 @@
 @property (strong, nonatomic) UIWindow *window;
 @property BranchUniversalObject *initialMonster;
 @end
-

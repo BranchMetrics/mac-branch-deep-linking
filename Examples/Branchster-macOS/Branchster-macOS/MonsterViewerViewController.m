@@ -13,7 +13,7 @@
 #import "MonsterPartsFactory.h"
 #import "MonsterWindowController.h"
 
-@interface MonsterViewerViewController () <NSSharingServicePickerDelegate>
+@interface MonsterViewerViewController () <NSSharingServicePickerDelegate, NSUserActivityDelegate>
 
 @property (weak, nonatomic) IBOutlet NSView      *botLayerOneColor;
 @property (weak, nonatomic) IBOutlet NSImageView *botLayerTwoBody;
@@ -142,20 +142,36 @@
 }
 
 - (void) publishUserActivityURL:(NSURL*)URL {
-    __auto_type activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
-    activity.title = self.monster.monsterName;
-    activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
-    activity.userInfo = @{ @"branch": URL };
-    activity.requiredUserInfoKeys = [NSSet setWithArray:@[ @"branch" ]];
-    activity.eligibleForSearch = YES;
-    activity.eligibleForHandoff = YES;
-    activity.eligibleForPublicIndexing = YES;
-//    self.activity.webpageURL = URL;
+    self.monsterURL = URL;
+    self.activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
+    self.activity.title = self.monster.monsterName;
+    self.activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
+    self.activity.requiredUserInfoKeys = [NSSet setWithArray:@[ @"branch" ]];
+//    self.activity.userInfo = @{ @"branch": URL };
+    [self.activity addUserInfoEntriesFromDictionary:@{ @"branch": URL }];
+    self.activity.eligibleForSearch = YES;
+    self.activity.eligibleForHandoff = YES;
+    self.activity.eligibleForPublicIndexing = YES;
+//  self.activity.webpageURL = URL;
 // iOS Only:
 //    self.activity.eligibleForPrediction = YES;
 //    self.activity.suggestedInvocationPhrase = @"Show Monster";
-    self.userActivity = activity;
+    self.activity.delegate = self;
+    self.userActivity = self.activity;
     [self.userActivity becomeCurrent];
+//  [self.userActivity needsSave];
+}
+
+- (void)userActivityWasContinued:(NSUserActivity *)userActivity {
+    BNCLogMethodName();
+    BNCLogDebug(@"%@", userActivity.userInfo);
+}
+
+- (void)userActivityWillSave:(NSUserActivity *)userActivity {
+    BNCLogMethodName();
+    BNCLogDebug(@"before userInfo %@", userActivity.userInfo);
+    [userActivity addUserInfoEntriesFromDictionary:@{ @"branch": self.monsterURL }];
+    BNCLogDebug(@" after userInfo %@", userActivity.userInfo);
 }
 
 @end

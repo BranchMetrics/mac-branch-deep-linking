@@ -761,7 +761,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return URL;
 }
 
-// Used for setting up unit tests mostly.
+// Useful for unit tests mostly.
 - (void) clearAllSettings {
     BNCLogDebugSDK(@"[Branch clearAllSettings].");
     if (self.networkAPIService)
