@@ -116,10 +116,20 @@
 }
 
 - (IBAction)shareAction:(id)sender {
-    BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
-    linkProperties.feature = @"sharing";
-    linkProperties.channel = @"viral share";
+/*
+    UIActivityItem*item = [[UIActivityItem alloc] init];
 
+    UIAlertController* alert =
+        [UIAlertController alertControllerWithTitle:@"Open Failed"
+            message:[NSString stringWithFormat:@"Can't open the URL '%@'.", URL.absoluteString]
+            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction*defaultAction =
+        [UIAlertAction actionWithTitle:@"OK"
+            style:UIAlertActionStyleDefault
+            handler:nil];
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+*/
 }
 
 - (void) publishUserActivityURL:(NSURL*)URL {
