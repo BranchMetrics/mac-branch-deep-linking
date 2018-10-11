@@ -13,7 +13,7 @@
 		2B3C06F520AB704800F38167 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C06F420AB704800F38167 /* main.m */; };
 		2B3C070F20AB8E9400F38167 /* APPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C070D20AB8E9400F38167 /* APPViewController.m */; };
 		2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C070E20AB8E9400F38167 /* APPViewController.xib */; };
-		4D0F11C1216EB84D0008080A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0F11BB216EB84D0008080A /* AdSupport.framework */; };
+		4D0F1245216F31160008080A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0F11BB216EB84D0008080A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4D0F56AD20B33C97003D6607 /* TestBed-MacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0F56AC20B33C97003D6607 /* TestBed-MacTests.m */; };
 		4D39087F20BF378C00E28074 /* APPActionItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D39087E20BF378C00E28074 /* APPActionItemView.xib */; };
 		4D85A9F920BF61D500E61F6E /* APPActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D85A9F820BF61D500E61F6E /* APPActionItemView.m */; };
@@ -76,15 +76,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4D70A4B020DDA5020083768C /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -115,14 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4D0F56A720B33C97003D6607 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4D0F11C1216EB84D0008080A /* AdSupport.framework in Frameworks */,
+				4D0F1245216F31160008080A /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,9 +209,6 @@
 			buildConfigurationList = 4D0F56B420B33C97003D6607 /* Build configuration list for PBXNativeTarget "TestBed-macOSTests" */;
 			buildPhases = (
 				4D0F56A620B33C97003D6607 /* Sources */,
-				4D0F56A720B33C97003D6607 /* Frameworks */,
-				4D0F56A820B33C97003D6607 /* Resources */,
-				4D70A4B020DDA5020083768C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -331,13 +312,6 @@
 				2B3C06EF20AB704800F38167 /* Assets.xcassets in Resources */,
 				2B3C06F220AB704800F38167 /* MainMenu.xib in Resources */,
 				2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4D0F56A820B33C97003D6607 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

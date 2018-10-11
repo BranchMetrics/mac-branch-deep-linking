@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		15B4B8141B0AB016002AA93E /* BranchInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15B4B8131B0AB016002AA93E /* BranchInfoViewController.m */; };
-		374174E91C3C870A0069BA54 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 374174E81C3C870A0069BA54 /* Media.xcassets */; };
 		377C3CE81C121DCC005DF795 /* BranchUniversalObject+MonsterHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 377C3CE71C121DCC005DF795 /* BranchUniversalObject+MonsterHelpers.m */; };
 		46FD92CE1A9AD0A70028A385 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67FD945E1A4D250C00D6BFA8 /* Main.storyboard */; };
 		4D0F11D0216EDAD50008080A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D0F11CF216EDAD50008080A /* Launch Screen.storyboard */; };
@@ -114,11 +113,10 @@
 /* Begin PBXFileReference section */
 		15B4B8121B0AB016002AA93E /* BranchInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchInfoViewController.h; sourceTree = "<group>"; };
 		15B4B8131B0AB016002AA93E /* BranchInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchInfoViewController.m; sourceTree = "<group>"; };
-		374174E81C3C870A0069BA54 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		377C3CE61C121DCC005DF795 /* BranchUniversalObject+MonsterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BranchUniversalObject+MonsterHelpers.h"; sourceTree = "<group>"; };
 		377C3CE71C121DCC005DF795 /* BranchUniversalObject+MonsterHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BranchUniversalObject+MonsterHelpers.m"; sourceTree = "<group>"; };
 		377C3CE91C16141C005DF795 /* Branchster-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-iOS.entitlements"; sourceTree = "<group>"; };
-		4D0F11CF216EDAD50008080A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		4D0F11CF216EDAD50008080A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4D170F69216D1BA40083D6B6 /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
 		4D4006171FFE8B4C004BE326 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		4D4F23221F7F456000638C65 /* Strings.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Strings.strings; sourceTree = "<group>"; };
@@ -194,9 +192,9 @@
 		4D170F6A216D1BA40083D6B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				4D170FC7216D2D250083D6B6 /* Branch.framework */,
 				4D170F70216D1BA50083D6B6 /* Branch.framework */,
 				4D170F72216D1BA50083D6B6 /* Branch.framework */,
-				4D170FC7216D2D250083D6B6 /* Branch.framework */,
 				4D170F74216D1BA50083D6B6 /* BranchTests.xctest */,
 			);
 			name = Products;
@@ -238,7 +236,6 @@
 				4D0F11CF216EDAD50008080A /* Launch Screen.storyboard */,
 				67FD94BB1A4D250C00D6BFA8 /* main.m */,
 				67FD945E1A4D250C00D6BFA8 /* Main.storyboard */,
-				374174E81C3C870A0069BA54 /* Media.xcassets */,
 				67FD94BD1A4D250C00D6BFA8 /* MonsterCreatorViewController.h */,
 				67FD94BE1A4D250C00D6BFA8 /* MonsterCreatorViewController.m */,
 				67FD947F1A4D250C00D6BFA8 /* MonsterPartsFactory.h */,
@@ -442,7 +439,6 @@
 				67FD94D71A4D250C00D6BFA8 /* 0body.png in Resources */,
 				67FD94DC1A4D250C00D6BFA8 /* branchster.png in Resources */,
 				67FD94EF1A4D250C00D6BFA8 /* face2.png in Resources */,
-				374174E91C3C870A0069BA54 /* Media.xcassets in Resources */,
 				67FD94EC1A4D250C00D6BFA8 /* up_pressed.png in Resources */,
 				67FD94E11A4D250C00D6BFA8 /* facebook_pressed.png in Resources */,
 				67FD94E71A4D250C00D6BFA8 /* text_pressed.png in Resources */,
@@ -630,7 +626,7 @@
 				PRODUCT_NAME = Branchsters;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -655,7 +651,7 @@
 				PRODUCT_NAME = Branchsters;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

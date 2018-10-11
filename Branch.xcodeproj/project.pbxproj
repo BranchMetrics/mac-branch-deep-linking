@@ -20,6 +20,9 @@
 		4D046E9720C8B5B20073262B /* NSData+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */; };
 		4D046E9A20C8CE740073262B /* BNCTestNetworkService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D046E9920C8CE740073262B /* BNCTestNetworkService.Test.m */; };
 		4D0E5119212DD86A000DA56B /* UIViewController+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0E5118212DD86A000DA56B /* UIViewController+Branch.Test.m */; };
+		4D0F1241216F2FD10008080A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0F1240216F2FD10008080A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4D0F124A216F39800008080A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0F1249216F39800008080A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4D0F124C216F398D0008080A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0F124B216F398D0008080A /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4D159DD620B62DD5005A9850 /* BNCApplication.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */; };
 		4D159DD920B62DD5005A9850 /* BNCDevice.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C166220AD090F002BF211 /* BNCDevice.Test.m */; };
 		4D159DDA20B62DD5005A9850 /* BNCEncoder.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818C220B031EB00441881 /* BNCEncoder.Test.m */; };
@@ -212,16 +215,6 @@
 		4DFB135A20CCFAE800AF3E47 /* BranchOpen.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4DB9FCD2212D06060070D293 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D67473C20C74E81001639C5;
-			remoteInfo = "Branch-tvOS";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.m; sourceTree = "<group>"; };
 		2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCURLBlackList.h; sourceTree = "<group>"; };
@@ -235,6 +228,9 @@
 		4D0B753C211209F900A06D97 /* BranchTestHost-macOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BranchTestHost-macOS.xcconfig"; sourceTree = "<group>"; };
 		4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BranchTestHost-tvOS.xcconfig"; sourceTree = "<group>"; };
 		4D0E5118212DD86A000DA56B /* UIViewController+Branch.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Branch.Test.m"; sourceTree = "<group>"; };
+		4D0F1240216F2FD10008080A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4D0F1249216F39800008080A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		4D0F124B216F398D0008080A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 		4D159DCB20B62D7D005A9850 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D170FBB216D1CC00083D6B6 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D170FBD216D28EE0083D6B6 /* BranchTestHost-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BranchTestHost-iOS.xcconfig"; sourceTree = "<group>"; };
@@ -341,6 +337,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D0F124C216F398D0008080A /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +345,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D0F1241216F2FD10008080A /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +353,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D0F124A216F39800008080A /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +498,9 @@
 		4DC2232220AA19A2005C57D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D0F124B216F398D0008080A /* AdSupport.framework */,
+				4D0F1249216F39800008080A /* AdSupport.framework */,
+				4D0F1240216F2FD10008080A /* AdSupport.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -624,12 +626,10 @@
 				4D159DC720B62D7D005A9850 /* Sources */,
 				4D159DC820B62D7D005A9850 /* Frameworks */,
 				4D159DC920B62D7D005A9850 /* Resources */,
-				4D61CA02210646AD0037D104 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4DB9FCD3212D06060070D293 /* PBXTargetDependency */,
 			);
 			name = BranchTests;
 			productName = BranchTests;
@@ -703,7 +703,7 @@
 					4D159DCA20B62D7D005A9850 = {
 						CreatedOnToolsVersion = 9.3.1;
 						LastSwiftMigration = 1000;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					4D170F79216D1CC00083D6B6 = {
 						ProvisioningStyle = Automatic;
@@ -728,9 +728,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				4D170F79216D1CC00083D6B6 /* Branch-iOS */,
 				4D54C07420A6560400C76496 /* Branch-macOS */,
 				4D67473C20C74E81001639C5 /* Branch-tvOS */,
-				4D170F79216D1CC00083D6B6 /* Branch-iOS */,
 				4D159DCA20B62D7D005A9850 /* BranchTests */,
 			);
 		};
@@ -774,19 +774,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "echo \"Build tvOS lib.\"";
-		};
-		4D61CA02210646AD0037D104 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Build tvOS test lib.\" \n";
 		};
 		4D6977E620F6D2C000F36413 /* Copy Framework */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -952,21 +939,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		4DB9FCD3212D06060070D293 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4D67473C20C74E81001639C5 /* Branch-tvOS */;
-			targetProxy = 4DB9FCD2212D06060070D293 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
 		4D159DD320B62D7D005A9850 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D0B753C211209F900A06D97 /* BranchTestHost-macOS.xcconfig */;
+			baseConfigurationReference = 4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = BranchTests/Info.plist;
@@ -974,6 +954,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
@@ -983,6 +964,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = BranchTests/Info.plist;
@@ -990,6 +973,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
@@ -1292,6 +1276,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = BranchTests/Info.plist;
@@ -1299,6 +1285,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac.BranchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};

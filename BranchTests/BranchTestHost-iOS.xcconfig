@@ -8,4 +8,4 @@
 
 SDKROOT                 = iphoneos
 SUPPORTED_PLATFORMS     = iphoneos iphonesimulator
-BranchTestHost          = $(BUILT_PRODUCTS_DIR)/TestBed-iOS.app/TestBed-iOS
+TEST_HOST               = $(BUILT_PRODUCTS_DIR)/TestBed-iOS.app/TestBed-iOS
