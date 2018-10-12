@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy, readonly) NSString *systemName;
 @property (atomic, copy, readonly) NSString *systemVersion;
 @property (atomic, copy, readonly) NSString *systemBuildVersion;
+@property (atomic, copy, readonly) NSString *deviceName;
 @property (atomic, assign, readonly) BOOL    isSimulator;
 @property (atomic, assign, readonly) CGSize  screenSize;
 @property (atomic, assign, readonly) CGFloat screenDPI;

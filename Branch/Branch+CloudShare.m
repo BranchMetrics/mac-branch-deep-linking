@@ -10,8 +10,9 @@
 
 #import "Branch+CloudShare.h"
 #import "BranchMainClass+Private.h"
-#import "BNCThreads.h"
 #import "BNCEncoder.h"
+#import "BNCDevice.h"
+#import "BNCThreads.h"
 #import "BNCLog.h"
 
 NSString*const BranchCloundShareNotification = @"BranchCloundShareNotification";
@@ -42,8 +43,8 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 #pragma mark - BNCCloudShare
 
 @interface BNCCloudShare : NSObject <NSUserActivityDelegate>
-- (instancetype) init NS_DESIGNATED_INITIALIZER;
 - (void) start;
+- (void) stop;
 - (void) updateItem:(BranchCloudShareItem*)item;
 
 @property (strong) NSUbiquitousKeyValueStore*cloudStore;
@@ -54,11 +55,6 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 @end
 
 @implementation BNCCloudShare
-
-- (instancetype) init {
-    self = [super init];
-    return self;
-}
 
 - (void) start {
     // Already started?
@@ -73,10 +69,17 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
     self.cloudStore = [NSUbiquitousKeyValueStore defaultStore];
     self.lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"cloudUpdateDate"];
     [self.cloudStore synchronize];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 repeats:YES block:^(NSTimer*_Nonnull timer) {
-        [self.cloudStore synchronize];
-    }];
+    self.timer =
+        [NSTimer scheduledTimerWithTimeInterval:5.0
+            target:self
+            selector:@selector(timerUpdate:)
+            userInfo:nil
+            repeats:YES];
     [self refreshFromCloud];
+}
+
+- (void) timerUpdate:(NSTimer*)update {
+    [self.cloudStore synchronize];
 }
 
 - (void) stop {
@@ -91,7 +94,9 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 }
 
 - (void) updateItem:(BranchCloudShareItem *)item {
+    if (!item) return;
     item.updateDate = [NSDate date];
+    item.deviceName = [BNCDevice currentDevice].deviceName;
     self.cloudShareItem = item;
     self.lastUpdateDate = item.updateDate;
     [[NSUserDefaults standardUserDefaults] setObject:self.lastUpdateDate forKey:@"cloudUpdateDate"];

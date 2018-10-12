@@ -1181,6 +1181,7 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 			};
 			name = Debug;
@@ -1188,6 +1189,7 @@
 		4D54C08B20A6560400C76496 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 			};
 			name = Release;
@@ -1289,6 +1291,7 @@
 		4DFB135520CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 			};
 			name = UnitTests;

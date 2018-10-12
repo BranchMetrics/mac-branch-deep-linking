@@ -25,6 +25,7 @@ FOUNDATION_EXTERN NSString*const BranchCloundShareItemKey;
 @property (strong) NSSet*contentKeywords;
 @property (strong) NSURL*contentURL;
 @property (strong) NSString*originatingApplicationName;
+@property (strong) NSString*deviceName;
 @property (strong) NSDate*updateDate;
 @end
 

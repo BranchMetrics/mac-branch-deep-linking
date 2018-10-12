@@ -19,10 +19,15 @@
         selector:@selector(branchDidStartSessionNotification:)
         name:BranchDidStartSessionNotification
         object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(branchCloudShareNotification:)
+        name:BranchCloundShareNotification
+        object:nil];
     BranchConfiguration*configuration =
         [[BranchConfiguration alloc] initWithKey:@"key_live_hkDytPACtipny3N9XmnbZlapBDdj4WIL"];
     [Branch.sharedInstance startWithConfiguration:configuration];
-
+    [Branch.sharedInstance startCloudShareNotifications];
     [NSApplication.sharedApplication activateIgnoringOtherApps:YES];
     [MonsterWindowController newWindowWithMonster:nil];
 }
@@ -53,6 +58,23 @@ continueUserActivity:(NSUserActivity *)userActivity
     if (!controller) controller = [MonsterWindowController newWindowWithMonster:monster];
     controller.monster = monster;
     [controller viewMonster:self];
+}
+
+- (void) branchCloudShareNotification:(NSNotification*)notification {
+    BranchCloudShareItem*item = notification.userInfo[BranchCloundShareItemKey];
+    if (!item) return;
+
+    __auto_type message =
+        [NSString stringWithFormat:@"There's a new scary monster!\nShow '%@'?", item.contentTitle];
+
+    NSAlert*alert = [[NSAlert alloc] init];
+    alert.messageText = @"Show Monster?";
+    alert.informativeText = message;
+    [[alert addButtonWithTitle:@"Show"] setTag:NSModalResponseOK];
+    [[alert addButtonWithTitle:@"Cancel"] setTag:NSModalResponseCancel];
+    if ([alert runModal] == NSModalResponseOK) {
+        [Branch.sharedInstance openURL:item.contentURL];
+    }
 }
 
 - (IBAction) newDocument:(id)sender {

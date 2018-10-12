@@ -272,6 +272,10 @@
     return nil;
 }
 
+- (NSString*) deviceName {
+    return [[NSHost currentHost] localizedName];
+}
+
 #else
 
 - (NSString *)vendorID {
@@ -291,6 +295,10 @@
         }
         return _vendorID;
     }
+}
+
+- (NSString*) deviceName {
+    return [UIDevice currentDevice].name;
 }
 
 #endif

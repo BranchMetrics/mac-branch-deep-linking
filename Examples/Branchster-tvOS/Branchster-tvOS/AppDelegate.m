@@ -94,7 +94,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
             message:message
             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:
-        [UIAlertAction actionWithTitle:@"OK"
+        [UIAlertAction actionWithTitle:@"Show"
             style:UIAlertActionStyleDefault
             handler:^(UIAlertAction * _Nonnull action) {
                 [Branch.sharedInstance openURL:item.contentURL];

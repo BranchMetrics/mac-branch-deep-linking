@@ -131,9 +131,9 @@
 		4D12D92A212487A6005C544C /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				4D8C4B08216D567A00E3DB1C /* Branch.framework */,
 				4D12D930212487A6005C544C /* Branch.framework */,
 				4D12D932212487A6005C544C /* Branch.framework */,
-				4D8C4B08216D567A00E3DB1C /* Branch.framework */,
 				4D12D934212487A6005C544C /* BranchTests.xctest */,
 			);
 			name = Products;
@@ -229,6 +229,9 @@
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
 							};
 						};
 					};
@@ -468,6 +471,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
@@ -486,6 +490,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Branchster-macOS/Branchster-macOS.entitlements";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;

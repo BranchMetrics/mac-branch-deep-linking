@@ -40,10 +40,7 @@
     [self.cmdChange.layer setCornerRadius:3.0];
     [self.cmdInfo.layer setCornerRadius:3.0];
     self.shareButton.image = [NSImage imageNamed:NSImageNameShareTemplate];
-    CGSize s = self.shareButton.image.size;
-    s.height *= 1.4f;
-    s.width *= 1.4f;
-    self.shareButton.image.size = s;
+    self.shareButton.image.size = NSMakeSize(16.0, 23.0);
     self.shareButton.layer.borderWidth = 1.5f;
     self.shareButton.layer.borderColor = [NSColor lightGrayColor].CGColor;
     CGRect r = self.shareButton.bounds;
@@ -143,35 +140,13 @@
 
 - (void) publishUserActivityURL:(NSURL*)URL {
     self.monsterURL = URL;
-    self.activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
-    self.activity.title = self.monster.monsterName;
-    self.activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
-    self.activity.requiredUserInfoKeys = [NSSet setWithArray:@[ @"branch" ]];
-//    self.activity.userInfo = @{ @"branch": URL };
-    [self.activity addUserInfoEntriesFromDictionary:@{ @"branch": URL }];
-    self.activity.eligibleForSearch = YES;
-    self.activity.eligibleForHandoff = YES;
-    self.activity.eligibleForPublicIndexing = YES;
-//  self.activity.webpageURL = URL;
-// iOS Only:
-//    self.activity.eligibleForPrediction = YES;
-//    self.activity.suggestedInvocationPhrase = @"Show Monster";
-    self.activity.delegate = self;
-    self.userActivity = self.activity;
-    [self.userActivity becomeCurrent];
-//  [self.userActivity needsSave];
-}
-
-- (void)userActivityWasContinued:(NSUserActivity *)userActivity {
-    BNCLogMethodName();
-    BNCLogDebug(@"%@", userActivity.userInfo);
-}
-
-- (void)userActivityWillSave:(NSUserActivity *)userActivity {
-    BNCLogMethodName();
-    BNCLogDebug(@"before userInfo %@", userActivity.userInfo);
-    [userActivity addUserInfoEntriesFromDictionary:@{ @"branch": self.monsterURL }];
-    BNCLogDebug(@" after userInfo %@", userActivity.userInfo);
+    BranchCloudShareItem*item = [BranchCloudShareItem new];
+    item.activityID = @"io.branch.Branchster";
+    item.contentTitle = self.monster.monsterName;
+    item.contentKeywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
+    item.contentURL = URL;
+    item.originatingApplicationName = @"Branchster tvOS";
+    [Branch.sharedInstance updateCloudShareItem:item];
 }
 
 @end
