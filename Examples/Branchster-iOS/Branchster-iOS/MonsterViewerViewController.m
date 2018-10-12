@@ -31,7 +31,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *shareTextView;
 
-@property (strong) NSURL*monsterURL;
 @property (strong) NSDictionary*monsterDictionary;
 @property (strong) NSUserActivity*activity;
 @end
@@ -42,10 +41,12 @@
 
 static CGFloat MONSTER_HEIGHT = 0.4f;
 
-+ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster {
++ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster
+                                                monsterURL:(NSURL*)url {
     UIStoryboard*storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     MonsterViewerViewController*controller =
         [storyBoard instantiateViewControllerWithIdentifier:NSStringFromClass(self)];
+    controller.monsterURL = url;
     controller.monster = monster;
     return controller;
 }
@@ -92,12 +93,14 @@ static CGFloat MONSTER_HEIGHT = 0.4f;
 
 - (void) setMonster:(BranchUniversalObject *)monster {
     _monster = monster;
+    if (!_monster.isMonster) return;
     self.monsterDictionary = @{
         @"color_index": @(self.monster.colorIndex),
         @"body_index":  @(self.monster.bodyIndex),
         @"face_index":  @(self.monster.faceIndex),
         @"monster_name":self.monster.monsterName
     };
+    if (self.monsterURL) return;
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"monster_sharing";
     linkProperties.channel = @"Branch Monster Factory";
@@ -135,19 +138,14 @@ static CGFloat MONSTER_HEIGHT = 0.4f;
 // https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/Handoff/AdoptingHandoff/AdoptingHandoff.html
 
 - (void) publishUserActivityURL:(NSURL*)URL {
-    __auto_type activity = [[NSUserActivity alloc] initWithActivityType:@"io.branch.Branchster"];
-    activity.title = self.monster.monsterName;
-    activity.keywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
-    activity.userInfo = @{ @"branch": URL };
-    activity.eligibleForSearch = YES;
-    activity.eligibleForHandoff = YES;
-    activity.eligibleForPublicIndexing = YES;
-//    self.activity.webpageURL = URL;
-// iOS Only:
-//    self.activity.eligibleForPrediction = YES;
-//    self.activity.suggestedInvocationPhrase = @"Show Monster";
-    self.userActivity = activity;
-    [self.userActivity becomeCurrent];
+    self.monsterURL = URL;
+    BranchCloudShareItem*item = [BranchCloudShareItem new];
+    item.activityID = @"io.branch.Branchster";
+    item.contentTitle = self.monster.monsterName;
+    item.contentKeywords = [NSSet setWithArray:@[ @"Branch", @"Monster", @"Factory" ]];
+    item.contentURL = URL;
+    item.originatingApplicationName = @"Branchster tvOS";
+    [Branch.sharedInstance updateCloudShareItem:item];
 }
 
 -(IBAction)shareSheet:(id)sender {

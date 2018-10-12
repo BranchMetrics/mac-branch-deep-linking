@@ -10,7 +10,8 @@
 @import Branch;
 
 @interface MonsterViewerViewController : UIViewController
-+ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster;
++ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster monsterURL:(NSURL*)url;
 @property (nonatomic, strong) BranchUniversalObject *monster;
+@property (strong) NSURL*monsterURL;
 @end
 
