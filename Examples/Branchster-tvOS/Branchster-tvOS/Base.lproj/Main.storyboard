@@ -531,6 +531,7 @@
                         <outlet property="botLayerTwoBody" destination="oMh-9x-jpm" id="E6T-wZ-Y7z"/>
                         <outlet property="cmdInfo" destination="4B5-bE-Ots" id="mCg-UL-CcI"/>
                         <outlet property="cmdShare" destination="pLF-7l-pgr" id="XR3-BR-1qB"/>
+                        <outlet property="shareTextView" destination="A3g-7U-orJ" id="1fX-TG-5vf"/>
                         <outlet property="txtDescription" destination="01m-g9-Wxp" id="XuX-Jn-2Ob"/>
                         <outlet property="txtName" destination="VWG-c7-t5F" id="z0L-j7-O9T"/>
                     </connections>

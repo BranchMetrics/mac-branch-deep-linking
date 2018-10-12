@@ -71,10 +71,12 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
         name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
         object:nil];
     self.cloudStore = [NSUbiquitousKeyValueStore defaultStore];
+    self.lastUpdateDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"cloudUpdateDate"];
     [self.cloudStore synchronize];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0 repeats:YES block:^(NSTimer*_Nonnull timer) {
         [self.cloudStore synchronize];
     }];
+    [self refreshFromCloud];
 }
 
 - (void) stop {
@@ -91,6 +93,9 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 - (void) updateItem:(BranchCloudShareItem *)item {
     item.updateDate = [NSDate date];
     self.cloudShareItem = item;
+    self.lastUpdateDate = item.updateDate;
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastUpdateDate forKey:@"cloudUpdateDate"];
+
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     NSData*data = [NSKeyedArchiver archivedDataWithRootObject:item];
@@ -113,13 +118,17 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
     // NSUbiquitousKeyValueStoreChangeReasonKey
 
     NSArray* updatedKeys = notification.userInfo[NSUbiquitousKeyValueStoreChangedKeysKey];
-    if (![updatedKeys containsObject:BranchCloudShareDateKey]) return;
+    if ([updatedKeys containsObject:BranchCloudShareDateKey]) {
+        [self refreshFromCloud];
+    }
+}
 
+- (void) refreshFromCloud {
     NSDate*updateDate = [self.cloudStore objectForKey:BranchCloudShareDateKey];
     NSData*itemData = [self.cloudStore objectForKey:BranchCloudShareKey];
     if (updateDate == nil || itemData == nil) return;
 
-    if (self.lastUpdateDate != nil && [updateDate compare:self.lastUpdateDate] < 0)
+    if (self.lastUpdateDate != nil && [updateDate compare:self.lastUpdateDate] <= 0)
         return;
 
     BranchCloudShareItem*item = [NSKeyedUnarchiver unarchiveObjectWithData:itemData];
@@ -127,6 +136,7 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
 
     self.cloudShareItem = item;
     self.lastUpdateDate = [NSDate date];
+    [[NSUserDefaults standardUserDefaults] setObject:self.lastUpdateDate forKey:@"cloudUpdateDate"];
 
     NSNotification*shareNotification =
         [NSNotification notificationWithName:BranchCloundShareNotification

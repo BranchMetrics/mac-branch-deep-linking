@@ -20,9 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtDescription;
 @property (weak, nonatomic) IBOutlet UIButton    *cmdShare;
 @property (weak, nonatomic) IBOutlet UIButton    *cmdInfo;
-@property (weak, nonatomic) IBOutlet UITextView  *shareTextView;
+@property (weak, nonatomic) IBOutlet UILabel     *shareTextView;
 
-@property (strong) NSURL*monsterURL;
 @property (strong) NSDictionary*monsterDictionary;
 @property (strong) NSUserActivity*activity;
 @end
@@ -31,10 +30,12 @@
 
 @implementation MonsterViewerViewController
 
-+ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster {
++ (MonsterViewerViewController*) viewControllerWithMonster:(BranchUniversalObject*)monster
+                                                monsterURL:(NSURL*)URL {
     UIStoryboard*storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     MonsterViewerViewController*controller =
         [storyBoard instantiateViewControllerWithIdentifier:NSStringFromClass(self)];
+    controller.monsterURL = URL;
     controller.monster = monster;
     return controller;
 }
@@ -49,6 +50,7 @@
     self.txtDescription.text = self.monster.monsterDescription;
     self.cmdShare.backgroundColor = [MonsterPartsFactory colorForIndex:5];
     self.cmdInfo.backgroundColor = [MonsterPartsFactory colorForIndex:5];
+    self.shareTextView.text = self.monsterURL ? self.monsterURL.absoluteString : @"";
 /*
     [self.monster registerViewWithCallback:^(NSDictionary *params, NSError *error) {
         NSLog(@"Monster %@ was viewed.  params: %@", self.monster.monsterName, params);
@@ -77,6 +79,7 @@
         @"face_index":  @(self.monster.faceIndex),
         @"monster_name":self.monster.monsterName
     };
+    if (self.monsterURL) return;
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"monster_sharing";
     linkProperties.channel = @"Branch Monster Factory";
@@ -108,6 +111,7 @@
             }
             self.monsterURL = shortURL;
             [self publishUserActivityURL:shortURL];
+            self.shareTextView.text = shortURL.absoluteString;
         }];
 }
 
