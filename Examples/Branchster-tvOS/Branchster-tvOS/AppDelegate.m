@@ -59,9 +59,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self.navigationController setViewControllers:@[creator] animated:YES];
 }
 
-- (void) showMonster:(BranchUniversalObject*)monster {
+- (void) showMonster:(BranchUniversalObject*)monster monsterURL:(NSURL*)URL {
     MonsterCreatorViewController *creator = [MonsterCreatorViewController viewControllerWithMonster:monster];
-    MonsterViewerViewController *viewer = [MonsterViewerViewController viewControllerWithMonster:monster];
+    MonsterViewerViewController *viewer =
+        [MonsterViewerViewController viewControllerWithMonster:monster monsterURL:URL];
     [self.navigationController setViewControllers:@[creator, viewer] animated:YES];
 }
 
@@ -74,7 +75,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BranchSession*session = notification.userInfo[BranchSessionKey];
     BranchUniversalObject*buo = session.linkContent;
     if (buo.isMonster) {
-        [self showMonster:buo];
+        [self showMonster:buo monsterURL:session.referringURL];
     } else
     if (isFirstTime) {
         [self editMonster:BranchUniversalObject.emptyMonster];
@@ -86,7 +87,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if (!item) return;
 
     __auto_type message =
-        [NSString stringWithFormat:@"There's a new scary monster!\nShow %@?", item.contentTitle];
+        [NSString stringWithFormat:@"There's a new scary monster!\nShow '%@'?", item.contentTitle];
 
     UIAlertController* alert =
         [UIAlertController alertControllerWithTitle:@"Show Monster?"

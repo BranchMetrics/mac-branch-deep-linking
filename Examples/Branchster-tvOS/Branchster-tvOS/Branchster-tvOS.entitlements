@@ -10,9 +10,7 @@
 		<string>applinks:branchster.test-app.link</string>
 		<string>applinks:branchster-alternate.app.link</string>
 	</array>
-	<key>com.apple.developer.icloud-container-identifiers</key>
-	<array/>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
-	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+	<string>$(TeamIdentifierPrefix)io.branch.Branchster</string>
 </dict>
 </plist>
