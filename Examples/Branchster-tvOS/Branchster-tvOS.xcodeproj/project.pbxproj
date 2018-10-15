@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D04CB9E21713054009F321F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D04CB9D21713054009F321F /* CloudKit.framework */; };
 		4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */; };
 		4D80E36C214048CF00A52CB7 /* MButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D80E36B214048CF00A52CB7 /* MButton.m */; };
 		4D94DB772122087200E1CA33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DB762122087200E1CA33 /* AppDelegate.m */; };
@@ -77,6 +78,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D04CB9D21713054009F321F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4D773EB2212396890002D3A3 /* Branchster-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-tvOS.entitlements"; sourceTree = "<group>"; };
 		4D80E36A214048CF00A52CB7 /* MButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MButton.h; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D04CB9E21713054009F321F /* CloudKit.framework in Frameworks */,
 				4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */,
 				4D94DBA521220B4300E1CA33 /* Branch.framework in Frameworks */,
 			);
@@ -121,6 +124,7 @@
 		4D2BF36C213EEC3A00D7CDD1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D04CB9D21713054009F321F /* CloudKit.framework */,
 				4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */,
 			);
 			name = Frameworks;
@@ -220,7 +224,7 @@
 						CreatedOnToolsVersion = 9.4.1;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.SafariKeychain = {
 								enabled = 1;

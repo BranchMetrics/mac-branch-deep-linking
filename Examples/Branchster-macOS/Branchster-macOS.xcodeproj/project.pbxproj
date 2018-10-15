@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D04CB9C21713043009F321F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D04CB9B21713043009F321F /* CloudKit.framework */; };
 		4D07BC842124D7BA009EF635 /* MonsterViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */; };
 		4D07BC8A2125F543009EF635 /* MonsterWindowController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D07BC882125F543009EF635 /* MonsterWindowController.storyboard */; };
 		4D07BC9121261C21009EF635 /* MonsterWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D07BC9021261C21009EF635 /* MonsterWindowController.m */; };
@@ -82,6 +83,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D04CB9B21713043009F321F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4D07BC832124D7BA009EF635 /* MonsterViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonsterViewerViewController.xib; sourceTree = "<group>"; };
 		4D07BC872124DDC0009EF635 /* Branchster-macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-macOS.entitlements"; sourceTree = "<group>"; };
 		4D07BC892125F543009EF635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MonsterWindowController.storyboard; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D04CB9C21713043009F321F /* CloudKit.framework in Frameworks */,
 				4D12D936212487D0005C544C /* Branch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +131,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D04CB9721713043009F321F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D04CB9B21713043009F321F /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4D12D92A212487A6005C544C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +156,7 @@
 				4D12D929212487A6005C544C /* Branch.xcodeproj */,
 				4D679CED21233DDB0041D7C5 /* Branchster-macOS */,
 				4D679CEC21233DDB0041D7C5 /* Products */,
+				4D04CB9721713043009F321F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

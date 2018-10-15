@@ -121,7 +121,6 @@ static NSString*const BranchCloudShareDateKey = @"io.branch.sdk.CloudShareDate";
     // Notification keys:
     // NSUbiquitousKeyValueStoreChangedKeysKey
     // NSUbiquitousKeyValueStoreChangeReasonKey
-
     NSArray* updatedKeys = notification.userInfo[NSUbiquitousKeyValueStoreChangedKeysKey];
     if ([updatedKeys containsObject:BranchCloudShareDateKey]) {
         [self refreshFromCloud];
