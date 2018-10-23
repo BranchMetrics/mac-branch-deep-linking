@@ -710,6 +710,7 @@
 					};
 					4D54C07420A6560400C76496 = {
 						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
 					};
 					4D67473C20C74E81001639C5 = {
 						ProvisioningStyle = Automatic;
@@ -942,7 +943,7 @@
 /* Begin XCBuildConfiguration section */
 		4D159DD320B62D7D005A9850 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */;
+			baseConfigurationReference = 4D0B753C211209F900A06D97 /* BranchTestHost-macOS.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -1162,14 +1163,22 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		4D54C08B20A6560400C76496 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -1268,7 +1277,11 @@
 		4DFB135520CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = UnitTests;
 		};

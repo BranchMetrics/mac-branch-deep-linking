@@ -21,12 +21,6 @@
 
 @implementation BNCURLBlackListTest
 
-- (void) setUp {
-}
-
-- (void) tearDown {
-}
-
 - (void)testListDownLoad {
     XCTestExpectation *expectation = [self expectationWithDescription:@"BlackList Download"];
     Branch*branch = [Branch new];

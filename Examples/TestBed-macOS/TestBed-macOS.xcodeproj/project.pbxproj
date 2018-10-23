@@ -157,9 +157,9 @@
 		2B3C06FE20AB722200F38167 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				4D0F11C0216EB84D0008080A /* Branch.framework */,
 				2B3C070320AB722200F38167 /* Branch.framework */,
 				2B073C1520C9AC45005D16D2 /* Branch.framework */,
-				4D0F11C0216EB84D0008080A /* Branch.framework */,
 				4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */,
 			);
 			name = Products;
