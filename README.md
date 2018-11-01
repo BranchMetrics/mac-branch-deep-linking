@@ -13,7 +13,7 @@ In addition you can track and analyze your app usage and the effectiveness of sh
 marketing campaigns, and cohorts with atrribution, influencer, and content breakdowns of your links
 on the Branch dashboard.
 
-NOTE: This project is still in beta. We support deferred and regular deep linking. We are currently building support for analytics, and this is slated to be released by end of Q3 18. Please send feedback to sahil@branch.io. Happy linking. 
+NOTE: This project is still in beta. We support deferred and regular deep linking. We are currently building support for analytics, but you can get raw data out, via our Data Feedback product. Please send feedback to sahil@branch.io. Happy linking. 
 
 
 Also see:
