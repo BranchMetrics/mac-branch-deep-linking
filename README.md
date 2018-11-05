@@ -79,7 +79,7 @@ other app kits for oauth and other uses.
 
 ### How Branch Deep Linking for Mac Works
 
-A Branch link is an web URL that looks like `https://your-app.app.link/bOsE0bbUtO`. When this link
+A Branch link is a web URL that looks like `https://your-app.app.link/bOsE0bbUtO`. When this link
 is clicked on a Mac it opens a Branch web page that quickly determines if the Mac app can be opened
 on the user's computer, and if so, Branch opens the app with a Mac URI scheme like
 `your-app-scheme://open?link_click_id=348527481794276288`.
