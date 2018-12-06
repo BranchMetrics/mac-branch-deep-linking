@@ -4,6 +4,37 @@ set -euo pipefail
 # http://www.mokacoding.com/blog/xcodebuild-destination-options/
 # https://pewpewthespells.com/blog/buildsettings.html
 
+function full_path_of_directory() {
+    local directory_name
+    directory_name="$1"
+    current_directory=$(pwd)
+    while [[ "$(basename "$current_directory")" != "$directory_name" && ${#current_directory} -gt 1 ]]
+    do
+        current_directory=$(dirname "$current_directory")
+    done
+    if (( ${#current_directory} <= 1 ))
+    then
+        echo ">>> Error: Path of '$1' not found." 1>&2
+        kill -9 -- $$
+        exit 1
+    fi
+    echo "$current_directory"
+}
+project_directory="$(full_path_of_directory mac-branch-deep-linking)"
+
+
+framework_path="$project_directory"/Frameworks
+rm -Rf "$framework_path"
+mkdir -p "$framework_path"
+
+temp_path="$project_directory"/Temp
+mkdir -p "$project_directory"/Temp
+
+function exit_function() {
+    rm -Rf "$temp_path"
+}
+trap exit_function EXIT
+
 # macOS:
 echo ">>> Building macOS."
 target_path=~/Desktop/f/macOS
@@ -16,11 +47,11 @@ xcodebuild \
     clean build \
     ARCHS=x86_64 \
     VALID_ARCHS=x86_64 \
-    TARGET_BUILD_DIR="$target_path"
-file "$target_path"/Branch.framework/Branch
+    TARGET_BUILD_DIR="$framework_path"/macOS
+file "$framework_path"/macOS/Branch.framework/Branch
 
-echo ">>> Building tvOS."
-target_path=~/Desktop/f/tvOS-1
+# tvOS arm64
+echo ">>> Building tvOS arm64."
 xcodebuild \
     -project Branch.xcodeproj \
     -target Branch-tvOS \
@@ -30,11 +61,11 @@ xcodebuild \
     clean build \
     ARCHS=arm64 \
     VALID_ARCHS=arm64 \
-    TARGET_BUILD_DIR="$target_path"
-file "$target_path"/Branch.framework/Branch
+    TARGET_BUILD_DIR="$temp_path"/tvOS-arm
+file "$temp_path"/tvOS-arm/Branch.framework/Branch
 
-echo ">>> Building tvOS."
-target_path=~/Desktop/f/tvOS-2
+# tvOS Simulator
+echo ">>> Building tvOS Simulator."
 xcodebuild \
     -project Branch.xcodeproj \
     -target Branch-tvOS \
@@ -44,48 +75,12 @@ xcodebuild \
     clean build \
     ARCHS=x86_64 \
     VALID_ARCHS=x86_64 \
-    TARGET_BUILD_DIR="$target_path"
-file "$target_path"/Branch.framework/Branch
+    TARGET_BUILD_DIR="$temp_path"/tvOS-sim
+file "$temp_path"/tvOS-sim/Branch.framework/Branch
 
-
-cat > /dev/null <<JUNK
-    -sdk appletvsimulator \
-    -sdk appletvos \
-
-    -sdk appletvos \
-    -showdestinations
-
-    clean build \
-    only_active_arch=no \
-    ARCHS="arm64 armv7 armv7s" \
-    VALID_ARCHS="arm64 armv7 armv7s"
-
-    -sdk appletvos11.4 \
-
-    ARCHS="arm64 armv7 armv7s i386 x86_64" \
-    VALID_ARCHS="arm64 armv7 armv7s i386 x86_64"
-
-xcodebuild \
-    -project Branch.xcodeproj \
-    -scheme Branch-macOS \
-    -destination 'platform=OS X,arch=x86_64' \
-    -verbose \
-        clean build \
-    ARCHS="i386 x86_64" \
-    VALID_ARCHS="i386 x86_64"
-
-
-    -destination 'platform=OS X,arch=i386 x86_64' \
-    -destination tvOS \
-    -destination platform=tvOS \
-
-xcodebuild \
-    -project Branch.xcodeproj \
-    -scheme Branch-macOS \
-    -showdestinations
-
-arch=x86_64
-
- -exportPath
-JUNK
+"$project_directory"/Documentation/Scripts/make_fat \
+    "$temp_path"/tvOS-arm/Branch.framework \
+    "$temp_path"/tvOS-sim/Branch.framework \
+    "$framework_path"/tvOS
+file "$framework_path"/tvOS/Branch.framework/Branch
 
