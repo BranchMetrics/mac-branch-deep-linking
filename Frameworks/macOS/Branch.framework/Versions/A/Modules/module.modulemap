@@ -1,0 +1,15 @@
+/**
+ @file          Branch.modulemap
+ @package       Branch
+ @brief         The Branch SDK module map file.
+
+ @author        Edward Smith
+ @date          May 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
+
+framework module Branch {
+   umbrella header "Branch.h"
+   export *
+   module * { export * }
+}

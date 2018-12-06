@@ -14,7 +14,7 @@
     <a title="Branch Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Branch Docs</a> (24% documented)</p>
+        <p><a href="../index.html">Branch Docs</a> (25% documented)</p>
         <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -286,6 +286,9 @@
               <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@BNCForceNSErrorCategoryToLoad">BNCForceNSErrorCategoryToLoad</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@BNCForceUIViewControllerCategoryToLoad">BNCForceUIViewControllerCategoryToLoad</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -336,7 +339,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L77">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L77">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -371,7 +374,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L80">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L80">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -406,7 +409,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L83">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L83">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -464,7 +467,7 @@
                         <p>Returns a pointer to the receiver.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L90">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -499,7 +502,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L93">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L93">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -524,17 +527,17 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">isBranchURL</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">isBranchURL</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">url</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">isBranch</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">isBranch</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L96">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L96">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -589,10 +592,150 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>BOOL   Returns true if it is a Branch link and an attempt will be made to open the link.</p>
+                        <p>Returns true if it is a Branch link and an attempt will be made to open the link.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L105">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L105">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Branch(im)openURL:options:"></a>
+                    <a name="//apple_ref/objc/Method/-openURL:options:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(im)openURL:options:">-openURL:options:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Open a URL with Branch.</p>
+
+<p>This should be called from an iOS or tvOS application delegate method
+<code>- (BOOL) openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey, id&gt; *)options;</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">openURL</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span>
+        <span class="nf">options</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">open</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL passed by the OS.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The options passed by the OS.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Returns <code>true</code> if Branch can handle this URL, <code>false</code> otherwise.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L118">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Branch(im)continueUserActivity:"></a>
+                    <a name="//apple_ref/objc/Method/-continueUserActivity:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(im)continueUserActivity:">-continueUserActivity:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Opens a URL that was passed in an app continuation.</p>
+
+<p>This should be called from your application&rsquo;s delegate method</p>
+<pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">application</span><span class="p">:(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+<span class="nf">continueUserActivity</span><span class="p">:(</span><span class="n">NSUserActivity</span> <span class="o">*</span><span class="p">)</span><span class="nv">userActivity</span>
+  <span class="nf">restorationHandler</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">))</span><span class="nv">restorationHandler</span>
+</code></pre>
+
+<p>so that Branch can handle the passed URL.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">continueUserActivity</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSUserActivity</span> <span class="o">*</span><span class="p">)</span><span class="nv">userActivity</span><span class="p">;</span></code></pre>
+
+                        </div>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="err">`</span><span class="k">continue</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">userActivity</span><span class="p">:</span> <span class="kt">NSUserActivity</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userActivity</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The <code>NSUserActivity</code> that was passed to your application.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Returns <code>true</code> if Branch can handle the passed URL, <code>false</code> otherwise.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L135">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -677,7 +820,7 @@ a completion callback, notifying you whether it succeeded or failed.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L119-L120">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L149-L150">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -714,7 +857,7 @@ of installs</em>. If you call setIdentity, this device will have that identity a
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L127">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L157">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -774,7 +917,7 @@ of installs</em>. If you call setIdentity, this device will have that identity a
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L137">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L167">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -794,6 +937,9 @@ of installs</em>. If you call setIdentity, this device will have that identity a
                       <div class="abstract">
                         <p>Generates a Branch short URL that describes the content described in the Branch Universal Object and
 has the passed link properties.</p>
+
+<p>A short link will not be able to be generated if networking is not available. In that case create a long
+link, which is guaranteed to succeed, but can be very long.</p>
 
                       </div>
                       <div class="declaration">
@@ -858,7 +1004,7 @@ has the passed link properties.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L148-L150">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L181-L183">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -930,7 +1076,7 @@ has the passed link properties.</p>
                         <p>Returns a Branch URL that has the given properties.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L160-L161">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L193-L194">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -938,9 +1084,9 @@ has the passed link properties.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(im)requestMetadataDictionary"></a>
-                    <a name="//apple_ref/objc/Method/-requestMetadataDictionary" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(im)requestMetadataDictionary">-requestMetadataDictionary</a>
+                    <a name="/c:objc(cs)Branch(py)requestMetadataDictionary"></a>
+                    <a name="//apple_ref/objc/Property/requestMetadataDictionary" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(py)requestMetadataDictionary">requestMetadataDictionary</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -955,17 +1101,18 @@ has the passed link properties.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">requestMetadataDictionary</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">readwrite</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">atomic</span><span class="p">,</span> <span class="n">null_resettable</span><span class="p">)</span>
+    <span class="n">NSMutableDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">NSString</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">requestMetadataDictionary</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">requestMetadataDictionary</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">NSMutableDictionary</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">requestMetadataDictionary</span><span class="p">:</span> <span class="kt">NSMutableDictionary</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L164">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L197">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -973,44 +1120,9 @@ has the passed link properties.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(im)setRequestMetadataDictionary:"></a>
-                    <a name="//apple_ref/objc/Method/-setRequestMetadataDictionary:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(im)setRequestMetadataDictionary:">-setRequestMetadataDictionary:</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">setRequestMetadataDictionary</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">dictionary</span><span class="p">;</span></code></pre>
-
-                        </div>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setRequestMetadataDictionary</span><span class="p">(</span><span class="n">_</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)Branch(py)trackingDisabled"></a>
-                    <a name="//apple_ref/objc/Property/trackingDisabled" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(py)trackingDisabled">trackingDisabled</a>
+                    <a name="/c:objc(cs)Branch(py)userTrackingDisabled"></a>
+                    <a name="//apple_ref/objc/Property/userTrackingDisabled" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Branch(py)userTrackingDisabled">userTrackingDisabled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1040,18 +1152,18 @@ information and prevent Branch from making any Branch network calls that will tr
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">getter</span><span class="o">=</span><span class="n">trackingIsDisabled</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">atomic</span><span class="p">)</span>
-    <span class="n">BOOL</span> <span class="n">trackingDisabled</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">getter</span><span class="o">=</span><span class="n">userTrackingIsDisabled</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">atomic</span><span class="p">)</span>
+    <span class="n">BOOL</span> <span class="n">userTrackingDisabled</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">trackingIsDisabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">userTrackingIsDisabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L183">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L215">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1059,9 +1171,9 @@ information and prevent Branch from making any Branch network calls that will tr
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)Branch(py)loggingEnabled"></a>
+                    <a name="/c:objc(cs)Branch(cpy)loggingEnabled"></a>
                     <a name="//apple_ref/objc/Property/loggingEnabled" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)Branch(py)loggingEnabled">loggingEnabled</a>
+                    <a class="token" href="#/c:objc(cs)Branch(cpy)loggingEnabled">loggingEnabled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1076,18 +1188,18 @@ information and prevent Branch from making any Branch network calls that will tr
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">getter</span><span class="o">=</span><span class="n">loggingIsEnabled</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">atomic</span><span class="p">)</span>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">getter</span><span class="o">=</span><span class="n">loggingIsEnabled</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="n">readwrite</span><span class="p">,</span> <span class="n">atomic</span><span class="p">,</span> <span class="n">class</span><span class="p">)</span>
     <span class="n">BOOL</span> <span class="n">loggingEnabled</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">loggingIsEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">class</span> <span class="k">var</span> <span class="nv">loggingIsEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L186">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L218">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1123,7 +1235,7 @@ to true limits the amount of user data that is synchronized with Facebook for th
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L192">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L224">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1163,7 +1275,7 @@ to true limits the amount of user data that is synchronized with Facebook for th
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L198">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L230">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1200,7 +1312,7 @@ though a block call back.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchMainClass.h#L204">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchMainClass.h#L236">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1265,7 +1377,7 @@ though a block call back.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchEvent.h#L96">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchEvent.h#L96">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1332,7 +1444,7 @@ though a block call back.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchEvent.h#L104">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchEvent.h#L104">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

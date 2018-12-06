@@ -1,6 +1,6 @@
 Branch Mac SDK Change Log
 
-## v1.0.0 - December 4th, 2018
+## v1.1.0 - December 6th, 2018
 * Added tvOS support
 * Added CocoaPod support
 

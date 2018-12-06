@@ -32,6 +32,7 @@ mkdir -p "$project_directory"/Temp
 
 function exit_function() {
     rm -Rf "$temp_path"
+    rm -Rf "$project_directory"/build
 }
 trap exit_function EXIT
 
@@ -78,9 +79,9 @@ xcodebuild \
     TARGET_BUILD_DIR="$temp_path"/tvOS-sim
 file "$temp_path"/tvOS-sim/Branch.framework/Branch
 
-"$project_directory"/Documentation/Scripts/make_fat \
+"$project_directory"/Documentation/Scripts/make-fat \
     "$temp_path"/tvOS-arm/Branch.framework \
     "$temp_path"/tvOS-sim/Branch.framework \
-    "$framework_path"/tvOS
+    "$framework_path"/tvOS//Branch.framework
 file "$framework_path"/tvOS/Branch.framework/Branch
 
