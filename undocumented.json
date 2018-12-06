@@ -2,63 +2,63 @@
   "warnings": [
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 38,
+      "line": 37,
       "symbol": "BranchDelegate.-branch:willStartSessionWithURL:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 39,
+      "line": 38,
       "symbol": "BranchDelegate.-branch:didStartSession:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 40,
+      "line": 39,
       "symbol": "BranchDelegate.-branch:failedToStartSessionWithURL:error:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 42,
+      "line": 41,
       "symbol": "BranchDelegate.-branch:didOpenURLWithSession:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 88,
+      "line": 87,
       "symbol": "BranchDidStartSessionNotification",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 89,
+      "line": 88,
       "symbol": "BranchDidOpenURLWithSessionNotification",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 91,
+      "line": 90,
       "symbol": "BranchURLKey",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 92,
+      "line": 91,
       "symbol": "BranchSessionKey",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchDelegate.h",
-      "line": 93,
+      "line": 92,
       "symbol": "BranchErrorKey",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
@@ -582,13 +582,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchMainClass.h",
-      "line": 165,
-      "symbol": "Branch.-setRequestMetadataDictionary:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchMutableDictionary.h",
       "line": 17,
       "symbol": "BranchMutableDictionary.-init",
@@ -654,8 +647,8 @@
     {
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchNetworkServiceProtocol.h",
       "line": 82,
-      "symbol": "BNCNetworkServiceProtocol.+new",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "symbol": "BNCNetworkServiceProtocol.-init",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
@@ -669,6 +662,13 @@
       "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchNetworkServiceProtocol.h",
       "line": 91,
       "symbol": "BNCNetworkServiceProtocol.-networkOperationWithURLRequest:completion:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/BranchNetworkServiceProtocol.h",
+      "line": 96,
+      "symbol": "BNCNetworkServiceProtocol.-pinSessionToPublicSecKeyRefs:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
@@ -1230,6 +1230,13 @@
       "line": 129,
       "symbol": "BranchUniversalObject.creationDate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/esmith/Documents/Development/BranchMetrics/mac-branch-deep-linking/Temp/Branch/UIViewController+Branch.h",
+      "line": 23,
+      "symbol": "BNCForceUIViewControllerCategoryToLoad",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.function",
       "warning": "undocumented"
     }
   ],

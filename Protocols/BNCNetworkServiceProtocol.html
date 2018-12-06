@@ -14,7 +14,7 @@
     <a title="BNCNetworkServiceProtocol Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Branch Docs</a> (24% documented)</p>
+        <p><a href="../index.html">Branch Docs</a> (25% documented)</p>
         <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -286,6 +286,9 @@
               <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@BNCForceNSErrorCategoryToLoad">BNCForceNSErrorCategoryToLoad</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@BNCForceUIViewControllerCategoryToLoad">BNCForceUIViewControllerCategoryToLoad</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -310,9 +313,9 @@ operations.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(pl)BNCNetworkServiceProtocol(cm)new"></a>
-                    <a name="//apple_ref/objc/Method/+new" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)BNCNetworkServiceProtocol(cm)new">+new</a>
+                    <a name="/c:objc(pl)BNCNetworkServiceProtocol(im)init"></a>
+                    <a name="//apple_ref/objc/Method/-init" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)BNCNetworkServiceProtocol(im)init">-init</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -327,17 +330,17 @@ operations.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">BNCNetworkServiceProtocol</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">new</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="o">&lt;</span><span class="n">BNCNetworkServiceProtocol</span><span class="o">&gt;</span><span class="p">)</span> <span class="n">init</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">new</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchNetworkServiceProtocol.h#L">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchNetworkServiceProtocol.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -372,7 +375,7 @@ operations.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchNetworkServiceProtocol.h#L">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchNetworkServiceProtocol.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -408,7 +411,7 @@ operations.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchNetworkServiceProtocol.h#L91-L92">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchNetworkServiceProtocol.h#L91-L92">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -426,15 +429,14 @@ operations.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><SecKeyRef></p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nf">pinSessionToPublicSecKeyRefs</span><span class="p">:</span>
-    <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">publicKeys</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSError</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span> <span class="nf">pinSessionToPublicSecKeyRefs</span><span class="p">:(</span><span class="n">NSArray</span><span class="cm">/* &lt;SecKeyRef&gt; */</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">publicKeys</span><span class="p">;</span></code></pre>
 
                         </div>
                         <div class="language">
@@ -444,7 +446,7 @@ operations.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/BranchMetrics/Branch-SDK-Mac/tree/v1.0.0/Branch/BranchNetworkServiceProtocol.h#L96">Show on GitHub</a>
+                        <a href="https://github.com/BranchMetrics/mac-branch-deep-linking/blob/master/Branch/BranchNetworkServiceProtocol.h#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
