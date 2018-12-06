@@ -13,7 +13,7 @@
     <a title="Branch  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Branch Docs</a> (24% documented)</p>
+        <p><a href="index.html">Branch Docs</a> (25% documented)</p>
         <p class="header-right"><a href="https://github.com/BranchMetrics/Branch-SDK-Mac"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -285,6 +285,9 @@
               <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@BNCForceNSErrorCategoryToLoad">BNCForceNSErrorCategoryToLoad</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/c:@F@BNCForceUIViewControllerCategoryToLoad">BNCForceUIViewControllerCategoryToLoad</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -306,6 +309,15 @@ so unexpected conditions are handled gracefully.</p>
 <p>In addition you can track and analyze your app usage and the effectiveness of sharing virality,
 marketing campaigns, and cohorts with atrribution, influencer, and content breakdowns of your links
 on the Branch dashboard.</p>
+
+<p>NOTE: This project is still in beta. We support deferred and regular deep linking. We are currently building support for analytics, and this is slated to be released by end of Q3 18. Please send feedback to <a href="mailto:sahil@branch.io">sahil@branch.io</a>. Happy linking. </p>
+
+<p>See also:</p>
+
+<ul>
+<li><a href="https://branchmetrics.github.io/mac-branch-deep-linking/index.html">Mac SDK online documentation</a></li>
+<li><a href="https://docs.branch.io">Branch general documentation</a></li>
+</ul>
 <h2 id='contents' class='heading'>Contents</h2>
 
 <ol>
@@ -379,6 +391,11 @@ on the user&rsquo;s computer, and if so, Branch opens the app with a Mac URI sch
 
 <p>(If the user doesn&rsquo;t have the app installed Branch can redirect the user to a fallback URL, like an
 app download page or some other configurable place).</p>
+
+<p>Once your app is running, macOS passes the URI <code>your-app-scheme://open?link_click_id=348527481794276288</code> to
+your app, which is intercepted by the Branch SDK. The SDK takes the link and makes a network call to our servers, which 
+translate and expand the parameters in the link to something meaningful for your app. The SDK then notifies your app that a link
+was opened with the expanded data.</p>
 <h2 id='adding-branch-to-your-app' class='heading'>Adding Branch to Your App</h2>
 <h3 id='get-a-branch-key' class='heading'>Get a Branch Key</h3>
 
@@ -469,7 +486,7 @@ method:</p>
 <p>To help debugging your app, you can turn on Branch logging, which logs to the console. Remember to turn it off in your production app.</p>
 <h4 id='property' class='heading'>Property</h4>
 
-<p><code><a href="Classes/Branch.html#/c:objc(cs)Branch(py)loggingEnabled">Branch.loggingEnabled</a></code></p>
+<p><code><a href="Classes/Branch.html#/c:objc(cs)Branch(cpy)loggingEnabled">Branch.loggingEnabled</a></code></p>
 <h3 id='setting-user-identities' class='heading'>Setting User Identities</h3>
 
 <p>Often, you might have your own user IDs, or want referral and event data to persist across platforms or uninstall/reinstall. It&rsquo;s

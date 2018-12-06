@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Creates and returns a new network service.
 @required
-+ (id<BNCNetworkServiceProtocol>) new;
+- (id<BNCNetworkServiceProtocol>) init;
 
 /// Cancel all current and queued network operations.
 @optional
@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Pins the session to the array of public keys.
 @optional
-- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*_Nullable)publicKeys;
+- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/* <SecKeyRef> */*_Nullable)publicKeys;
 
 @end
 

@@ -12,6 +12,7 @@
 #import "BNCEncoder.h"
 #import "BNCThreads.h"
 #import "BNCLog.h"
+#import "BNCApplication.h"
 #import "BNCPersistence.h"
 @class BNCSettingsProxy;
 
@@ -24,6 +25,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
     BranchMutableDictionary<NSString*, NSString*>* _requestMetadataDictionary;
     BranchMutableDictionary<NSString*, NSString*>* _instrumentationDictionary;
 }
+@property (strong) BNCPersistence*persistence;
 @end
 
 @interface BNCSettingsProxy : NSProxy {
@@ -70,8 +72,11 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 + (instancetype) loadSettings {
     @synchronized(self) {
         BNCSettingsProxy*result = nil;
-        BNCSettings* settings = [BNCPersistence unarchiveObjectNamed:BNCSettingsPersistenceName];
-        if (!settings) settings = [[BNCSettings alloc] init];
+        BNCSettings*settings =
+            [[[BNCPersistence alloc]
+                initWithAppGroup:BNCApplication.currentApplication.bundleID]
+                    unarchiveObjectNamed:BNCSettingsPersistenceName];
+        if (![settings isKindOfClass:BNCSettings.class]) settings = [[BNCSettings alloc] init];
         Class foundClass = [settings class];
         Class proxyClass = [BNCSettingsProxy class];
         Class settingsClass = [BNCSettings class];
@@ -97,6 +102,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 - (instancetype) init {
     self = [super init];
     if (!self) return self;
+    self.persistence = [[BNCPersistence alloc] initWithAppGroup:BNCApplication.currentApplication.bundleID];
     BNCSettingsProxy*proxy = [[BNCSettingsProxy alloc] initWithSettings:self];
     self->_proxy = proxy;
     return (BNCSettings*) proxy;
@@ -107,7 +113,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 }
 
 + (NSArray<NSString*>*) ignoreMembers {
-    return @[@"_saveQueue", @"_saveTimer", @"_proxy", @"_settingsSavedBlock"];
+    return @[@"_saveQueue", @"_saveTimer", @"_proxy", @"_settingsSavedBlock", @"_persistence" ];
 }
 
 - (instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
@@ -158,7 +164,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
             dispatch_source_cancel(_saveTimer);
             _saveTimer = nil;
         }
-        NSError*error = [BNCPersistence archiveObject:self named:BNCSettingsPersistenceName];
+        NSError*error = [self.persistence archiveObject:self named:BNCSettingsPersistenceName];
         if (self.settingsSavedBlock) self.settingsSavedBlock((BNCSettings*)self->_proxy, error);
     }
 }
@@ -200,7 +206,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
     }
 }
 
-- (void) clearTrackingInformation {
+- (void) clearUserIdentifyingInformation {
     @synchronized(self) {
         /* Don't clear these:
         self.deviceFingerprintID = nil;
@@ -210,6 +216,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
         */
         self.sessionID = nil;
         self.requestMetadataDictionary = nil;
+        [self setNeedsSave];
     }
 }
 

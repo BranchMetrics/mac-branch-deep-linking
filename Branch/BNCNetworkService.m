@@ -61,11 +61,6 @@
 
 @implementation BNCNetworkService
 
-- (instancetype) init {
-    self = [super init];
-    return self;
-}
-
 - (NSOperationQueue*) serviceQueue {
     @synchronized(self) {
         if (_serviceQueue) return _serviceQueue;

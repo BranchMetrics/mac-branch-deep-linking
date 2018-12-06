@@ -22,6 +22,7 @@
 #import "BranchError.h"
 #import "NSString+Branch.h"
 #import "NSData+Branch.h"
+#import "UIViewController+Branch.h"
 
 #pragma mark BranchConfiguration
 
@@ -82,6 +83,12 @@
 
 #pragma mark - Branch
 
+typedef NS_ENUM(NSInteger, BNCSessionState) {
+    BNCSessionStateUninitialized = 0,
+    BNCSessionStateInitializing,
+    BNCSessionStateInitialized
+};
+
 @interface Branch ()
 - (void) startNewSession;
 - (void) endSession;
@@ -93,6 +100,7 @@
 @property (atomic, strong) NSURL                *delayedOpenURL;
 @property (atomic, strong) dispatch_source_t    delayedOpenTimer;
 @property (atomic, strong) dispatch_queue_t     workQueue;
+@property (atomic, assign) BNCSessionState      sessionState;
 @end
 
 #pragma mark - Branch
@@ -132,6 +140,7 @@
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSDataCategoryToLoad();
     BNCForceNSStringCategoryToLoad();
+    BNCForceUIViewControllerCategoryToLoad();
 
     if (!configuration.isValidConfiguration) {
         [NSException raise:NSInvalidArgumentException
@@ -234,14 +243,14 @@
     return self.settings.limitFacebookTracking;
 }
 
-- (void) setLoggingEnabled:(BOOL)enabled_ {
++ (void) setLoggingEnabled:(BOOL)enabled_ {
     @synchronized(self) {
         BNCLogLevel level = enabled_ ? BNCLogLevelDebug : BNCLogLevelWarning;
         BNCLogSetDisplayLevel(level);
     }
 }
 
-- (BOOL) loggingIsEnabled {
++ (BOOL) loggingIsEnabled {
     @synchronized(self) {
         return (BNCLogDisplayLevel() < BNCLogLevelWarning) ? YES : NO;
     }
@@ -270,6 +279,7 @@
 #endif
 
 - (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
+    // TODO: Remove this?
     BNCLogMethodName();
     BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
 }
@@ -285,6 +295,7 @@
 }
 
 - (void) notificationObserver:(NSNotification*)notification {
+    // TODO: Remove this.
     //BNCLogDebugSDK(@"Notification '%@'.", notification.name);
 }
 
@@ -313,13 +324,9 @@
     return (linkIdentifier.length > 0) ? YES : NO;
 }
 
-- (BOOL) openURL:(NSURL *)url {
+- (void) startDelayedOpenTimer {
     @synchronized(self) {
-        if (url != nil && ![self isBranchURL:url]) {
-            return NO;
-        }
-        if (url.absoluteString.length) self.delayedOpenURL = url;
-        if (self.delayedOpenTimer) return YES;
+        if (self.delayedOpenTimer) return;
 
         NSTimeInterval kOpenDeadline = 0.750; // The delay may need to be tweaked.
 
@@ -327,7 +334,7 @@
             self.workQueue = dispatch_queue_create("io.branch.sdk.work", DISPATCH_QUEUE_CONCURRENT);
 
         self.delayedOpenTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.workQueue);
-        if (!self.delayedOpenTimer) return YES;
+        if (!self.delayedOpenTimer) return;
 
         dispatch_time_t startTime = BNCDispatchTimeFromSeconds(kOpenDeadline);
         dispatch_source_set_timer(
@@ -342,9 +349,61 @@
             [strongSelf delayedOpen];
         });
         dispatch_resume(self.delayedOpenTimer);
-
-        return YES;
     }
+}
+
+- (BOOL) openURL:(NSURL *)url {
+    @synchronized(self) {
+        if (url.absoluteString.length) {
+            self.delayedOpenURL = url;
+            [self startDelayedOpenTimer];
+        } else
+        if (self.sessionState == BNCSessionStateUninitialized) {
+            self.sessionState = BNCSessionStateInitializing;
+            [self startDelayedOpenTimer];
+        }
+        return [self isBranchURL:url];
+    }
+}
+
+- (BOOL) openURL:(NSURL *)url
+         options:(NSDictionary</*UIApplicationOpenURLOptionsKey*/NSString*, id> *)options {
+    return [self openURL:url];
+}
+
+- (BOOL) continueUserActivity:(NSUserActivity *)userActivity {
+    if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
+        return [self openURL:userActivity.webpageURL];
+    } else {
+        NSURL*branchURL = userActivity.userInfo[@"branch"];
+        if ([branchURL isKindOfClass:NSURL.class]) {
+            [self openURL:branchURL];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (NSURL*) URLWithSchemeSubstitution:(NSURL*)URL {
+    BOOL needsSubstitution = NO;
+    BNCApplication*application = [BNCApplication currentApplication];
+    if (application.defaultURLScheme && [URL.scheme isEqualToString:application.defaultURLScheme]) {
+        NSString*urlDomain = URL.host;
+        for (NSString*domain in application.associatedDomains) {
+            if ([domain hasPrefix:@"applinks:"]) {
+                NSString*nakedDomain = [domain substringFromIndex:9];
+                if ([urlDomain isEqualToString:nakedDomain]) {
+                    needsSubstitution = YES;
+                    break;
+                }
+            }
+        }
+    }
+    if (!needsSubstitution) return URL;
+    NSString*newURL =
+        [NSString stringWithFormat:@"https%@",
+            [URL.absoluteString substringFromIndex:application.defaultURLScheme.length]];
+    return [NSURL URLWithString:newURL];
 }
 
 - (void) delayedOpen {
@@ -355,7 +414,9 @@
         dispatch_source_cancel(self.delayedOpenTimer);
         self.delayedOpenTimer = nil;
     }
+    if (!openURL && self.userTrackingIsDisabled) return;
 
+    self.sessionState = BNCSessionStateInitializing;
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 
@@ -376,12 +437,13 @@
     if (blackListPattern != nil) {
         dictionary[@"external_intent_uri"] = blackListPattern;
     } else {
+        openURL = [self URLWithSchemeSubstitution:openURL];
         NSString*scheme = openURL.scheme;
         if ([scheme isEqualToString:@"https"] || [scheme isEqualToString:@"http"]) {
-            dictionary[@"universal_link_url"] = openURL.absoluteString;
+            dictionary[@"universal_link_url"] = BNCWireFormatFromURL(openURL);
         } else
         if (scheme.length > 0) {
-            dictionary[@"external_intent_uri"] = openURL.absoluteString;
+            dictionary[@"external_intent_uri"] = BNCWireFormatFromURL(openURL);
             NSURLComponents*components = [NSURLComponents componentsWithString:openURL.absoluteString];
             for (NSURLQueryItem*item in components.queryItems) {
                 if ([item.name isEqualToString:@"link_click_id"]) {
@@ -417,12 +479,13 @@
 
 - (void) openResponseWithOperation:(BNCNetworkAPIOperation*)operation url:(NSURL*)URL {
     if (operation.error) {
+        self.sessionState = BNCSessionStateUninitialized;
         BNCPerformBlockOnMainThreadAsync(^{
             [self notifyDidStartSession:nil withURL:URL error:operation.error];
         });
         return;
     }
-
+    self.sessionState = BNCSessionStateInitialized;
     BranchSession*session = operation.session;
     BranchLinkProperties*linkProperties = [BranchLinkProperties linkPropertiesWithDictionary:session.data];
     session.linkProperties = linkProperties;
@@ -506,12 +569,12 @@
 
 #pragma mark - User Tracking
 
-- (void) setTrackingDisabled:(BOOL)trackingDisabled_ {
+- (void) setUserTrackingDisabled:(BOOL)trackingDisabled_ {
     @synchronized(self) {
-        if (!!self.settings.trackingDisabled == !!trackingDisabled_) return;
-        self.settings.trackingDisabled = trackingDisabled_;
+        if (!!self.settings.userTrackingDisabled == !!trackingDisabled_) return;
+        self.settings.userTrackingDisabled = trackingDisabled_;
         if (trackingDisabled_) {
-            [self.settings clearAllSettings];
+            [self.settings clearUserIdentifyingInformation];
             [self.networkAPIService clearNetworkQueue];
             //[self.linkCache clear];
         } else {
@@ -521,9 +584,9 @@
     }
 }
 
-- (BOOL) trackingIsDisabled {
+- (BOOL) userTrackingIsDisabled {
     @synchronized(self) {
-        return self.settings.trackingDisabled;
+        return self.settings.userTrackingDisabled;
     }
 }
 
@@ -589,17 +652,19 @@
 }
 
 - (void) sendClose {
+    if (self.userTrackingIsDisabled) return;
     NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
     dictionary[@"identity_id"] = self.settings.identityID;
     dictionary[@"session_id"] = self.settings.sessionID;
     dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    self.sessionState = BNCSessionStateUninitialized;
     [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
         dictionary:dictionary
         completion:nil];
 }
 
-- (NSMutableDictionary*) requestMetadataDictionary {
+- (NSMutableDictionary*_Nonnull) requestMetadataDictionary {
     return self.settings.requestMetadataDictionary;
 }
 
@@ -614,7 +679,7 @@
                          completion:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error))completion {
     if (content == nil || linkProperties == nil) {
         // TODO: Add localized description.
-        NSError*error = [NSError branchErrorWithCode:BNCBadRequestError];
+        NSError*error = [NSError branchErrorWithCode:BNCBadRequestError localizedMessage:@"Bad parameters."];
         if (completion) completion(nil, error);
         return;
     }
@@ -659,7 +724,7 @@
     addItem(@"stage", linkProperties.stage);
     addItem(@"type", [NSNumber numberWithInteger:linkProperties.linkType].stringValue);
     addItem(@"matchDuration", [NSNumber numberWithInteger:linkProperties.matchDuration].stringValue);
-    addItem(@"source", @"ios"); // TODO: Add new sources.
+    addItem(@"source", @"mac"); // TODO: Add new sources.
 
     NSDictionary*dictionary = content.dictionary;
     if (dictionary.count) {
@@ -679,7 +744,7 @@
     else
         baseURL = [[NSMutableString alloc] initWithFormat:@"https://bnc.lt/a/%@", self.configuration.key];
 
-    if (self.trackingIsDisabled) {
+    if (self.userTrackingIsDisabled) {
         NSString *id_string = [NSString stringWithFormat:@"%%24identity_id=%@", self.settings.identityID];
         NSRange range = [baseURL rangeOfString:id_string];
         if (range.location != NSNotFound) {
@@ -696,6 +761,7 @@
     return URL;
 }
 
+// Useful for unit tests mostly.
 - (void) clearAllSettings {
     BNCLogDebugSDK(@"[Branch clearAllSettings].");
     if (self.networkAPIService)

@@ -1,0 +1,11 @@
+//@file          BranchTests-macOS.xcconfig
+//@package       Branch
+//@brief         An xcconfig file for configuring the Branch framework TEST_HOST for macOS.
+//
+//@author        Edward Smith
+//@date          June 2018
+//@copyright     Copyright © 2018 Branch. All rights reserved.
+
+SDKROOT                 = macosx
+SUPPORTED_PLATFORMS     = macosx
+TEST_HOST               = $(BUILT_PRODUCTS_DIR)/TestBed-macOS.app/Contents/MacOS/TestBed-macOS

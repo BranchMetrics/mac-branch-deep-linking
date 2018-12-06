@@ -16,10 +16,10 @@ on the Branch dashboard.
 NOTE: This project is still in beta. We support deferred and regular deep linking. We are currently building support for analytics, but you can get raw data out, via our Data Feedback product. Please send feedback to sahil@branch.io. Happy linking. 
 
 
-Also see:
+See also:
 
 * [Mac SDK online documentation](https://branchmetrics.github.io/mac-branch-deep-linking/index.html)
-* [Branch documentation](https://docs.branch.io)
+* [Branch general documentation](https://docs.branch.io)
 
 ## Contents
 
@@ -86,6 +86,11 @@ on the user's computer, and if so, Branch opens the app with a Mac URI scheme li
 
 (If the user doesn't have the app installed Branch can redirect the user to a fallback URL, like an
 app download page or some other configurable place).
+
+Once your app is running, macOS passes the URI `your-app-scheme://open?link_click_id=348527481794276288` to
+your app, which is intercepted by the Branch SDK. The SDK takes the link and makes a network call to our servers, which 
+translate and expand the parameters in the link to something meaningful for your app. The SDK then notifies your app that a link
+was opened with the expanded data.
 
 ## Adding Branch to Your App
 

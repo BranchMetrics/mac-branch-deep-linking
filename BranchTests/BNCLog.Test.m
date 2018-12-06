@@ -13,19 +13,27 @@
 #import "NSString+Branch.h"
 #import "BNCTestCase.h"
 
-static NSString* globalTestLogString = nil;
-
-void TestLogProcedure(NSDate*timestamp, BNCLogLevel level, NSString* message) {
-    globalTestLogString = [message copy];
-}
-
 @interface BNCLogTest : BNCTestCase
 @end
+
+static NSString* globalTestLogString_ = nil;
+
+void TestLogProcedure(NSDate*timestamp, BNCLogLevel level, NSString* message) {
+    @synchronized (BNCLogTest.class) {
+        globalTestLogString_ = [message copy];
+    }
+}
+
+NSString* globalTestLogString(void) {
+    @synchronized (BNCLogTest.class) {
+        return globalTestLogString_;
+    }
+}
 
 @implementation BNCLogTest
 
 - (void) dealloc {
-    globalTestLogString = nil;
+    globalTestLogString_ = nil;
 }
 
 extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
@@ -53,8 +61,8 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
 
     BNCLog(@"Debug message with no parameters.");
     BNCLogFlushMessages();
-    XCTAssertEqualObjects(globalTestLogString,
-        @"[branch.io] BNCLog.Test.m(54) Log: Debug message with no parameters.");
+    XCTAssertEqualObjects(globalTestLogString(),
+        @"[branch.io] BNCLog.Test.m(62) Log: Debug message with no parameters.");
 }
 
 - (void) testLog {
@@ -69,25 +77,25 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
 
     BNCLog(@"Debug message with no parameters.");
     BNCLogFlushMessages();
-    XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
+    XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(**) Log: Debug message with no parameters."]);
 
     BNCLog(@"Debug message with one parameter: %d.", 1);
     BNCLogFlushMessages();
-    XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
+    XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(**) Log: Debug message with one parameter: 1."]);
 
     BNCLogMethodName();
     BNCLogFlushMessages();
-    XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
+    XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(**) DebugSDK: Method 'testLog'."]);
 
     BNCLogAssert(1 == 2);
-    XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
+    XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(**) Assert: (1 == 2) !!! "]);
 
     BNCLogAssertWithMessage(1 == 2, @"Assert message! Parameter: %d.", 2);
-    XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
+    XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(**) Assert: (1 == 2) !!! Assert message! Parameter: 2."]);
 }
 
@@ -270,7 +278,7 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
     BNCLog((id)data);
     #pragma clang diagnostic pop
     BNCLogFlushMessages();
-    XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
+    XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(***) Log: "
          "0x**************** <NSConcreteMutableData> "
          "<54657374 20737472 696e672e>"]);

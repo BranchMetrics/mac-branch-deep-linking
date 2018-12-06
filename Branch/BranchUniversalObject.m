@@ -216,7 +216,7 @@ BranchCondition _Nonnull BranchConditionRefurbished   = @"REFURBISHED";
 
 #pragma mark - Dictionary Methods
 
-+ (BranchUniversalObject*_Nonnull) objectWithDictionary:(NSDictionary*_Null_unspecified)dictionary {
++ (BranchUniversalObject*_Nonnull) objectWithDictionary:(NSDictionary*_Nullable)dictionary {
     BranchUniversalObject *object = [BranchUniversalObject new];
 
     #define BNCWireFormatObjectFromDictionary

@@ -38,6 +38,7 @@
             atomic_fetch_add(&retryCount, 1);
             BNCTestNetworkOperation*operation = [BNCTestNetworkService operationWithRequest:request response:nil];
             operation.HTTPStatusCode = 500;
+            BNCSleepForTimeInterval(15.0);
             return operation;
         };
 
@@ -130,7 +131,8 @@
     [self waitForExpectationsWithTimeout:90.0 handler:nil];
     NSTimeInterval howLong = - [startDate timeIntervalSinceNow];
     long count = atomic_load(&retryCount);
-    XCTAssertTrue(count == 1 && howLong < 60.0);
+    XCTAssertEqual(count, 1);
+    XCTAssertLessThan(howLong, 60.0);
 }
 
 - (void) testSaveAndLoadOperations {
@@ -159,7 +161,8 @@
 
         BNCSleepForTimeInterval(1.0);
         long count = atomic_load(&operationCount1);
-        XCTAssert(branch.networkAPIService.queueDepth == 4 && count == 0);
+        XCTAssertEqual(branch.networkAPIService.queueDepth, 4);
+        XCTAssertEqual(count, 0);
     }
 
     Branch*branch = [Branch new];
@@ -177,7 +180,7 @@
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
     [branch startWithConfiguration:configuration];
-    [self waitForExpectationsWithTimeout:3.0 handler:nil];
+    [self waitForExpectationsWithTimeout:120.0 handler:nil];
     long count = atomic_load(&operationCount2);
     XCTAssertEqual(count, 6);
 }
@@ -237,7 +240,6 @@
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     configuration.networkServiceClass = BNCTestNetworkService.class;
 
-    __block long ms = 0;
     __block long requestCount = 0;
     BNCTestNetworkService.requestHandler =
         ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
@@ -246,8 +248,9 @@
                 NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
                 NSLog(@"WTF: %ld request: %@.", requestCount, request.URL.path);
                 NSLog(@"%@", dictionary);
-                if ([request.URL.path isEqualToString:@"/v2/event"]) {
-                    ms = [dictionary[@"instrumentation"][@"/v1/install-brtt"] integerValue];
+                if ([request.URL.path isEqualToString:@"/v2/event/standard"]) {
+                    NSString*brtt = dictionary[@"instrumentation"][@"/v1/install-brtt"];
+                    XCTAssertGreaterThan([brtt integerValue], 1);
                 }
                 return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
             }
@@ -263,7 +266,6 @@
         }
     ];
     [self waitForExpectationsWithTimeout:3.0 handler:nil];
-    XCTAssertGreaterThan(ms, 1);
 }
 
 @end

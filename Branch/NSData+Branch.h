@@ -10,9 +10,13 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSData (Branch)
 + (NSData*) bnc_dataWithHexString:(NSString*)string;
 @end
 
 FOUNDATION_EXPORT void BNCForceNSDataCategoryToLoad(void)
     __attribute__((constructor));
+
+NS_ASSUME_NONNULL_END

@@ -9,6 +9,7 @@
 */
 
 #import "BNCTestCase.h"
+#import "BranchError.h"
 #import "BNCLog.h"
 
 @interface BranchMainTest : BNCTestCase
@@ -21,11 +22,19 @@
     if (!self.branch) {
         self.branch = [[Branch alloc] init];
         [self.branch startWithConfiguration:[[BranchConfiguration alloc] initWithKey:BNCTestBranchKey]];
-        BNCSleepForTimeInterval(2.0);   // TODO: remove
+        BNCSleepForTimeInterval(2.0);   // TODO: remove Wait for open to happen.
     }
 }
 
+- (void)testSingleton {
+    Branch*b1 = Branch.sharedInstance;
+    Branch*b2 = Branch.sharedInstance;
+    XCTAssertNotNil(b1);
+    XCTAssertEqual(b1, b2);
+}
+
 - (void) testKitDetails {
+    // TODO: Change sdk bundle ID for tvos?
     XCTAssertEqualObjects(Branch.bundleIdentifier, @"io.branch.sdk.mac");
     XCTAssertTrue(Branch.kitDisplayVersion.length >= 5);
     XCTAssertEqualObjects(Branch.kitDisplayVersion,
@@ -40,14 +49,14 @@
 }
 
 - (void) testLogging {
-    self.branch.loggingEnabled = YES;
-    XCTAssertTrue(self.branch.loggingIsEnabled);
+    Branch.loggingEnabled = YES;
+    XCTAssertTrue(Branch.loggingIsEnabled);
     BNCLogDebug(@"Debug!");
     BNCLogFlushMessages();
     NSLog(@"Flushed 1.");
 
-    self.branch.loggingEnabled = NO;
-    XCTAssertFalse(self.branch.loggingIsEnabled);
+    Branch.loggingEnabled = NO;
+    XCTAssertFalse(Branch.loggingIsEnabled);
     BNCLogDebug(@"Debug!");
     BNCLogFlushMessages();
     NSLog(@"Flushed 2.");
@@ -94,13 +103,63 @@
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
 }
 
-- (void) testShortLinkBadNetwork {
-    // TODO: Finish this.
-    // XCTAssert(NO, @"Write this test.");
+- (void) testLongLinks {
+    BranchLinkProperties*lp = [BranchLinkProperties new];
+    lp.tags = @[ @"t1", @"t2" ];
+    lp.feature = @"feature";
+    lp.alias = @"alias";
+    lp.channel = @"channel";
+    lp.stage = @"stage";
+    lp.campaign = @"campaign";
+    lp.matchDuration = 600;
+    lp.linkType = BranchLinkTypeOneTimeUse;
+    lp.controlParams = (id) @{ @"cp1": @"cp1v" };
+
+    NSDictionary *dictionary = [self mutableDictionaryFromBundleJSONWithKey:@"BranchUniversalObjectJSON"];
+    XCTAssert(dictionary);
+    BranchUniversalObject *buo = [BranchUniversalObject objectWithDictionary:dictionary];
+    XCTAssert(buo);
+
+    NSURL*longURL = [self.branch branchLongLinkWithContent:buo linkProperties:lp];
+    NSString*test = longURL.absoluteString;
+    NSString*truth = [self stringFromBundleWithKey:@"LongLinkURL"];
+    XCTAssertEqualObjects(test, truth);
 }
 
-//### Functional Tests
-//* [ ] Make long link.
-//* [ ] Tracking disabled: Test setting persistence, open link work, long links work, else fail.
+- (void) testSetTrackingDisabled {
+    self.branch.userTrackingDisabled = YES;
+    Branch*branch = self.branch;
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinks"];
+    [branch setUserIdentity:@"Bob" completion:^(BranchSession * _Nullable session, NSError * _Nullable error) {
+        XCTAssertEqualObjects(error.domain, BNCErrorDomain);
+        XCTAssertEqual(error.code, BNCTrackingDisabledError);
+        [expectation fulfill];
+    }];
+    [self awaitExpectations];
+    self.branch.userTrackingDisabled = NO;
+}
+
+- (void) testSendClose {
+    Branch*branch = [Branch new];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testSendClose"];
+    BNCTestNetworkService.requestHandler =
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            if ([request.URL.path isEqualToString:@"/v1/close"]) {
+                NSDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+                XCTAssertGreaterThan(test.count, 1);
+                [expectation fulfill];
+            }
+            BNCTestNetworkOperation*operation = [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+            return operation;
+        };
+
+    [branch startWithConfiguration:configuration];
+    BNCSleepForTimeInterval(1.0); // TODO: Fix Sleep: open should happen without sleep.
+    [branch endSession];
+    [self awaitExpectations];
+}
 
 @end

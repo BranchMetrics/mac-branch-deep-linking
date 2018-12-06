@@ -55,7 +55,7 @@
         device.systemVersion.doubleValue > 8.0 &&
         device.systemVersion.doubleValue <= 12.0
     );
-    XCTAssertTrue(BNCTestStringMatchesRegex(device.systemBuildVersion, @"^[0-9A-Z]+$"));
+    XCTAssertTrue(BNCTestStringMatchesRegex(device.systemBuildVersion, @"^[0-9A-Za-z]+$"));
     XCTAssertTrue(
         device.screenSize.height > 0 &&
         device.screenSize.width > 0
@@ -67,11 +67,15 @@
     XCTAssertTrue(device.screenDPI >= 1.0 && device.screenDPI <= 3.0);
 #endif
 
-    XCTAssertFalse(device.adTrackingIsEnabled);
-    XCTAssertTrue(device.advertisingID == nil);
+    if ([self testDeviceSupportsIDFA]) {
+        XCTAssertTrue(device.adTrackingIsEnabled);
+        XCTAssertNotNil(device.advertisingID);
+    } else {
+        XCTAssertFalse(device.adTrackingIsEnabled);
+        XCTAssertNil(device.advertisingID);
+    }
     XCTAssertTrue([device.country isEqualToString:@"US"]);
     XCTAssertTrue([device.language isEqualToString:@"en"]);
-    XCTAssertTrue(device.browserUserAgent.length == 0);
     XCTAssertTrue(BNCTestStringMatchesRegex(device.localIPAddress, @"^\\d*\\.\\d*\\.\\d*\\.\\d*$"));
 }
 

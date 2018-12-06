@@ -1,0 +1,506 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */; };
+		4D80E36C214048CF00A52CB7 /* MButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D80E36B214048CF00A52CB7 /* MButton.m */; };
+		4D94DB772122087200E1CA33 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DB762122087200E1CA33 /* AppDelegate.m */; };
+		4D94DB7D2122087200E1CA33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D94DB7B2122087200E1CA33 /* Main.storyboard */; };
+		4D94DB7F2122087400E1CA33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D94DB7E2122087400E1CA33 /* Assets.xcassets */; };
+		4D94DB822122087400E1CA33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DB812122087400E1CA33 /* main.m */; };
+		4D94DBA521220B4300E1CA33 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D94DB912122093700E1CA33 /* Branch.framework */; };
+		4D94DBA621220B4300E1CA33 /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D94DB912122093700E1CA33 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4D94DBAC212227F000E1CA33 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBAB212227F000E1CA33 /* SplashViewController.m */; };
+		4D94DBB32122280B00E1CA33 /* BranchInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBAD2122280A00E1CA33 /* BranchInfoViewController.m */; };
+		4D94DBB42122280B00E1CA33 /* MonsterCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBAF2122280A00E1CA33 /* MonsterCreatorViewController.m */; };
+		4D94DBB52122280B00E1CA33 /* MonsterViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBB22122280B00E1CA33 /* MonsterViewerViewController.m */; };
+		4D94DBBB212228A200E1CA33 /* BranchUniversalObject+MonsterHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBB7212228A100E1CA33 /* BranchUniversalObject+MonsterHelpers.m */; };
+		4D94DBBC212228A200E1CA33 /* MonsterPartsFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBB9212228A100E1CA33 /* MonsterPartsFactory.m */; };
+		4D94DBC2212228ED00E1CA33 /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D94DBBF212228ED00E1CA33 /* ImageCollectionViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4D0F11C8216EC95F0008080A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D170FBB216D1CC00083D6B6;
+			remoteInfo = "Branch-iOS";
+		};
+		4D94DB8E2122093700E1CA33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D54C07520A6560400C76496;
+			remoteInfo = "Branch-macOS";
+		};
+		4D94DB902122093700E1CA33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D67477420C74E81001639C5;
+			remoteInfo = "Branch-tvOS";
+		};
+		4D94DB922122093700E1CA33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4D159DCB20B62D7D005A9850;
+			remoteInfo = BranchTests;
+		};
+		4D94DBA721220B4300E1CA33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D67473C20C74E81001639C5;
+			remoteInfo = "Branch-tvOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4D94DBA921220B4300E1CA33 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4D94DBA621220B4300E1CA33 /* Branch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4D773EB2212396890002D3A3 /* Branchster-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Branchster-tvOS.entitlements"; sourceTree = "<group>"; };
+		4D80E36A214048CF00A52CB7 /* MButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MButton.h; sourceTree = "<group>"; };
+		4D80E36B214048CF00A52CB7 /* MButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MButton.m; sourceTree = "<group>"; };
+		4D94DB722122087200E1CA33 /* Branchster-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Branchster-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D94DB752122087200E1CA33 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4D94DB762122087200E1CA33 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4D94DB7C2122087200E1CA33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4D94DB7E2122087400E1CA33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D94DB802122087400E1CA33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D94DB812122087400E1CA33 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4D94DB882122093700E1CA33 /* Branch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Branch.xcodeproj; path = ../../Branch.xcodeproj; sourceTree = "<group>"; };
+		4D94DBAA212227EF00E1CA33 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
+		4D94DBAB212227F000E1CA33 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
+		4D94DBAD2122280A00E1CA33 /* BranchInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchInfoViewController.m; sourceTree = "<group>"; };
+		4D94DBAE2122280A00E1CA33 /* MonsterCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterCreatorViewController.h; sourceTree = "<group>"; };
+		4D94DBAF2122280A00E1CA33 /* MonsterCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterCreatorViewController.m; sourceTree = "<group>"; };
+		4D94DBB02122280A00E1CA33 /* BranchInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchInfoViewController.h; sourceTree = "<group>"; };
+		4D94DBB12122280A00E1CA33 /* MonsterViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterViewerViewController.h; sourceTree = "<group>"; };
+		4D94DBB22122280B00E1CA33 /* MonsterViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterViewerViewController.m; sourceTree = "<group>"; };
+		4D94DBB7212228A100E1CA33 /* BranchUniversalObject+MonsterHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BranchUniversalObject+MonsterHelpers.m"; sourceTree = "<group>"; };
+		4D94DBB8212228A100E1CA33 /* MonsterPartsFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterPartsFactory.h; sourceTree = "<group>"; };
+		4D94DBB9212228A100E1CA33 /* MonsterPartsFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonsterPartsFactory.m; sourceTree = "<group>"; };
+		4D94DBBA212228A200E1CA33 /* BranchUniversalObject+MonsterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BranchUniversalObject+MonsterHelpers.h"; sourceTree = "<group>"; };
+		4D94DBBF212228ED00E1CA33 /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
+		4D94DBC0212228ED00E1CA33 /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D94DB6F2122087200E1CA33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D2BF370213EEC3A00D7CDD1 /* AdSupport.framework in Frameworks */,
+				4D94DBA521220B4300E1CA33 /* Branch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D2BF36C213EEC3A00D7CDD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D2BF36F213EEC3A00D7CDD1 /* AdSupport.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4D94DB692122087200E1CA33 = {
+			isa = PBXGroup;
+			children = (
+				4D94DB882122093700E1CA33 /* Branch.xcodeproj */,
+				4D94DB742122087200E1CA33 /* Branchster-tvOS */,
+				4D94DB732122087200E1CA33 /* Products */,
+				4D2BF36C213EEC3A00D7CDD1 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4D94DB732122087200E1CA33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D94DB722122087200E1CA33 /* Branchster-tvOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4D94DB742122087200E1CA33 /* Branchster-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				4D94DB752122087200E1CA33 /* AppDelegate.h */,
+				4D94DB762122087200E1CA33 /* AppDelegate.m */,
+				4D94DB7E2122087400E1CA33 /* Assets.xcassets */,
+				4D94DBB02122280A00E1CA33 /* BranchInfoViewController.h */,
+				4D94DBAD2122280A00E1CA33 /* BranchInfoViewController.m */,
+				4D773EB2212396890002D3A3 /* Branchster-tvOS.entitlements */,
+				4D94DBBA212228A200E1CA33 /* BranchUniversalObject+MonsterHelpers.h */,
+				4D94DBB7212228A100E1CA33 /* BranchUniversalObject+MonsterHelpers.m */,
+				4D94DBC0212228ED00E1CA33 /* ImageCollectionViewCell.h */,
+				4D94DBBF212228ED00E1CA33 /* ImageCollectionViewCell.m */,
+				4D94DB802122087400E1CA33 /* Info.plist */,
+				4D94DB812122087400E1CA33 /* main.m */,
+				4D94DB7B2122087200E1CA33 /* Main.storyboard */,
+				4D80E36A214048CF00A52CB7 /* MButton.h */,
+				4D80E36B214048CF00A52CB7 /* MButton.m */,
+				4D94DBAE2122280A00E1CA33 /* MonsterCreatorViewController.h */,
+				4D94DBAF2122280A00E1CA33 /* MonsterCreatorViewController.m */,
+				4D94DBB8212228A100E1CA33 /* MonsterPartsFactory.h */,
+				4D94DBB9212228A100E1CA33 /* MonsterPartsFactory.m */,
+				4D94DBB12122280A00E1CA33 /* MonsterViewerViewController.h */,
+				4D94DBB22122280B00E1CA33 /* MonsterViewerViewController.m */,
+				4D94DBAA212227EF00E1CA33 /* SplashViewController.h */,
+				4D94DBAB212227F000E1CA33 /* SplashViewController.m */,
+			);
+			path = "Branchster-tvOS";
+			sourceTree = "<group>";
+		};
+		4D94DB892122093700E1CA33 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D94DB8F2122093700E1CA33 /* Branch.framework */,
+				4D94DB912122093700E1CA33 /* Branch.framework */,
+				4D0F11C9216EC95F0008080A /* Branch.framework */,
+				4D94DB932122093700E1CA33 /* BranchTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D94DB712122087200E1CA33 /* Branchster-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D94DB852122087400E1CA33 /* Build configuration list for PBXNativeTarget "Branchster-tvOS" */;
+			buildPhases = (
+				4D94DB6E2122087200E1CA33 /* Sources */,
+				4D94DB6F2122087200E1CA33 /* Frameworks */,
+				4D94DB702122087200E1CA33 /* Resources */,
+				4D94DBA921220B4300E1CA33 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D94DBA821220B4300E1CA33 /* PBXTargetDependency */,
+			);
+			name = "Branchster-tvOS";
+			productName = "Branchster-tvOS";
+			productReference = 4D94DB722122087200E1CA33 /* Branchster-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4D94DB6A2122087200E1CA33 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Branch;
+				TargetAttributes = {
+					4D94DB712122087200E1CA33 = {
+						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 4D94DB6D2122087200E1CA33 /* Build configuration list for PBXProject "Branchster-tvOS" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4D94DB692122087200E1CA33;
+			productRefGroup = 4D94DB732122087200E1CA33 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4D94DB892122093700E1CA33 /* Products */;
+					ProjectRef = 4D94DB882122093700E1CA33 /* Branch.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				4D94DB712122087200E1CA33 /* Branchster-tvOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4D0F11C9216EC95F0008080A /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D0F11C8216EC95F0008080A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D94DB8F2122093700E1CA33 /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D94DB8E2122093700E1CA33 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D94DB912122093700E1CA33 /* Branch.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Branch.framework;
+			remoteRef = 4D94DB902122093700E1CA33 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4D94DB932122093700E1CA33 /* BranchTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BranchTests.xctest;
+			remoteRef = 4D94DB922122093700E1CA33 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4D94DB702122087200E1CA33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D94DB7F2122087400E1CA33 /* Assets.xcassets in Resources */,
+				4D94DB7D2122087200E1CA33 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D94DB6E2122087200E1CA33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D94DBBC212228A200E1CA33 /* MonsterPartsFactory.m in Sources */,
+				4D94DB822122087400E1CA33 /* main.m in Sources */,
+				4D94DB772122087200E1CA33 /* AppDelegate.m in Sources */,
+				4D94DBB32122280B00E1CA33 /* BranchInfoViewController.m in Sources */,
+				4D94DBB42122280B00E1CA33 /* MonsterCreatorViewController.m in Sources */,
+				4D80E36C214048CF00A52CB7 /* MButton.m in Sources */,
+				4D94DBBB212228A200E1CA33 /* BranchUniversalObject+MonsterHelpers.m in Sources */,
+				4D94DBC2212228ED00E1CA33 /* ImageCollectionViewCell.m in Sources */,
+				4D94DBAC212227F000E1CA33 /* SplashViewController.m in Sources */,
+				4D94DBB52122280B00E1CA33 /* MonsterViewerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4D94DBA821220B4300E1CA33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Branch-tvOS";
+			targetProxy = 4D94DBA721220B4300E1CA33 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4D94DB7B2122087200E1CA33 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D94DB7C2122087200E1CA33 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D94DB832122087400E1CA33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		4D94DB842122087400E1CA33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4D94DB862122087400E1CA33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Image";
+				CODE_SIGN_ENTITLEMENTS = "Branchster-tvOS/Branchster-tvOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "Branchster-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.Branchster-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		4D94DB872122087400E1CA33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Image";
+				CODE_SIGN_ENTITLEMENTS = "Branchster-tvOS/Branchster-tvOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "Branchster-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.Branchster-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D94DB6D2122087200E1CA33 /* Build configuration list for PBXProject "Branchster-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D94DB832122087400E1CA33 /* Debug */,
+				4D94DB842122087400E1CA33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D94DB852122087400E1CA33 /* Build configuration list for PBXNativeTarget "Branchster-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D94DB862122087400E1CA33 /* Debug */,
+				4D94DB872122087400E1CA33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4D94DB6A2122087200E1CA33 /* Project object */;
+}

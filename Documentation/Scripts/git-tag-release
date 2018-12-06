@@ -26,14 +26,14 @@ project_directory="$(full_path_of_directory mac-branch-deep-linking)"
 cd "$project_directory"
 
 version=$(defaults read "$project_directory"/Branch/Info.plist CFBundleShortVersionString)
-version=${version}-beta
+version=${version}
 git_branch=$(git symbolic-ref --short HEAD)
 
 echo ">>> Pushing version $version to '$git_branch'..." 1>&2
 
 git add --all
 git commit --allow-empty -m "Release ${version}."
-git tag v"${version}"
+git tag "${version}"
 git push --tags origin "$git_branch"
 
 # Update the online doc sub repo:

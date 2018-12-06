@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param  completion     The completion block that receives the response data.
  */
 - (void) postOperationForAPIServiceName:(NSString*)serviceName
-        dictionary:(NSDictionary*)dictionary
+        dictionary:(NSMutableDictionary*)dictionary
         completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion;
 
 - (void) clearNetworkQueue;

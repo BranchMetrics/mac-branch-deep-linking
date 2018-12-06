@@ -1,5 +1,9 @@
 Branch Mac SDK Change Log
 
+## v1.1.0 - December 6th, 2018
+* Added tvOS support
+* Added CocoaPod support
+
 ## v0.1.0-beta - *First Release - July 13, 2018*
 
 Branch is proud to release the beta version of the Branch SDK for Mac!

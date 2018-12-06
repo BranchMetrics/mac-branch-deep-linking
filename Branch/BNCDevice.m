@@ -8,123 +8,17 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-/**
-  @discussion
-
-  Technical Note TN1103
-  Uniquely Identifying a Macintosh Computer
-  https://developer.apple.com/library/content/technotes/tn1103/_index.html
-*/
-
 #import "BNCDevice.h"
 #import "BNCLog.h"
+#import "BNCNetworkInformation.h"
 
 #import <sys/sysctl.h>
-#import <net/if.h>
-#import <ifaddrs.h>
-#import <arpa/inet.h>
-#import <netinet/in.h>
-#import <sys/utsname.h>
 #import <CommonCrypto/CommonCrypto.h>
 
 // Forward declare this for older versions of iOS
 @interface NSLocale (Branch)
 - (NSString*) countryCode;
 - (NSString*) languageCode;
-@end
-
-#pragma mark - BRNNetworkInfo
-
-typedef NS_ENUM(NSInteger, BNCNetworkAddressType) {
-    BNCNetworkAddressTypeUnknown = 0,
-    BNCNetworkAddressTypeIPv4,
-    BNCNetworkAddressTypeIPv6
-};
-
-@interface BNCNetworkInterface : NSObject
-
-+ (NSArray<BNCNetworkInterface*>*) currentInterfaces;
-
-@property (nonatomic, strong) NSString              *interfaceName;
-@property (nonatomic, assign) BNCNetworkAddressType addressType;
-@property (nonatomic, strong) NSString              *address;
-@end
-
-@implementation BNCNetworkInterface
-
-+ (NSArray<BNCNetworkInterface*>*) currentInterfaces {
-
-    struct ifaddrs *interfaces = NULL;
-    NSMutableArray *currentInterfaces = [NSMutableArray arrayWithCapacity:8];
-
-    // Retrieve the current interfaces - returns 0 on success
-
-    if (getifaddrs(&interfaces) != 0) {
-        int e = errno;
-        BNCLogError(@"Can't read ip address: (%d): %s.", e, strerror(e));
-        goto exit;
-    }
-
-    // Loop through linked list of interfaces --
-
-    struct ifaddrs *interface = NULL;
-    for(interface=interfaces; interface; interface=interface->ifa_next) {
-        // BNCLogDebugSDK(@"Found %s: %x.", interface->ifa_name, interface->ifa_flags);
-        // Check the state: IFF_RUNNING, IFF_UP, IFF_LOOPBACK, etc.
-        if ((interface->ifa_flags & IFF_UP) &&
-            (interface->ifa_flags & IFF_RUNNING) &&
-            !(interface->ifa_flags & IFF_LOOPBACK)) {
-        } else {
-            continue;
-        }
-
-        // TODO: Check ifdata too. May indicate actual interface used.
-        // struct if_data *ifdata = interface->ifa_data;
-
-        const struct sockaddr_in *addr = (const struct sockaddr_in*)interface->ifa_addr;
-        if (!addr) continue;
-
-        BNCNetworkAddressType type = BNCNetworkAddressTypeUnknown;
-        char addrBuf[ MAX(INET_ADDRSTRLEN, INET6_ADDRSTRLEN) ];
-
-        if (addr->sin_family == AF_INET) {
-            if (inet_ntop(AF_INET, &addr->sin_addr, addrBuf, INET_ADDRSTRLEN))
-                type = BNCNetworkAddressTypeIPv4;
-        }
-        else
-        if (addr->sin_family == AF_INET6) {
-            const struct sockaddr_in6 *addr6 = (const struct sockaddr_in6*)interface->ifa_addr;
-            if (inet_ntop(AF_INET6, &addr6->sin6_addr, addrBuf, INET6_ADDRSTRLEN))
-                type = BNCNetworkAddressTypeIPv6;
-        }
-        else {
-            continue;
-        }
-
-        NSString *name = [NSString stringWithUTF8String:interface->ifa_name];
-        if (name && type != BNCNetworkAddressTypeUnknown) {
-            BNCNetworkInterface *interface = [BNCNetworkInterface new];
-            interface.interfaceName = name;
-            interface.addressType = type;
-            interface.address = [NSString stringWithUTF8String:addrBuf];
-            [currentInterfaces addObject:interface];
-        }
-    }
-
-exit:
-    if (interfaces) freeifaddrs(interfaces);
-    return currentInterfaces;
-}
-
-- (NSString*) description {
-    return [NSString stringWithFormat:@"<%@ %p %@ %@>",
-        NSStringFromClass(self.class),
-        self,
-        self.interfaceName,
-        self.address
-    ];
-}
-
 @end
 
 #pragma mark - BNCDevice
@@ -280,62 +174,10 @@ exit:
     return version;
 }
 
-#if TARGET_OS_OSX
-
-+ (NSData*) macAddress {
-    kern_return_t             kernResult;
-    mach_port_t               master_port;
-    io_iterator_t             iterator;
-    io_object_t               service;
-    CFDataRef                 macAddress = nil;
-    CFMutableDictionaryRef    matchingDict = nil;
-
-    kernResult = IOMasterPort(MACH_PORT_NULL, &master_port);
-    if (kernResult != KERN_SUCCESS) {
-        BNCLogDebugSDK(@"IOMasterPort returned %d.", kernResult);
-        return nil;
-    }
-
-    matchingDict = IOBSDNameMatching(master_port, 0, "en0");
-    if (!matchingDict) {
-        BNCLogDebugSDK(@"IOBSDNameMatching returned empty dictionary.");
-        goto exit;
-    }
-
-    // Note: IOServiceGetMatchingServices releases matchingDict.
-    kernResult = IOServiceGetMatchingServices(master_port, matchingDict, &iterator);
-    if (kernResult != KERN_SUCCESS) {
-        BNCLogDebugSDK(@"IOServiceGetMatchingServices returned %d.", kernResult);
-        goto exit;
-    }
-
-    while((service = IOIteratorNext(iterator)) != 0) {
-        io_object_t parentService;
-        kernResult = IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService);
-        if (kernResult == KERN_SUCCESS) {
-            if (macAddress) CFRelease(macAddress);
-            macAddress = (CFDataRef) IORegistryEntryCreateCFProperty(
-                parentService,
-                CFSTR("IOMACAddress"),
-                kCFAllocatorDefault,
-                0
-            );
-            IOObjectRelease(parentService);
-        } else {
-            BNCLogDebugSDK(@"IORegistryEntryGetParentEntry returned %d.", kernResult);
-        }
-        IOObjectRelease(service);
-    }
-    IOObjectRelease(iterator);
-
-exit:
-    //if (matchingDict) CFRelease(matchingDict);  // Already released by IOServiceGetMatchingServices
-    return (__bridge_transfer NSData*) macAddress;
-}
-
 + (NSString*) networkAddress {
     NSMutableString* string = nil;
-    NSData*data = [self macAddress];
+    BNCNetworkInformation*info = [BNCNetworkInformation local];
+    NSData*data = info.address;
     if (!data || data.length != 6) return nil;
 
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
@@ -354,123 +196,6 @@ exit:
 
     return result;
 }
-
-#else
-
-+ (NSString*) networkAddress {
-    return nil;
-}
-
-#endif
-
-/*
-+ (NSString*) userAgentString {
-    // TODO: Fill out with real string.
-
-    // Mac Safari
-    //return @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1 Safari/605.1.15";
-
-    // iOS Safari
-    return
-        @"\"Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) "
-         "Version/11.0 Mobile/15A372 Safari/604.1\"";
-}
-*/
-
-+ (NSString*) userAgentString {
-    return nil;
-}
-
-// #else
-
-#if 0 // TARGET_OS_OSX
-
-+ (NSString*) userAgentString {
-
-    static NSString* brn_browserUserAgentString = nil;
-
-    void (^setBrowserUserAgent)(void) = ^() {
-        @synchronized (self) {
-            if (!brn_browserUserAgentString) {
-                brn_browserUserAgentString =
-                    [[[UIWebView alloc]
-                      initWithFrame:CGRectZero]
-                        stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-                BNCPreferenceHelper *preferences = [BNCPreferenceHelper preferenceHelper];
-                preferences.browserUserAgentString = brn_browserUserAgentString;
-                preferences.lastSystemBuildVersion = self.systemBuildVersion;
-                BNCLogDebugSDK(@"userAgentString: '%@'.", brn_browserUserAgentString);
-            }
-        }
-    };
-
-    NSString* (^browserUserAgent)(void) = ^ NSString* () {
-        @synchronized (self) {
-            return brn_browserUserAgentString;
-        }
-    };
-
-    @synchronized (self) {
-        //    We only get the string once per app run:
-
-        if (brn_browserUserAgentString)
-            return brn_browserUserAgentString;
-
-        //  Did we cache it?
-
-        BNCPreferenceHelper *preferences = [BNCPreferenceHelper preferenceHelper];
-        if (preferences.browserUserAgentString &&
-            preferences.lastSystemBuildVersion &&
-            [preferences.lastSystemBuildVersion isEqualToString:self.systemBuildVersion]) {
-            brn_browserUserAgentString = [preferences.browserUserAgentString copy];
-            return brn_browserUserAgentString;
-        }
-
-        //    Make sure this executes on the main thread.
-        //    Uses an implied lock through dispatch_queues:  This can deadlock if mis-used!
-
-        if (NSThread.isMainThread) {
-            setBrowserUserAgent();
-            return brn_browserUserAgentString;
-        }
-
-    }
-
-    //  Different case for iOS 7.0:
-    if ([UIDevice currentDevice].systemVersion.doubleValue  < 8.0) {
-        BNCLogDebugSDK(@"Getting iOS 7 UserAgent.");
-        dispatch_sync(dispatch_get_main_queue(), ^ {
-            setBrowserUserAgent();
-        });
-        BNCLogDebugSDK(@"Got iOS 7 UserAgent.");
-        return browserUserAgent();
-    }
-
-    //    Wait and yield to prevent deadlock:
-    int retries = 10;
-    int64_t timeoutDelta = (dispatch_time_t)((long double)NSEC_PER_SEC * (long double)0.100);
-    while (!browserUserAgent() && retries > 0) {
-
-        dispatch_block_t agentBlock = dispatch_block_create_with_qos_class(
-            DISPATCH_BLOCK_DETACHED | DISPATCH_BLOCK_ENFORCE_QOS_CLASS,
-            QOS_CLASS_USER_INTERACTIVE,
-            0,  ^ {
-                BNCLogDebugSDK(@"Will set userAgent.");
-                setBrowserUserAgent();
-                BNCLogDebugSDK(@"Did set userAgent.");
-            });
-        dispatch_async(dispatch_get_main_queue(), agentBlock);
-
-        dispatch_time_t timeoutTime = dispatch_time(DISPATCH_TIME_NOW, timeoutDelta);
-        dispatch_block_wait(agentBlock, timeoutTime);
-        retries--;
-    }
-    BNCLogDebugSDK(@"Retries: %d", 10-retries);
-
-    return browserUserAgent();
-}
-
-#endif
 
 #if TARGET_OS_OSX
 
@@ -524,7 +249,7 @@ exit:
         if ([sharedManager respondsToSelector:advertisingIdentifierSelector]) {
             NSUUID *uuid = [sharedManager performSelector:advertisingIdentifierSelector];
             device->_advertisingID = [uuid UUIDString];
-            // limit ad tracking is enabled. iOS 10+
+            // Check if limit ad tracking is enabled. iOS 10+
             if ([device->_advertisingID isEqualToString:@"00000000-0000-0000-0000-000000000000"]) {
                 device->_advertisingID = nil;
             }
@@ -535,7 +260,6 @@ exit:
     device->_netAddress = [self networkAddress];
     device->_country = [self country];
     device->_language = [self language];
-    device->_browserUserAgent = [self userAgentString];
 
     return device;
 }
@@ -565,7 +289,7 @@ exit:
         if (!_vendorID) {
             _vendorID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
         }
-        return [_vendorID copy];
+        return _vendorID;
     }
 }
 
@@ -578,14 +302,14 @@ exit:
         _hardwareIDType = @"mac_id";
         return s;
     }
-    s = [self vendorID];
-    if (s) {
-        _hardwareIDType = @"vendor_id";
-        return s;
-    }
     s = [self advertisingID];
     if (s) {
         _hardwareIDType = @"idfa";
+        return s;
+    }
+    s = [self vendorID];
+    if (s) {
+        _hardwareIDType = @"vendor_id";
         return s;
     }
     s = [[NSUUID UUID] UUIDString];
@@ -614,7 +338,6 @@ exit:
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
     addString(netAddress,           mac_id);
-    addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);
@@ -643,7 +366,6 @@ exit:
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
     addString(netAddress,           mac_id);
-    addString(browserUserAgent,     user_agent);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);
@@ -659,10 +381,10 @@ exit:
 
 - (NSString*) localIPAddress {
     @synchronized (self) {
-        NSArray<BNCNetworkInterface*>*interfaces = [BNCNetworkInterface currentInterfaces];
-        for (BNCNetworkInterface *interface in interfaces) {
-            if (interface.addressType == BNCNetworkAddressTypeIPv4)
-                return interface.address;
+        NSArray<BNCNetworkInformation*>*interfaces = [BNCNetworkInformation currentInterfaces];
+        for (BNCNetworkInformation *interface in interfaces) {
+            if (interface.inetAddressType == BNCInetAddressTypeIPv4)
+                return interface.displayInetAddress;
         }
         return @"";
     }
@@ -671,8 +393,9 @@ exit:
 - (NSArray<NSString*>*) allLocalIPAddresses {
     @synchronized(self) {
         NSMutableArray *array = [NSMutableArray new];
-        for (BNCNetworkInterface *inf in [BNCNetworkInterface currentInterfaces]) {
-            [array addObject:inf.description];
+        for (BNCNetworkInformation *inf in [BNCNetworkInformation currentInterfaces]) {
+            if (inf.displayInetAddress.length)
+                [array addObject:inf.displayInetAddress];
         }
         return array;
     }

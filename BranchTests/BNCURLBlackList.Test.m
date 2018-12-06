@@ -21,12 +21,6 @@
 
 @implementation BNCURLBlackListTest
 
-- (void) setUp {
-}
-
-- (void) tearDown {
-}
-
 - (void)testListDownLoad {
     XCTestExpectation *expectation = [self expectationWithDescription:@"BlackList Download"];
     Branch*branch = [Branch new];
@@ -161,8 +155,8 @@
                 NSDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
                 NSLog(@"URL: %@", request.URL);
                 NSLog(@"d: %@", dictionary);
-                NSString* link = dictionary[@"external_intent_uri"];
-                NSString *pattern =
+                NSString*link = dictionary[@"external_intent_uri"];
+                NSString*pattern =
                     @"^(?i)(?!(http|https):).*(:|:.*\\b)(password|o?auth|o?auth.?token|access|access.?token)\\b";
                     // @"^(?i).+:.*[?].*\\b(password|o?auth|o?auth.?token|access|access.?token)\\b";
                 NSLog(@"\n   Link: '%@'\nPattern: '%@'\n.", link, pattern);
@@ -172,10 +166,7 @@
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
 
-    NSString *url = @"https://myapp.app.link/bob/link?oauth=true";
-    #if TARGET_OS_OSX
-    url = @"testbed-mac://open?link_click_id=348527481794276288&oauth=true";
-    #endif
+    NSString*url = @"testbed-mac://open?link_click_id=348527481794276288&oauth=true";
 
     [branch openURL:[NSURL URLWithString:url]];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];

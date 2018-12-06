@@ -9,20 +9,20 @@
 */
 
 #import "BNCNetworkAPIService.h"
-#import "BNCSettings.h"
 #import "BNCApplication.h"
 #import "BNCDevice.h"
-#import "BNCWireFormat.h"
+#import "BNCLocalization.h"
+#import "BNCLog.h"
+#import "BNCPersistence.h"
+#import "BNCSettings.h"
 #import "BNCThreads.h"
-#import "BranchSession.h"
+#import "BNCWireFormat.h"
+#import "BranchDelegate.h"
+#import "BranchError.h"
+#import "BranchEvent.h"
 #import "BranchMainClass.h"
 #import "BranchMainClass+Private.h"
-#import "BNCLog.h"
-#import "BranchDelegate.h"
-#import "BranchEvent.h"
-#import "BranchError.h"
-#import "BNCLocalization.h"
-#import "BNCPersistence.h"
+#import "BranchSession.h"
 #import "NSData+Branch.h"
 
 static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queue";
@@ -54,6 +54,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 @property (atomic, strong) BNCSettings *settings;
 @property (atomic, strong) NSOperationQueue *operationQueue;
 @property (atomic, strong) NSMutableDictionary<NSString*, NSData*> *archivedOperations;
+@property (atomic, strong) BNCPersistence*persistence;
 - (void) saveOperation:(BNCNetworkAPIOperation*)operation;
 - (void) deleteOperation:(BNCNetworkAPIOperation*)operation;
 - (void) loadOperations;
@@ -69,6 +70,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     self.configuration = configuration;
     self.settings = self.configuration.settings;
     self.networkService = [configuration.networkServiceClass new];
+    self.persistence = [[BNCPersistence alloc] initWithAppGroup:BNCApplication.currentApplication.bundleID];
     if (self.configuration.useCertificatePinning) {
         NSError*error = [self.networkService pinSessionToPublicSecKeyRefs:self.class.publicSecKeyRefs];
         if (error) {
@@ -113,7 +115,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     return [NSString stringWithFormat:@"<%@ %p Queued: %ld %@>",
         NSStringFromClass(self.class),
         (void*) self,
-        self.queueDepth,
+        (long) self.queueDepth,
         self.operationQueue.operations];
 }
 
@@ -134,8 +136,6 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         if (![metadata isKindOfClass:NSMutableDictionary.class]) metadata = [NSMutableDictionary new];
         [metadata addEntriesFromDictionary:self.configuration.settings.requestMetadataDictionary];
         if (metadata.count) dictionary[@"metadata"] = metadata;
-        NSDictionary*instrumentation = [self.settings.instrumentationDictionary copy];
-        if (instrumentation.count) dictionary[@"instrumentation"] = instrumentation;
         dictionary[@"branch_key"] = self.configuration.key;
     }
 }
@@ -160,20 +160,54 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         if (![metadata isKindOfClass:NSMutableDictionary.class]) metadata = [NSMutableDictionary new];
         [metadata addEntriesFromDictionary:self.settings.requestMetadataDictionary];
         if (metadata.count) dictionary[@"metadata"] = metadata;
-        NSDictionary*instrumentation = self.settings.instrumentationDictionary;
-        if (instrumentation.count) dictionary[@"instrumentation"] = instrumentation;
         dictionary[@"branch_key"] = self.configuration.key;
     }
 }
 
 - (void) postOperationForAPIServiceName:(NSString*)serviceName
-        dictionary:(NSDictionary*)dictionary
+        dictionary:(NSMutableDictionary*)dictionary
         completion:(void (^_Nullable)(BNCNetworkAPIOperation*operation))completion {
 
     serviceName = [serviceName stringByTrimmingCharactersInSet:
         [NSCharacterSet characterSetWithCharactersInString:@" \t\n\\/"]];
     NSString *string = [NSString stringWithFormat:@"%@/%@", self.configuration.branchAPIServiceURL, serviceName];
     NSURL*url = [NSURL URLWithString:string];
+
+    if (self.settings.userTrackingDisabled) {
+        NSString *endpoint = url.path;
+        if (([endpoint isEqualToString:@"/v1/install"] ||
+             [endpoint isEqualToString:@"/v1/open"]) &&
+             (dictionary[@"external_intent_uri"] != nil ||
+              dictionary[@"universal_link_url"] != nil  ||
+              dictionary[@"spotlight_identitifer"] != nil ||
+              dictionary[@"link_identifier"] != nil)) {
+
+              // Clear any sensitive data:
+              dictionary[@"tracking_disabled"] = BNCWireFormatFromBool(YES);
+              dictionary[@"local_ip"] = nil;
+              dictionary[@"lastest_update_time"] = nil;
+              dictionary[@"previous_update_time"] = nil;
+              dictionary[@"latest_install_time"] = nil;
+              dictionary[@"first_install_time"] = nil;
+              dictionary[@"ios_vendor_id"] = nil;
+              dictionary[@"hardware_id"] = nil;
+              dictionary[@"hardware_id_type"] = nil;
+              dictionary[@"is_hardware_id_real"] = nil;
+              dictionary[@"device_fingerprint_id"] = nil;
+              dictionary[@"identity_id"] = nil;
+              dictionary[@"identity"] = nil;
+              dictionary[@"update"] = nil;
+
+        } else {
+
+            [self.settings clearUserIdentifyingInformation];
+            BNCNetworkAPIOperation* operation = [[BNCNetworkAPIOperation alloc] init];
+            operation.error = [NSError branchErrorWithCode:BNCTrackingDisabledError];
+            BNCLogError(@"Network service error: %@.", operation.error);
+            if (completion) completion(operation);
+            return;
+        }
+    }
 
     __weak __typeof(self) weakSelf = self;
     BNCNetworkAPIOperation* networkAPIOperation =
@@ -195,9 +229,12 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 
 - (void) saveOperation:(BNCNetworkAPIOperation *)operation {
     @synchronized(self) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSData*data = [NSKeyedArchiver archivedDataWithRootObject:operation];
         self.archivedOperations[operation.identifier] = data;
         [self saveArchivedOperations];
+        #pragma clang diagnostic pop
     }
 }
 
@@ -209,14 +246,14 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 }
 - (void) saveArchivedOperations {
     @synchronized(self) {
-        [BNCPersistence archiveObject:self.archivedOperations named:BNCNetworkQueueFilename];
+        [self.persistence archiveObject:self.archivedOperations named:BNCNetworkQueueFilename];
     }
 }
 
 - (void) loadOperations {
     @synchronized(self) {
         self.archivedOperations = [NSMutableDictionary new];
-        NSDictionary*d = [BNCPersistence unarchiveObjectNamed:BNCNetworkQueueFilename];
+        NSDictionary*d = [self.persistence unarchiveObjectNamed:BNCNetworkQueueFilename];
         if (![d isKindOfClass:NSDictionary.class]) return;
         // Start the operations:
         __weak __typeof(self) weakSelf = self;
@@ -228,7 +265,10 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
                 continue;
             BNCNetworkAPIOperation*op = nil;
             @try {
+                #pragma clang diagnostic push
+                #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 op = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                #pragma clang diagnostic pop
             }
             @catch (id e) {
                 BNCLogError(@"Can't unarchive network operation: %@.", e);
@@ -253,7 +293,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 - (void) clearNetworkQueue {
     @synchronized(self) {
         self.archivedOperations = [NSMutableDictionary new];
-        [BNCPersistence removeDataNamed:BNCNetworkQueueFilename];
+        [self.persistence removeDataNamed:BNCNetworkQueueFilename];
         if ([self.networkService respondsToSelector:@selector(cancelAllOperations)])
             [self.networkService cancelAllOperations];
         [self.operationQueue cancelAllOperations];
@@ -499,6 +539,7 @@ exit:
 
 - (void) main {
     NSInteger retry = 0;
+    NSTimeInterval retryWaitTime = 1.0;
     NSError*error = nil;
     self.startDate = [NSDate date];
     self.timeoutDate = [NSDate dateWithTimeIntervalSinceNow:60.0];
@@ -509,12 +550,17 @@ exit:
         do  {
             if (retry > 0) {
                 // Wait before retrying to avoid flooding the network.
-                BNCSleepForTimeInterval(1.0);
+                BNCSleepForTimeInterval(retryWaitTime);
+                retryWaitTime *= 1.5f;
             }
             NSData *data = nil;
             if (self.dictionary) {
                 NSError *error = nil;
-                self.dictionary[@"retry_number"] = BNCWireFormatFromInteger(retry);
+                // TODO: ???
+                //self.dictionary[@"retry_number"] = BNCWireFormatFromInteger(retry);
+                self.dictionary[@"retryNumber"] = BNCWireFormatFromInteger(retry);
+                NSDictionary*instrumentation = [self.settings.instrumentationDictionary copy];
+                if (instrumentation.count) self.dictionary[@"instrumentation"] = instrumentation;
                 data = [NSJSONSerialization dataWithJSONObject:self.dictionary options:0 error:&error];
                 if (error) {
                     BNCLogError(@"Can't convert to JSON: %@.", error);
@@ -525,6 +571,10 @@ exit:
             NSTimeInterval timeout = MIN(20.0, [self.timeoutDate timeIntervalSinceNow]);
             if (timeout < 0.0) {
                 error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorTimedOut userInfo:nil];
+                goto exit;
+            }
+            if (self.isCancelled) {
+                error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:nil];
                 goto exit;
             }
 
@@ -544,21 +594,20 @@ exit:
                         dispatch_semaphore_signal(network_semaphore);
                     }
                 ];
-            [self.operation start];
-            dispatch_semaphore_wait(network_semaphore, DISPATCH_TIME_FOREVER);
             error = [self verifyNetworkOperation:self.operation];
             if (error) {
                 BNCLogError(@"Bad network interface: %@.", error);
                 goto exit;
             }
-            [self collectInstrumentationMetrics];
+            [self.operation start];
+            dispatch_semaphore_wait(network_semaphore, DISPATCH_TIME_FOREVER);
             if (self.operation.error) {
                 BNCLogError(@"Network service error: %@.", error);
             }
 
             retry++;
 
-        } while (!self.isCancelled && [self.class canRetryOperation:self.operation]);
+        } while (!self.isCancelled && [self.class canRetryOperation:self.operation] && retry <= 5);
 
     error = [self.class errorWithOperation:self.operation];
     if (error) goto exit;
@@ -570,6 +619,8 @@ exit:
         error = [NSError branchErrorWithCode:BNCBadRequestError];
         goto exit;
     }
+
+    [self collectInstrumentationMetrics];
     self.session = [BranchSession sessionWithDictionary:dictionary];
 
     if (self.session.linkCreationURL.length)
@@ -583,6 +634,7 @@ exit:
     if (self.session.identityID.length)
         self.settings.identityID = self.session.identityID;
     }
+
 exit:
     self.error = error;
     if (self.completion)
@@ -649,7 +701,7 @@ exit:
 + (NSDictionary*) dictionaryWithJSONData:(NSData*)data
         error:(NSError*_Nullable __autoreleasing *_Nullable)error_ {
     NSError*error = nil;
-    NSDictionary *dictionary = nil;
+    NSDictionary*dictionary = nil;
     @try {
         if ([data isKindOfClass:[NSData class]]) {
             dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];

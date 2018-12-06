@@ -13,6 +13,7 @@
 #import "BNCThreads.h"
 #import "BranchMainClass+Private.h"
 #import "BNCTestNetworkService.h"
+#import "BNCDevice.h"
 
 FOUNDATION_EXPORT NSString*_Nonnull const BNCTestBranchKey;
 
@@ -22,6 +23,8 @@ FOUNDATION_EXPORT NSString*_Nonnull const BNCTestBranchKey;
         XCTAssertEqualObjects(string, mask); \
     } \
 }
+
+NS_ASSUME_NONNULL_BEGIN
 
 extern BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex);
 
@@ -37,9 +40,12 @@ extern BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex);
 
 // Load Resources from the test bundle:
 
-- (NSString*)stringFromBundleWithKey:(NSString*)key;
-- (NSString*)stringFromBundleJSONWithKey:(NSString *)key;
-- (NSMutableDictionary*)mutableDictionaryFromBundleJSONWithKey:(NSString*)key;
+- (NSString*_Nullable)stringFromBundleWithKey:(NSString*)key;
+- (NSString*_Nullable)stringFromBundleJSONWithKey:(NSString *)key;
+- (NSMutableDictionary*_Nullable)mutableDictionaryFromBundleJSONWithKey:(NSString*)key;
 
+- (BOOL) testDeviceSupportsIDFA;
 + (BOOL) breakpointsAreEnabledInTests;
 @end
+
+NS_ASSUME_NONNULL_END

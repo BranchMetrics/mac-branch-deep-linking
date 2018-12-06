@@ -35,7 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy,   readonly) NSString*_Nullable netAddress;     //!< Network card address.
 @property (atomic, copy, readonly) NSString *country;                   //!< The iso2 Country name (us, in,etc).
 @property (atomic, copy, readonly) NSString *language;                  //!< The iso2 language code (en, ml).
-@property (atomic, copy, readonly) NSString *browserUserAgent;          //!< Simple user agent string.
 @property (atomic, copy, readonly) NSString *localIPAddress;            //!< The current local IPv4 address.
 @property (atomic, copy, readonly) NSArray<NSString*> *allLocalIPAddresses; //!< All local IP addresses.
 @end

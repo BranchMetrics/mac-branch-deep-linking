@@ -80,8 +80,14 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
         application->_bundleID.length > 0) {
         application->_applicationID = [NSString stringWithFormat:@"%@.%@", application->_teamID, application->_bundleID];
     }
-
     if (application->_applicationID.length) {
+        if (![application->_keychainAccessGroups containsObject:application->_applicationID]) {
+            NSMutableArray*groups = [NSMutableArray new];
+            [groups addObject:application->_applicationID];
+            if (application->_keychainAccessGroups)
+                [groups addObjectsFromArray:application->_keychainAccessGroups];
+            application->_keychainAccessGroups = groups;
+        }
         BNCKeyChain *keychain = [[BNCKeyChain alloc] initWithSecurityAccessGroup:application->_applicationID];
         if (keychain) {
             application->_firstInstallBuildDate = [BNCApplication firstInstallBuildDateWithKeychain:keychain];
@@ -183,24 +189,6 @@ static NSString*const kBranchKeychainFirstInstalldKey = @"BranchKeychainFirstIns
 
     return firstInstallDate;
 }
-
-#if 0
-// TODO: Add this back at some point.
-// Returns a dictionary of device / identity pairs.
-// @property (atomic, readonly) NSDictionary<NSString*, NSString*>*_Nonnull deviceKeyIdentityValueDictionary;
-- (NSDictionary*) deviceKeyIdentityValueDictionary:(BNCKeyChain*)keychain {
-    @synchronized (self.class) {
-        NSError *error = nil;
-        NSDictionary *deviceDictionary =
-            [keychain retrieveValueForService:kBranchKeychainService
-                key:kBranchKeychainDevicesKey
-                error:&error];
-        if (error) BNCLogWarning(@"While retrieving deviceKeyIdentityValueDictionary: %@.", error);
-        if (!deviceDictionary) deviceDictionary = @{};
-        return deviceDictionary;
-    }
-}
-#endif
 
 + (BNCApplicationUpdateState) updateStateForApplication:(BNCApplication*)application {
 

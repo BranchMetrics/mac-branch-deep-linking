@@ -35,12 +35,22 @@
             XCTAssertEqualObjects(request.HTTPMethod, @"POST");
             XCTAssertEqualObjects(request.URL.path, @"/v1/install");
             NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
+            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
             NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
             for (NSString*key in truth) {
                 XCTAssertNotNil(test[key], @"No key '%@'!", key);
                 if (test[key] == nil)
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
+            }
+            if (YES) { // [[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
+                XCTAssert([test[@"mac_id"] hasPrefix:@"mac_"]);
+                test[@"mac_id"] = nil;
+            }
+            if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
+                XCTAssert(test[@"idfv"]);
+                test[@"idfv"] = nil;
+                // test[@"idfa"] = nil;
             }
             XCTAssert(test.count == 0, @"Found keys: %@.", test);
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
@@ -85,12 +95,22 @@
             truth[@"external_intent_uri"] = nil;
             truth[@"link_identifier"] = nil;
             truth[@"universal_link_url"] = kTestURL;
+            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
             NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
             for (NSString*key in truth) {
                 XCTAssertNotNil(test[key], @"No key '%@'!", key);
                 if (test[key] == nil)
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
+            }
+            if (YES) { // [[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
+                XCTAssert([test[@"mac_id"] hasPrefix:@"mac_"]);
+                test[@"mac_id"] = nil;
+            }
+            if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
+                XCTAssert(test[@"idfv"]);
+                test[@"idfv"] = nil;
+                // test[@"idfa"] = nil;
             }
             XCTAssert(test.count == 0, @"Found keys: %@.", test);
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];

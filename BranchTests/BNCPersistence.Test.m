@@ -21,21 +21,23 @@
     XCTAssertNotNil(url);
 }
 
-- (void) testRemove {
-    NSError *error = [BNCPersistence removeDataNamed:@"io.branch.sdk.test"];
-    XCTAssertNil(error);
-}
-
-- (void) testSaveAndLoad {
-    [BNCPersistence removeDataNamed:@"io.branch.sdk.test"];
+- (void) testSaveLoadRemove {
+    BNCPersistence*persistence = [[BNCPersistence alloc] initWithAppGroup:@"io.branch.sdk.unit.tests"];
+    [persistence removeDataNamed:@"io.branch.sdk.test"];
 
     NSString*s = @"Howdy!";
     NSData*sd = [s dataUsingEncoding:NSUTF8StringEncoding];
-    NSError*error = [BNCPersistence saveDataNamed:@"io.branch.sdk.test" data:sd];
+    NSError*error = [persistence saveDataNamed:@"io.branch.sdk.test" data:sd];
     XCTAssertNil(error);
 
-    NSData*td = [BNCPersistence loadDataNamed:@"io.branch.sdk.test"];
+    NSData*td = [persistence loadDataNamed:@"io.branch.sdk.test"];
     XCTAssertEqualObjects(sd, td);
+
+    error = [persistence removeDataNamed:@"io.branch.sdk.test"];
+    XCTAssertNil(error);
+
+    td = [persistence loadDataNamed:@"io.branch.sdk.test"];
+    XCTAssertNil(td);
 }
 
 @end
