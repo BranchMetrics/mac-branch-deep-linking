@@ -213,6 +213,10 @@
 		4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818BE20B025DA00441881 /* BNCEncoder.h */; };
 		4DF818C120B025DA00441881 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
 		4DFB135A20CCFAE800AF3E47 /* BranchOpen.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */; };
+		5FA17909232702F10012B500 /* BNCUserAgentCollector.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FA17907232702F00012B500 /* BNCUserAgentCollector.h */; };
+		5FA1791723270F2B0012B500 /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
+		5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
+		5FA313A32327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -323,6 +327,8 @@
 		4DF818BF20B025DA00441881 /* BNCEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.m; sourceTree = "<group>"; };
 		4DF818C220B031EB00441881 /* BNCEncoder.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.Test.m; sourceTree = "<group>"; };
 		4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchOpen.Test.m; sourceTree = "<group>"; };
+		5FA17907232702F00012B500 /* BNCUserAgentCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCUserAgentCollector.h; sourceTree = "<group>"; };
+		5FA17908232702F00012B500 /* BNCUserAgentCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCUserAgentCollector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -389,6 +395,8 @@
 				4D9C163D20ACBEF6002BF211 /* BNCApplication.m */,
 				4D9C165C20ACD625002BF211 /* BNCDevice.h */,
 				4D9C165D20ACD625002BF211 /* BNCDevice.m */,
+				5FA17907232702F00012B500 /* BNCUserAgentCollector.h */,
+				5FA17908232702F00012B500 /* BNCUserAgentCollector.m */,
 				4DF818BE20B025DA00441881 /* BNCEncoder.h */,
 				4DF818BF20B025DA00441881 /* BNCEncoder.m */,
 				4D9C164620ACCD7C002BF211 /* BNCKeyChain.h */,
@@ -527,6 +535,7 @@
 				4D170FA5216D1CC00083D6B6 /* Branch.h in Headers */,
 				4D170FA6216D1CC00083D6B6 /* BNCNetworkService.h in Headers */,
 				4D170FA7216D1CC00083D6B6 /* BNCWireFormat.h in Headers */,
+				5FA17909232702F10012B500 /* BNCUserAgentCollector.h in Headers */,
 				4D170FA8216D1CC00083D6B6 /* BranchCommerce.h in Headers */,
 				4D170FA9216D1CC00083D6B6 /* BranchNetworkServiceProtocol.h in Headers */,
 				4D170FAA216D1CC00083D6B6 /* BNCKeyChain.h in Headers */,
@@ -837,6 +846,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA1791723270F2B0012B500 /* BNCUserAgentCollector.m in Sources */,
 				4D170F7B216D1CC00083D6B6 /* BranchUniversalObject.m in Sources */,
 				4D170F7C216D1CC00083D6B6 /* UIViewController+Branch.m in Sources */,
 				4D170F7D216D1CC00083D6B6 /* BranchCommerce.m in Sources */,
@@ -872,6 +882,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */,
 				4DF8189B20ADDC5000441881 /* BranchUniversalObject.m in Sources */,
 				4DF34EA0210BC04B00E5D20C /* UIViewController+Branch.m in Sources */,
 				4DF818A620ADE1BB00441881 /* BranchCommerce.m in Sources */,
@@ -907,6 +918,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA313A32327107B007BAA6A /* BNCUserAgentCollector.m in Sources */,
 				4D67473E20C74E81001639C5 /* BranchUniversalObject.m in Sources */,
 				4DF34EA1210BC04B00E5D20C /* UIViewController+Branch.m in Sources */,
 				4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */,

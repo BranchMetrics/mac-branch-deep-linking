@@ -24,6 +24,9 @@
 #import "NSData+Branch.h"
 #import "UIViewController+Branch.h"
 
+#import "BNCDevice.h"
+#import "BNCUserAgentCollector.h"
+
 #pragma mark BranchConfiguration
 
 @interface BranchConfiguration ()
@@ -136,6 +139,10 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
+    
+    // This as it relies on startDelayedOpenTimer to beat all the network calls in a race.
+    [[BNCUserAgentCollector instance] loadUserAgentWithCompletion:nil];
+    
     // These function references force the linker to load the categories just in case it forgot.
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSDataCategoryToLoad();

@@ -11,6 +11,7 @@
 #import "BNCDevice.h"
 #import "BNCLog.h"
 #import "BNCNetworkInformation.h"
+#import "BNCUserAgentCollector.h"
 
 #import <sys/sysctl.h>
 #import <CommonCrypto/CommonCrypto.h>
@@ -261,6 +262,8 @@
     device->_country = [self country];
     device->_language = [self language];
 
+    device->_userAgent = [BNCUserAgentCollector instance].userAgent;
+    
     return device;
 }
 
@@ -348,6 +351,7 @@
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
     addString(systemName,           os);
+    addString(userAgent, user_agent);
 
     if (!self.deviceIsUnidentified)
         dictionary[@"is_hardware_id_real"] = BNCWireFormatFromBool(YES);
@@ -375,6 +379,7 @@
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
+    addString(userAgent, user_agent);
 
     return dictionary;
 }
