@@ -177,7 +177,7 @@
 
 + (NSString*) networkAddress {
     BNCNetworkInformation*info = [BNCNetworkInformation local];
-    if (!info.displayAddress || info.displayAddress.length > 0) return nil;
+    if (!info.displayAddress || info.displayAddress.length == 0) return nil;
     
     return [info.displayAddress copy];
 }
