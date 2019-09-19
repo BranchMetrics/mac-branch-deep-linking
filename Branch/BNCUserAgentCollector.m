@@ -87,13 +87,21 @@
 // collect user agent from webkit.  this is expensive.
 - (void)collectUserAgentWithCompletion:(void (^)(NSString *userAgent))completion {
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.webview = [[WKWebView alloc] initWithFrame:CGRectZero];
-        [self.webview evaluateJavaScript:@"navigator.userAgent;" completionHandler:^(id _Nullable response, NSError * _Nullable error) {            
+        if (!self.webview) {
+            self.webview = [[WKWebView alloc] initWithFrame:CGRectZero];
+        }
+        
+        [self.webview evaluateJavaScript:@"navigator.userAgent;" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
             if (completion) {
-                completion(response);
+                if (response) {
+                    completion(response);
                 
-                // release the webview
-                self.webview = nil;
+                    // release the webview
+                    self.webview = nil;
+                } else {
+                    // retry if we failed to obtain user agent.  This occurs on iOS simulators.
+                    [self collectUserAgentWithCompletion:completion];
+                }
             }
         }];
     });

@@ -18,7 +18,6 @@
 		4D39087F20BF378C00E28074 /* APPActionItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D39087E20BF378C00E28074 /* APPActionItemView.xib */; };
 		4D85A9F920BF61D500E61F6E /* APPActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D85A9F820BF61D500E61F6E /* APPActionItemView.m */; };
 		4DD347A320BCFA54003891F1 /* Branch.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5FA1791523270ED40012B500 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FA1791123270ED40012B500 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +107,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FA1791523270ED40012B500 /* WebKit.framework in Frameworks */,
 				4D0F1245216F31160008080A /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
