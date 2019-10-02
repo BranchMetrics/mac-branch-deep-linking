@@ -43,16 +43,21 @@
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
             }
-            if (YES) { // [[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
-                XCTAssert([test[@"mac_id"] hasPrefix:@"mac_"]);
-                test[@"mac_id"] = nil;
-            }
+
             if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
                 XCTAssert(test[@"idfv"]);
                 test[@"idfv"] = nil;
                 // test[@"idfa"] = nil;
             }
+            
+            // check mac address and user agent are populated
+            XCTAssertNotNil(test[@"mac_address"]);
+            test[@"mac_address"] = nil;
+            XCTAssertNotNil(test[@"user_agent"]);
+            test[@"user_agent"] = nil;
+            
             XCTAssert(test.count == 0, @"Found keys: %@.", test);
+            
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
             XCTAssertNotNil(response);
             return [BNCTestNetworkService operationWithRequest:request response:response];
@@ -103,15 +108,19 @@
                     NSLog(@"No key '%@'!", key);
                 test[key] = nil;
             }
-            if (YES) { // [[BNCDevice currentDevice].systemName isEqualToString:@"mac_OS"]) {
-                XCTAssert([test[@"mac_id"] hasPrefix:@"mac_"]);
-                test[@"mac_id"] = nil;
-            }
+            
             if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
                 XCTAssert(test[@"idfv"]);
                 test[@"idfv"] = nil;
                 // test[@"idfa"] = nil;
             }
+            
+            // check mac address and user agent are populated
+            XCTAssertNotNil(test[@"mac_address"]);
+            test[@"mac_address"] = nil;
+            XCTAssertNotNil(test[@"user_agent"]);
+            test[@"user_agent"] = nil;
+            
             XCTAssert(test.count == 0, @"Found keys: %@.", test);
             NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
             XCTAssertNotNil(response);

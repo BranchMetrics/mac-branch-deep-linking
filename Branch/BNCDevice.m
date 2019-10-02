@@ -11,6 +11,7 @@
 #import "BNCDevice.h"
 #import "BNCLog.h"
 #import "BNCNetworkInformation.h"
+#import "BNCUserAgentCollector.h"
 
 #import <sys/sysctl.h>
 #import <CommonCrypto/CommonCrypto.h>
@@ -175,26 +176,10 @@
 }
 
 + (NSString*) networkAddress {
-    NSMutableString* string = nil;
     BNCNetworkInformation*info = [BNCNetworkInformation local];
-    NSData*data = info.address;
-    if (!data || data.length != 6) return nil;
-
-    uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-    CC_SHA1(data.bytes, (const unsigned int) data.length, digest);
-
-    // SHA1 is 160 bits = 20 bytes
-
-    string = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
-    for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
-        [string appendFormat:@"%02x", digest[i]];
-
-    // Truncate last four bytes to make UUID:
-
-    if (string.length < 32) return nil; // What?
-    NSString*result = [NSString stringWithFormat:@"mac_%@", string];
-
-    return result;
+    if (!info.displayAddress || info.displayAddress.length == 0) return nil;
+    
+    return [info.displayAddress copy];
 }
 
 #if TARGET_OS_OSX
@@ -261,6 +246,8 @@
     device->_country = [self country];
     device->_language = [self language];
 
+    device->_userAgent = [BNCUserAgentCollector instance].userAgent;
+    
     return device;
 }
 
@@ -297,11 +284,6 @@
 
 - (NSString*) hardwareID {
     NSString*s;
-    s = [self netAddress];
-    if (s) {
-        _hardwareIDType = @"mac_id";
-        return s;
-    }
     s = [self advertisingID];
     if (s) {
         _hardwareIDType = @"idfa";
@@ -310,6 +292,11 @@
     s = [self vendorID];
     if (s) {
         _hardwareIDType = @"vendor_id";
+        return s;
+    }
+    s = [self netAddress];
+    if (s) {
+        _hardwareIDType = @"mac_address";
         return s;
     }
     s = [[NSUUID UUID] UUIDString];
@@ -337,7 +324,7 @@
     addString(hardwareIDType,       hardware_id_type);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
-    addString(netAddress,           mac_id);
+    addString(netAddress,           mac_address);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);
@@ -348,6 +335,7 @@
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
     addString(systemName,           os);
+    addString(userAgent, user_agent);
 
     if (!self.deviceIsUnidentified)
         dictionary[@"is_hardware_id_real"] = BNCWireFormatFromBool(YES);
@@ -365,7 +353,7 @@
     addString(systemVersion,        os_version);
     addString(vendorID,             idfv);
     addString(advertisingID,        idfa);
-    addString(netAddress,           mac_id);
+    addString(netAddress,           mac_address);
     addString(country,              country);
     addString(language,             language);
     addString(brandName,            brand);
@@ -375,6 +363,7 @@
     addDouble(screenSize.width,     screen_width);
     addBoolean(deviceIsUnidentified, unidentified_device);
     addString(localIPAddress,       local_ip);
+    addString(userAgent, user_agent);
 
     return dictionary;
 }

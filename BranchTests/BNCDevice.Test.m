@@ -32,7 +32,7 @@
 
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"mac_OS"]);
-    XCTAssertStringMatchesRegex(device.hardwareID, @"^mac_[0-9a-f]+$");
+    XCTAssertTrue(device.hardwareID.length > 0);
 
 #elif TARGET_OS_TV
 
