@@ -25,7 +25,10 @@
 #import "UIViewController+Branch.h"
 
 #import "BNCDevice.h"
+
+#if !TARGET_OS_TV
 #import "BNCUserAgentCollector.h"
+#endif
 
 #pragma mark BranchConfiguration
 
@@ -141,9 +144,11 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
     
     // This as it relies on startDelayedOpenTimer to beat all the network calls in a race.
+    #if !TARGET_OS_TV
     [[BNCUserAgentCollector instance] loadUserAgentWithCompletion:^(NSString * _Nullable userAgent) {
         
     }];
+    #endif
     
     // These function references force the linker to load the categories just in case it forgot.
     BNCForceNSErrorCategoryToLoad();

@@ -218,7 +218,6 @@
 		5FA17909232702F10012B500 /* BNCUserAgentCollector.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FA17907232702F00012B500 /* BNCUserAgentCollector.h */; };
 		5FA1791723270F2B0012B500 /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
 		5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
-		5FA313A32327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -926,7 +925,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FA313A32327107B007BAA6A /* BNCUserAgentCollector.m in Sources */,
 				4D67473E20C74E81001639C5 /* BranchUniversalObject.m in Sources */,
 				4DF34EA1210BC04B00E5D20C /* UIViewController+Branch.m in Sources */,
 				4D67474020C74E81001639C5 /* BranchCommerce.m in Sources */,

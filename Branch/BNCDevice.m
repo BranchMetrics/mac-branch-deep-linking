@@ -11,7 +11,9 @@
 #import "BNCDevice.h"
 #import "BNCLog.h"
 #import "BNCNetworkInformation.h"
+#if !TARGET_OS_TV
 #import "BNCUserAgentCollector.h"
+#endif
 
 #import <sys/sysctl.h>
 #import <CommonCrypto/CommonCrypto.h>
@@ -246,7 +248,9 @@
     device->_country = [self country];
     device->_language = [self language];
 
+    #if !TARGET_OS_TV
     device->_userAgent = [BNCUserAgentCollector instance].userAgent;
+    #endif
     
     return device;
 }
