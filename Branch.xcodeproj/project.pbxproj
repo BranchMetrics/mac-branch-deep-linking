@@ -213,6 +213,11 @@
 		4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818BE20B025DA00441881 /* BNCEncoder.h */; };
 		4DF818C120B025DA00441881 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
 		4DFB135A20CCFAE800AF3E47 /* BranchOpen.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */; };
+		5F7BD69D23341EB00067E5DA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7BD69C23341EB00067E5DA /* WebKit.framework */; };
+		5F909B802334124D00A774D2 /* BNCUserAgentCollectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F909B7F2334124D00A774D2 /* BNCUserAgentCollectorTests.m */; };
+		5FA17909232702F10012B500 /* BNCUserAgentCollector.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FA17907232702F00012B500 /* BNCUserAgentCollector.h */; };
+		5FA1791723270F2B0012B500 /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
+		5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -323,6 +328,10 @@
 		4DF818BF20B025DA00441881 /* BNCEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.m; sourceTree = "<group>"; };
 		4DF818C220B031EB00441881 /* BNCEncoder.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.Test.m; sourceTree = "<group>"; };
 		4DFB135920CCFAE800AF3E47 /* BranchOpen.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchOpen.Test.m; sourceTree = "<group>"; };
+		5F7BD69C23341EB00067E5DA /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		5F909B7F2334124D00A774D2 /* BNCUserAgentCollectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCUserAgentCollectorTests.m; sourceTree = "<group>"; };
+		5FA17907232702F00012B500 /* BNCUserAgentCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCUserAgentCollector.h; sourceTree = "<group>"; };
+		5FA17908232702F00012B500 /* BNCUserAgentCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCUserAgentCollector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,6 +354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F7BD69D23341EB00067E5DA /* WebKit.framework in Frameworks */,
 				4D0F1241216F2FD10008080A /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -389,6 +399,8 @@
 				4D9C163D20ACBEF6002BF211 /* BNCApplication.m */,
 				4D9C165C20ACD625002BF211 /* BNCDevice.h */,
 				4D9C165D20ACD625002BF211 /* BNCDevice.m */,
+				5FA17907232702F00012B500 /* BNCUserAgentCollector.h */,
+				5FA17908232702F00012B500 /* BNCUserAgentCollector.m */,
 				4DF818BE20B025DA00441881 /* BNCEncoder.h */,
 				4DF818BF20B025DA00441881 /* BNCEncoder.m */,
 				4D9C164620ACCD7C002BF211 /* BNCKeyChain.h */,
@@ -452,6 +464,7 @@
 		4D54C08220A6560400C76496 /* BranchTests */ = {
 			isa = PBXGroup;
 			children = (
+				5F909B7F2334124D00A774D2 /* BNCUserAgentCollectorTests.m */,
 				4D9C165620ACD00E002BF211 /* BNCApplication.Test.m */,
 				4D9C166220AD090F002BF211 /* BNCDevice.Test.m */,
 				4DF818C220B031EB00441881 /* BNCEncoder.Test.m */,
@@ -498,6 +511,7 @@
 		4DC2232220AA19A2005C57D0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5F7BD69C23341EB00067E5DA /* WebKit.framework */,
 				4D0F124B216F398D0008080A /* AdSupport.framework */,
 				4D0F1249216F39800008080A /* AdSupport.framework */,
 				4D0F1240216F2FD10008080A /* AdSupport.framework */,
@@ -527,6 +541,7 @@
 				4D170FA5216D1CC00083D6B6 /* Branch.h in Headers */,
 				4D170FA6216D1CC00083D6B6 /* BNCNetworkService.h in Headers */,
 				4D170FA7216D1CC00083D6B6 /* BNCWireFormat.h in Headers */,
+				5FA17909232702F10012B500 /* BNCUserAgentCollector.h in Headers */,
 				4D170FA8216D1CC00083D6B6 /* BranchCommerce.h in Headers */,
 				4D170FA9216D1CC00083D6B6 /* BranchNetworkServiceProtocol.h in Headers */,
 				4D170FAA216D1CC00083D6B6 /* BNCKeyChain.h in Headers */,
@@ -801,6 +816,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D159DDB20B62DD5005A9850 /* BNCKeyChain.Test.m in Sources */,
+				5F909B802334124D00A774D2 /* BNCUserAgentCollectorTests.m in Sources */,
 				4D159DD920B62DD5005A9850 /* BNCDevice.Test.m in Sources */,
 				4D159DE920B62DD5005A9850 /* BranchUniversalObject.Test.m in Sources */,
 				4D159DE620B62DD5005A9850 /* BranchError.Test.m in Sources */,
@@ -837,6 +853,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA1791723270F2B0012B500 /* BNCUserAgentCollector.m in Sources */,
 				4D170F7B216D1CC00083D6B6 /* BranchUniversalObject.m in Sources */,
 				4D170F7C216D1CC00083D6B6 /* UIViewController+Branch.m in Sources */,
 				4D170F7D216D1CC00083D6B6 /* BranchCommerce.m in Sources */,
@@ -872,6 +889,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */,
 				4DF8189B20ADDC5000441881 /* BranchUniversalObject.m in Sources */,
 				4DF34EA0210BC04B00E5D20C /* UIViewController+Branch.m in Sources */,
 				4DF818A620ADE1BB00441881 /* BranchCommerce.m in Sources */,
@@ -1163,9 +1181,9 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -1176,7 +1194,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -1279,7 +1297,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = "";
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};

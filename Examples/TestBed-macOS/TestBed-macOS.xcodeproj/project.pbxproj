@@ -99,6 +99,7 @@
 		4D39087E20BF378C00E28074 /* APPActionItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APPActionItemView.xib; sourceTree = "<group>"; };
 		4D85A9F720BF61D500E61F6E /* APPActionItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPActionItemView.h; sourceTree = "<group>"; };
 		4D85A9F820BF61D500E61F6E /* APPActionItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPActionItemView.m; sourceTree = "<group>"; };
+		5FA1791123270ED40012B500 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +169,7 @@
 		2B3C071320ABB83100F38167 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5FA1791123270ED40012B500 /* WebKit.framework */,
 				4D0F11BB216EB84D0008080A /* AdSupport.framework */,
 			);
 			name = Frameworks;

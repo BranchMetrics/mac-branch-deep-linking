@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy, readonly) NSString *language;                  //!< The iso2 language code (en, ml).
 @property (atomic, copy, readonly) NSString *localIPAddress;            //!< The current local IPv4 address.
 @property (atomic, copy, readonly) NSArray<NSString*> *allLocalIPAddresses; //!< All local IP addresses.
+
+@property (atomic, copy, readonly) NSString *userAgent;
+
 @end
 
 NS_ASSUME_NONNULL_END

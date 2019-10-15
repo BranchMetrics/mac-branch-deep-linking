@@ -24,6 +24,12 @@
 #import "NSData+Branch.h"
 #import "UIViewController+Branch.h"
 
+#import "BNCDevice.h"
+
+#if !TARGET_OS_TV
+#import "BNCUserAgentCollector.h"
+#endif
+
 #pragma mark BranchConfiguration
 
 @interface BranchConfiguration ()
@@ -136,6 +142,14 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
+    
+    // This as it relies on startDelayedOpenTimer to beat all the network calls in a race.
+    #if !TARGET_OS_TV
+    [[BNCUserAgentCollector instance] loadUserAgentWithCompletion:^(NSString * _Nullable userAgent) {
+        
+    }];
+    #endif
+    
     // These function references force the linker to load the categories just in case it forgot.
     BNCForceNSErrorCategoryToLoad();
     BNCForceNSDataCategoryToLoad();
@@ -209,11 +223,11 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 #endif
 
     // TODO: This is for debugging only.  Remove it.
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(notificationObserver:)
-        name:nil
-        object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//        addObserver:self
+//        selector:@selector(notificationObserver:)
+//        name:nil
+//        object:nil];
 
     [self openURL:nil];
     return self;
@@ -280,7 +294,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 - (void)applicationDidFinishLaunchingNotification:(NSNotification*)notification {
     // TODO: Remove this?
-    BNCLogMethodName();
+    //BNCLogMethodName();
     BNCLogDebugSDK(@"userInfo: %@.", notification.userInfo);
 }
 

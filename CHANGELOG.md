@@ -1,5 +1,9 @@
 Branch Mac SDK Change Log
 
+## v1.2.0 - October 7, 2019
+* Add user agent
+* Attribution fixes
+
 ## v1.1.0 - December 6th, 2018
 * Added tvOS support
 * Added CocoaPod support
