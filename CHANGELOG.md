@@ -1,5 +1,8 @@
 Branch Mac SDK Change Log
 
+## v1.2.1 - December 13, 2019
+* Fix crash when idfa is not available
+
 ## v1.2.0 - October 7, 2019
 * Add user agent
 * Attribution fixes

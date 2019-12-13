@@ -1184,6 +1184,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -1195,6 +1196,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -1298,6 +1300,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
