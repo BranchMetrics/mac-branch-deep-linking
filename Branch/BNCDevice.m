@@ -286,8 +286,9 @@
 
 #endif
 
-- (NSString*) hardwareID {
-    NSString*s;
+- (NSString *)hardwareID {
+    // INTENG-8458 server only wants hardware id and hardware id type for idfa and idfv.
+    NSString *s = nil;
     s = [self advertisingID];
     if (s) {
         _hardwareIDType = @"idfa";
@@ -298,13 +299,6 @@
         _hardwareIDType = @"vendor_id";
         return s;
     }
-    s = [self netAddress];
-    if (s) {
-        _hardwareIDType = @"mac_address";
-        return s;
-    }
-    s = [[NSUUID UUID] UUIDString];
-    _hardwareIDType = @"random";
     return s;
 }
 
