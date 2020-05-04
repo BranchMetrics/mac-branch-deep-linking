@@ -42,7 +42,7 @@
 + (NSString*) etherString:(struct sockaddr_dl*)sdl  {
     if (sdl->sdl_alen) {
         u_char *cp = (u_char *)LLADDR(sdl);
-        return [NSString stringWithFormat:@"%x:%x:%x:%x:%x:%x",
+        return [NSString stringWithFormat:@"%02x:%02x:%02x:%02x:%02x:%02x",
                     cp[0], cp[1], cp[2], cp[3], cp[4], cp[5]];
     }
     return @"";
