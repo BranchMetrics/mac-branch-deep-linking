@@ -198,22 +198,13 @@ exit:
     return currentInterfaces;
 }
 
+// returns first local network interface
 + (BNCNetworkInformation*) local {
-    uint8_t const kLocalAddress[] = { 0xfe, 0x80 };
     NSArray*areaEntries = [self areaEntries];
     NSArray*localEntries = [self currentInterfaces];
     for (BNCNetworkInformation*le in localEntries) {
         for (BNCNetworkInformation*ae in areaEntries) {
-            if (ae.inetAddress && le.inetAddress && [ae.inetAddress isEqualToData:le.inetAddress]) {
-                le.address = ae.address;
-                le.displayAddress = ae.displayAddress;
-                return le;
-            } else
-            if (ae.inetAddress.length == 16 &&
-                le.inetAddress.length == 16 &&
-                memcmp([ae.inetAddress bytes], kLocalAddress, 2) == 0 &&
-                memcmp([le.inetAddress bytes], kLocalAddress, 2) == 0 &&
-                memcmp([le.inetAddress bytes] + 8, [ae.inetAddress bytes] + 8, 8) == 0) {
+            if (![self isTouchBarInterface:ae] && [self canMergeLocalEntry:le withAreaEntry:ae]) {
                 le.address = ae.address;
                 le.displayAddress = ae.displayAddress;
                 return le;
@@ -221,6 +212,36 @@ exit:
         }
     }
     return nil;
+}
+
+// Ignore the Touchbar iBridge interface on the MacBook Pro
++ (BOOL)isTouchBarInterface:(BNCNetworkInformation *)ae {
+    NSString *touchBarMacAddress = @"ac:de:48:00:11:22";
+    if ([touchBarMacAddress isEqualToString:ae.displayAddress]) {
+        return YES;
+    }
+    return NO;
+}
+
+// Check if we can merge the entries
++ (BOOL)canMergeLocalEntry:(BNCNetworkInformation *)le withAreaEntry:(BNCNetworkInformation *)ae {
+    
+    // fairly certain this IP address check never works
+    if (ae.inetAddress && le.inetAddress && [ae.inetAddress isEqualToData:le.inetAddress]) {
+        return YES;
+    }
+    
+    // This IP address compare works
+    uint8_t const kLocalAddress[] = { 0xfe, 0x80 };
+    if (ae.inetAddress.length == 16 &&
+        le.inetAddress.length == 16 &&
+        memcmp([ae.inetAddress bytes], kLocalAddress, 2) == 0 &&
+        memcmp([le.inetAddress bytes], kLocalAddress, 2) == 0 &&
+        memcmp([le.inetAddress bytes] + 8, [ae.inetAddress bytes] + 8, 8) == 0) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (NSString*) description {
