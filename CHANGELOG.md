@@ -1,5 +1,8 @@
 Branch Mac SDK Change Log
 
+## v1.2.2 - May 7, 2020
+* Fix fallback when idfa is not available
+
 ## v1.2.1 - December 13, 2019
 * Fix crash when idfa is not available
 
