@@ -1,5 +1,8 @@
 Branch Mac SDK Change Log
 
+## v1.2.3 - May 13, 2020
+* Fix control param location in request payload
+
 ## v1.2.2 - May 7, 2020
 * Fix fallback when idfa is not available
 
