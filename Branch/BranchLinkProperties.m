@@ -60,7 +60,7 @@
     addInteger(matchDuration, ~duration);
     addInteger(linkType, ~type);
 
-    [dictionary addEntriesFromDictionary:self.controlParams];
+    //[dictionary addEntriesFromDictionary:self.controlParams];
 
     return dictionary;
 }
