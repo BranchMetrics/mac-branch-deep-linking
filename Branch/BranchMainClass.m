@@ -700,7 +700,13 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
     NSMutableDictionary*dictionary = [NSMutableDictionary new];
     [dictionary addEntriesFromDictionary:linkProperties.dictionary];
-    dictionary[@"data"] = content.dictionary;
+    
+    // Control params must also be at the data level
+    NSMutableDictionary *data = [NSMutableDictionary new];
+    [data addEntriesFromDictionary:linkProperties.controlParams];
+    [data addEntriesFromDictionary:content.dictionary];
+    dictionary[@"data"] = data;
+    
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     [self.networkAPIService postOperationForAPIServiceName:@"v1/url"
         dictionary:dictionary
