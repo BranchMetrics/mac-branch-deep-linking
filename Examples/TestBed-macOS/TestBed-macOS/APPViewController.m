@@ -264,7 +264,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 - (BranchLinkProperties*) createLinkProperties {
     NSString *feature = @"Sharing Feature";
     NSString *channel = @"Distribution Channel";
-//    NSString *desktop_url = @"http://branch.io";
+    NSString *desktop_url = @"http://branch.io";
 //    NSString *ios_url = @"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/";
 
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
@@ -274,6 +274,9 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     linkProperties.stage = @"stage four";
     linkProperties.campaign = @"some campaign";
     linkProperties.matchDuration = 18000;
+    
+    linkProperties.controlParams[@"$desktop_url"] = desktop_url;
+    
     // TODO: Control params:
 //    [linkProperties addControlParam:@"$desktop_url" withValue: desktop_url];
 //    [linkProperties addControlParam:@"$ios_url" withValue: ios_url];
