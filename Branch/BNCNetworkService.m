@@ -27,8 +27,6 @@
 #pragma mark - BNCNetworkService
 
 @interface BNCNetworkService () <NSURLSessionDelegate> {
-    NSMutableArray*_pinnedPublicKeys;
-    NSMutableSet<NSString*>*_anySSLCertHosts;
     NSOperationQueue*_serviceQueue;
     NSURLSession*_session;
 }
@@ -117,19 +115,6 @@
     return self.serviceQueue.maxConcurrentOperationCount;
 }
 
-- (NSMutableSet<NSString*>*) anySSLCertHosts {
-    @synchronized(self) {
-        if (!_anySSLCertHosts) _anySSLCertHosts = [NSMutableSet new];
-        return _anySSLCertHosts;
-    }
-}
-
-- (void) setAnySSLCertHosts:(NSMutableSet<NSString*>*)anySSLCertHosts_ {
-    @synchronized(self) {
-        _anySSLCertHosts = [anySSLCertHosts_ copy];
-    }
-}
-
 - (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion {
     BNCNetworkOperation *operation = [BNCNetworkOperation new];
@@ -185,104 +170,6 @@
     BNCLogDebug(@"Network start %@ %@\n%@.",
         operation.request.HTTPMethod, operation.request.URL, requestString);
     [operation.sessionTask resume];
-}
-
-#pragma mark - Transport Security
-
-- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
-    @synchronized (self) {
-        NSError*error = nil;
-        _pinnedPublicKeys = [NSMutableArray array];
-        for (id secKey in publicKeys) {
-            if (CFGetTypeID((SecKeyRef)secKey) == SecKeyGetTypeID())
-                [_pinnedPublicKeys addObject:secKey];
-            else {
-                error = [NSError errorWithDomain:NSNetServicesErrorDomain
-                    code:NSNetServicesBadArgumentError userInfo:nil];
-            }
-        }
-        return error;
-    }
-}
-
-- (NSArray*) pinnedPublicKeys {
-    @synchronized (self) {
-        return _pinnedPublicKeys;
-    }
-}
-
-- (void) URLSession:(NSURLSession *)session
-               task:(NSURLSessionTask *)task
-didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
-  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition,
-        NSURLCredential *credential))completionHandler {
-
-    BOOL trusted = NO;
-    SecTrustResultType trustResult = 0;
-    OSStatus err = 0;
-
-    // Keep a local copy in case they mutate.
-    NSArray *localPinnedKeys = [self.pinnedPublicKeys copy];
-    NSSet<NSString*>*localAllowedHosts = [self.anySSLCertHosts copy];
-    
-    // Release these:
-    SecKeyRef key = nil;
-    SecPolicyRef hostPolicy = nil;
-
-    // Get remote certificate
-    SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
-    @synchronized ((__bridge id<NSObject, OS_dispatch_semaphore>)serverTrust) {
-
-        // Set SSL policies for domain name check
-        hostPolicy = SecPolicyCreateSSL(true, (__bridge CFStringRef)challenge.protectionSpace.host);
-        if (!hostPolicy) goto exit;
-        SecTrustSetPolicies(serverTrust, (__bridge CFTypeRef _Nonnull)(@[ (__bridge id)hostPolicy ]));
-
-        // Evaluate server certificate
-        SecTrustEvaluate(serverTrust, &trustResult);
-        switch (trustResult) {
-        case kSecTrustResultRecoverableTrustFailure:
-            if ([localAllowedHosts containsObject:challenge.protectionSpace.host])
-                break;
-            else
-                goto exit;
-        case kSecTrustResultUnspecified:
-        case kSecTrustResultProceed:
-            break;
-        default:
-            goto exit;
-        }
-
-        if (localPinnedKeys == nil) {
-            trusted = YES;
-            goto exit;
-        }
-
-        key = SecTrustCopyPublicKey(serverTrust);
-        if (!key) goto exit;
-    }
-
-    for (id<NSObject> pinnedKey in localPinnedKeys) {
-        if ([pinnedKey isEqual:(__bridge id<NSObject>)key]) {
-            trusted = YES;
-            goto exit;
-        }
-    }
-
-exit:
-    if (err) {
-        NSError *error = [NSError errorWithDomain:NSOSStatusErrorDomain code:err userInfo:nil];
-        BNCLogError(@"Error while validating cert: %@.", error);
-    }
-    if (key) CFRelease(key);
-    if (hostPolicy) CFRelease(hostPolicy);
-
-    if (trusted) {
-        NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
-        completionHandler(NSURLSessionAuthChallengeUseCredential, credential);
-    } else {
-        completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, NULL);
-    }
 }
 
 - (void) cancelAllOperations {

@@ -53,22 +53,10 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
         name:BranchDidOpenURLWithSessionNotification
         object:nil];
 
-    BranchConfiguration*configuration =
-        [[BranchConfiguration alloc] initWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
+    BranchConfiguration *configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
 
-#if 0
-    configuration.useCertificatePinning = NO;
-    configuration.branchAPIServiceURL = @"http://esmith.api.beta.branch.io";
-    configuration.key = @"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC";
-#elif 0
-    configuration.useCertificatePinning = NO;
-    configuration.branchAPIServiceURL = @"http://cjones.api.beta.branch.io";
-    configuration.key = @"key_live_ocyWSee4dsA1EUPxxMvFchefuqdjuxyW";
-#else
-    configuration.useCertificatePinning = YES;
     configuration.branchAPIServiceURL = @"https://api.branch.io";
     configuration.key = @"key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N";
-#endif
 
     [[Branch sharedInstance] startWithConfiguration:configuration];
 }
