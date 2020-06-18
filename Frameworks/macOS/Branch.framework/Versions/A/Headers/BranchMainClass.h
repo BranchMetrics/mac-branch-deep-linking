@@ -31,13 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) initWithKey:(NSString*)key NS_DESIGNATED_INITIALIZER;
 
 /** Your Branch key. */
-@property (atomic, strong) NSString*key;
-
-/** Use certificate pinning for extra security. The default is to use certificate pinning. */
-@property (atomic, assign) BOOL useCertificatePinning;
+@property (atomic, strong) NSString *key;
 
 /** The URL to the Branch API servers. */
-@property (atomic, copy)   NSString*branchAPIServiceURL;
+@property (atomic, copy)   NSString *branchAPIServiceURL;
 
 /**
  This is `Class` for the network service. If you want to use your own underlying network service,

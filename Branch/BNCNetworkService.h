@@ -33,12 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion;
 
-- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*_Nullable)publicKeys;
-
-/// An array of host domains that we will allow with a self-signed SSL cert.
-@property (atomic, strong, null_resettable) NSMutableSet<NSString*>* anySSLCertHosts;
 @property (atomic, assign) NSInteger maxConcurrentOperationCount;
+
 - (void) cancelAllOperations;
+
 @end
 
 NS_ASSUME_NONNULL_END

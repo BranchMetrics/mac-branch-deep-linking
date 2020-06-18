@@ -91,10 +91,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion;
 
-/// Pins the session to the array of public keys.
-@optional
-- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/* <SecKeyRef> */*_Nullable)publicKeys;
-
 @end
 
 NS_ASSUME_NONNULL_END

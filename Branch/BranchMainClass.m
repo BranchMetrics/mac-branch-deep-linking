@@ -46,7 +46,7 @@
 - (instancetype) initWithKey:(NSString *)key {
     self = [super init];
     self.key = [key copy];
-    self.useCertificatePinning = YES;
+
     self.branchAPIServiceURL = @"https://api.branch.io";
     self.networkServiceClass = [BNCNetworkService class];
     self.blackListURLRegex = [NSArray new];
@@ -55,7 +55,6 @@
 
 - (instancetype) copyWithZone:(NSZone*)zone {
     BranchConfiguration* configuration = [[BranchConfiguration alloc] initWithKey:self.key];
-    configuration.useCertificatePinning = self.useCertificatePinning;
     configuration.branchAPIServiceURL = [self.branchAPIServiceURL copy];
     configuration.networkServiceClass = self.networkServiceClass;
     configuration.blackListURLRegex = [self.blackListURLRegex copy];
