@@ -71,14 +71,6 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
     self.settings = self.configuration.settings;
     self.networkService = [configuration.networkServiceClass new];
     self.persistence = [[BNCPersistence alloc] initWithAppGroup:BNCApplication.currentApplication.bundleID];
-    if (self.configuration.useCertificatePinning) {
-        NSError*error = [self.networkService pinSessionToPublicSecKeyRefs:self.class.publicSecKeyRefs];
-        if (error) {
-            BNCLogError(@"Can't pin network certificates: %@.", error);
-            error = [NSError branchErrorWithCode:BNCInvalidNetworkPublicKeyError];
-            BNCLogError(@"Can't pin network certificates: %@.", error);
-        }
-    }
     self.operationQueue = [[NSOperationQueue alloc] init];
     self.operationQueue.qualityOfService = NSQualityOfServiceUserInitiated;
     self.operationQueue.name = @"io.branch.sdk.BNCNetworkAPIService";
