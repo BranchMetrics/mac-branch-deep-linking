@@ -1,5 +1,8 @@
 Branch Mac SDK Change Log
 
+## v1.2.4 - June 17, 2020
+* Remove certificate pinning
+
 ## v1.2.3 - May 13, 2020
 * Fix control param location in request payload
 
