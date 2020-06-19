@@ -65,19 +65,21 @@
 		4DF818BB20AF9EB000441881 /* BranchDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818B920AF9EAF00441881 /* BranchDelegate.m */; };
 		4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF818BE20B025DA00441881 /* BNCEncoder.h */; };
 		4DF818C120B025DA00441881 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF818BF20B025DA00441881 /* BNCEncoder.m */; };
+		5F2FDA37249D3CBF0061D571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2FDA36249D3CBF0061D571 /* AppDelegate.m */; };
+		5F2FDA3A249D3CBF0061D571 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2FDA39249D3CBF0061D571 /* ViewController.m */; };
+		5F2FDA3C249D3CC10061D571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F2FDA3B249D3CC10061D571 /* Assets.xcassets */; };
+		5F2FDA3F249D3CC10061D571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F2FDA3D249D3CC10061D571 /* Main.storyboard */; };
+		5F2FDA42249D3CC10061D571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2FDA41249D3CC10061D571 /* main.m */; };
 		5F78ED94249C317400E313B9 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D54C07520A6560400C76496 /* Branch.framework */; };
 		5F78EDC3249C31FA00E313B9 /* BNCNetworkInformation.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78ED9C249C31F600E313B9 /* BNCNetworkInformation.Test.m */; };
 		5F78EDC4249C31FA00E313B9 /* BranchDelegate.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78ED9D249C31F600E313B9 /* BranchDelegate.Test.m */; };
 		5F78EDC5249C31FA00E313B9 /* BNCLog.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78ED9E249C31F600E313B9 /* BNCLog.Test.m */; };
 		5F78EDC6249C31FA00E313B9 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78ED9F249C31F600E313B9 /* BNCTestCase.Test.m */; };
 		5F78EDC7249C31FA00E313B9 /* Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA0249C31F600E313B9 /* Branch.Test.m */; };
-		5F78EDC8249C31FA00E313B9 /* BranchTestHost-tvOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5F78EDA1249C31F600E313B9 /* BranchTestHost-tvOS.xcconfig */; };
 		5F78EDC9249C31FA00E313B9 /* BNCNetworkAPIService.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA2249C31F700E313B9 /* BNCNetworkAPIService.Test.m */; };
 		5F78EDCA249C31FA00E313B9 /* UIViewController+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA3249C31F700E313B9 /* UIViewController+Branch.Test.m */; };
 		5F78EDCB249C31FA00E313B9 /* NSData+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA4249C31F700E313B9 /* NSData+Branch.Test.m */; };
-		5F78EDCC249C31FA00E313B9 /* BranchTestHost-iOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5F78EDA5249C31F700E313B9 /* BranchTestHost-iOS.xcconfig */; };
 		5F78EDCD249C31FA00E313B9 /* BranchUniversalObject.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA6249C31F700E313B9 /* BranchUniversalObject.Test.m */; };
-		5F78EDCE249C31FA00E313B9 /* BranchTestHost-macOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5F78EDA7249C31F700E313B9 /* BranchTestHost-macOS.xcconfig */; };
 		5F78EDCF249C31FA00E313B9 /* BNCURLBlackList.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA8249C31F700E313B9 /* BNCURLBlackList.Test.m */; };
 		5F78EDD0249C31FA00E313B9 /* BranchMutableDictionary.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDA9249C31F700E313B9 /* BranchMutableDictionary.Test.m */; };
 		5F78EDD1249C31FA00E313B9 /* BranchEvent.Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDAA249C31F700E313B9 /* BranchEvent.Test.swift */; };
@@ -107,6 +109,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5F2FDA48249D3CCF0061D571 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5F2FDA32249D3CBF0061D571;
+			remoteInfo = BranchTestHost;
+		};
 		5F78ED95249C317400E313B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D54C06C20A6560400C76496 /* Project object */;
@@ -180,6 +189,16 @@
 		4DF818B920AF9EAF00441881 /* BranchDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchDelegate.m; sourceTree = "<group>"; };
 		4DF818BE20B025DA00441881 /* BNCEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCEncoder.h; sourceTree = "<group>"; };
 		4DF818BF20B025DA00441881 /* BNCEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.m; sourceTree = "<group>"; };
+		5F2FDA33249D3CBF0061D571 /* BranchTestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BranchTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F2FDA35249D3CBF0061D571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5F2FDA36249D3CBF0061D571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5F2FDA38249D3CBF0061D571 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5F2FDA39249D3CBF0061D571 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5F2FDA3B249D3CC10061D571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5F2FDA3E249D3CC10061D571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5F2FDA40249D3CC10061D571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F2FDA41249D3CC10061D571 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5F2FDA43249D3CC10061D571 /* BranchTestHost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BranchTestHost.entitlements; sourceTree = "<group>"; };
 		5F78ED8F249C317400E313B9 /* BranchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BranchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F78ED93249C317400E313B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F78ED9B249C31F600E313B9 /* BranchTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BranchTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -188,13 +207,10 @@
 		5F78ED9E249C31F600E313B9 /* BNCLog.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.Test.m; sourceTree = "<group>"; };
 		5F78ED9F249C31F600E313B9 /* BNCTestCase.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCTestCase.Test.m; sourceTree = "<group>"; };
 		5F78EDA0249C31F600E313B9 /* Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Branch.Test.m; sourceTree = "<group>"; };
-		5F78EDA1249C31F600E313B9 /* BranchTestHost-tvOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BranchTestHost-tvOS.xcconfig"; sourceTree = "<group>"; };
 		5F78EDA2249C31F700E313B9 /* BNCNetworkAPIService.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkAPIService.Test.m; sourceTree = "<group>"; };
 		5F78EDA3249C31F700E313B9 /* UIViewController+Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Branch.Test.m"; sourceTree = "<group>"; };
 		5F78EDA4249C31F700E313B9 /* NSData+Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Branch.Test.m"; sourceTree = "<group>"; };
-		5F78EDA5249C31F700E313B9 /* BranchTestHost-iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BranchTestHost-iOS.xcconfig"; sourceTree = "<group>"; };
 		5F78EDA6249C31F700E313B9 /* BranchUniversalObject.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchUniversalObject.Test.m; sourceTree = "<group>"; };
-		5F78EDA7249C31F700E313B9 /* BranchTestHost-macOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BranchTestHost-macOS.xcconfig"; sourceTree = "<group>"; };
 		5F78EDA8249C31F700E313B9 /* BNCURLBlackList.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.Test.m; sourceTree = "<group>"; };
 		5F78EDA9249C31F700E313B9 /* BranchMutableDictionary.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchMutableDictionary.Test.m; sourceTree = "<group>"; };
 		5F78EDAA249C31F700E313B9 /* BranchEvent.Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BranchEvent.Test.swift; sourceTree = "<group>"; };
@@ -237,6 +253,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5F2FDA30249D3CBF0061D571 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F78ED8C249C317400E313B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -254,6 +277,7 @@
 				4DBB97A020EAA12A00207F0E /* README.md */,
 				4D54C07720A6560400C76496 /* Branch */,
 				5F78ED90249C317400E313B9 /* BranchTests */,
+				5F2FDA34249D3CBF0061D571 /* BranchTestHost */,
 				4D54C07620A6560400C76496 /* Products */,
 				4DC2232220AA19A2005C57D0 /* Frameworks */,
 			);
@@ -264,6 +288,7 @@
 			children = (
 				4D54C07520A6560400C76496 /* Branch.framework */,
 				5F78ED8F249C317400E313B9 /* BranchTests.xctest */,
+				5F2FDA33249D3CBF0061D571 /* BranchTestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -346,6 +371,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5F2FDA34249D3CBF0061D571 /* BranchTestHost */ = {
+			isa = PBXGroup;
+			children = (
+				5F2FDA35249D3CBF0061D571 /* AppDelegate.h */,
+				5F2FDA36249D3CBF0061D571 /* AppDelegate.m */,
+				5F2FDA38249D3CBF0061D571 /* ViewController.h */,
+				5F2FDA39249D3CBF0061D571 /* ViewController.m */,
+				5F2FDA3B249D3CC10061D571 /* Assets.xcassets */,
+				5F2FDA3D249D3CC10061D571 /* Main.storyboard */,
+				5F2FDA40249D3CC10061D571 /* Info.plist */,
+				5F2FDA41249D3CC10061D571 /* main.m */,
+				5F2FDA43249D3CC10061D571 /* BranchTestHost.entitlements */,
+			);
+			path = BranchTestHost;
+			sourceTree = "<group>";
+		};
 		5F78ED90249C317400E313B9 /* BranchTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,9 +421,6 @@
 				5F78EDAF249C31F800E313B9 /* BranchMainClass.Test.m */,
 				5F78EDA9249C31F700E313B9 /* BranchMutableDictionary.Test.m */,
 				5F78EDAC249C31F700E313B9 /* BranchOpen.Test.m */,
-				5F78EDA5249C31F700E313B9 /* BranchTestHost-iOS.xcconfig */,
-				5F78EDA7249C31F700E313B9 /* BranchTestHost-macOS.xcconfig */,
-				5F78EDA1249C31F600E313B9 /* BranchTestHost-tvOS.xcconfig */,
 				5F78EDBA249C31F900E313B9 /* BranchTests-Bridging-Header.h */,
 				5F78ED93249C317400E313B9 /* Info.plist */,
 				5F78EDA6249C31F700E313B9 /* BranchUniversalObject.Test.m */,
@@ -454,6 +492,23 @@
 			productReference = 4D54C07520A6560400C76496 /* Branch.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		5F2FDA32249D3CBF0061D571 /* BranchTestHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F2FDA44249D3CC10061D571 /* Build configuration list for PBXNativeTarget "BranchTestHost" */;
+			buildPhases = (
+				5F2FDA2F249D3CBF0061D571 /* Sources */,
+				5F2FDA30249D3CBF0061D571 /* Frameworks */,
+				5F2FDA31249D3CBF0061D571 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BranchTestHost;
+			productName = BranchTestHost;
+			productReference = 5F2FDA33249D3CBF0061D571 /* BranchTestHost.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5F78ED8E249C317400E313B9 /* BranchTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5F78ED97249C317400E313B9 /* Build configuration list for PBXNativeTarget "BranchTests" */;
@@ -466,6 +521,7 @@
 			);
 			dependencies = (
 				5F78ED96249C317400E313B9 /* PBXTargetDependency */,
+				5F2FDA49249D3CCF0061D571 /* PBXTargetDependency */,
 			);
 			name = BranchTests;
 			productName = BranchTests;
@@ -486,10 +542,15 @@
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
 					};
+					5F2FDA32249D3CBF0061D571 = {
+						CreatedOnToolsVersion = 11.5;
+						ProvisioningStyle = Automatic;
+					};
 					5F78ED8E249C317400E313B9 = {
 						CreatedOnToolsVersion = 11.5;
 						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
+						TestTargetID = 5F2FDA32249D3CBF0061D571;
 					};
 				};
 			};
@@ -508,19 +569,26 @@
 			targets = (
 				4D54C07420A6560400C76496 /* Branch-macOS */,
 				5F78ED8E249C317400E313B9 /* BranchTests */,
+				5F2FDA32249D3CBF0061D571 /* BranchTestHost */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5F2FDA31249D3CBF0061D571 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F2FDA3C249D3CC10061D571 /* Assets.xcassets in Resources */,
+				5F2FDA3F249D3CC10061D571 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F78ED8D249C317400E313B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F78EDCC249C31FA00E313B9 /* BranchTestHost-iOS.xcconfig in Resources */,
 				5F78EDE3249C31FA00E313B9 /* BNCTestCase.strings in Resources */,
-				5F78EDCE249C31FA00E313B9 /* BranchTestHost-macOS.xcconfig in Resources */,
-				5F78EDC8249C31FA00E313B9 /* BranchTestHost-tvOS.xcconfig in Resources */,
 				5F78EDE2249C31FA00E313B9 /* BNCTestCase.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +652,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5F2FDA2F249D3CBF0061D571 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F2FDA3A249D3CBF0061D571 /* ViewController.m in Sources */,
+				5F2FDA42249D3CC10061D571 /* main.m in Sources */,
+				5F2FDA37249D3CBF0061D571 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F78ED8B249C317400E313B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -625,12 +703,28 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5F2FDA49249D3CCF0061D571 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5F2FDA32249D3CBF0061D571 /* BranchTestHost */;
+			targetProxy = 5F2FDA48249D3CCF0061D571 /* PBXContainerItemProxy */;
+		};
 		5F78ED96249C317400E313B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4D54C07420A6560400C76496 /* Branch-macOS */;
 			targetProxy = 5F78ED95249C317400E313B9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5F2FDA3D249D3CC10061D571 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F2FDA3E249D3CC10061D571 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4D54C08720A6560400C76496 /* Debug */ = {
@@ -783,9 +877,9 @@
 		4D54C08A20A6560400C76496 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R63EM248DP;
 				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -795,9 +889,9 @@
 		4D54C08B20A6560400C76496 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R63EM248DP;
 				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -883,19 +977,79 @@
 		4DFB135520CCD96400AF3E47 /* UnitTests */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R63EM248DP;
 				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = UnitTests;
 		};
+		5F2FDA45249D3CC10061D571 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BranchTestHost/BranchTestHost.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = BranchTestHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.BranchTestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5F2FDA46249D3CC10061D571 /* UnitTests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BranchTestHost/BranchTestHost.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = BranchTestHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.BranchTestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = UnitTests;
+		};
+		5F2FDA47249D3CC10061D571 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BranchTestHost/BranchTestHost.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = BranchTestHost/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.branch.BranchTestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		5F78ED98249C317400E313B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -910,6 +1064,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BranchTestHost.app/Contents/MacOS/BranchTestHost";
 			};
 			name = Debug;
 		};
@@ -917,6 +1072,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
@@ -929,6 +1085,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BranchTestHost.app/Contents/MacOS/BranchTestHost";
 			};
 			name = UnitTests;
 		};
@@ -936,6 +1093,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
@@ -947,6 +1105,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "BranchTests/BranchTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BranchTestHost.app/Contents/MacOS/BranchTestHost";
 			};
 			name = Release;
 		};
@@ -969,6 +1128,16 @@
 				4D54C08A20A6560400C76496 /* Debug */,
 				4DFB135520CCD96400AF3E47 /* UnitTests */,
 				4D54C08B20A6560400C76496 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F2FDA44249D3CC10061D571 /* Build configuration list for PBXNativeTarget "BranchTestHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F2FDA45249D3CC10061D571 /* Debug */,
+				5F2FDA46249D3CC10061D571 /* UnitTests */,
+				5F2FDA47249D3CC10061D571 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
