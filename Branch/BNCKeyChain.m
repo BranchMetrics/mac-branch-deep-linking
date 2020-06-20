@@ -19,13 +19,9 @@
 
 #pragma mark SecCopyErrorMessageString
 
-#if TARGET_OS_OSX
-
 //#pragma clang link undefined _SecCopyErrorMessageString // -Wl,-U,_SecCopyErrorMessageString
 extern CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved)
     __attribute__((weak_import));
-
-#else
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wpartial-availability"
@@ -33,8 +29,6 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
     return CFSTR("Sec OSStatus error.");
 }
 #pragma clang diagnostic pop
-
-#endif
 
 #pragma mark - BNCKeyChain
 

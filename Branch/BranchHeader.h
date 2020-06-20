@@ -17,26 +17,10 @@
 #import <Foundation/Foundation.h>
 #endif
 
-#if TARGET_OS_OSX
-
-    #if __has_feature(modules)
-    @import AppKit;
-    #else
-    #import <AppKit/Appkit.h>
-    #endif
-
-#elif TARGET_OS_IPHONE
-
-    #if __has_feature(modules)
-    @import UIKit;
-    #else
-    #import <UIKit/UIKit.h>
-    #endif
-
+#if __has_feature(modules)
+@import AppKit;
 #else
-
-    #error Unknown compile target.
-
+#import <AppKit/Appkit.h>
 #endif
 
 #endif // BranchHeader_h

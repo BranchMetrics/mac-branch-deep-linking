@@ -27,13 +27,11 @@
     BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
     [branch startWithConfiguration:configuration];
     BNCURLBlackList *blackList = [BNCURLBlackList new];
-    [blackList refreshBlackListFromServerWithBranch:branch completion:
-        ^(BNCURLBlackList * _Nonnull blackList, NSError * _Nullable error) {
-            XCTAssertNil(error);
-            XCTAssertTrue(blackList.blackList.count == 6);
-            [expectation fulfill];
-        }
-    ];
+    [blackList refreshBlackListFromServerWithBranch:branch completion: ^(BNCURLBlackList * _Nonnull blackList, NSError * _Nullable error) {
+        XCTAssertNil(error);
+        XCTAssertTrue(blackList.blackList.count == 6);
+        [expectation fulfill];
+    }];
     [self awaitExpectations];
 }
 
@@ -205,10 +203,7 @@
             return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
         };
 
-    NSString *url = @"https://myapp.app.link/bob/link";
-    #if TARGET_OS_OSX
-    url = @"testbed-mac://bob/open?link_click_id=348527481794276288&oauth=true";
-    #endif
+    NSString *url = @"testbed-mac://bob/open?link_click_id=348527481794276288&oauth=true";
 
     [branch openURL:[NSURL URLWithString:url]];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];

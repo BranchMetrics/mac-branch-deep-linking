@@ -17,13 +17,8 @@
 #import <netdb.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
-
-#if TARGET_OS_TV || TARGET_OS_IPHONE
-    #import "../Vendor/route.h"
-#else
-    #import <net/route.h>
-    #import <netinet/if_ether.h>
-#endif
+#import <net/route.h>
+#import <netinet/if_ether.h>
 
 #define ROUNDUP(a) \
     ((a) > 0 ? (1 + (((a) - 1) | (sizeof(uint32_t) - 1))) : sizeof(uint32_t))

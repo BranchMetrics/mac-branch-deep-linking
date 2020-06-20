@@ -116,12 +116,15 @@ BOOL BNCTestStringMatchesRegex(NSString *string, NSString *regex) {
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
+// idfa was introuced in macOS 10.14.1, however it always returns 0's on macOS 10.15+
 - (BOOL) testDeviceSupportsIDFA {
-    #if TARGET_OS_OSX && (!defined(__MAC_10_14_1) || __MAC_OS_X_VERSION_MAX_ALLOWED < __MAC_10_14_1)
-        return NO;
-    #else
-        return YES;
-    #endif
+    return NO;
+    
+//    #if TARGET_OS_OSX && (!defined(__MAC_10_14_1) || __MAC_OS_X_VERSION_MAX_ALLOWED < __MAC_10_14_1)
+//        return NO;
+//    #else
+//        return YES;
+//    #endif
 }
 
 static BOOL _breakpointsAreEnabledInTests = NO;

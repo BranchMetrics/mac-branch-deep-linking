@@ -257,7 +257,7 @@
         };
 
     [branch startWithConfiguration:configuration];
-    BNCSleepForTimeInterval(1.0); // TODO: Fix! Make sure open happens first before event.
+    BNCSleepForTimeInterval(3.0); // TODO: Fix! Make sure open happens first before event.
     XCTestExpectation *expectation = [self expectationWithDescription:@"testInstrumentation"];
     [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
         completion: ^ (NSError * _Nullable error) {
