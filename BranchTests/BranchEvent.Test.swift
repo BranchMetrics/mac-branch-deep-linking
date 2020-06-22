@@ -13,7 +13,7 @@ import Foundation
 class BranchEventTestSwift : BNCTestCase {
 
     // TODO: move this to an integration test, it hits the server
-    func testBranchEvent() {
+//    func testBranchEvent() {
 //
 //        // Set up the Branch Universal Object --
 //
@@ -94,7 +94,7 @@ class BranchEventTestSwift : BNCTestCase {
 //            expectation.fulfill()
 //        })
 //        self.awaitExpectations()
-    }
+//   }
 
     func testExampleSyntaxSwift() {
         let branch = Branch
