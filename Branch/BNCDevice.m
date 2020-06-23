@@ -11,9 +11,7 @@
 #import "BNCDevice.h"
 #import "BNCLog.h"
 #import "BNCNetworkInformation.h"
-#if !TARGET_OS_TV
 #import "BNCUserAgentCollector.h"
-#endif
 
 #import <sys/sysctl.h>
 #import <CommonCrypto/CommonCrypto.h>
@@ -60,14 +58,8 @@
 + (NSString*) systemName {
     #if TARGET_OS_OSX
     return @"mac_OS";
-    #elif TARGET_OS_IOS
-    return @"iOS";
-    #elif TARGET_OS_TV
-    return @"tv_OS";
-    #elif TARGET_OS_WATCH
-    return @"watch_OS";
     #else
-    return @"Unknown";
+    return @"other";
     #endif
 }
 
@@ -184,8 +176,6 @@
     return [info.displayAddress copy];
 }
 
-#if TARGET_OS_OSX
-
 + (void) updateScreenAttributesWithDevice:(BNCDevice*)device {
     if (!device) return;
     NSDictionary*attributes = [[NSScreen mainScreen] deviceDescription];
@@ -194,16 +184,6 @@
     device->_screenSize = size;
     device->_screenDPI = resolution.width;
 }
-
-#else
-
-+ (void) updateScreenAttributesWithDevice:(BNCDevice*)device {
-    if (!device) return;
-    device->_screenSize = [UIScreen mainScreen].bounds.size;
-    device->_screenDPI = [UIScreen mainScreen].scale;
-}
-
-#endif
 
 + (instancetype) createCurrentDevice {
     BNCDevice*device = [[BNCDevice alloc] init];
@@ -247,44 +227,18 @@
     device->_netAddress = [self networkAddress];
     device->_country = [self country];
     device->_language = [self language];
-
-    #if !TARGET_OS_TV
     device->_userAgent = [BNCUserAgentCollector instance].userAgent;
-    #endif
     
     return device;
 }
 
 #pragma mark - Instance Methods
 
-#if TARGET_OS_OSX
-
+// macOS does not have a vendor id
+// https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
 - (NSString *)vendorID {
     return nil;
 }
-
-#else
-
-- (NSString *)vendorID {
-    /*
-     * https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor
-     *
-     * If the value is nil, wait and get the value again later. This happens, for example,
-     * after the device has been restarted but before the user has unlocked the device.
-     *
-     * It's not clear if that specific example scenario would apply to opening Branch links,
-     * but this lazy initialization is probably safer.
-     */
-    @synchronized (self) {
-        static NSString* _vendorID = nil;
-        if (!_vendorID) {
-            _vendorID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        }
-        return _vendorID;
-    }
-}
-
-#endif
 
 - (NSString *)hardwareID {
     NSString *s = nil;

@@ -237,31 +237,32 @@
     XCTAssertEqual(branch.networkAPIService.queueDepth, 0);
 }
 
-- (void) testExampleSyntax {
-    BranchUniversalObject *contentItem = [BranchUniversalObject new];
-    contentItem.canonicalIdentifier = @"item/123";
-    contentItem.canonicalUrl = @"https://branch.io/item/123";
-    contentItem.contentMetadata.ratingAverage = 5.0;
-
-    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventCompleteRegistration];
-    event.eventDescription = @"Product Search";
-    event.searchQuery = @"product name";
-    event.customData[@"rating"] = @"5";
-
-    Branch*branch = [[Branch alloc] init];
-    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:BNCTestBranchKey];
-    [branch startWithConfiguration:configuration];
-    BNCSleepForTimeInterval(2.0); // TODO: Make sure the open/install happens first.
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
-    [branch logEvent:event completion:^ (NSError*error) {
-        XCTAssertNil(error);
-        [expectation fulfill];
-    }];
-    [self awaitExpectations];
-    XCTAssertEqual(branch.networkAPIService.queueDepth, 0); // TODO: Make sure the open/install happens first.
-
-    // Test that all events are in the array:
-    XCTAssert([BranchEvent standardEvents].count == 16);
-}
+// TODO: move this to an integration test, it hits the server
+//- (void) testExampleSyntax {
+//    BranchUniversalObject *contentItem = [BranchUniversalObject new];
+//    contentItem.canonicalIdentifier = @"item/123";
+//    contentItem.canonicalUrl = @"https://branch.io/item/123";
+//    contentItem.contentMetadata.ratingAverage = 5.0;
+//
+//    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventCompleteRegistration];
+//    event.eventDescription = @"Product Search";
+//    event.searchQuery = @"product name";
+//    event.customData[@"rating"] = @"5";
+//
+//    Branch*branch = [[Branch alloc] init];
+//    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:BNCTestBranchKey];
+//    [branch startWithConfiguration:configuration];
+//    BNCSleepForTimeInterval(2.0); // TODO: Make sure the open/install happens first.
+//    XCTestExpectation *expectation = [self expectationWithDescription:@"testExampleSyntax"];
+//    [branch logEvent:event completion:^ (NSError*error) {
+//        XCTAssertNil(error);
+//        [expectation fulfill];
+//    }];
+//    [self awaitExpectations];
+//    XCTAssertEqual(branch.networkAPIService.queueDepth, 0); // TODO: Make sure the open/install happens first.
+//
+//    // Test that all events are in the array:
+//    XCTAssert([BranchEvent standardEvents].count == 16);
+//}
 
 @end

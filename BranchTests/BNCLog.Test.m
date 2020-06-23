@@ -281,7 +281,7 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
     XCTAssert([globalTestLogString() bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(***) Log: "
          "0x**************** <NSConcreteMutableData> "
-         "<54657374 20737472 696e672e>"]);
+         "{length = 12, bytes = 0x5465737420737472696e672e}"]);
 }
 
 #pragma mark - Test BNCLogSetOutputToURLByteWrap

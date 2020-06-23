@@ -18,130 +18,131 @@
 
 @implementation BranchOpenTest
 
-- (void) testOpenScheme {
-    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
-    configuration.networkServiceClass = BNCTestNetworkService.class;
-    Branch*branch = [[Branch alloc] init];
-    [branch clearAllSettings];
-    [branch startWithConfiguration:configuration];
-    branch.limitFacebookTracking = YES;
-    
-    // Mock the result. Fix up the expectedParameters for simulator hardware --
-
-    __block _Atomic(NSInteger) callCount = 0;
-    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        NSInteger count = atomic_fetch_add(&callCount, 1);
-        if (count == 0) {
-            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-            XCTAssertEqualObjects(request.URL.path, @"/v1/install");
-            NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
-            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
-            NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-            for (NSString*key in truth) {
-                XCTAssertNotNil(test[key], @"No key '%@'!", key);
-                if (test[key] == nil)
-                    NSLog(@"No key '%@'!", key);
-                test[key] = nil;
-            }
-
-            if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
-                XCTAssert(test[@"idfv"]);
-                test[@"idfv"] = nil;
-                // test[@"idfa"] = nil;
-            }
-            
-            // check mac address and user agent are populated
-            XCTAssertNotNil(test[@"mac_address"]);
-            test[@"mac_address"] = nil;
-            XCTAssertNotNil(test[@"user_agent"]);
-            test[@"user_agent"] = nil;
-            
-            XCTAssert(test.count == 0, @"Found keys: %@.", test);
-            
-            NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
-            XCTAssertNotNil(response);
-            return [BNCTestNetworkService operationWithRequest:request response:response];
-        } else {
-            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
-        }
-    };
-
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testOpenScheme"];
-    branch.sessionStartedBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
-        XCTAssertNil(error);
-        XCTAssertNotNil(session);
-        NSString*result = session.description;
-        XCTAssert([result hasPrefix:@"<BranchSession 0x"]);
-        [expectation fulfill];
-    };
-    
-    [branch.networkAPIService clearNetworkQueue];
-    [branch openURL:[NSURL URLWithString:@"testbed-mac://open?link_click_id=348527481794276288"]];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
-}
-
-- (void) testOpenHTTP {
-    NSString*const kTestURL = @"https://testbed-mac.app.link/ODYeswaVWM";
-    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
-    configuration.networkServiceClass = BNCTestNetworkService.class;
-    Branch*branch = [[Branch alloc] init];
-    [branch clearAllSettings];
-    [branch startWithConfiguration:configuration];
-    branch.limitFacebookTracking = YES;
-
-    // Mock the result. Fix up the expectedParameters for simulator hardware --
-
-    __block BOOL foundInstallRequest = NO;
-    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
-        if ([request.URL.path isEqualToString:@"/v1/install"]) {
-            foundInstallRequest = YES;
-            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-            NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
-            truth[@"external_intent_uri"] = nil;
-            truth[@"link_identifier"] = nil;
-            truth[@"universal_link_url"] = kTestURL;
-            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
-            NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-            for (NSString*key in truth) {
-                XCTAssertNotNil(test[key], @"No key '%@'!", key);
-                if (test[key] == nil)
-                    NSLog(@"No key '%@'!", key);
-                test[key] = nil;
-            }
-            
-            if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
-                XCTAssert(test[@"idfv"]);
-                test[@"idfv"] = nil;
-                // test[@"idfa"] = nil;
-            }
-            
-            // check mac address and user agent are populated
-            XCTAssertNotNil(test[@"mac_address"]);
-            test[@"mac_address"] = nil;
-            XCTAssertNotNil(test[@"user_agent"]);
-            test[@"user_agent"] = nil;
-            
-            XCTAssert(test.count == 0, @"Found keys: %@.", test);
-            NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
-            XCTAssertNotNil(response);
-            return [BNCTestNetworkService operationWithRequest:request response:response];
-        } else {
-            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
-        }
-    };
-
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testOpenHTTP"];
-    branch.sessionStartedBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
-        XCTAssertNil(error);
-        XCTAssertNotNil(session);
-        NSString*result = session.description;
-        XCTAssert([result hasPrefix:@"<BranchSession 0x"]);
-        [expectation fulfill];
-    };
-
-    [branch openURL:[NSURL URLWithString:kTestURL]];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
-    XCTAssertTrue(foundInstallRequest);
-}
+// TODO: move these to integration tests, they hit the server
+//- (void) testOpenScheme {
+//    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
+//    configuration.networkServiceClass = BNCTestNetworkService.class;
+//    Branch*branch = [[Branch alloc] init];
+//    [branch clearAllSettings];
+//    [branch startWithConfiguration:configuration];
+//    branch.limitFacebookTracking = YES;
+//
+//    // Mock the result. Fix up the expectedParameters for simulator hardware --
+//
+//    __block _Atomic(NSInteger) callCount = 0;
+//    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+//        NSInteger count = atomic_fetch_add(&callCount, 1);
+//        if (count == 0) {
+//            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+//            XCTAssertEqualObjects(request.URL.path, @"/v1/install");
+//            NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
+//            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
+//            NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+//            for (NSString*key in truth) {
+//                XCTAssertNotNil(test[key], @"No key '%@'!", key);
+//                if (test[key] == nil)
+//                    NSLog(@"No key '%@'!", key);
+//                test[key] = nil;
+//            }
+//
+//            if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
+//                XCTAssert(test[@"idfv"]);
+//                test[@"idfv"] = nil;
+//                // test[@"idfa"] = nil;
+//            }
+//
+//            // check mac address and user agent are populated
+//            XCTAssertNotNil(test[@"mac_address"]);
+//            test[@"mac_address"] = nil;
+//            XCTAssertNotNil(test[@"user_agent"]);
+//            test[@"user_agent"] = nil;
+//
+//            XCTAssert(test.count == 0, @"Found keys: %@.", test);
+//
+//            NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
+//            XCTAssertNotNil(response);
+//            return [BNCTestNetworkService operationWithRequest:request response:response];
+//        } else {
+//            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+//        }
+//    };
+//
+//    XCTestExpectation *expectation = [self expectationWithDescription:@"testOpenScheme"];
+//    branch.sessionStartedBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
+//        XCTAssertNil(error);
+//        XCTAssertNotNil(session);
+//        NSString*result = session.description;
+//        XCTAssert([result hasPrefix:@"<BranchSession 0x"]);
+//        [expectation fulfill];
+//    };
+//
+//    [branch.networkAPIService clearNetworkQueue];
+//    [branch openURL:[NSURL URLWithString:@"testbed-mac://open?link_click_id=348527481794276288"]];
+//    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+//}
+//
+//- (void) testOpenHTTP {
+//    NSString*const kTestURL = @"https://testbed-mac.app.link/ODYeswaVWM";
+//    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
+//    configuration.networkServiceClass = BNCTestNetworkService.class;
+//    Branch*branch = [[Branch alloc] init];
+//    [branch clearAllSettings];
+//    [branch startWithConfiguration:configuration];
+//    branch.limitFacebookTracking = YES;
+//
+//    // Mock the result. Fix up the expectedParameters for simulator hardware --
+//
+//    __block BOOL foundInstallRequest = NO;
+//    BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
+//        if ([request.URL.path isEqualToString:@"/v1/install"]) {
+//            foundInstallRequest = YES;
+//            XCTAssertEqualObjects(request.HTTPMethod, @"POST");
+//            NSMutableDictionary*truth = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
+//            truth[@"external_intent_uri"] = nil;
+//            truth[@"link_identifier"] = nil;
+//            truth[@"universal_link_url"] = kTestURL;
+//            if (!self.testDeviceSupportsIDFA) truth[@"idfa"] = nil;
+//            NSMutableDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+//            for (NSString*key in truth) {
+//                XCTAssertNotNil(test[key], @"No key '%@'!", key);
+//                if (test[key] == nil)
+//                    NSLog(@"No key '%@'!", key);
+//                test[key] = nil;
+//            }
+//
+//            if ([[BNCDevice currentDevice].systemName isEqualToString:@"tv_OS"]) {
+//                XCTAssert(test[@"idfv"]);
+//                test[@"idfv"] = nil;
+//                // test[@"idfa"] = nil;
+//            }
+//
+//            // check mac address and user agent are populated
+//            XCTAssertNotNil(test[@"mac_address"]);
+//            test[@"mac_address"] = nil;
+//            XCTAssertNotNil(test[@"user_agent"]);
+//            test[@"user_agent"] = nil;
+//
+//            XCTAssert(test.count == 0, @"Found keys: %@.", test);
+//            NSString*response = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
+//            XCTAssertNotNil(response);
+//            return [BNCTestNetworkService operationWithRequest:request response:response];
+//        } else {
+//            return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+//        }
+//    };
+//
+//    XCTestExpectation *expectation = [self expectationWithDescription:@"testOpenHTTP"];
+//    branch.sessionStartedBlock = ^ (BranchSession * _Nullable session, NSError * _Nullable error) {
+//        XCTAssertNil(error);
+//        XCTAssertNotNil(session);
+//        NSString*result = session.description;
+//        XCTAssert([result hasPrefix:@"<BranchSession 0x"]);
+//        [expectation fulfill];
+//    };
+//
+//    [branch openURL:[NSURL URLWithString:kTestURL]];
+//    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+//    XCTAssertTrue(foundInstallRequest);
+//}
 
 @end

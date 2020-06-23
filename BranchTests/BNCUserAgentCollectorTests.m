@@ -5,8 +5,6 @@
 //  Created by Ernest Cho on 8/29/19.
 //  Copyright © 2019 Branch, Inc. All rights reserved.
 //
-#if !TARGET_OS_TV
-
 #import <XCTest/XCTest.h>
 #import "BNCUserAgentCollector.h"
 
@@ -119,4 +117,3 @@
 }
 
 @end
-#endif

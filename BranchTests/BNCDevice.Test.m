@@ -16,40 +16,20 @@
 
 @implementation BNCDeviceTest
 
-- (void) testDevice {
+- (void)testDevice {
     BNCDevice *device = [BNCDevice currentDevice];
     XCTAssertTrue(device.hardwareID.length > 0);
     XCTAssertTrue(
         [device.hardwareIDType isEqualToString:@"idfa"] ||
-        [device.hardwareIDType isEqualToString:@"vendor_id"] ||
         [device.hardwareIDType isEqualToString:@"random"] ||
-        [device.hardwareIDType isEqualToString:@"mac_id"]
+        [device.hardwareIDType isEqualToString:@"mac_address"]
     );
     XCTAssertFalse(device.deviceIsUnidentified);
     XCTAssertTrue([device.brandName isEqualToString:@"Apple"]);
 
-#if TARGET_OS_OSX
-
     XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
     XCTAssertTrue([device.systemName isEqualToString:@"mac_OS"]);
     XCTAssertTrue(device.hardwareID.length > 0);
-
-#elif TARGET_OS_TV
-
-    XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
-    XCTAssertTrue([device.systemName isEqualToString:@"tv_OS"]);
-    XCTAssertTrue([device.vendorID bnc_isEqualToMaskedString:@"********-****-****-****-************"]);
-
-#elif TARGET_OS_IOS
-
-    XCTAssertTrue([device.modelName hasPrefix:@"Mac"]);
-    XCTAssertTrue([device.systemName isEqualToString:@"iOS"]);
-
-#else
-
-    #error Unknown target.
-
-#endif
 
     XCTAssertTrue(
         device.systemVersion.doubleValue > 8.0 &&
@@ -61,12 +41,9 @@
         device.screenSize.width > 0
     );
 
-#if TARGET_OS_OSX
     XCTAssertTrue(device.screenDPI >= 72.0 && device.screenDPI <= 216.0);
-#else
-    XCTAssertTrue(device.screenDPI >= 1.0 && device.screenDPI <= 3.0);
-#endif
 
+    // idfa is broken on 10.15+
     if ([self testDeviceSupportsIDFA]) {
         XCTAssertTrue(device.adTrackingIsEnabled);
         XCTAssertNotNil(device.advertisingID);
@@ -79,8 +56,8 @@
     XCTAssertTrue(BNCTestStringMatchesRegex(device.localIPAddress, @"^\\d*\\.\\d*\\.\\d*\\.\\d*$"));
 }
 
-- (void) testIPAddresses {
-    NSArray*d = [[BNCDevice currentDevice] allLocalIPAddresses];
+- (void)testIPAddresses {
+    NSArray *d = [[BNCDevice currentDevice] allLocalIPAddresses];
     XCTAssertGreaterThan(d.count, 1);
     NSLog(@"IP Addresses: %@.", d);
 }
