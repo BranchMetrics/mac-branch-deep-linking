@@ -87,6 +87,7 @@ restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObje
 continueUserActivity:(NSUserActivity *)userActivity
 restorationHandler:(void(^)(NSArray *restorableObjects))restorationHandler {
     BNCLogMethodName();
+    [[Branch sharedInstance] continueUserActivity:userActivity];
     return YES;
 }
 
