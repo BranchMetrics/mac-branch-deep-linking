@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		035E033D252BD1A80015E37C /* BranchUserTrackingDisabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 035E033C252BD1A80015E37C /* BranchUserTrackingDisabled.m */; };
 		2B073C1020C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
 		2B073C1120C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
 		2B0B035520CA50FF0008938F /* BNCURLBlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */; };
@@ -221,6 +222,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		035E033C252BD1A80015E37C /* BranchUserTrackingDisabled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchUserTrackingDisabled.m; sourceTree = "<group>"; };
 		2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.m; sourceTree = "<group>"; };
 		2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCURLBlackList.h; sourceTree = "<group>"; };
 		4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchNetworkServiceProtocol.h; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				4D0B753D211209FA00A06D97 /* BranchTestHost-tvOS.xcconfig */,
 				4DF8189D20ADDCB500441881 /* BranchTests-Bridging-Header.h */,
 				4DF818A020ADDCB600441881 /* BranchUniversalObject.Test.m */,
+				035E033C252BD1A80015E37C /* BranchUserTrackingDisabled.m */,
 				4D54C08520A6560400C76496 /* Info.plist */,
 				4D046E9620C8B5B20073262B /* NSData+Branch.Test.m */,
 				4D99773520AA09B300A63EE1 /* NSString+Branch.Test.m */,
@@ -830,6 +833,7 @@
 				4D159DDE20B62DD5005A9850 /* BNCPersistence.Test.m in Sources */,
 				4D046E9A20C8CE740073262B /* BNCTestNetworkService.Test.m in Sources */,
 				4D159DE320B62DD5005A9850 /* BNCThreads.Test.m in Sources */,
+				035E033D252BD1A80015E37C /* BranchUserTrackingDisabled.m in Sources */,
 				4D046E9720C8B5B20073262B /* NSData+Branch.Test.m in Sources */,
 				4D159DE020B62DD5005A9850 /* BNCTestCase.m in Sources */,
 				4D159DEA20B62DD5005A9850 /* NSString+Branch.Test.m in Sources */,
