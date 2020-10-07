@@ -167,12 +167,13 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 
     if (self.settings.userTrackingDisabled) {
         NSString *endpoint = url.path;
-        if (([endpoint isEqualToString:@"/v1/install"] ||
-             [endpoint isEqualToString:@"/v1/open"]) &&
+        if ((([endpoint isEqualToString:@"/v1/install"] ||
+              [endpoint isEqualToString:@"/v1/open"]) &&
              (dictionary[@"external_intent_uri"] != nil ||
               dictionary[@"universal_link_url"] != nil  ||
               dictionary[@"spotlight_identitifer"] != nil ||
-              dictionary[@"link_identifier"] != nil)) {
+              dictionary[@"link_identifier"] != nil)) ||
+            ([endpoint isEqualToString:@"/v1/url"])) {
 
               // Clear any sensitive data:
               dictionary[@"tracking_disabled"] = BNCWireFormatFromBool(YES);

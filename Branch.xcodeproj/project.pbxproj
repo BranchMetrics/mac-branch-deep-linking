@@ -101,6 +101,7 @@
 		5F78EDE4249C31FA00E313B9 /* BNCTestNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDC0249C31FA00E313B9 /* BNCTestNetworkService.m */; };
 		5F78EDE5249C31FA00E313B9 /* BranchCommerce.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDC1249C31FA00E313B9 /* BranchCommerce.Test.m */; };
 		5F78EDE6249C31FA00E313B9 /* BranchEvent.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78EDC2249C31FA00E313B9 /* BranchEvent.Test.m */; };
+		5F790AFD252E73C000C82E83 /* BranchUserTrackingDisabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F790AFC252E73C000C82E83 /* BranchUserTrackingDisabled.m */; };
 		5F7BD69D23341EB00067E5DA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7BD69C23341EB00067E5DA /* WebKit.framework */; };
 		5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
 /* End PBXBuildFile section */
@@ -232,6 +233,7 @@
 		5F78EDC0249C31FA00E313B9 /* BNCTestNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCTestNetworkService.m; sourceTree = "<group>"; };
 		5F78EDC1249C31FA00E313B9 /* BranchCommerce.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchCommerce.Test.m; sourceTree = "<group>"; };
 		5F78EDC2249C31FA00E313B9 /* BranchEvent.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchEvent.Test.m; sourceTree = "<group>"; };
+		5F790AFC252E73C000C82E83 /* BranchUserTrackingDisabled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchUserTrackingDisabled.m; sourceTree = "<group>"; };
 		5F7BD69C23341EB00067E5DA /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5FA17907232702F00012B500 /* BNCUserAgentCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCUserAgentCollector.h; sourceTree = "<group>"; };
 		5FA17908232702F00012B500 /* BNCUserAgentCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCUserAgentCollector.m; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 		5F78ED90249C317400E313B9 /* BranchTests */ = {
 			isa = PBXGroup;
 			children = (
+				5F790AFC252E73C000C82E83 /* BranchUserTrackingDisabled.m */,
 				5F78EDB4249C31F800E313B9 /* BNCApplication.Test.m */,
 				5F78EDAB249C31F700E313B9 /* BNCDevice.Test.m */,
 				5F78EDB6249C31F800E313B9 /* BNCEncoder.Test.m */,
@@ -668,6 +671,7 @@
 				5F78EDE6249C31FA00E313B9 /* BranchEvent.Test.m in Sources */,
 				5F78EDD6249C31FA00E313B9 /* BranchMainClass.Test.m in Sources */,
 				5F78EDC7249C31FA00E313B9 /* Branch.Test.m in Sources */,
+				5F790AFD252E73C000C82E83 /* BranchUserTrackingDisabled.m in Sources */,
 				5F78EDDE249C31FA00E313B9 /* BNCSettings.Test.m in Sources */,
 				5F78EDD5249C31FA00E313B9 /* NSString+Branch.Test.m in Sources */,
 				5F78EDD8249C31FA00E313B9 /* BNCUserAgentCollectorTests.m in Sources */,
