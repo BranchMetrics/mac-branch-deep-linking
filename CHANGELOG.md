@@ -1,5 +1,8 @@
 Branch Mac SDK Change Log
 
+## v1.2.5 - Oct 8, 2020
+* Allow short link generation when tracking is disabled
+
 ## v1.2.4 - June 17, 2020
 * Remove certificate pinning
 
