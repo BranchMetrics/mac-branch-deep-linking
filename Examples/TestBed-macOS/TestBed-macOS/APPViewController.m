@@ -21,6 +21,9 @@
 @interface APPViewController () <NSCollectionViewDelegate, NSCollectionViewDataSource>
 @property (weak) IBOutlet NSCollectionView *actionItemCollection;
 @property (strong) NSArray<NSDictionary*> *actionItems;
+@property (strong) IBOutlet NSWindow *v2EventsSelectionWindow;
+@property (strong) IBOutlet NSComboBox *v2EventsComboBox;
+
 @end
 
 #pragma mark - APPViewController
@@ -57,9 +60,9 @@
             @"detail":      @"Log the current user out.",
             @"selector":    @"logUserOut:",
         },@{
-            @"title":       @"Purchase Event",
-            @"detail":      @"Send a v2-purchase event.",
-            @"selector":    @"sendPurchaseEvent:",
+            @"title":       @"Send Event",
+            @"detail":      @"Select and send a V2 event.",
+            @"selector":    @"sendV2Event:",
         },@{
             @"title":       @"Create Short Link",
             @"detail":      @"Create a Branch short link.",
@@ -232,6 +235,170 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
         self.stateField.stringValue = event.eventName;
         self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";
     }];
+}
+
+- (NSArray *) v2Events
+{
+    NSMutableArray *eventNames = [NSMutableArray arrayWithArray:[BranchEvent standardEvents]];
+    [eventNames addObject:@"Custom Event"];
+    
+    return  eventNames;
+}
+
+- (IBAction) sendV2Event:(id)sender {
+    
+    if (!self.v2EventsSelectionWindow){
+        [NSBundle.mainBundle loadNibNamed:@"APPV2EventSelectionWindow" owner:self topLevelObjects:NULL];
+        [self.v2EventsComboBox addItemsWithObjectValues:[self v2Events]];
+    }
+    
+    [[NSApp mainWindow] beginSheet:self.v2EventsSelectionWindow completionHandler:^(NSModalResponse returnCode) {
+        [self sendV2EventWithName:self.v2EventsComboBox.stringValue ];
+    }];
+}
+- (void)sendV2EventWithName:(NSString *)eventName {
+
+    // standard events with data requirements
+    if ([eventName isEqualToString:BranchStandardEventInvite]) {
+        [self sendInviteEvent];
+    } else if ([eventName isEqualToString:BranchStandardEventLogin]) {
+        [self sendLoginEvent];
+    } else if ([eventName isEqualToString:BranchStandardEventSubscribe]) {
+        [self sendSubscribeEvent];
+    } else if ([eventName isEqualToString:BranchStandardEventStartTrial]) {
+        [self sendStartTrialEvent];
+    } else if ([eventName isEqualToString:BranchStandardEventClickAd]) {
+        [self sendClickAdEvent];
+    } else if ([eventName isEqualToString:BranchStandardEventViewAd]) {
+        [self sendViewAdEvent];
+    } else if ([eventName isEqualToString:BranchStandardEventPurchase]) {
+        [self sendPurchaseEvent:nil];
+    } else if ([[BranchEvent standardEvents] containsObject:eventName]) {     // other standard events
+        [self sendStandardV2Event:eventName];
+    } else {  // custom events
+        [self sendCustomV2Event:eventName];
+    }
+}
+
+- (void)sendInviteEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventInvite];
+    [self logEvent:event];
+}
+
+- (void)sendLoginEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventLogin];
+    [self logEvent:event];
+}
+
+- (void)sendSubscribeEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventSubscribe];
+    event.currency = BNCCurrencyUSD;
+    event.revenue = [NSDecimalNumber decimalNumberWithString:@"1.0"];
+    [self logEvent:event];
+}
+
+- (void)sendStartTrialEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventStartTrial];
+    event.currency = BNCCurrencyUSD;
+    event.revenue = [NSDecimalNumber decimalNumberWithString:@"1.0"];
+    [self logEvent:event];
+}
+
+- (void)sendClickAdEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventClickAd];
+    event.adType = BranchEventAdTypeBanner;
+    [self logEvent:event];
+}
+
+- (void)sendViewAdEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventClickAd];
+    event.adType = BranchEventAdTypeBanner;
+    [self logEvent:event];
+}
+
+- (void)sendStandardV2Event:(BranchStandardEvent)event {
+    [self sendGenericV2EventWithName:event isStandardEvent:YES];
+}
+
+- (void)sendCustomV2Event:(NSString *)eventName {
+    [self sendGenericV2EventWithName:eventName isStandardEvent:NO];
+}
+
+- (void) sendGenericV2EventWithName:(NSString*)eventName isStandardEvent:(BOOL)isStandardEvent {
+    BranchUniversalObject *buo = [BranchUniversalObject new];
+
+    buo.contentMetadata.contentSchema    = BranchContentSchemaCommerceProduct;
+    buo.contentMetadata.quantity         = 2;
+    buo.contentMetadata.price            = [NSDecimalNumber decimalNumberWithString:@"23.20"];
+    buo.contentMetadata.currency         = BNCCurrencyUSD;
+    buo.contentMetadata.sku              = @"1994320302";
+    buo.contentMetadata.productName      = @"my_product_name1";
+    buo.contentMetadata.productBrand     = @"my_prod_Brand1";
+    buo.contentMetadata.productCategory  = BNCProductCategoryBabyToddler;
+    buo.contentMetadata.productVariant   = @"3T";
+    buo.contentMetadata.condition        = BranchConditionFair;
+
+    buo.contentMetadata.ratingAverage    = 5;
+    buo.contentMetadata.ratingCount      = 5;
+    buo.contentMetadata.ratingMax        = 7;
+    buo.contentMetadata.rating           = 6;
+    buo.contentMetadata.addressStreet    = @"Street_name1";
+    buo.contentMetadata.addressCity      = @"city1";
+    buo.contentMetadata.addressRegion    = @"Region1";
+    buo.contentMetadata.addressCountry   = @"Country1";
+    buo.contentMetadata.addressPostalCode= @"postal_code";
+    buo.contentMetadata.latitude         = 12.07;
+    buo.contentMetadata.longitude        = -97.5;
+    buo.contentMetadata.imageCaptions    = (id) @[@"my_img_caption1", @"my_img_caption_2"];
+    buo.contentMetadata.customMetadata   = (id) @{
+        @"Custom_Content_metadata_key1": @"Custom_Content_metadata_val1",
+        @"Custom_Content_metadata_key2": @"Custom_Content_metadata_val2",
+        @"~campaign": @"My campaign"
+    };
+    buo.title                       = @"My Title";
+    buo.canonicalIdentifier         = @"item/12345";
+    buo.canonicalUrl                = @"https://branch.io/deepviews";
+    buo.keywords                    = @[@"My_Keyword1", @"My_Keyword2"];
+    buo.contentDescription          = @"my_product_description1";
+    buo.imageUrl                    = @"https://test_img_url";
+    buo.expirationDate              = [NSDate dateWithTimeIntervalSinceNow:24*60*60];
+    buo.publiclyIndex               = NO;
+    buo.locallyIndex                = YES;
+    buo.creationDate                = [NSDate date];
+
+    BranchEvent *event;
+    if (isStandardEvent) {
+        event = [BranchEvent standardEvent:eventName];
+    } else {
+        event = [BranchEvent customEventWithName:eventName];
+    }
+    event.transactionID   = @"12344555";
+    event.currency        = BNCCurrencyUSD;
+    event.revenue         = [NSDecimalNumber decimalNumberWithString:@"1.5"];
+    event.shipping        = [NSDecimalNumber decimalNumberWithString:@"10.2"];
+    event.tax             = [NSDecimalNumber decimalNumberWithString:@"12.3"];
+    event.coupon          = @"test_coupon";
+    event.affiliation     = @"test_affiliation";
+    event.eventDescription= @"Event _description";
+    event.customData      = (NSMutableDictionary*) @{
+        @"Custom_Event_Property_Key1": @"Custom_Event_Property_val1",
+        @"Custom_Event_Property_Key2": @"Custom_Event_Property_val2"
+    };
+    event.contentItems = (id) @[ buo ];
+    //ND event.alias = @"event alias";
+    
+    [self logEvent:event];
+}
+
+-(void)logEvent:(BranchEvent *)event{
+    [[Branch sharedInstance] logEvent:event completion:^(NSError * _Nullable error) {
+        self.stateField.stringValue = event.eventName;
+        self.errorField.stringValue = (error) ? error.localizedDescription : @"< None >";
+    }];
+}
+
+- (IBAction)closev2EventsSelectionWindow:(id)sender {
+    [self.window endSheet:self.v2EventsSelectionWindow ];
 }
 
 - (BranchUniversalObject*) createUniversalObject {
