@@ -27,7 +27,7 @@
 - (void)testSendV2Events {
     
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
-    XCUIElement *sendV2EventStaticText = testbedMacWindow.collectionViews.staticTexts[@"Send V2 Event"];
+    XCUIElement *sendV2EventStaticText = testbedMacWindow.collectionViews.staticTexts[@"Send Event"];
     XCUIElementQuery *sheetsQuery = testbedMacWindow.sheets;
     XCUIElement *button = [sheetsQuery.comboBoxes[@"Select V2 Event"] childrenMatchingType:XCUIElementTypeButton].element;
     XCUIElementQuery *elementsQuery = sheetsQuery.scrollViews.otherElements;
