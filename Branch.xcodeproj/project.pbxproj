@@ -104,6 +104,7 @@
 		5F790AFD252E73C000C82E83 /* BranchUserTrackingDisabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F790AFC252E73C000C82E83 /* BranchUserTrackingDisabled.m */; };
 		5F7BD69D23341EB00067E5DA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7BD69C23341EB00067E5DA /* WebKit.framework */; };
 		5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
+		5FEA9EC02547835F00E7E729 /* BranchMainClass+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D70A4BC20E1A0D90083768C /* BranchMainClass+Private.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,6 +442,7 @@
 				4DC2232920AA262D005C57D0 /* BranchMainClass.h in Headers */,
 				4D046E8B20C881480073262B /* BranchNetworkServiceProtocol.h in Headers */,
 				4D27FF8B20B222C7002C7EB0 /* BNCPersistence.h in Headers */,
+				5FEA9EC02547835F00E7E729 /* BranchMainClass+Private.h in Headers */,
 				4D9C165E20ACD625002BF211 /* BNCDevice.h in Headers */,
 				4DF818C020B025DA00441881 /* BNCEncoder.h in Headers */,
 				4DF818B020AE1A9200441881 /* BranchHeader.h in Headers */,
