@@ -26,31 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       enableUBSanitizer = "YES"
-      codeCoverageEnabled = "YES"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D0F56A920B33C97003D6607"
-               BuildableName = "TestBed-macOSTests.xctest"
-               BlueprintName = "TestBed-macOSTests"
-               ReferencedContainer = "container:TestBed-macOS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4D159DCA20B62D7D005A9850"
-               BuildableName = "BranchTests.xctest"
-               BlueprintName = "BranchTests"
-               ReferencedContainer = "container:../../Branch.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -67,6 +45,38 @@
             isEnabled = "YES">
          </AdditionalOption>
       </AdditionalOptions>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D0F56A920B33C97003D6607"
+               BuildableName = "TestBed-macOSTests.xctest"
+               BlueprintName = "TestBed-macOSTests"
+               ReferencedContainer = "container:TestBed-macOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5F78ED8E249C317400E313B9"
+               BuildableName = "BranchTests.xctest"
+               BlueprintName = "BranchTests"
+               ReferencedContainer = "container:../../Branch.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0310053A253A4BE500E135E0"
+               BuildableName = "TestBed-macOSUITests.xctest"
+               BlueprintName = "TestBed-macOSUITests"
+               ReferencedContainer = "container:TestBed-macOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -88,8 +98,6 @@
             ReferencedContainer = "container:TestBed-macOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

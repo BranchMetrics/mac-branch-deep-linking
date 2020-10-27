@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0310053E253A4BE500E135E0 /* TestBed_macOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310053D253A4BE500E135E0 /* TestBed_macOSUITests.m */; };
+		03E6ADD125396DF2005EBAEB /* APPV2EventSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E6ADD025396DF2005EBAEB /* APPV2EventSelectionWindow.xib */; };
 		2B3C06ED20AB704600F38167 /* APPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C06EC20AB704600F38167 /* APPAppDelegate.m */; };
 		2B3C06EF20AB704800F38167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C06EE20AB704800F38167 /* Assets.xcassets */; };
 		2B3C06F220AB704800F38167 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C06F020AB704800F38167 /* MainMenu.xib */; };
@@ -21,12 +23,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2B073C1420C9AC45005D16D2 /* PBXContainerItemProxy */ = {
+		03100540253A4BE500E135E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B3C06E020AB704600F38167 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B3C06E720AB704600F38167;
+			remoteInfo = "TestBed-macOS";
+		};
+		03E6ADD425396DF3005EBAEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 4D67477420C74E81001639C5;
-			remoteInfo = "Branch-tvOS";
+			remoteGlobalIDString = 5F2FDA33249D3CBF0061D571;
+			remoteInfo = BranchTestHost;
 		};
 		2B3C070220AB722200F38167 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -41,13 +50,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
-		};
-		4D0F11BF216EB84D0008080A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4D170FBB216D1CC00083D6B6;
-			remoteInfo = "Branch-iOS";
 		};
 		4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -79,6 +81,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0310053B253A4BE500E135E0 /* TestBed-macOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-macOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0310053D253A4BE500E135E0 /* TestBed_macOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestBed_macOSUITests.m; sourceTree = "<group>"; };
+		0310053F253A4BE500E135E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03E6ADD025396DF2005EBAEB /* APPV2EventSelectionWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APPV2EventSelectionWindow.xib; sourceTree = "<group>"; };
 		2B3C06E820AB704600F38167 /* TestBed-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestBed-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B3C06EB20AB704600F38167 /* APPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPAppDelegate.h; sourceTree = "<group>"; };
 		2B3C06EC20AB704600F38167 /* APPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPAppDelegate.m; sourceTree = "<group>"; };
@@ -103,6 +109,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		03100538253A4BE500E135E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2B3C06E520AB704600F38167 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,6 +127,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0310053C253A4BE500E135E0 /* TestBed-macOSUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0310053D253A4BE500E135E0 /* TestBed_macOSUITests.m */,
+				0310053F253A4BE500E135E0 /* Info.plist */,
+			);
+			path = "TestBed-macOSUITests";
+			sourceTree = "<group>";
+		};
 		2B3C06DF20AB704600F38167 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +143,7 @@
 				2B3C06FD20AB722200F38167 /* Branch.xcodeproj */,
 				2B3C06EA20AB704600F38167 /* TestBed-macOS */,
 				4D0F56AB20B33C97003D6607 /* TestBed-macOSTests */,
+				0310053C253A4BE500E135E0 /* TestBed-macOSUITests */,
 				2B3C06E920AB704600F38167 /* Products */,
 				2B3C071320ABB83100F38167 /* Frameworks */,
 			);
@@ -131,6 +154,7 @@
 			children = (
 				2B3C06E820AB704600F38167 /* TestBed-macOS.app */,
 				4D0F56AA20B33C97003D6607 /* TestBed-macOSTests.xctest */,
+				0310053B253A4BE500E135E0 /* TestBed-macOSUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,6 +169,7 @@
 				2B3C06EC20AB704600F38167 /* APPAppDelegate.m */,
 				2B3C070C20AB8E9400F38167 /* APPViewController.h */,
 				2B3C070D20AB8E9400F38167 /* APPViewController.m */,
+				03E6ADD025396DF2005EBAEB /* APPV2EventSelectionWindow.xib */,
 				2B3C070E20AB8E9400F38167 /* APPViewController.xib */,
 				2B3C06EE20AB704800F38167 /* Assets.xcassets */,
 				2B3C06F320AB704800F38167 /* Info.plist */,
@@ -158,10 +183,9 @@
 		2B3C06FE20AB722200F38167 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D0F11C0216EB84D0008080A /* Branch.framework */,
 				2B3C070320AB722200F38167 /* Branch.framework */,
-				2B073C1520C9AC45005D16D2 /* Branch.framework */,
 				4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */,
+				03E6ADD525396DF3005EBAEB /* BranchTestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,6 +211,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0310053A253A4BE500E135E0 /* TestBed-macOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03100542253A4BE500E135E0 /* Build configuration list for PBXNativeTarget "TestBed-macOSUITests" */;
+			buildPhases = (
+				03100537253A4BE500E135E0 /* Sources */,
+				03100538253A4BE500E135E0 /* Frameworks */,
+				03100539253A4BE500E135E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03100541253A4BE500E135E0 /* PBXTargetDependency */,
+			);
+			name = "TestBed-macOSUITests";
+			productName = "TestBed-macOSUITests";
+			productReference = 0310053B253A4BE500E135E0 /* TestBed-macOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		2B3C06E720AB704600F38167 /* TestBed-macOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2B3C06F920AB704800F38167 /* Build configuration list for PBXNativeTarget "TestBed-macOS" */;
@@ -232,6 +274,10 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Branch;
 				TargetAttributes = {
+					0310053A253A4BE500E135E0 = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 2B3C06E720AB704600F38167;
+					};
 					2B3C06E720AB704600F38167 = {
 						CreatedOnToolsVersion = 9.3.1;
 						SystemCapabilities = {
@@ -270,16 +316,17 @@
 			targets = (
 				2B3C06E720AB704600F38167 /* TestBed-macOS */,
 				4D0F56A920B33C97003D6607 /* TestBed-macOSTests */,
+				0310053A253A4BE500E135E0 /* TestBed-macOSUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2B073C1520C9AC45005D16D2 /* Branch.framework */ = {
+		03E6ADD525396DF3005EBAEB /* BranchTestHost.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Branch.framework;
-			remoteRef = 2B073C1420C9AC45005D16D2 /* PBXContainerItemProxy */;
+			fileType = wrapper.application;
+			path = BranchTestHost.app;
+			remoteRef = 03E6ADD425396DF3005EBAEB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2B3C070320AB722200F38167 /* Branch.framework */ = {
@@ -287,13 +334,6 @@
 			fileType = wrapper.framework;
 			path = Branch.framework;
 			remoteRef = 2B3C070220AB722200F38167 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4D0F11C0216EB84D0008080A /* Branch.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Branch.framework;
-			remoteRef = 4D0F11BF216EB84D0008080A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4DDC6FE820B62F4700A50F39 /* BranchTests.xctest */ = {
@@ -306,6 +346,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		03100539253A4BE500E135E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2B3C06E620AB704600F38167 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -314,12 +361,21 @@
 				2B3C06EF20AB704800F38167 /* Assets.xcassets in Resources */,
 				2B3C06F220AB704800F38167 /* MainMenu.xib in Resources */,
 				2B3C071020AB8E9400F38167 /* APPViewController.xib in Resources */,
+				03E6ADD125396DF2005EBAEB /* APPV2EventSelectionWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		03100537253A4BE500E135E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0310053E253A4BE500E135E0 /* TestBed_macOSUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2B3C06E420AB704600F38167 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -342,6 +398,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		03100541253A4BE500E135E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B3C06E720AB704600F38167 /* TestBed-macOS */;
+			targetProxy = 03100540253A4BE500E135E0 /* PBXContainerItemProxy */;
+		};
 		4D03D58020CB61DD00DD1341 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2B3C06E720AB704600F38167 /* TestBed-macOS */;
@@ -366,6 +427,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		03100543253A4BE500E135E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-macOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac.TestBed-macOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "TestBed-macOS";
+			};
+			name = Debug;
+		};
+		03100544253A4BE500E135E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				INFOPLIST_FILE = "TestBed-macOSUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac.TestBed-macOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "TestBed-macOS";
+			};
+			name = Release;
+		};
 		2B3C06F720AB704800F38167 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -550,6 +654,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		03100542253A4BE500E135E0 /* Build configuration list for PBXNativeTarget "TestBed-macOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03100543253A4BE500E135E0 /* Debug */,
+				03100544253A4BE500E135E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2B3C06E320AB704600F38167 /* Build configuration list for PBXProject "TestBed-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

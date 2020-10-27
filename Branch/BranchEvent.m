@@ -28,6 +28,10 @@ BranchStandardEvent BranchStandardEventInitiatePurchase   = @"INITIATE_PURCHASE"
 BranchStandardEvent BranchStandardEventAddPaymentInfo     = @"ADD_PAYMENT_INFO";
 BranchStandardEvent BranchStandardEventPurchase           = @"PURCHASE";
 BranchStandardEvent BranchStandardEventSpendCredits       = @"SPEND_CREDITS";
+BranchStandardEvent BranchStandardEventSubscribe          = @"SUBSCRIBE";
+BranchStandardEvent BranchStandardEventStartTrial         = @"START_TRIAL";
+BranchStandardEvent BranchStandardEventClickAd            = @"CLICK_AD";
+BranchStandardEvent BranchStandardEventViewAd             = @"VIEW_AD";
 
 // Content Events
 
@@ -43,6 +47,9 @@ BranchStandardEvent BranchStandardEventCompleteRegistration   = @"COMPLETE_REGIS
 BranchStandardEvent BranchStandardEventCompleteTutorial       = @"COMPLETE_TUTORIAL";
 BranchStandardEvent BranchStandardEventAchieveLevel           = @"ACHIEVE_LEVEL";
 BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVEMENT";
+BranchStandardEvent BranchStandardEventInvite                 = @"INVITE";
+BranchStandardEvent BranchStandardEventLogin                  = @"LOGIN";
+BranchStandardEvent BranchStandardEventReserve                = @"RESERVE";
 
 #pragma mark - BranchEvent
 
@@ -59,6 +66,7 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
     self = [super init];
     if (!self) return self;
     _eventName = name;
+	_adType = BranchEventAdTypeNone;
     return self;
 }
 
@@ -109,6 +117,26 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
     }
 }
 
+- (NSString *)jsonStringForAdType:(BranchEventAdType)adType {
+    switch (adType) {
+        case BranchEventAdTypeBanner:
+            return @"BANNER";
+            
+        case BranchEventAdTypeInterstitial:
+            return @"INTERSTITIAL";
+            
+        case BranchEventAdTypeRewardedVideo:
+            return @"REWARDED_VIDEO";
+            
+        case BranchEventAdTypeNative:
+            return @"NATIVE";
+            
+        case BranchEventAdTypeNone:
+        default:
+            return nil;
+    }
+}
+
 - (NSDictionary*) dictionary {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
 
@@ -127,7 +155,11 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
     addDictionary(customData,   custom_data);
     
     #include "BNCWireFormat.h"
-
+   
+    NSString *adTypeString = [self jsonStringForAdType:self.adType];
+    if (adTypeString.length > 0) {
+        [dictionary setObject:adTypeString forKey:@"ad_type"];
+    }
     return dictionary;
 }
 
@@ -149,6 +181,13 @@ BranchStandardEvent BranchStandardEventUnlockAchievement      = @"UNLOCK_ACHIEVE
         BranchStandardEventCompleteTutorial,
         BranchStandardEventAchieveLevel,
         BranchStandardEventUnlockAchievement,
+        BranchStandardEventInvite,
+        BranchStandardEventLogin,
+        BranchStandardEventReserve,
+        BranchStandardEventSubscribe,
+        BranchStandardEventStartTrial,
+        BranchStandardEventClickAd,
+        BranchStandardEventViewAd,
     ];
 }
 

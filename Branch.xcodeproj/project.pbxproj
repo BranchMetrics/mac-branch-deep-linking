@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03E6ADC82538DAEA005EBAEB /* BranchV2Event.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E6ADC72538DAEA005EBAEB /* BranchV2Event.Test.m */; };
 		2B073C1020C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
 		2B0B035520CA50FF0008938F /* BNCURLBlackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */; };
 		4D046E8B20C881480073262B /* BranchNetworkServiceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -124,6 +125,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03E6ADC72538DAEA005EBAEB /* BranchV2Event.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchV2Event.Test.m; sourceTree = "<group>"; };
 		2B073C0C20C97F43005D16D2 /* BNCURLBlackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCURLBlackList.m; sourceTree = "<group>"; };
 		2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCURLBlackList.h; sourceTree = "<group>"; };
 		4D046E8A20C881470073262B /* BranchNetworkServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchNetworkServiceProtocol.h; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				5F78ED9D249C31F600E313B9 /* BranchDelegate.Test.m */,
 				5F78EDAD249C31F800E313B9 /* BranchError.Test.m */,
 				5F78EDC2249C31FA00E313B9 /* BranchEvent.Test.m */,
+				03E6ADC72538DAEA005EBAEB /* BranchV2Event.Test.m */,
 				5F78EDAA249C31F700E313B9 /* BranchEvent.Test.swift */,
 				5F78EDB9249C31F900E313B9 /* BranchLinkProperties.Test.m */,
 				5F78EDAF249C31F800E313B9 /* BranchMainClass.Test.m */,
@@ -660,6 +663,7 @@
 			files = (
 				5F78EDD2249C31FA00E313B9 /* BNCDevice.Test.m in Sources */,
 				5F78EDDF249C31FA00E313B9 /* BranchLinkProperties.Test.m in Sources */,
+				03E6ADC82538DAEA005EBAEB /* BranchV2Event.Test.m in Sources */,
 				5F78EDD7249C31FA00E313B9 /* BNCTestCase.m in Sources */,
 				5F78EDC3249C31FA00E313B9 /* BNCNetworkInformation.Test.m in Sources */,
 				5F78EDD0249C31FA00E313B9 /* BranchMutableDictionary.Test.m in Sources */,
