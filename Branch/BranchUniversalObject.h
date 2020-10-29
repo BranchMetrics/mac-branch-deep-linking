@@ -13,6 +13,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BranchUniversalObjects_h
+#define BranchUniversalObjects_h
+
 #pragma mark - BranchContentSchema
 
 typedef NSString * const BranchContentSchema NS_STRING_ENUM;
@@ -141,6 +145,8 @@ FOUNDATION_EXPORT BranchCondition _Nonnull BranchConditionRefurbished;
 @property (nonatomic, strong, nonnull) BranchContentMetadata *contentMetadata;
 
 @end
+
+#endif
 
 NS_ASSUME_NONNULL_END
 

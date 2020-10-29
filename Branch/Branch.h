@@ -8,7 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import <Branch/BranchHeader.h>
+#import "BranchHeader.h"
 
 /// The Branch SDK version number as a double.
 FOUNDATION_EXPORT double BranchVersionNumber;
@@ -16,16 +16,16 @@ FOUNDATION_EXPORT double BranchVersionNumber;
 /// The Branch SDK version framework string.
 FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 
-#import <Branch/BranchCommerce.h>
-#import <Branch/BranchDelegate.h>
-#import <Branch/BranchError.h>
-#import <Branch/BranchEvent.h>
-#import <Branch/BranchLinkProperties.h>
-#import <Branch/BranchNetworkServiceProtocol.h>
-#import <Branch/BranchMainClass.h>
-#import <Branch/BranchMutableDictionary.h>
-#import <Branch/BranchSession.h>
-#import <Branch/BranchUniversalObject.h>
+#import "BranchCommerce.h"
+#import "BranchDelegate.h"
+#import "BranchError.h"
+#import "BranchEvent.h"
+#import "BranchLinkProperties.h"
+#import "BranchNetworkServiceProtocol.h"
+#import "BranchMainClass.h"
+#import "BranchMutableDictionary.h"
+#import "BranchSession.h"
+#import "BranchUniversalObject.h"
 
 // Exposed private headers:
-#import <Branch/BNCLog.h>
+#import "BNCLog.h"

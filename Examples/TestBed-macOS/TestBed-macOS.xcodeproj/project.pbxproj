@@ -42,13 +42,6 @@
 			remoteGlobalIDString = 2B3C06E720AB704600F38167;
 			remoteInfo = "TestBed-Mac";
 		};
-		4D0F11BF216EB84D0008080A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4D170FBB216D1CC00083D6B6;
-			remoteInfo = "Branch-iOS";
-		};
 		4DD347A420BCFA5C003891F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B3C06FD20AB722200F38167 /* Branch.xcodeproj */;
@@ -492,6 +485,7 @@
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = ../../;
 			};
 			name = Debug;
 		};
@@ -510,6 +504,7 @@
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.sdk.TestBed-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = ../../;
 			};
 			name = Release;
 		};

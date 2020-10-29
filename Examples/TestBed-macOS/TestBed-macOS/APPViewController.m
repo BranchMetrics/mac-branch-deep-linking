@@ -9,8 +9,8 @@
 #import "APPViewController.h"
 #import "APPActionItemView.h"
 #import <Branch/Branch.h>
-#import "../../../Branch/BNCApplication.h"
-#import "../../../Branch/BranchMainClass+Private.h"
+#import "Branch/BNCApplication.h"
+#import "Branch/BranchMainClass+Private.h"
 
 @interface NSTextView (TestBedMac)
 @property (atomic, copy) NSAttributedString *placeholderAttributedString;

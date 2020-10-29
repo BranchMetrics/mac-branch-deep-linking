@@ -15,6 +15,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BranchEvent_h
+#define BranchEvent_h
+
 ///@group Branch Event Logging
 
 typedef NSString*const BranchStandardEvent NS_STRING_ENUM;
@@ -103,5 +107,7 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventUnlockAchievem
 */
 - (void) logEvent:(BranchEvent*)event completion:(void (^_Nullable)(NSError*_Nullable error))completion;
 @end
+
+#endif
 
 NS_ASSUME_NONNULL_END
