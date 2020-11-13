@@ -13,6 +13,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BranchDelegate_h
+#define BranchDelegate_h
+
 /**
  @name Branch Notifications and delegate methods.
 
@@ -90,5 +94,7 @@ FOUNDATION_EXPORT NSString*const BranchDidOpenURLWithSessionNotification;
 FOUNDATION_EXPORT NSString*const BranchURLKey;
 FOUNDATION_EXPORT NSString*const BranchSessionKey;
 FOUNDATION_EXPORT NSString*const BranchErrorKey;
+
+#endif
 
 NS_ASSUME_NONNULL_END

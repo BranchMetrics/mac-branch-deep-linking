@@ -10,6 +10,10 @@
 
 #import <Foundation/Foundation.h>
 
+
+#ifndef BranchMutableDictionary_h
+#define BranchMutableDictionary_h
+
 /**
  This is a thread-safe version of an NSMutableDictionary.
  */
@@ -18,3 +22,5 @@
 - (instancetype) initWithCapacity:(NSUInteger)numItems NS_DESIGNATED_INITIALIZER;
 - (instancetype) initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 @end
+
+#endif

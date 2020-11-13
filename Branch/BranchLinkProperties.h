@@ -12,6 +12,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#ifndef BranchLinkProperties_h
+#define BranchLinkProperties_h
+
 typedef NS_ENUM(NSInteger, BranchLinkType) {
     BranchLinkTypeUnlimitedUse = 0,
     BranchLinkTypeOneTimeUse = 1
@@ -32,5 +35,7 @@ typedef NS_ENUM(NSInteger, BranchLinkType) {
 @property (nonatomic, assign) BranchLinkType linkType;
 @property (nonatomic, strong, null_resettable) NSMutableDictionary* controlParams;
 @end
+
+#endif
 
 NS_ASSUME_NONNULL_END

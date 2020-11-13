@@ -14,6 +14,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BranchMainClass_h
+#define BranchMainClass_h
+
 #pragma mark BranchConfiguration
 
 /**
@@ -233,5 +237,7 @@ so that Branch can handle the passed URL.
 @property (atomic, copy) void (^_Nullable sessionStartedBlock)(BranchSession*_Nullable session,
                                                                NSError*_Nullable error);
 @end
+
+#endif
 
 NS_ASSUME_NONNULL_END

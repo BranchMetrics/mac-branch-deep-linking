@@ -10,6 +10,10 @@
 
 #import "BranchHeader.h"
 
+
+#ifndef BNCLog_h
+#define BNCLog_h
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -187,4 +191,6 @@ extern void BNCLogFlushMessages(void);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -12,6 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BranchError_h
+#define BranchError_h
+
 /// The Branch error domain.
 FOUNDATION_EXPORT NSString*const BNCErrorDomain;
 
@@ -48,5 +52,7 @@ typedef NS_ENUM(NSInteger, BNCErrorCode) {
 ///
 FOUNDATION_EXPORT void BNCForceNSErrorCategoryToLoad(void)
     __attribute__((constructor));
+
+#endif
 
 NS_ASSUME_NONNULL_END
