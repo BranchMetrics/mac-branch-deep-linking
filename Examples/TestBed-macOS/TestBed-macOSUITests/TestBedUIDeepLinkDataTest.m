@@ -9,11 +9,8 @@
 #import "TestBedUITest.h"
 #import "TestBedUIUtils.h"
 
-//static NSString *shortURL;
-//void *kMyKVOContext = (void*)&kMyKVOContext;
-//extern void *kMyKVOContext;
+void *kMyKVOContext = (void*)&kMyKVOContext;
 XCTestExpectation *expectationForAppLaunch;
-//id observer;
 
 @interface TestBedUIDeepLinkDataTest : TestBedUITest
 
@@ -47,10 +44,6 @@ extern void *kMyKVOContext;
             
             NSDictionary *serverRequestDictionary = [ TestBedUIUtils dictionaryFromString:[self serverRequestString]];
             linkData = [serverRequestDictionary objectForKey:@"data"];
-            
-           // NSDictionary *serverResponseDictionary = [ TestBedUIUtils dictionaryFromString:[self serverResponseString]];
-           // XCTAssertNotNil([serverResponseDictionary valueForKey:@"identity_id"]);
-            //XCTAssertNotNil([serverResponseDictionary valueForKey:@"device_fingerprint_id"]);
             [self terminateApp];
         }
         else {
@@ -66,7 +59,7 @@ extern void *kMyKVOContext;
     sleep(1.0);
     [element typeText:shortURL];
     [element typeKey:XCUIKeyboardKeyEnter
-       modifierFlags:XCUIKeyModifierNone];  // TODO Check for return key also
+       modifierFlags:XCUIKeyModifierNone];
     sleep(1.0);
     [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
 
@@ -74,9 +67,8 @@ extern void *kMyKVOContext;
 
     [[NSWorkspace sharedWorkspace] addObserver:self
                                     forKeyPath:@"runningApplications"
-                                       options:NSKeyValueObservingOptionNew // maybe | NSKeyValueObservingOptionInitial
+                                       options:NSKeyValueObservingOptionNew
                                        context:kMyKVOContext];
-  //  NSLog(@"%@" , [safariApp debugDescription]);
     [self waitForExpectationsWithTimeout:60.0 handler:nil];
     
     
@@ -93,7 +85,6 @@ extern void *kMyKVOContext;
     for ( NSString* key in linkData){
         XCTAssertNotNil(deepLinkDataDictionary[key]);
         XCTAssertEqualObjects(linkData[key], deepLinkDataDictionary[key]);
-        NSLog(@" Key is Equql ========== %@" , key);
     }
 }
 
