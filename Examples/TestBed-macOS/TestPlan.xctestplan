@@ -17,7 +17,8 @@
         "BranchSDKUITestCase",
         "OpenURL_macOSUITests",
         "SafariOpenLink",
-        "SafariOpenLinkUITests"
+        "SafariOpenLinkUITests",
+        "TestBedUIV2EventTest"
       ],
       "target" : {
         "containerPath" : "container:TestBed-macOS.xcodeproj",
