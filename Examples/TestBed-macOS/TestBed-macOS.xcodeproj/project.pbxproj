@@ -18,6 +18,7 @@
 		034FEA0B255765AA00E4C40C /* TestBedUISafariTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 034FEA0A255765AA00E4C40C /* TestBedUISafariTest.m */; };
 		03517C3F255D13510055D4A5 /* TestBedUIChromeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 03517C3E255D13510055D4A5 /* TestBedUIChromeTest.m */; };
 		039714C1254418D400C75895 /* TestWebPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 039714BE254418D300C75895 /* TestWebPage.html */; };
+		03B3932C2563337B0082A911 /* TestRedirectionWebPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 03B3932B2563337B0082A911 /* TestRedirectionWebPage.html */; };
 		03E6ADD125396DF2005EBAEB /* APPV2EventSelectionWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03E6ADD025396DF2005EBAEB /* APPV2EventSelectionWindow.xib */; };
 		2B3C06ED20AB704600F38167 /* APPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C06EC20AB704600F38167 /* APPAppDelegate.m */; };
 		2B3C06EF20AB704800F38167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C06EE20AB704800F38167 /* Assets.xcassets */; };
@@ -106,6 +107,7 @@
 		039714BE254418D300C75895 /* TestWebPage.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = TestWebPage.html; sourceTree = "<group>"; };
 		03971551254A925100C75895 /* TestBed-macOS-UITest.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "TestBed-macOS-UITest.entitlements"; sourceTree = "<group>"; };
 		03B3931E2562F37C0082A911 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
+		03B3932B2563337B0082A911 /* TestRedirectionWebPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TestRedirectionWebPage.html; sourceTree = "<group>"; };
 		03E6ADD025396DF2005EBAEB /* APPV2EventSelectionWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APPV2EventSelectionWindow.xib; sourceTree = "<group>"; };
 		2B3C06E820AB704600F38167 /* TestBed-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestBed-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B3C06EB20AB704600F38167 /* APPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPAppDelegate.h; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				0310053F253A4BE500E135E0 /* Info.plist */,
 				03B3931E2562F37C0082A911 /* TestPlan.xctestplan */,
 				039714BE254418D300C75895 /* TestWebPage.html */,
+				03B3932B2563337B0082A911 /* TestRedirectionWebPage.html */,
 				034FE9EC2552779300E4C40C /* TestBedUIInstallOpenTest.m */,
 				034FE9F92552863A00E4C40C /* TestBedUIDeepLinkDataTest.m */,
 				034FEA022555F6BD00E4C40C /* TestBedUISetIdentityTest.m */,
@@ -386,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				039714C1254418D400C75895 /* TestWebPage.html in Resources */,
+				03B3932C2563337B0082A911 /* TestRedirectionWebPage.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +478,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/TestBed-macOS/TestBed-macOS-UITest.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/TestBed-macOSUITests/TestBed-macOS-UITest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
@@ -497,7 +501,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/TestBed-macOS/TestBed-macOS-UITest.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/TestBed-macOSUITests/TestBed-macOS-UITest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;

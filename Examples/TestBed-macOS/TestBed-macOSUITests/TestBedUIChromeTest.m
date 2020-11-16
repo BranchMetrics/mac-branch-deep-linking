@@ -107,7 +107,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
         return;
     }
     
-    NSLog(@"keyPath : 44444444 %@" , keyPath);
     if ([keyPath isEqualToString:@"runningApplications"])
     {
         for (NSRunningApplication * application in NSWorkspace.sharedWorkspace.runningApplications) {
