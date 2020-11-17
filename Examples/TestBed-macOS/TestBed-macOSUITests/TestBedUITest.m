@@ -62,7 +62,11 @@
     XCUIElement *stateElement = [self trackingDisabled ] ? testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] : testbedMacWindow.staticTexts[@"< State >"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
-    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:15];
+    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:6];
+    XCUIElement *stateElementNext = testbedMacWindow.staticTexts[@"BranchDidOpenURLWithSessionNotification"];
+    expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElementNext];
+    result = [XCTWaiter waitForExpectations:@[expectation] timeout:6];
+    
     return  result;
 }
 
