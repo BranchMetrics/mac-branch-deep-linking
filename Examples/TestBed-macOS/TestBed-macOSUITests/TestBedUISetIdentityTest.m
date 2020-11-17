@@ -30,6 +30,8 @@
     
     if (result == XCTWaiterResultCompleted) {
         
+        [self setIdentity];
+        
         XCTAssertTrue([[self serverRequestString] containsString:@"/v1/profile"]);
         
         NSDictionary *serverRequest = [TestBedUIUtils dictionaryFromString:[self serverRequestString]];
