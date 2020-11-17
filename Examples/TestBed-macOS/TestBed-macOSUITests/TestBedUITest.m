@@ -10,7 +10,7 @@
 @implementation TestBedUITest
 
 - (void)setUp {
-    self.continueAfterFailure = NO;
+    self.continueAfterFailure = YES;
     self.appLaunched = FALSE;
 }
 
@@ -43,7 +43,7 @@
     if (!self.appLaunched) {
         [[[XCUIApplication alloc] init] launch];
         self.appLaunched = TRUE;
-        sleep(1);
+        sleep(3);
     }
     XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
     if ((int)stateElement.value == 1){
@@ -71,7 +71,17 @@
 }
 
 - (void) terminateApp {
+    self.appLaunched = FALSE;
     [[[XCUIApplication alloc] init] terminate];
+}
+
+-(void) terminateTestBed {
+    self.appLaunched = FALSE;
+    [[[XCUIApplication alloc] init] terminate];
+}
+
+-(void) terminateSafari {
+    [[[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"] terminate];
 }
 
 - (NSString *) serverRequestString {

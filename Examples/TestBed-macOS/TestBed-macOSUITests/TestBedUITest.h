@@ -30,6 +30,8 @@
 -(BOOL) trackingDisabled;
 -(void) enableTracking;
 -(void) disableTracking;
+-(void) terminateTestBed;
+-(void) terminateSafari;
 
 @end
 
