@@ -30,6 +30,8 @@
     
     if (result == XCTWaiterResultCompleted) {
         
+        [self logOut];
+        
         [self setIdentity];
         
         XCTAssertTrue([[self serverRequestString] containsString:@"/v1/profile"]);

@@ -144,7 +144,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierNone];
     
-    sleep(1);
+    sleep(3);
     [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
     
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
@@ -239,7 +239,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierNone];
     
-    sleep(1);
+    sleep(3);
     
     [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
     
@@ -329,7 +329,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierOption];
     
-    sleep(1);
+    sleep(3);
     
     [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
     
