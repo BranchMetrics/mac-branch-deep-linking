@@ -99,7 +99,9 @@
 -(void) terminateSafari {
     
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
-    [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
+    if (safariApp.state == XCUIApplicationStateRunningForeground) {
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
+    }
     [safariApp terminate];
 }
 
