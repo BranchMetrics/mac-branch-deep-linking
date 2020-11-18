@@ -40,9 +40,13 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     [element2 click];
     sleep(3);
-    XCUIElement *confirmationToggleButton = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    if (confirmationToggleButton.exists) {
-        [confirmationToggleButton click];
+    
+    XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
+    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
+    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+    if (toggleElement.exists) {
+        [toggleElement click];
     }
     
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
@@ -128,8 +132,15 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierNone];
     
-    sleep(3);
-    [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
+    sleep(1);
+    
+    XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
+    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
+    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+    if (toggleElement.exists) {
+        [toggleElement click];
+    }
     
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
     
@@ -229,7 +240,9 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
     [XCTWaiter waitForExpectations:@[expectation] timeout:12];
-    [toggleElement click];
+    if (toggleElement.exists) {
+        [toggleElement click];
+    }
     
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
     
@@ -326,7 +339,13 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     sleep(3);
     
-    [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
+    XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
+    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
+    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+    if (toggleElement.exists) {
+        [toggleElement click];
+    }
     
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
     
