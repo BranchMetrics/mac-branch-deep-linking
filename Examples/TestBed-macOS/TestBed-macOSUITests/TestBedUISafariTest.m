@@ -138,7 +138,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
                                        options:NSKeyValueObservingOptionNew // maybe | NSKeyValueObservingOptionInitial
                                        context:kSafariKVOContext];
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    [self waitForExpectationsWithTimeout:60.0 handler:nil];
+    [self waitForExpectationsWithTimeout:30.0 handler:nil];
 }
 
 -(void) applicationActivated:(NSNotification *)notification {
@@ -234,7 +234,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
                                        options:NSKeyValueObservingOptionNew
                                        context:kSafariKVOContext];
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    [self waitForExpectationsWithTimeout:60.0 handler:nil];
+    [self waitForExpectationsWithTimeout:30.0 handler:nil];
 }
 
 -(void) testOpenURLInSafariInNewWindow{
@@ -331,7 +331,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
                                        options:NSKeyValueObservingOptionNew
                                        context:kSafariKVOContext];
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    [self waitForExpectationsWithTimeout:60.0 handler:nil];
+    [self waitForExpectationsWithTimeout:30.0 handler:nil];
 }
 
 -(void) testOpenURLInSafariInPrivateWindow {

@@ -97,7 +97,10 @@
 }
 
 -(void) terminateSafari {
-    [[[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"] terminate];
+    
+    XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
+    [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
+    [safariApp terminate];
 }
 
 -(void) terminateChrome {
