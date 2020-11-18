@@ -18,6 +18,15 @@
     
 }
 
+-(NSString *) testWebPageURLWithRedirection:(BOOL)enabled {
+    if (!enabled) {
+        return [NSString stringWithFormat:@"%@%@" , [[NSBundle mainBundle] bundlePath] , @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestWebPage.html" ];
+    }
+    else {
+        return [NSString stringWithFormat:@"%@%@" , [[NSBundle mainBundle] bundlePath] , @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestRedirectionWebPage.html" ];
+    }
+}
+
 -(BOOL) trackingDisabled {
     if (!self.appLaunched) {
         [[[XCUIApplication alloc] init] launch];
@@ -76,12 +85,18 @@
 }
 
 -(void) terminateTestBed {
+    if (self.appLaunched) {
+        [[[XCUIApplication alloc] init] terminate];
+    }
     self.appLaunched = FALSE;
-    [[[XCUIApplication alloc] init] terminate];
 }
 
 -(void) terminateSafari {
     [[[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"] terminate];
+}
+
+-(void) terminateChrome {
+    [[[XCUIApplication alloc] initWithBundleIdentifier:@"com.google.Chrome"] terminate];
 }
 
 - (NSString *) serverRequestString {
@@ -97,7 +112,6 @@
 }
 
 - (NSString *) dataTextViewString {
-    XCUIElement *testbedMacWindow = [[XCUIApplication alloc] initWithBundleIdentifier:@"io.branch.sdk.TestBed-Mac"].windows[@"TestBed-Mac"];
     XCUIElement *dataTextView = [[[[[XCUIApplication alloc] initWithBundleIdentifier:@"io.branch.sdk.TestBed-Mac"].windows[@"TestBed-Mac"] childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
     return dataTextView.value;
 }

@@ -27,16 +27,6 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
 }
 
 
-
--(NSString *) testWebPageURLWithRedirection:(BOOL)enabled {
-    if (!enabled) {
-        return [NSString stringWithFormat:@"%@%@" , [[NSBundle mainBundle] bundlePath] , @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestWebPage.html" ];
-    }
-    else {
-        return [NSString stringWithFormat:@"%@%@" , [[NSBundle mainBundle] bundlePath] , @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestRedirectionWebPage.html" ];
-    }
-}
-
 -(void) openURLInSafariWithRedirection:(BOOL) enabled {
     
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
@@ -233,7 +223,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierNone];
     
-    sleep(3);
+   // sleep(3);
     
     [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
     

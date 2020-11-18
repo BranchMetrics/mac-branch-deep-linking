@@ -32,6 +32,8 @@
 -(void) disableTracking;
 -(void) terminateTestBed;
 -(void) terminateSafari;
+-(void) terminateChrome;
+-(NSString *) testWebPageURLWithRedirection:(BOOL)enabled;
 
 @end
 
