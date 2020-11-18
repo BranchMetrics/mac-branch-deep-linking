@@ -33,7 +33,11 @@
         self.appLaunched = TRUE;
     }
     XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    return stateElement.value ? TRUE : FALSE;
+    NSString *eleValue = [NSString stringWithFormat:@"%@" , stateElement.value ];
+    if ( [eleValue isEqualToString:@"1"]){
+        return TRUE;
+    }
+    return FALSE;
 }
 
 -(void) enableTracking {
@@ -68,7 +72,7 @@
         self.appLaunched = TRUE;
     }
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
-    XCUIElement *stateElement = [self trackingDisabled ] ? testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] : testbedMacWindow.staticTexts[@"< State >"];
+    XCUIElement *stateElement = [self trackingDisabled ] ?  testbedMacWindow.staticTexts[@"< State >"] : testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
     XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];
@@ -115,7 +119,7 @@
 - (NSString *) dataTextViewString {
     
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
-    XCUIElement *stateElement = [self trackingDisabled ] ? testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] : testbedMacWindow.staticTexts[@"< State >"];
+    XCUIElement *stateElement = [self trackingDisabled ] ? testbedMacWindow.staticTexts[@"< State >"] :  testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
     XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];

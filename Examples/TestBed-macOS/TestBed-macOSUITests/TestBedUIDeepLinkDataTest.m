@@ -40,6 +40,8 @@ extern void *kMyKVOContext;
             
             shortURL = [self createShortLink];
             
+            XCTAssertNotNil(shortURL);
+            
             XCTAssertTrue([[self serverRequestString] containsString:@"/v1/url"]);
             
             NSDictionary *serverRequestDictionary = [ TestBedUIUtils dictionaryFromString:[self serverRequestString]];
@@ -48,6 +50,7 @@ extern void *kMyKVOContext;
         }
         else {
             XCTFail("App Launch / Session Start Failed.");
+            return;
         }
     }];
 
@@ -60,7 +63,7 @@ extern void *kMyKVOContext;
     [element typeText:shortURL];
     [element typeKey:XCUIKeyboardKeyEnter
        modifierFlags:XCUIKeyModifierNone];
-    sleep(1.0);
+    sleep(3.0);
     [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
 
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
@@ -71,9 +74,11 @@ extern void *kMyKVOContext;
                                        context:kMyKVOContext];
     [self waitForExpectationsWithTimeout:60.0 handler:nil];
     
+
+   
+    NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithString:[self dataTextViewString]] ;
     
-    
-    NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithData:[NSData dataWithContentsOfFile:@"/tmp/deepLinkData.txt"]  encoding:NSUTF8StringEncoding];
+    XCTAssertTrue([deepLinkDataString isNotEqualTo:@""]);
     
     [deepLinkDataString replaceOccurrencesOfString:@" = " withString:@" : " options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
     [deepLinkDataString replaceOccurrencesOfString:@";\n" withString:@",\n" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
@@ -83,8 +88,8 @@ extern void *kMyKVOContext;
     NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
     
     for ( NSString* key in linkData){
-      // Remove assestion for now  XCTAssertNotNil(deepLinkDataDictionary[key]);
-      // Remove assestion for now XCTAssertEqualObjects(linkData[key], deepLinkDataDictionary[key]);
+      XCTAssertNotNil(deepLinkDataDictionary[key]);
+      XCTAssertEqualObjects(linkData[key], deepLinkDataDictionary[key]);
     }
 }
 
@@ -103,7 +108,7 @@ extern void *kMyKVOContext;
                 if ([application.bundleIdentifier isEqualToString:@"io.branch.sdk.TestBed-Mac"]) {
                     [[NSWorkspace sharedWorkspace] removeObserver:self forKeyPath:@"runningApplications"];
                     [expectationForAppLaunch fulfill];
-                    [application terminate];
+                    self.appLaunched = TRUE;
                     break;
                 }
             }
