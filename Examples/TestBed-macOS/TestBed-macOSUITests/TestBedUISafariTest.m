@@ -224,8 +224,12 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         modifierFlags:XCUIKeyModifierNone];
     
     sleep(1);
-    
-    [[[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ] click];
+   
+    XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
+    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
+    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+    [toggleElement click];
     
     expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
     
