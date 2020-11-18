@@ -18,6 +18,11 @@
         "OpenURL_macOSUITests",
         "SafariOpenLink",
         "SafariOpenLinkUITests",
+        "TestBedUIChromeTest",
+        "TestBedUIDeepLinkDataTest",
+        "TestBedUIInstallOpenTest",
+        "TestBedUISetIdentityTest",
+        "TestBedUITest",
         "TestBedUIV2EventTest"
       ],
       "target" : {
