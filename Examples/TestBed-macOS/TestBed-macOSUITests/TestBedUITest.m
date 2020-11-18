@@ -124,7 +124,7 @@
     if (result != XCTWaiterResultCompleted)
         result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];
     
-    XCUIElement *dataTextView = [[[[[XCUIApplication alloc] initWithBundleIdentifier:@"io.branch.sdk.TestBed-Mac"].windows[@"TestBed-Mac"] childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
+    XCUIElement *dataTextView = [[[testbedMacWindow childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
     return dataTextView.value;
 }
 
