@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define TESTBED_CLICK_LINK     "https://testbed-mac.app.link/ODYeswaVWM"
+#define TESTBED_CLICK_LINK_WITH_REDIRECTION "https://testbed-mac.app.link/3G71sPkhtbb"
 
 @interface TestBedUIUtils : NSObject
 

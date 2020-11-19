@@ -51,7 +51,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
     self.appLaunched = TRUE;
-    [self validateDeepLinkData];
+    [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
 
 -(void) testOpenURLInSafari{
@@ -137,7 +137,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
     self.appLaunched = TRUE;
-    [self validateDeepLinkData];
+    [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
 
 -(void) testOpenURLInSafariInNewTab{
@@ -221,7 +221,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
     self.appLaunched = TRUE;
-    [self validateDeepLinkData];
+    [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
 
 -(void) testOpenURLInSafariInNewWindow{
@@ -316,7 +316,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
     self.appLaunched = TRUE;
-    [self validateDeepLinkData];
+    [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
 
 -(void) testOpenURLInSafariInPrivateWindow {
@@ -370,7 +370,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     }
 }
 
-- (void) validateDeepLinkData {
+- (void) validateDeepLinkDataForRedirectionEnabled:(bool)enabled {
     
     NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithString:[self dataTextViewString]] ;
     
@@ -387,7 +387,12 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     NSError *error;
     NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
     XCTAssertEqualObjects(deepLinkDataDictionary[@"+match_guaranteed"], @1 );
-    XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @"https://testbed-mac.app.link/ODYeswaVWM");
+    if (enabled) {
+        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK_WITH_REDIRECTION);
+    }
+    else {
+        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK);
+    }
 }
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
