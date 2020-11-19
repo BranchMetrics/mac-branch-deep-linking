@@ -21,7 +21,6 @@
         "TestBedUIChromeTest",
         "TestBedUIDeepLinkDataTest",
         "TestBedUIInstallOpenTest",
-        "TestBedUISafariTest\/testOpenURLInSafariInNewTab",
         "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
         "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow",
         "TestBedUISetIdentityTest",

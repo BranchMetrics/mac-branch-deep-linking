@@ -141,6 +141,8 @@
     return dataTextView.value;
 }
 
+//-(NSDictionary)
+
 - (void) setIdentity {
     [[[XCUIApplication alloc] init].windows[@"TestBed-Mac"].collectionViews.staticTexts[@"Set Identity"] click];
 }

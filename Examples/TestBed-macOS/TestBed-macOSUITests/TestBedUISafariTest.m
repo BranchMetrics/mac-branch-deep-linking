@@ -9,6 +9,10 @@
 #import "TestBedUITest.h"
 #import "TestBedUIUtils.h"
 
+#define SLEEP_TIME_CLICK_BIG        3
+#define SLEEP_TIME_CLICK_SMALL      1
+
+
 @interface TestBedUISafariTest : TestBedUITest {
     XCTestExpectation *expectationForAppLaunch;
 }
@@ -34,27 +38,20 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [safariApp launch];
     [safariApp activate];
     
-    sleep(3);
-    
+    sleep(SLEEP_TIME_CLICK_BIG);
     XCUIElement *element2 = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
     [element2 click];
-    sleep(3);
+    sleep(SLEEP_TIME_CLICK_BIG);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
     
-//    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-//
-//    [[NSWorkspace sharedWorkspace] addObserver:self
-//                                    forKeyPath:@"runningApplications"
-//                                       options:NSKeyValueObservingOptionNew
-//                                       context:kSafariKVOContext];
-//
-//    [self waitForExpectationsWithTimeout:30.0 handler:nil];
     XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    self.appLaunched = TRUE;
+    [self validateDeepLinkData];
 }
 
 -(void) testOpenURLInSafari{
@@ -79,8 +76,6 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             [self terminateTestBed];
             [self terminateSafari];
             [self openURLInSafariWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
         
         // Cold Browser & Warm App
@@ -88,7 +83,6 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             [self terminateSafari];
             [self openURLInSafariWithRedirection:enableRedirection];
             XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
         
         // Warm Browser & Cold App
@@ -96,14 +90,12 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             [self terminateTestBed];
             [self openURLInSafariWithRedirection:enableRedirection];
             XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
         
         // Warm Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
             [self openURLInSafariWithRedirection:enableRedirection];;
             XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
     }
 }
@@ -115,7 +107,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [safariApp launch];
     [safariApp activate];
     
-    sleep(3);
+    sleep(SLEEP_TIME_CLICK_BIG);
     
     if (safariApp.state == XCUIApplicationStateRunningForeground) {
         [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
@@ -125,40 +117,27 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     [element2 rightClick];
     
-    sleep(1.0);
+    sleep(SLEEP_TIME_CLICK_SMALL);
     
     [element2 typeKey:XCUIKeyboardKeyRightArrow
         modifierFlags:XCUIKeyModifierNone];
-    
     [element2 typeKey:XCUIKeyboardKeyDownArrow
         modifierFlags:XCUIKeyModifierNone];
-    
     [element2 typeKey:XCUIKeyboardKeyDownArrow
         modifierFlags:XCUIKeyModifierNone];
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierNone];
     
-    sleep(1);
+    sleep(SLEEP_TIME_CLICK_SMALL);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
     
-    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-    
-    [[NSWorkspace sharedWorkspace] addObserver:self
-                                    forKeyPath:@"runningApplications"
-                                       options:NSKeyValueObservingOptionNew // maybe | NSKeyValueObservingOptionInitial
-                                       context:kSafariKVOContext];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    [self waitForExpectationsWithTimeout:30.0 handler:nil];
-}
-
--(void) applicationActivated:(NSNotification *)notification {
-    NSRunningApplication *app = notification.userInfo[NSWorkspaceApplicationKey];
-    
-    NSLog( @"=>=>=>%@", app.localizedName);
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    self.appLaunched = TRUE;
+    [self validateDeepLinkData];
 }
 
 -(void) testOpenURLInSafariInNewTab{
@@ -183,27 +162,23 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             [self terminateTestBed];
             [self terminateSafari];
             [self openURLInNewTabWithRedirection:enableRedirection];
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
         
         // Cold Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
             [self terminateSafari];
             [self openURLInNewTabWithRedirection:enableRedirection];
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
         
         // Warm Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
             [self terminateTestBed];
             [self openURLInNewTabWithRedirection:enableRedirection];
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
         
         // Warm Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
             [self openURLInNewTabWithRedirection:enableRedirection];
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
     }
 }
@@ -244,14 +219,9 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-    
-    [[NSWorkspace sharedWorkspace] addObserver:self
-                                    forKeyPath:@"runningApplications"
-                                       options:NSKeyValueObservingOptionNew
-                                       context:kSafariKVOContext];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    [self waitForExpectationsWithTimeout:30.0 handler:nil];
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    self.appLaunched = TRUE;
+    [self validateDeepLinkData];
 }
 
 -(void) testOpenURLInSafariInNewWindow{
@@ -344,14 +314,9 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-    
-    [[NSWorkspace sharedWorkspace] addObserver:self
-                                    forKeyPath:@"runningApplications"
-                                       options:NSKeyValueObservingOptionNew
-                                       context:kSafariKVOContext];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    [self waitForExpectationsWithTimeout:30.0 handler:nil];
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    self.appLaunched = TRUE;
+    [self validateDeepLinkData];
 }
 
 -(void) testOpenURLInSafariInPrivateWindow {
@@ -403,6 +368,26 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
         }];
     }
+}
+
+- (void) validateDeepLinkData {
+    
+    NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithString:[self dataTextViewString]] ;
+    
+    XCTAssertTrue([deepLinkDataString isNotEqualTo:@""]);
+    
+    [deepLinkDataString replaceOccurrencesOfString:@" = " withString:@" : " options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@";\n" withString:@",\n" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"website" withString:@"\"website\"" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"message :" withString:@"\"message\" :" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"MacSDK," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"QuickLink," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"marketing," withString:@"\"marketing\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    
+    NSError *error;
+    NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
+    XCTAssertEqual(deepLinkDataDictionary[@"+match_guaranteed"], @0 );
+    XCTAssertEqual(deepLinkDataDictionary[@"~referring_link"], @"https://testbed-mac.app.link/ODYeswaVWM");
 }
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
