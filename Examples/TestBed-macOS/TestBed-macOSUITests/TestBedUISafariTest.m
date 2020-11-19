@@ -386,8 +386,8 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     NSError *error;
     NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
-    XCTAssertEqual(deepLinkDataDictionary[@"+match_guaranteed"], @1 );
-    XCTAssertEqual(deepLinkDataDictionary[@"~referring_link"], @"https://testbed-mac.app.link/ODYeswaVWM");
+    XCTAssertEqualObjects(deepLinkDataDictionary[@"+match_guaranteed"], @1 );
+    XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @"https://testbed-mac.app.link/ODYeswaVWM");
 }
 
 - (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
