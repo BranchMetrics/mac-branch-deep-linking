@@ -109,10 +109,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     sleep(SLEEP_TIME_CLICK_BIG);
     
-    if (safariApp.state == XCUIApplicationStateRunningForeground) {
-        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
-    }
-    
+   
     XCUIElement *element2 = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
     [element2 rightClick];
@@ -135,9 +132,14 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
+    if (safariApp.state == XCUIApplicationStateRunningForeground) {
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
+    }
+    
     XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
     self.appLaunched = TRUE;
     [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    
 }
 
 -(void) testOpenURLInSafariInNewTab{
