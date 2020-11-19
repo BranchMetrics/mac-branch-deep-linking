@@ -42,10 +42,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     sleep(3);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
-    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
-    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
-    if (toggleElement.exists) {
+    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
     
@@ -115,6 +112,10 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     sleep(3);
     
+    if (safariApp.state == XCUIApplicationStateRunningForeground) {
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
+    }
+    
     XCUIElement *element2 = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
     [element2 rightClick];
@@ -135,10 +136,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     sleep(1);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
-    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
-    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
-    if (toggleElement.exists) {
+    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
     
@@ -237,10 +235,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     sleep(1);
    
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
-    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
-    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
-    if (toggleElement.exists) {
+    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
     
@@ -340,10 +335,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     sleep(3);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
-    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:toggleElement];
-    [XCTWaiter waitForExpectations:@[expectation] timeout:12];
-    if (toggleElement.exists) {
+    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
     
