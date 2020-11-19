@@ -34,12 +34,12 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [safariApp launch];
     [safariApp activate];
     
-    sleep(3);
+    sleep(1);
     
     XCUIElement *element2 = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
     [element2 click];
-    sleep(3);
+    sleep(1);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {

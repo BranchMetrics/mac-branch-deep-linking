@@ -75,11 +75,11 @@
     XCUIElement *stateElement = [self trackingDisabled ] ?  testbedMacWindow.staticTexts[@"< State >"] : testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
-    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:6];
     XCUIElement *stateElementNext = testbedMacWindow.staticTexts[@"BranchDidOpenURLWithSessionNotification"];
     expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElementNext];
     if (result != XCTWaiterResultCompleted)
-        result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+        result = [XCTWaiter waitForExpectations:@[expectation] timeout:6];
     
     return  result;
 }
@@ -129,11 +129,11 @@
     XCUIElement *stateElement = [self trackingDisabled ] ? testbedMacWindow.staticTexts[@"< State >"] :  testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
-    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:6];
     XCUIElement *stateElementNext = testbedMacWindow.staticTexts[@"BranchDidOpenURLWithSessionNotification"];
     expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElementNext];
     if (result != XCTWaiterResultCompleted)
-        result = [XCTWaiter waitForExpectations:@[expectation] timeout:12];
+        result = [XCTWaiter waitForExpectations:@[expectation] timeout:6];
     
     XCUIElement *dataTextView = [[[testbedMacWindow childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
     return dataTextView.value;
