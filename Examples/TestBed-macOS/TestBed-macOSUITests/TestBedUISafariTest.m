@@ -258,6 +258,9 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
+        [safariApp activate];
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
+        
     } else {
         XCTFail("Application not launched");
     }
