@@ -73,29 +73,49 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         
         // Cold Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self terminateSafari];
-            [self openURLInSafariWithRedirection:enableRedirection];
+           @try {
+                
+                [self terminateTestBed];
+                [self terminateSafari];
+                [self openURLInSafariWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Cold Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateSafari];
-            [self openURLInSafariWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
+           @try {
+                
+                [self terminateSafari];
+                [self openURLInSafariWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self openURLInSafariWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
+           @try {
+                
+                [self terminateTestBed];
+                [self openURLInSafariWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self openURLInSafariWithRedirection:enableRedirection];;
-            XCTAssertNotNil([self dataTextViewString]);
+            @try {
+                [self openURLInSafariWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
     }
 }
@@ -109,7 +129,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
     sleep(SLEEP_TIME_CLICK_BIG);
     
-   
+    
     XCUIElement *element2 = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
     [element2 rightClick];
@@ -161,26 +181,42 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         
         // Cold Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self terminateSafari];
-            [self openURLInNewTabWithRedirection:enableRedirection];
+            @try {
+                [self terminateTestBed];
+                [self terminateSafari];
+                [self openURLInNewTabWithRedirection:enableRedirection];
+            } @finally {
+                
+            }
         }];
         
         // Cold Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateSafari];
-            [self openURLInNewTabWithRedirection:enableRedirection];
+            @try {
+                [self terminateSafari];
+                [self openURLInNewTabWithRedirection:enableRedirection];
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self openURLInNewTabWithRedirection:enableRedirection];
+            @try {
+                [self terminateTestBed];
+                [self openURLInNewTabWithRedirection:enableRedirection];
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self openURLInNewTabWithRedirection:enableRedirection];
+            @try {
+                [self openURLInNewTabWithRedirection:enableRedirection];
+            } @finally {
+                
+            }
         }];
     }
 }
@@ -215,7 +251,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         modifierFlags:XCUIKeyModifierNone];
     
     sleep(1);
-   
+    
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
@@ -245,37 +281,49 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         sleep(3);
         
         __block BOOL enableRedirection = options[i][1];
-
+        
         // Cold Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self terminateSafari];
-            [self openURLInNewWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self terminateTestBed];
+                [self terminateSafari];
+                [self openURLInNewWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
-
+        
         // Cold Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateSafari];
-            [self openURLInNewWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self terminateSafari];
+                [self openURLInNewWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self openURLInNewWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self terminateTestBed];
+                [self openURLInNewWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self openURLInNewWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self openURLInNewWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
     }
 }
@@ -340,34 +388,46 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         
         // Cold Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self terminateSafari];
-            [self openURLInPrivateWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self terminateTestBed];
+                [self terminateSafari];
+                [self openURLInPrivateWindowWithRedirection:enableRedirection];
+            } @finally {
+                
+            }
         }];
         
         // Cold Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateSafari];
-            [self openURLInPrivateWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self terminateSafari];
+                [self openURLInPrivateWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Cold App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self terminateTestBed];
-            [self openURLInPrivateWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                
+                [self terminateTestBed];
+                [self openURLInPrivateWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
         
         // Warm Browser & Warm App
         [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            [self openURLInPrivateWindowWithRedirection:enableRedirection];
-            XCTAssertNotNil([self dataTextViewString]);
-            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
+            @try {
+                [self openURLInPrivateWindowWithRedirection:enableRedirection];
+                
+            } @finally {
+                
+            }
         }];
     }
 }
