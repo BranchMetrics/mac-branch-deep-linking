@@ -160,7 +160,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     
 }
 
--(void) testOpenURLInSafariInNewTab{
+-(void) test1OpenURLInSafariInNewTab{
     
     int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
     
@@ -254,10 +254,13 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
-    
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
-    self.appLaunched = TRUE;
-    [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    @try {
+        XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
+        self.appLaunched = TRUE;
+        [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    } @finally {
+        
+    }
 }
 
 -(void) testOpenURLInSafariInNewWindow{
