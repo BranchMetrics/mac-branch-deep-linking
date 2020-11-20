@@ -254,12 +254,12 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
-    @try {
-        XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
+    
+    if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
-    } @finally {
-        
+    } else {
+        XCTFail("Application not launched");
     }
 }
 
