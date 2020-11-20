@@ -49,7 +49,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
     self.appLaunched = TRUE;
     [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
@@ -152,11 +152,9 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    if (safariApp.state == XCUIApplicationStateRunningForeground) {
-        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
-    }
+    [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);      
     self.appLaunched = TRUE;
     [self validateDeepLinkDataForRedirectionEnabled:enabled];
     
@@ -257,7 +255,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
     self.appLaunched = TRUE;
     [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
@@ -364,7 +362,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:12]);
+    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
     self.appLaunched = TRUE;
     [self validateDeepLinkDataForRedirectionEnabled:enabled];
 }
