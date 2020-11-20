@@ -48,10 +48,20 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
+//
+//    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
+//    self.appLaunched = TRUE;
+//    [self validateDeepLinkDataForRedirectionEnabled:enabled];
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
-    self.appLaunched = TRUE;
-    [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
+        self.appLaunched = TRUE;
+        [self validateDeepLinkDataForRedirectionEnabled:enabled];
+        [safariApp activate];
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
+        
+    } else {
+        XCTFail("Application not launched");
+    }
 }
 
 -(void) testOpenURLInSafari{
@@ -152,11 +162,21 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
+    //[safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
+//
+//    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
+//    self.appLaunched = TRUE;
+//    [self validateDeepLinkDataForRedirectionEnabled:enabled];
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);      
-    self.appLaunched = TRUE;
-    [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
+        self.appLaunched = TRUE;
+        [self validateDeepLinkDataForRedirectionEnabled:enabled];
+        [safariApp activate];
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
+        
+    } else {
+        XCTFail("Application not launched");
+    }
     
 }
 
@@ -368,9 +388,15 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [toggleElement click];
     }
     
-    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
-    self.appLaunched = TRUE;
-    [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
+        self.appLaunched = TRUE;
+        [self validateDeepLinkDataForRedirectionEnabled:enabled];
+        [safariApp activate];
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
+        
+    } else {
+        XCTFail("Application not launched");
+    }
 }
 
 -(void) testOpenURLInSafariInPrivateWindow {
