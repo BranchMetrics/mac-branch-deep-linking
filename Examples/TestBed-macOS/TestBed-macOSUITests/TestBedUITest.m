@@ -137,8 +137,8 @@
 //    if (result != XCTWaiterResultCompleted)
 //        result = [XCTWaiter waitForExpectations:@[expectation] timeout:2];
 //
-    [stateElementNext waitForExistenceWithTimeout:6];
-    sleep(3);
+    [stateElementNext waitForExistenceWithTimeout:15];
+    //sleep(3);
     XCUIElement *dataTextView = [[[testbedMacWindow childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
     return dataTextView.value;
 }
