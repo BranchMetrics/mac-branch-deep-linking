@@ -12,6 +12,7 @@
 - (void)setUp {
     self.continueAfterFailure = YES;
     self.appLaunched = FALSE;
+    self.trackingState = TRACKING_STATE_UNKNOWN ;
 }
 
 - (void)tearDown {
@@ -44,11 +45,16 @@
     if (!self.appLaunched) {
         [[[XCUIApplication alloc] init] launch];
         self.appLaunched = TRUE;
-        sleep(1);
+        sleep(3);
     }
+    
+    if (self.trackingState == TRACKING_ENABLED)
+        return;
+    
     XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    if (stateElement.value == 0){
+    if ((int)stateElement.value == 1){
         [stateElement click];
+        self.trackingState = TRACKING_ENABLED;
     }
 }
 
@@ -58,9 +64,12 @@
         self.appLaunched = TRUE;
         sleep(3);
     }
+    if (self.trackingState == TRACKING_DISABLED)
+        return;
     XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    if ((int)stateElement.value == 1){
+    if ((int)stateElement.value == 0){
         [stateElement click];
+        self.trackingState = TRACKING_DISABLED;
     }
 }
 

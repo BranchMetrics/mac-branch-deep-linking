@@ -30,28 +30,73 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [super tearDown];
 }
 
-
--(void) openURLInSafariWithRedirection:(BOOL) enabled {
+-(void) setUpWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
     
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
-    [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
-    [safariApp launch];
-    [safariApp activate];
+    
+    // Check and Set Browser State - Cold or Warm
+    if (bCold) { // Terminate Safari and launch new
+        if (safariApp.state != XCUIApplicationStateNotRunning)
+            [self terminateSafari];
+        [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
+        [safariApp launch];
+    }
+    else {
+        if (safariApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
+            [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
+            [safariApp launch];
+        }
+        [safariApp activate]; // Activate Safari
+    }
+    
+    // Check and Set TestBed State - Cold Warm
+    XCUIApplication *testBedApp = [[XCUIApplication alloc] init];
+    if (aCold) { // Terminate Safari and launch new
+        if (testBedApp.state != XCUIApplicationStateNotRunning)
+            [self terminateTestBed];
+        [testBedApp launch];
+    }
+    else {
+        if (testBedApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
+            [testBedApp launch];
+        }
+        [testBedApp activate]; // Activate Safari
+    }
+    
+    // Disable / Enable Tracking
+    if ( disable ) {
+        if (self.trackingState != TRACKING_DISABLED) {
+            [self disableTracking];
+        }
+    }
+    else {
+        if (self.trackingState != TRACKING_ENABLED) {
+            [self enableTracking];
+        }
+    }
+    
+}
+
+-(void) openURLInSafariWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
+    
+    XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
+    
+    [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
     
     sleep(SLEEP_TIME_CLICK_BIG);
-    XCUIElement *element2 = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
+    XCUIElement *testBedLink = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
-    [element2 click];
+    [testBedLink click];
     sleep(SLEEP_TIME_CLICK_BIG);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
     }
-//
-//    XCTAssertTrue([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:30]);
-//    self.appLaunched = TRUE;
-//    [self validateDeepLinkDataForRedirectionEnabled:enabled];
+    else {
+        NSLog(@"Toggle Element(TestBed Launch Confirmation Dialog) Not Found");
+        // TODO - take screen shot.
+    }
     
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
@@ -61,74 +106,139 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         
     } else {
         XCTFail("Application not launched");
+        // TODO - take screen shot.
     }
 }
 
--(void) testOpenURLInSafari{
-    
-    int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
-    
-    for (int i = 0; i < 4; i++) {
-        
-        BOOL enableTracking = options[i][0];
-        
-        if (enableTracking) {
-            [self enableTracking];
-        }
-        else {
-            [self disableTracking];
-        }
-        
-        __block BOOL enableRedirection = options[i][1];
-        
-        // Cold Browser & Cold App
-        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-           @try {
-                
-                [self terminateTestBed];
-                [self terminateSafari];
-                [self openURLInSafariWithRedirection:enableRedirection];
-                
-            } @finally {
-                
-            }
-        }];
-        
-        // Cold Browser & Warm App
-        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-           @try {
-                
-                [self terminateSafari];
-                [self openURLInSafariWithRedirection:enableRedirection];
-                
-            } @finally {
-                
-            }
-        }];
-        
-        // Warm Browser & Cold App
-        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-           @try {
-                
-                [self terminateTestBed];
-                [self openURLInSafariWithRedirection:enableRedirection];
-                
-            } @finally {
-                
-            }
-        }];
-        
-        // Warm Browser & Warm App
-        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-            @try {
-                [self openURLInSafariWithRedirection:enableRedirection];
-                
-            } @finally {
-                
-            }
-        }];
-    }
+-(void) testSafariColdBrowserColdAppClickURLTrackDisabled0Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:TRUE trackDisabled:FALSE];
 }
+
+-(void) testSafariColdBrowserWarmAppClickURLTrack0Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:FALSE trackDisabled:FALSE];
+}
+
+-(void) testSafariWarmBrowserColdAppClickURLTrack0Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:TRUE trackDisabled:FALSE];
+}
+
+-(void) testSafariWarmBrowserWarmAppClickURLTrack0Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:FALSE trackDisabled:FALSE];
+}
+
+-(void) testSafariColdBrowserColdAppClickURLTrack0Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:TRUE trackDisabled:FALSE];
+}
+
+-(void) testSafariColdBrowserWarmAppClickURLTrack0Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:FALSE trackDisabled:FALSE];
+}
+
+-(void) testSafariWarmBrowserColdAppClickURLTrack0Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:TRUE trackDisabled:FALSE];
+}
+
+-(void) testSafariWarmBrowserWarmAppClickURLTrack0Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:FALSE];
+}
+
+-(void) testSafariColdBrowserColdAppClickURLTrack1Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:TRUE trackDisabled:TRUE];
+}
+
+-(void) testSafariColdBrowserWarmAppClickURLTrack1Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:FALSE trackDisabled:TRUE];
+}
+
+-(void) testSafariWarmBrowserColdAppClickURLTrack1Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:TRUE trackDisabled:TRUE];
+}
+
+-(void) testSafariWarmBrowserWarmAppClickURLTrack1Redirect0 {
+    [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
+}
+
+-(void) testSafariColdBrowserColdAppClickURLTrack1Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:TRUE trackDisabled:TRUE];
+}
+
+-(void) testSafariColdBrowserWarmAppClickURLTrack1Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:FALSE trackDisabled:TRUE];
+}
+
+-(void) testSafariWarmBrowserColdAppClickURLTrack1Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:TRUE trackDisabled:TRUE];
+}
+
+-(void) testSafariWarmBrowserWarmAppClickURLTrack1Redirect1 {
+    [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
+}
+
+//-(void) testOpenURLInSafari {
+//    
+//    int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
+//    
+//    for (int i = 0; i < 4; i++) {
+//        
+//        BOOL enableTracking = options[i][0];
+//        
+//        if (enableTracking) {
+//            [self enableTracking];
+//        }
+//        else {
+//            [self disableTracking];
+//        }
+//        
+//        __block BOOL enableRedirection = options[i][1];
+//        
+//        // Cold Browser & Cold App
+//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
+//           @try {
+//                
+//                [self terminateTestBed];
+//                [self terminateSafari];
+//                [self openURLInSafariWithRedirection:enableRedirection];
+//                
+//            } @finally {
+//                
+//            }
+//        }];
+//        
+//        // Cold Browser & Warm App
+//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
+//           @try {
+//                
+//                [self terminateSafari];
+//                [self openURLInSafariWithRedirection:enableRedirection];
+//                
+//            } @finally {
+//                
+//            }
+//        }];
+//        
+//        // Warm Browser & Cold App
+//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
+//           @try {
+//                
+//                [self terminateTestBed];
+//                [self openURLInSafariWithRedirection:enableRedirection];
+//                
+//            } @finally {
+//                
+//            }
+//        }];
+//        
+//        // Warm Browser & Warm App
+//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
+//            @try {
+//                [self openURLInSafariWithRedirection:enableRedirection];
+//                
+//            } @finally {
+//                
+//            }
+//        }];
+//    }
+//}
 
 -(void) openURLInNewTabWithRedirection:(BOOL) enabled {
     

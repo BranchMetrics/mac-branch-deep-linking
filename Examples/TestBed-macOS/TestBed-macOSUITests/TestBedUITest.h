@@ -11,9 +11,14 @@
 
 #import <XCTest/XCTest.h>
 
+#define TRACKING_STATE_UNKNOWN      -1
+#define TRACKING_ENABLED            1
+#define TRACKING_DISABLED           0
+
 @interface TestBedUITest : XCTestCase
 
 @property BOOL appLaunched;
+@property NSInteger trackingState;
 
 - (XCTWaiterResult) launchAppAndWaitForSessionStart;
 - (NSString *) serverRequestString;
