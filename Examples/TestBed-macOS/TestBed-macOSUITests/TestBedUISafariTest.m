@@ -65,7 +65,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             if([safariApp waitForState:XCUIApplicationStateRunningForeground timeout:6])
             {
             [safariApp  typeKey:@"N"
-               modifierFlags:XCUIKeyModifierOption | XCUIKeyModifierCommand];
+               modifierFlags: XCUIKeyModifierCommand];
             sleep(1.0);
             [safariApp typeText:[self testWebPageURLWithRedirection:enabled]];
             [safariApp typeKey:XCUIKeyboardKeyEnter
