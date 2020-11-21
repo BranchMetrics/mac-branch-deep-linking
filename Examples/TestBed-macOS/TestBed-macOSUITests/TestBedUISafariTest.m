@@ -35,20 +35,33 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
     
     // Check and Set Browser State - Cold or Warm
+//    if (bCold) { // Terminate Safari and launch new
+//        if (safariApp.state != XCUIApplicationStateNotRunning)
+//            [self terminateSafari];
+//        [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
+//        [safariApp launch];
+//    }
+//    else {
+//
+//        [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
+//        if (safariApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
+//            [safariApp launch];
+//        }
+//        [safariApp activate]; // Activate Safari
+//    }
+    
     if (bCold) { // Terminate Safari and launch new
-        if (safariApp.state != XCUIApplicationStateNotRunning)
-            [self terminateSafari];
-        [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
-        [safariApp launch];
-    }
-    else {
+            if (safariApp.state != XCUIApplicationStateNotRunning)
+                [self terminateSafari];
+        }
         
+    
         [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
         if (safariApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
             [safariApp launch];
         }
         [safariApp activate]; // Activate Safari
-    }
+    
     
     // Check and Set TestBed State - Cold Warm
     XCUIApplication *testBedApp = [[XCUIApplication alloc] init];
@@ -113,67 +126,67 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     }
 }
 
--(void) testSafariColdBrowserColdAppClickURLTrackDisabled0Redirect0 {
+-(void) testSafari1ColdBrowserColdAppClickURLTrackDisabled0Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:TRUE trackDisabled:FALSE];
 }
 
--(void) testSafariColdBrowserWarmAppClickURLTrack0Redirect0 {
+-(void) testSafari2ColdBrowserWarmAppClickURLTrack0Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:FALSE trackDisabled:FALSE];
 }
 
--(void) testSafariWarmBrowserColdAppClickURLTrack0Redirect0 {
+-(void) testSafari3WarmBrowserColdAppClickURLTrack0Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:TRUE trackDisabled:FALSE];
 }
 
--(void) testSafariWarmBrowserWarmAppClickURLTrack0Redirect0 {
+-(void) testSafari4WarmBrowserWarmAppClickURLTrack0Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:FALSE trackDisabled:FALSE];
 }
 
--(void) testSafariColdBrowserColdAppClickURLTrack0Redirect1 {
+-(void) testSafari5ColdBrowserColdAppClickURLTrack0Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:TRUE trackDisabled:FALSE];
 }
 
--(void) testSafariColdBrowserWarmAppClickURLTrack0Redirect1 {
+-(void) testSafari6ColdBrowserWarmAppClickURLTrack0Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:FALSE trackDisabled:FALSE];
 }
 
--(void) testSafariWarmBrowserColdAppClickURLTrack0Redirect1 {
+-(void) testSafari7WarmBrowserColdAppClickURLTrack0Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:TRUE trackDisabled:FALSE];
 }
 
--(void) testSafariWarmBrowserWarmAppClickURLTrack0Redirect1 {
+-(void) testSafari8WarmBrowserWarmAppClickURLTrack0Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:FALSE];
 }
 
--(void) testSafariColdBrowserColdAppClickURLTrack1Redirect0 {
+-(void) testSafari9ColdBrowserColdAppClickURLTrack1Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:TRUE trackDisabled:TRUE];
 }
 
--(void) testSafariColdBrowserWarmAppClickURLTrack1Redirect0 {
+-(void) testSafari10ColdBrowserWarmAppClickURLTrack1Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:TRUE appCold:FALSE trackDisabled:TRUE];
 }
 
--(void) testSafariWarmBrowserColdAppClickURLTrack1Redirect0 {
+-(void) testSafari11WarmBrowserColdAppClickURLTrack1Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:TRUE trackDisabled:TRUE];
 }
 
--(void) testSafariWarmBrowserWarmAppClickURLTrack1Redirect0 {
+-(void) testSafari12WarmBrowserWarmAppClickURLTrack1Redirect0 {
     [self openURLInSafariWithRedirection:FALSE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
 }
 
--(void) testSafariColdBrowserColdAppClickURLTrack1Redirect1 {
+-(void) testSafari13ColdBrowserColdAppClickURLTrack1Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:TRUE trackDisabled:TRUE];
 }
 
--(void) testSafariColdBrowserWarmAppClickURLTrack1Redirect1 {
+-(void) testSafari14ColdBrowserWarmAppClickURLTrack1Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:TRUE appCold:FALSE trackDisabled:TRUE];
 }
 
--(void) testSafariWarmBrowserColdAppClickURLTrack1Redirect1 {
+-(void) testSafari15WarmBrowserColdAppClickURLTrack1Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:TRUE trackDisabled:TRUE];
 }
 
--(void) testSafariWarmBrowserWarmAppClickURLTrack1Redirect1 {
+-(void) testSafari16WarmBrowserWarmAppClickURLTrack1Redirect1 {
     [self openURLInSafariWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
 }
 
