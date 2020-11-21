@@ -60,7 +60,17 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         if (safariApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
             [safariApp launch];
         }
-        [safariApp activate]; // Activate Safari
+        else{
+            [safariApp activate]; // Activate Safari
+            XCUIElement *element = [safariApp.windows.textFields elementBoundByIndex:0];
+            [element click];
+            sleep(1.0);
+            [element typeText:[self testWebPageURLWithRedirection:enabled]];
+            [element typeKey:XCUIKeyboardKeyEnter
+               modifierFlags:XCUIKeyModifierNone];
+            sleep(3.0);
+        }
+       
     
     
     // Check and Set TestBed State - Cold Warm
