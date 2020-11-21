@@ -12,8 +12,8 @@
 #import <XCTest/XCTest.h>
 
 #define TRACKING_STATE_UNKNOWN      -1
-#define TRACKING_ENABLED            1
-#define TRACKING_DISABLED           0
+#define TRACKING_ENABLED            0
+#define TRACKING_DISABLED           1
 
 @interface TestBedUITest : XCTestCase
 

@@ -54,13 +54,14 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     if (aCold) { // Terminate Safari and launch new
         if (testBedApp.state != XCUIApplicationStateNotRunning)
             [self terminateTestBed];
-        [testBedApp launch];
     }
     else {
         if (testBedApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
             [testBedApp launch];
         }
-        [testBedApp activate]; // Activate Safari
+//        else {
+        //    [testBedApp activate]; // Activate Safari
+        //}
     }
     
     // Disable / Enable Tracking
