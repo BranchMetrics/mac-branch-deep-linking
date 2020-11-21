@@ -62,13 +62,19 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         }
         else{
             [safariApp activate]; // Activate Safari
-            XCUIElement *element = [safariApp.windows.textFields elementBoundByIndex:0];
-            [element click];
+            if([safariApp waitForState:XCUIApplicationStateRunningForeground timeout:6])
+            {
+            [safariApp  typeKey:@"N"
+               modifierFlags:XCUIKeyModifierOption | XCUIKeyModifierCommand];
             sleep(1.0);
-            [element typeText:[self testWebPageURLWithRedirection:enabled]];
-            [element typeKey:XCUIKeyboardKeyEnter
+            [safariApp typeText:[self testWebPageURLWithRedirection:enabled]];
+            [safariApp typeKey:XCUIKeyboardKeyEnter
                modifierFlags:XCUIKeyModifierNone];
-            sleep(3.0);
+            }
+            else {
+                XCTFail(@"Could not launch Safari.");
+            }
+//            sleep(3.0);
         }
        
     
