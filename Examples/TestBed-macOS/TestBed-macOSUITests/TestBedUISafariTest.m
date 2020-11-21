@@ -42,8 +42,9 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         [safariApp launch];
     }
     else {
+        
+        [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
         if (safariApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
-            [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
             [safariApp launch];
         }
         [safariApp activate]; // Activate Safari
@@ -58,6 +59,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     else {
         if (testBedApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
             [testBedApp launch];
+            self.appLaunched = TRUE;
         }
 //        else {
         //    [testBedApp activate]; // Activate Safari
