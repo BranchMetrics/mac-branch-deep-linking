@@ -148,10 +148,17 @@
 //    if (result != XCTWaiterResultCompleted)
 //        result = [XCTWaiter waitForExpectations:@[expectation] timeout:2];
 //
-    [stateElementNext waitForExistenceWithTimeout:15];
-    //sleep(3);
-    XCUIElement *dataTextView = [[[testbedMacWindow childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
-    return dataTextView.value;
+   // [stateElementNext waitForExistenceWithTimeout:15];
+    if ([stateElementNext waitForExistenceWithTimeout:15] != NO) {
+        XCUIElement *dataTextView = [[[testbedMacWindow childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
+        return dataTextView.value;
+        
+    } else {
+        XCTFail("BranchDidOpenURLWithSessionNotification not received in 15 seconds");
+        // TODO - take screen shot.
+    }
+    
+    return @"";
 }
 
 //-(NSDictionary)
