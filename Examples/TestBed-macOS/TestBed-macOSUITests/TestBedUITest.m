@@ -52,7 +52,8 @@
         return;
     
     XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    if ((int)stateElement.value == 1){
+    NSString *eleValue = [NSString stringWithFormat:@"%@" , stateElement.value ];
+    if ( [eleValue isEqualToString:@"1"]){
         [stateElement click];
         self.trackingState = TRACKING_ENABLED;
     }
@@ -67,7 +68,8 @@
     if (self.trackingState == TRACKING_DISABLED)
         return;
     XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    if ((int)stateElement.value == 0){
+    NSString *eleValue = [NSString stringWithFormat:@"%@" , stateElement.value ];
+    if ( [eleValue isEqualToString:@"0"]){
         [stateElement click];
         self.trackingState = TRACKING_DISABLED;
     }
