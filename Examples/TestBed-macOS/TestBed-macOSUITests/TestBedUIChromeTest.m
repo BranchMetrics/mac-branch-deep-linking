@@ -50,6 +50,13 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
 //            [chromeApp typeText:[self testWebPageURLWithRedirection:enabled]];
 //            [chromeApp typeKey:XCUIKeyboardKeyEnter
 //                 modifierFlags:XCUIKeyModifierNone];
+            XCUIElement *element = [chromeApp.windows.textFields elementBoundByIndex:0];
+            [element click];
+            sleep(1.0);
+            [element typeText:[self testWebPageURLWithRedirection:enabled]];
+            sleep(1.0);
+            [element typeKey:XCUIKeyboardKeyReturn modifierFlags:XCUIKeyModifierNone];
+            sleep(1.0);
         }
         else {
             XCTFail(@"Could not launch Chrome.");
