@@ -18,16 +18,10 @@
         "OpenURL_macOSUITests",
         "SafariOpenLink",
         "SafariOpenLinkUITests",
-        "TestBedUIDeepLinkDataTest",
         "TestBedUIDeepLinkDataTest\/testDeepLink",
-        "TestBedUIInstallOpenTest",
-        "TestBedUISafariTest",
         "TestBedUISafariTest\/test1OpenURLInSafariInNewTab",
         "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
-        "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow",
-        "TestBedUISetIdentityTest",
-        "TestBedUITest",
-        "TestBedUIV2EventTest"
+        "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow"
       ],
       "target" : {
         "containerPath" : "container:TestBed-macOS.xcodeproj",

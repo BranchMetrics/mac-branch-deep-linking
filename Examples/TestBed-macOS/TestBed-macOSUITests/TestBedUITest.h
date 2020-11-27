@@ -30,15 +30,13 @@
 - (NSString *) getErrorString;
 - (void) logEvent:(NSString *)eventName;
 - (void) logAllEvents;
-- (void) terminateApp;
 - (NSString *) dataTextViewString;
 -(BOOL) trackingDisabled;
 -(void) enableTracking;
 -(void) disableTracking;
 -(void) terminateTestBed;
--(void) terminateSafari;
--(void) terminateChrome;
--(NSString *) testWebPageURLWithRedirection:(BOOL)enabled;
+-(NSString *) webPageURLWithRedirection:(BOOL)enabled;
+- (void) validateDeepLinkDataForRedirectionEnabled:(bool)enabled;
 
 @end
 

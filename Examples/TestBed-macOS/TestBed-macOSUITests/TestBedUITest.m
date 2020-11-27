@@ -6,10 +6,12 @@
 //  Copyright © 2020 Branch. All rights reserved.
 //
 #import "TestBedUITest.h"
+#import "TestBedUIUtils.h"
 
 @implementation TestBedUITest
 
 - (void)setUp {
+    
     self.continueAfterFailure = YES;
     self.appLaunched = FALSE;
     self.trackingState = TRACKING_STATE_UNKNOWN ;
@@ -19,29 +21,17 @@
     
 }
 
--(NSString *) testWebPageURLWithRedirection:(BOOL)enabled {
+-(NSString *) webPageURLWithRedirection:(BOOL)enabled {
+    
     if (!enabled) {
-        return [NSString stringWithFormat:@"%@%@" , [[NSBundle mainBundle] bundlePath] , @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestWebPage.html" ];
+        return [NSString stringWithFormat:@"%@%@", [[NSBundle mainBundle] bundlePath], @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestWebPage.html"]; //URL of the webpage
+    } else {
+        return [NSString stringWithFormat:@"%@%@", [[NSBundle mainBundle] bundlePath], @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestRedirectionWebPage.html"]; //URL of the webpage with redirection enabled.
     }
-    else {
-        return [NSString stringWithFormat:@"%@%@" , [[NSBundle mainBundle] bundlePath] , @"/Contents/PlugIns/TestBed-macOSUITests.xctest/Contents/Resources/TestRedirectionWebPage.html" ];
-    }
-}
-
--(BOOL) trackingDisabled {
-    if (!self.appLaunched) {
-        [[[XCUIApplication alloc] init] launch];
-        self.appLaunched = TRUE;
-    }
-    XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    NSString *eleValue = [NSString stringWithFormat:@"%@" , stateElement.value ];
-    if ( [eleValue isEqualToString:@"1"]){
-        return TRUE;
-    }
-    return FALSE;
 }
 
 -(void) enableTracking {
+    
     if (!self.appLaunched) {
         [[[XCUIApplication alloc] init] launch];
         self.appLaunched = TRUE;
@@ -51,26 +41,29 @@
     if (self.trackingState == TRACKING_ENABLED)
         return;
     
-    XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    NSString *eleValue = [NSString stringWithFormat:@"%@" , stateElement.value ];
+    XCUIElement *element = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
+    NSString *eleValue = [NSString stringWithFormat:@"%@" , element.value ];
     if ( [eleValue isEqualToString:@"1"]){
-        [stateElement click];
+        [element click];
         self.trackingState = TRACKING_ENABLED;
     }
 }
 
 -(void) disableTracking {
+    
     if (!self.appLaunched) {
         [[[XCUIApplication alloc] init] launch];
         self.appLaunched = TRUE;
         sleep(3);
     }
+    
     if (self.trackingState == TRACKING_DISABLED)
         return;
-    XCUIElement *stateElement = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
-    NSString *eleValue = [NSString stringWithFormat:@"%@" , stateElement.value ];
+    
+    XCUIElement *element = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
+    NSString *eleValue = [NSString stringWithFormat:@"%@" , element.value ];
     if ( [eleValue isEqualToString:@"0"]){
-        [stateElement click];
+        [element click];
         self.trackingState = TRACKING_DISABLED;
     }
 }
@@ -82,23 +75,24 @@
         [[[XCUIApplication alloc] init] launch];
         self.appLaunched = TRUE;
     }
+   
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
     XCUIElement *stateElement = [self trackingDisabled ] ?  testbedMacWindow.staticTexts[@"< State >"] : testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
+    
+    // Wait for BranchDidStartSessionNotification
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
     XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
-    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:1];
-    XCUIElement *stateElementNext = testbedMacWindow.staticTexts[@"BranchDidOpenURLWithSessionNotification"];
-    expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElementNext];
+    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:3];
+    
+    //If failed, check for BranchDidOpenURLWithSessionNotification
     if (result != XCTWaiterResultCompleted)
-        result = [XCTWaiter waitForExpectations:@[expectation] timeout:2];
+    {
+        XCUIElement *stateElementNext = testbedMacWindow.staticTexts[@"BranchDidOpenURLWithSessionNotification"];
+        expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElementNext];
+        result = [XCTWaiter waitForExpectations:@[expectation] timeout:3];
+    }
     
     return  result;
-}
-
-- (void) terminateApp {
-    self.appLaunched = FALSE;
-    
-    [[[XCUIApplication alloc] init] terminate];
 }
 
 -(void) terminateTestBed {
@@ -107,21 +101,6 @@
         [[[XCUIApplication alloc] init] terminate];
     }
     self.appLaunched = FALSE;
-}
-
--(void) terminateSafari {
-    
-    XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
-    [safariApp activate];
-    if (safariApp.state == XCUIApplicationStateRunningForeground) {
-        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
-        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
-    }
-    [safariApp terminate];
-}
-
--(void) terminateChrome {
-    [[[XCUIApplication alloc] initWithBundleIdentifier:@"com.google.Chrome"] terminate];
 }
 
 - (NSString *) serverRequestString {
@@ -139,29 +118,17 @@
 - (NSString *) dataTextViewString {
     
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
-    /*XCUIElement *stateElement = [self trackingDisabled ] ? testbedMacWindow.staticTexts[@"< State >"] :  testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
-    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElement];
-    XCTWaiterResult result = [XCTWaiter waitForExpectations:@[expectation] timeout:1];*/
     XCUIElement *stateElementNext = testbedMacWindow.staticTexts[@"BranchDidOpenURLWithSessionNotification"];
-//    expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:stateElementNext];
-//    if (result != XCTWaiterResultCompleted)
-//        result = [XCTWaiter waitForExpectations:@[expectation] timeout:2];
-//
-   // [stateElementNext waitForExistenceWithTimeout:15];
     if ([stateElementNext waitForExistenceWithTimeout:15] != NO) {
         XCUIElement *dataTextView = [[[testbedMacWindow childrenMatchingType:XCUIElementTypeScrollView] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextView].element;
         return dataTextView.value;
         
     } else {
         XCTFail("BranchDidOpenURLWithSessionNotification not received in 15 seconds");
-        // TODO - take screen shot.
     }
     
     return @"";
 }
-
-//-(NSDictionary)
 
 - (void) setIdentity {
     [[[XCUIApplication alloc] init].windows[@"TestBed-Mac"].collectionViews.staticTexts[@"Set Identity"] click];
@@ -224,6 +191,33 @@
         numberOfElementsLeft = numberOfElementsLeft - counter;
         [sendButton click];
     } while (numberOfElementsLeft > 0);
+}
+
+- (void) validateDeepLinkDataForRedirectionEnabled:(bool)enabled {
+    
+    NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithString:[self dataTextViewString]] ;
+    
+    XCTAssertTrue([deepLinkDataString isNotEqualTo:@""]);
+    
+    [deepLinkDataString replaceOccurrencesOfString:@" = " withString:@" : " options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@";\n" withString:@",\n" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    
+    //Data received from server is not properly formatted. So adding quotes here. Will be removed later on when it will be fixed.
+    [deepLinkDataString replaceOccurrencesOfString:@"website" withString:@"\"website\"" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"message :" withString:@"\"message\" :" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"MacSDK," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"QuickLink," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    [deepLinkDataString replaceOccurrencesOfString:@"marketing," withString:@"\"marketing\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
+    
+    NSError *error;
+    NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
+    XCTAssertEqualObjects(deepLinkDataDictionary[@"+match_guaranteed"], @1 );
+    if (enabled) {
+        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK_WITH_REDIRECTION);
+    }
+    else {
+        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK);
+    }
 }
 
 @end

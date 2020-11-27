@@ -46,7 +46,7 @@ extern void *kMyKVOContext;
             
             NSDictionary *serverRequestDictionary = [ TestBedUIUtils dictionaryFromString:[self serverRequestString]];
             linkData = [serverRequestDictionary objectForKey:@"data"];
-            [self terminateApp];
+            [self terminateTestBed];
         }
         else {
             XCTFail("App Launch / Session Start Failed.");

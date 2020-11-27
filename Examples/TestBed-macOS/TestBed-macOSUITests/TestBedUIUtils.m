@@ -21,8 +21,9 @@
     jsonPartOfAPIDataString = [[jsonPartOfAPIDataString stringByReplacingCharactersInRange:(NSRange)NSMakeRange(endRange.location+1, (jsonPartOfAPIDataString.length - endRange.location -1) ) withString:@""] mutableCopy];
     NSError *error;
     NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:[jsonPartOfAPIDataString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-    NSLog(@"%@", [error debugDescription]);
-    NSLog(@"%@" , jsonDictionary);
+    if (error) {
+        NSLog(@"%@", [error debugDescription]);
+    }
     return  jsonDictionary;
 }
 
@@ -32,6 +33,8 @@
     NSArray * searchPath = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString * applicationSupportDirectory = [searchPath objectAtIndex:0];
     NSString *settingsFolder = [NSString stringWithFormat:@"%@/io.branch/io.branch.sdk.TestBed-Mac" , applicationSupportDirectory];
+    
+    //Delete all settings files
     if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES)
     {
         [[NSFileManager defaultManager] removeItemAtPath:settingsFolder error:nil];

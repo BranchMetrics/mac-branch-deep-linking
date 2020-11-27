@@ -39,7 +39,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             [self terminateSafari];
     }
     
-    [safariApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
+    [safariApp setLaunchArguments:@[[self webPageURLWithRedirection:enabled]]];
     if (safariApp.state == XCUIApplicationStateNotRunning) { // If Safari is not running, launch now
         [safariApp launch];
     } else {
@@ -49,7 +49,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
             [safariApp  typeKey:@"N"
                   modifierFlags: XCUIKeyModifierCommand]; // Open New Window
             sleep(1.0);
-            [safariApp typeText:[self testWebPageURLWithRedirection:enabled]];
+            [safariApp typeText:[self webPageURLWithRedirection:enabled]];
             [safariApp typeKey:XCUIKeyboardKeyEnter
                  modifierFlags:XCUIKeyModifierNone];
         }
@@ -512,48 +512,15 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     [self openURLInPrivWindowWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
 }
 
-- (void) validateDeepLinkDataForRedirectionEnabled:(bool)enabled {
+-(void) terminateSafari {
     
-    NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithString:[self dataTextViewString]] ;
-    
-    XCTAssertTrue([deepLinkDataString isNotEqualTo:@""]);
-    
-    [deepLinkDataString replaceOccurrencesOfString:@" = " withString:@" : " options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@";\n" withString:@",\n" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"website" withString:@"\"website\"" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"message :" withString:@"\"message\" :" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"MacSDK," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"QuickLink," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"marketing," withString:@"\"marketing\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    
-    NSError *error;
-    NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
-    XCTAssertEqualObjects(deepLinkDataDictionary[@"+match_guaranteed"], @1 );
-    if (enabled) {
-        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK_WITH_REDIRECTION);
+    XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
+    [safariApp activate];
+    if (safariApp.state == XCUIApplicationStateRunningForeground) {
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
+        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
     }
-    else {
-        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK);
-    }
+    [safariApp terminate];
 }
 
-- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
-{
-    if (context != kSafariKVOContext)
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-        return;
-    }
-    
-    if ([keyPath isEqualToString:@"runningApplications"])
-    {
-        for (NSRunningApplication * application in NSWorkspace.sharedWorkspace.runningApplications) {
-            if ([application.bundleIdentifier isEqualToString:@"io.branch.sdk.TestBed-Mac"]) {
-                [[NSWorkspace sharedWorkspace] removeObserver:self forKeyPath:@"runningApplications"];
-                [expectationForAppLaunch fulfill];
-                break;
-            }
-        }
-    }
-}
 @end

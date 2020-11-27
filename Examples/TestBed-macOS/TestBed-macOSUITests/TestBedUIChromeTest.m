@@ -37,23 +37,18 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
             [self terminateChrome];
     }
     
-    [chromeApp setLaunchArguments:@[[self testWebPageURLWithRedirection:enabled]]];
+    [chromeApp setLaunchArguments:@[[self webPageURLWithRedirection:enabled]]];
+    
     if (chromeApp.state == XCUIApplicationStateNotRunning) { // If Chrome is not running, launch now
         [chromeApp launch];
     } else {
         [chromeApp activate]; // Activate Chrome
         if([chromeApp waitForState:XCUIApplicationStateRunningForeground timeout:6])
         {
-//            [chromeApp  typeKey:@"N"
-//                  modifierFlags: XCUIKeyModifierCommand]; // Open New Window
-//            sleep(1.0);
-//            [chromeApp typeText:[self testWebPageURLWithRedirection:enabled]];
-//            [chromeApp typeKey:XCUIKeyboardKeyEnter
-//                 modifierFlags:XCUIKeyModifierNone];
             XCUIElement *element = [chromeApp.windows.textFields elementBoundByIndex:0];
             [element click];
             sleep(1.0);
-            [element typeText:[self testWebPageURLWithRedirection:enabled]];
+            [element typeText:[self webPageURLWithRedirection:enabled]];
             sleep(1.0);
             [element typeKey:XCUIKeyboardKeyReturn modifierFlags:XCUIKeyModifierNone];
             sleep(1.0);
@@ -98,12 +93,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
     
     XCUIElement *element = [googleChromeApp.windows.textFields elementBoundByIndex:0];
-//    [element click];
-//    sleep(1.0);
-//    [element typeText:[self testWebPageURLWithRedirection:enabled]];
-//    sleep(1.0);
-//    [element typeKey:XCUIKeyboardKeyReturn
-//       modifierFlags:XCUIKeyModifierNone];
     sleep(1.0);
     [element typeKey:XCUIKeyboardKeyTab
        modifierFlags:XCUIKeyModifierNone];
@@ -111,33 +100,18 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [element typeKey:XCUIKeyboardKeyReturn
        modifierFlags:XCUIKeyModifierNone];
     sleep(1.0);
-//
-//    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-//    expectationForAppLaunch.assertForOverFulfill = NO;
-//
-//    [[NSWorkspace sharedWorkspace] addObserver:self
-//                                    forKeyPath:@"runningApplications"
-//                                       options:NSKeyValueObservingOptionNew
-//                                       context:kChromeKVOContext];
-//
-//    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-    
-  //  NSArray *eles = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] allElementsBoundByIndex];
+
     XCUIElement *openButton = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] elementBoundByIndex:1] ;
     [openButton click];
-    
-//    [self waitForExpectationsWithTimeout:30.0 handler:nil];
+
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
         [googleChromeApp activate];
-        //[safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
         
     } else {
         XCTFail("Application not launched");
-        // TODO - take screen shot.
     }
-    
 }
 
 -(void) testChrome01ClickURLColdBrowserColdAppTrackDisabled0Redirect0 {
@@ -204,53 +178,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self openURLInChromeWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
 }
 
-//-(void) testOpenURLInChrome{
-//
-//    int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
-//
-//    for (int i = 0; i < 4; i++) {
-//
-//        BOOL enableTracking = options[i][0];
-//
-//        if (enableTracking) {
-//            [self enableTracking];
-//        }
-//        else {
-//            [self disableTracking];
-//        }
-//
-//        __block BOOL enableRedirection = options[i][1];
-//
-//        // Cold Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self terminateSafari];
-//            [self openURLInChromeWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Cold Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateSafari];
-//            [self openURLInChromeWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self openURLInChromeWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppClickURLTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self openURLInChromeWithRedirection:enableRedirection];;
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//    }
-//}
-
 -(void) openURLInNewTabWithRedirection:(BOOL)enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
     
     XCUIApplication *googleChromeApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.google.Chrome"];
@@ -258,12 +185,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
     
     XCUIElement *element = [googleChromeApp.windows.textFields elementBoundByIndex:0];
-//    [element click];
-//    sleep(1.0);
-//    [element typeText:[self testWebPageURLWithRedirection:enabled]];
-//    sleep(1.0);
-//    [element typeKey:XCUIKeyboardKeyReturn
-//       modifierFlags:XCUIKeyModifierNone];
     sleep(1.0);
     [element typeKey:XCUIKeyboardKeyTab
        modifierFlags:XCUIKeyModifierNone];
@@ -273,27 +194,12 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
        modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierShift];
     sleep(1.0);
     
-//    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-//    expectationForAppLaunch.assertForOverFulfill = NO;
-//
-//    [[NSWorkspace sharedWorkspace] addObserver:self
-//                                    forKeyPath:@"runningApplications"
-//                                       options:NSKeyValueObservingOptionNew
-//                                       context:kChromeKVOContext];
-//
-//    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-//
-//    NSArray *eles = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] allElementsBoundByIndex];
-//    for (int i = 0 ; i < eles.count ; i++)
-//    NSLog(@"%@", [eles[i] debugDescription] );
     XCUIElement *openButton = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] elementBoundByIndex:1] ;
     [openButton click];
     
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
-//        [safariApp activate];
-//        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierOption];
         
     } else {
         XCTFail("Application not launched");
@@ -366,54 +272,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self openURLInNewTabWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
 }
 
-
-//-(void) t1estOpenURLInChromeInNewTab{
-//
-//    int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
-//
-//    for (int i = 0; i < 4; i++) {
-//
-//        BOOL enableTracking = options[i][0];
-//
-//        if (enableTracking) {
-//            [self enableTracking];
-//        }
-//        else {
-//            [self disableTracking];
-//        }
-//
-//        __block BOOL enableRedirection = options[i][1];
-//
-//        // Cold Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self terminateSafari];
-//            [self openURLInChromeInNewTabWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Cold Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateSafari];
-//            [self openURLInChromeInNewTabWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self openURLInChromeInNewTabWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInNewTabTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self openURLInChromeInNewTabWithRedirection:enableRedirection];;
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//    }
-//}
-
 -(void) openURLInNewWindowWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
     
     XCUIApplication *googleChromeApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.google.Chrome"];
@@ -421,12 +279,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
     
     XCUIElement *element = [googleChromeApp.windows.textFields elementBoundByIndex:0];
-//    [element click];
-//    sleep(1.0);
-//    [element typeText:[self testWebPageURLWithRedirection:enabled]];
-//    sleep(1.0);
-//    [element typeKey:XCUIKeyboardKeyReturn
-//       modifierFlags:XCUIKeyModifierNone];
     sleep(1.0);
     [element typeKey:XCUIKeyboardKeyTab
        modifierFlags:XCUIKeyModifierNone];
@@ -435,84 +287,19 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [element typeKey:XCUIKeyboardKeyReturn
        modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierShift];
     sleep(1.0);
-    
-//    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-//    expectationForAppLaunch.assertForOverFulfill = NO;
-//
-//    [[NSWorkspace sharedWorkspace] addObserver:self
-//                                    forKeyPath:@"runningApplications"
-//                                       options:NSKeyValueObservingOptionNew
-//                                       context:kChromeKVOContext];
-//
-//    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-//
-//    NSArray *eles = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] allElementsBoundByIndex];
-//    for (int i = 0 ; i < eles.count ; i++)
-//    NSLog(@"%@", [eles[i] debugDescription] );
+ 
     XCUIElement *openButton = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] elementBoundByIndex:1] ;
     [openButton click];
-    
-//    [self waitForExpectationsWithTimeout:30.0 handler:nil];
     
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
-//        [safariApp activate];
-//        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
         
     } else {
         XCTFail("Application not launched");
     }
     
 }
-//
-//-(void) tes1t1OpenURLInChromeInNewWindow{
-//
-//    int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
-//
-//    for (int i = 0; i < 4; i++) {
-//
-//        BOOL enableTracking = options[i][0];
-//
-//        if (enableTracking) {
-//            [self enableTracking];
-//        }
-//        else {
-//            [self disableTracking];
-//        }
-//
-//        __block BOOL enableRedirection = options[i][1];
-//
-//        // Cold Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self terminateSafari];
-//            [self openURLInChromeInNewWindowWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Cold Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateSafari];
-//            [self openURLInChromeInNewWindowWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self openURLInChromeInNewWindowWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInNewWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self openURLInChromeInNewWindowWithRedirection:enableRedirection];;
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//    }
-//}
-
 
 -(void) testChrome33OpenURLInNewWindowColdBrowserColdAppTrackDisabled0Redirect0 {
     [self openURLInNewWindowWithRedirection:FALSE browserCold:TRUE appCold:TRUE trackDisabled:FALSE];
@@ -585,12 +372,6 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
     
     XCUIElement *element = [googleChromeApp.windows.textFields elementBoundByIndex:0];
-//    [element click];
-//    sleep(1.0);
-//    [element typeText:[self testWebPageURLWithRedirection:enabled]];
-//    sleep(1.0);
-//    [element typeKey:XCUIKeyboardKeyReturn
-//       modifierFlags:XCUIKeyModifierNone];
     sleep(1.0);
     [element typeKey:XCUIKeyboardKeyTab
        modifierFlags:XCUIKeyModifierNone];
@@ -600,91 +381,17 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
        modifierFlags:XCUIKeyModifierCommand|XCUIKeyModifierShift];
     sleep(1.0);
     
-//    expectationForAppLaunch = [self expectationWithDescription:@"testShortLinks"];
-//    expectationForAppLaunch.assertForOverFulfill = NO;
-//
-//    [[NSWorkspace sharedWorkspace] addObserver:self
-//                                    forKeyPath:@"runningApplications"
-//                                       options:NSKeyValueObservingOptionNew
-//                                       context:kChromeKVOContext];
-//
-//    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(applicationActivated:) name:NSWorkspaceDidActivateApplicationNotification object:nil];
-//
-//    NSArray *eles = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] allElementsBoundByIndex];
-//    for (int i = 0 ; i < eles.count ; i++)
-//    NSLog(@"%@", [eles[i] debugDescription] );
     XCUIElement *openButton = [[[[googleChromeApp windows ] elementBoundByIndex:0] descendantsMatchingType:XCUIElementTypeButton] elementBoundByIndex:1] ;
     [openButton click];
-    
-//    [self waitForExpectationsWithTimeout:30.0 handler:nil];
     
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
-//        [safariApp activate];
-//        [safariApp typeKey:@"W" modifierFlags:XCUIKeyModifierShift|XCUIKeyModifierCommand|XCUIKeyModifierOption];
-        
     } else {
         XCTFail("Application not launched");
     }
     
 }
-
-//-(void) te1stOpenURLInChromeInPrivateWindow{
-//
-//    int options[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}}; // TRACKING_ENABLED X REDIRECTION_ENABLED
-//
-//    for (int i = 0; i < 4; i++) {
-//
-//        BOOL enableTracking = options[i][0];
-//
-//        if (enableTracking) {
-//            [self enableTracking];
-//        }
-//        else {
-//            [self disableTracking];
-//        }
-//
-//        __block BOOL enableRedirection = options[i][1];
-//
-//        // Cold Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserColdAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self terminateSafari];
-//            [self openURLInChromeInPrivateWindowWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Cold Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"ColdBrowserWarmAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateSafari];
-//            [self openURLInChromeInPrivateWindowWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Cold App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserColdAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self terminateTestBed];
-//            [self openURLInChromeInPrivateWindowWithRedirection:enableRedirection];
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//
-//        // Warm Browser & Warm App
-//        [XCTContext runActivityNamed:[NSString stringWithFormat:@"WarmBrowserWarmAppOpenURLInPrivateWindowTrack%dRedirect%d", enableTracking, enableRedirection] block:^(id<XCTActivity> activity) {
-//            [self openURLInChromeInPrivateWindowWithRedirection:enableRedirection];;
-//            // Remove assestion for now XCTAssertTrue([[self dataTextViewString] containsString:@ TESTBED_CLICK_LINK]);
-//        }];
-//    }
-//}
-//-(void) applicationActivated:(NSNotification *)notification {
-//    NSRunningApplication *app = notification.userInfo[NSWorkspaceApplicationKey];
-//    NSLog( @"App Activated => %@", app.localizedName);
-//    if ([app.localizedName isEqualToString:@"TestBed-macOS"]) {
-//            [expectationForAppLaunch fulfill];
-//    }
-//}
-
-
 
 -(void) testChrome49OpenURLInPrivWindowColdBrowserColdAppTrackDisabled0Redirect0 {
     [self openURLInPrivWindowWithRedirection:FALSE browserCold:TRUE appCold:TRUE trackDisabled:FALSE];
@@ -750,49 +457,8 @@ void *kChromeKVOContext = (void*)&kChromeKVOContext;
     [self openURLInPrivWindowWithRedirection:TRUE browserCold:FALSE appCold:FALSE trackDisabled:TRUE];
 }
 
-- (void) validateDeepLinkDataForRedirectionEnabled:(bool)enabled {
-    
-    NSMutableString *deepLinkDataString = [[NSMutableString alloc] initWithString:[self dataTextViewString]] ;
-    
-    XCTAssertTrue([deepLinkDataString isNotEqualTo:@""]);
-    
-    [deepLinkDataString replaceOccurrencesOfString:@" = " withString:@" : " options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@";\n" withString:@",\n" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"website" withString:@"\"website\"" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"message :" withString:@"\"message\" :" options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"MacSDK," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"QuickLink," withString:@"\"message\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    [deepLinkDataString replaceOccurrencesOfString:@"marketing," withString:@"\"marketing\"," options:0 range:NSMakeRange(0 , [deepLinkDataString length])];
-    
-    NSError *error;
-    NSDictionary *deepLinkDataDictionary = [NSJSONSerialization JSONObjectWithData: [ deepLinkDataString dataUsingEncoding:NSUTF8StringEncoding ] options:0 error:&error];
-    XCTAssertEqualObjects(deepLinkDataDictionary[@"+match_guaranteed"], @1 );
-    if (enabled) {
-        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK_WITH_REDIRECTION);
-    }
-    else {
-        XCTAssertEqualObjects(deepLinkDataDictionary[@"~referring_link"], @TESTBED_CLICK_LINK);
-    }
+-(void) terminateChrome {
+    [[[XCUIApplication alloc] initWithBundleIdentifier:@"com.google.Chrome"] terminate];
 }
 
-- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
-{
-    if (context != kChromeKVOContext)
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-        return;
-    }
-    
-    if ([keyPath isEqualToString:@"runningApplications"])
-    {
-        for (NSRunningApplication * application in NSWorkspace.sharedWorkspace.runningApplications) {
-                if ([application.bundleIdentifier isEqualToString:@"io.branch.sdk.TestBed-Mac"]) {
-                    [[NSWorkspace sharedWorkspace] removeObserver:self forKeyPath:@"runningApplications"];
-                    [expectationForAppLaunch fulfill];
-                   
-                    break;
-                }
-            }
-    }
-}
 @end
