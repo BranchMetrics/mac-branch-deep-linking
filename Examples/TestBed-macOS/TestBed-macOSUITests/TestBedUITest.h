@@ -31,7 +31,6 @@
 - (void) logEvent:(NSString *)eventName;
 - (void) logAllEvents;
 - (NSString *) dataTextViewString;
--(BOOL) trackingDisabled;
 -(void) enableTracking;
 -(void) disableTracking;
 -(void) terminateTestBed;

@@ -13,6 +13,13 @@
   },
   "testTargets" : [
     {
+      "target" : {
+        "containerPath" : "container:..\/..\/Branch.xcodeproj",
+        "identifier" : "5F78ED8E249C317400E313B9",
+        "name" : "BranchTests"
+      }
+    },
+    {
       "skippedTests" : [
         "BranchSDKUITestCase",
         "OpenURL_macOSUITests",

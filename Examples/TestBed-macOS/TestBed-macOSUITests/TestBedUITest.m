@@ -77,7 +77,7 @@
     }
    
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
-    XCUIElement *stateElement = [self trackingDisabled ] ?  testbedMacWindow.staticTexts[@"< State >"] : testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
+    XCUIElement *stateElement = (self.trackingState == TRACKING_DISABLED) ?  testbedMacWindow.staticTexts[@"< State >"] : testbedMacWindow.staticTexts[@"BranchDidStartSessionNotification"] ;
     
     // Wait for BranchDidStartSessionNotification
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"exists == true"];
