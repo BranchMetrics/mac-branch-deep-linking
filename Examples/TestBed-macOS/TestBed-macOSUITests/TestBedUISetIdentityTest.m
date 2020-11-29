@@ -30,6 +30,10 @@
     
     if (result == XCTWaiterResultCompleted) {
         
+        if (self.trackingState == TRACKING_DISABLED) {
+            [self enableTracking];
+        }
+        
         [self logOut];
         
         [self setIdentity];

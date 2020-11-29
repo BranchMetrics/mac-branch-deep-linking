@@ -68,12 +68,24 @@
     }
 }
 
+-(NSInteger) loadTrackingState {
+    XCUIElement *element = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"].checkBoxes[@"Tracking Disabled"];
+    NSString *eleValue = [NSString stringWithFormat:@"%@" , element.value ];
+    if ( [eleValue isEqualToString:@"0"]){
+        self.trackingState = TRACKING_ENABLED;
+    } else {
+        self.trackingState = TRACKING_DISABLED;
+    }
+    return  self.trackingState;
+}
+
 
 - (XCTWaiterResult) launchAppAndWaitForSessionStart {
     
     if (!self.appLaunched) {
         [[[XCUIApplication alloc] init] launch];
         self.appLaunched = TRUE;
+        [self loadTrackingState];
     }
    
     XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];

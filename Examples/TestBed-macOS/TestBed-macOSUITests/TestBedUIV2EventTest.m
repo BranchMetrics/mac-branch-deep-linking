@@ -31,6 +31,10 @@
 
     if (result == XCTWaiterResultCompleted) {
         
+        if (self.trackingState == TRACKING_DISABLED) {
+            [self enableTracking];
+        }
+        
         NSArray *events = [BranchEvent standardEvents];
         
         for (NSString *eventName in events) {
