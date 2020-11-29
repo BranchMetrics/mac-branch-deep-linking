@@ -100,18 +100,17 @@ NSURL*_Nonnull BNCURLForBranchDataDirectory() {
     NSString *settingsFolder = [NSString stringWithFormat:@"%@" , [url path]];
     
     //Delete all settings files
-    if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES){
+    if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES) {
         [[NSFileManager defaultManager] removeItemAtPath:settingsFolder error:nil];
-    } else {
-        NSArray * searchPath = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-        NSString * applicationSupportDirectory = [searchPath objectAtIndex:0];
-        NSString *settingsFolder = [NSString stringWithFormat:@"%@/io.branch/io.branch.sdk.TestBed-Mac" , applicationSupportDirectory];
-        
-        //Delete all settings files
-        if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES)
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:settingsFolder error:nil];
-        }
+    }
+    
+    NSArray * searchPath = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString * applicationSupportDirectory = [searchPath objectAtIndex:0];
+    settingsFolder = [NSString stringWithFormat:@"%@/io.branch/io.branch.sdk.TestBed-Mac" , applicationSupportDirectory];
+    
+    //Delete all settings files
+    if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES) {
+        [[NSFileManager defaultManager] removeItemAtPath:settingsFolder error:nil];
     }
 }
 

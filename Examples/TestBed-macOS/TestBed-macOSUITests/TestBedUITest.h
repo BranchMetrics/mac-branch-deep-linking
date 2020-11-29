@@ -39,7 +39,6 @@
 
 @end
 
-
 #endif /* TestBedUITest_h */
 
 // Adding this message for testing integration on commit from remote machine.
