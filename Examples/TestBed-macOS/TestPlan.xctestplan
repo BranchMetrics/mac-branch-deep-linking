@@ -13,6 +13,7 @@
   },
   "testTargets" : [
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:..\/..\/Branch.xcodeproj",
         "identifier" : "5F78ED8E249C317400E313B9",
@@ -25,7 +26,9 @@
         "OpenURL_macOSUITests",
         "SafariOpenLink",
         "SafariOpenLinkUITests",
+        "TestBedUIChromeTest",
         "TestBedUIDeepLinkDataTest\/testDeepLink",
+        "TestBedUISafariTest",
         "TestBedUISafariTest\/test1OpenURLInSafariInNewTab",
         "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
         "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow"
