@@ -26,9 +26,7 @@
         "OpenURL_macOSUITests",
         "SafariOpenLink",
         "SafariOpenLinkUITests",
-        "TestBedUIChromeTest",
         "TestBedUIDeepLinkDataTest\/testDeepLink",
-        "TestBedUISafariTest",
         "TestBedUISafariTest\/test1OpenURLInSafariInNewTab",
         "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
         "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow"
