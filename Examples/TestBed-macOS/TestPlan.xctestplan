@@ -32,7 +32,8 @@
         "TestBedUIRaceCondTest",
         "TestBedUISafariTest\/test1OpenURLInSafariInNewTab",
         "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
-        "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow"
+        "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow",
+        "TestBedUITest"
       ],
       "target" : {
         "containerPath" : "container:TestBed-macOS.xcodeproj",
