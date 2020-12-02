@@ -13,6 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// TODO: rename this class
 @interface BNCURLBlackList : NSObject
 
 - (instancetype) initWithBlackList:(NSArray<NSString*>*)blacklist_ version:(NSInteger)version_
