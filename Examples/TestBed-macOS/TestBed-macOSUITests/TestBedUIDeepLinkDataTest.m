@@ -9,8 +9,6 @@
 #import "TestBedUITest.h"
 #import "TestBedUIUtils.h"
 
-// Test Commit Message
-
 void *kMyKVOContext = (void*)&kMyKVOContext;
 XCTestExpectation *expectationForAppLaunch;
 
