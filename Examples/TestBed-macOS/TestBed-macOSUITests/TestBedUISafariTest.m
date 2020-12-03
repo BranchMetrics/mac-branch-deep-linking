@@ -185,7 +185,10 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
 
 -(void) openURLInNewTabWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
     
-    if (@available(macOS 10.15, *)) {
+    NSOperatingSystemVersion minimumSupportedOSVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
+    BOOL isSupported = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minimumSupportedOSVersion];
+    
+    if (isSupported) {
     
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
     
@@ -296,7 +299,11 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
 
 -(void) openURLInNewWindowWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
     
-    if (@available(macOS 10.15, *)) {
+      NSOperatingSystemVersion minimumSupportedOSVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
+      BOOL isSupported = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minimumSupportedOSVersion];
+      
+      if (isSupported) {
+          
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
     
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
@@ -407,7 +414,12 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
 }
 
 -(void) openURLInPrivWindowWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
-    if (@available(macOS 10.15, *)) {
+    
+    NSOperatingSystemVersion minimumSupportedOSVersion = { .majorVersion = 10, .minorVersion = 15, .patchVersion = 0 };
+      BOOL isSupported = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:minimumSupportedOSVersion];
+      
+      if (isSupported) {
+          
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
     
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
