@@ -185,6 +185,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
 
 -(void) openURLInNewTabWithRedirection:(BOOL) enabled browserCold:(BOOL) bCold appCold:(BOOL) aCold  trackDisabled:(BOOL) disable {
     
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= __MAC_10_15
     XCUIApplication *safariApp = [[XCUIApplication alloc] initWithBundleIdentifier:@"com.apple.Safari"];
     
     [self setUpWithRedirection:enabled browserCold:bCold appCold:aCold trackDisabled:disable];
@@ -223,6 +224,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     } else {
         XCTFail("Application not launched");
     }
+#endif
     
 }
 
