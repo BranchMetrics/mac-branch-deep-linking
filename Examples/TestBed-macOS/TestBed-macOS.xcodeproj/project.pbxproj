@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0305235025829B2D00013D4A /* TestRaceConditionWebPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 0305234F25829B2D00013D4A /* TestRaceConditionWebPage.html */; };
 		0308B46F2540FEA7004DC379 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; };
 		0308B4702540FEA7004DC379 /* Branch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2B3C070320AB722200F38167 /* Branch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		034FE9E82552748700E4C40C /* TestBedUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = 034FE9E72552748700E4C40C /* TestBedUITest.m */; };
@@ -93,6 +94,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0305234F25829B2D00013D4A /* TestRaceConditionWebPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TestRaceConditionWebPage.html; sourceTree = "<group>"; };
 		0310053B253A4BE500E135E0 /* TestBed-macOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestBed-macOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0310053F253A4BE500E135E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034FE9E72552748700E4C40C /* TestBedUITest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestBedUITest.m; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				03B3931E2562F37C0082A911 /* TestPlan.xctestplan */,
 				039714BE254418D300C75895 /* TestWebPage.html */,
 				03B3932B2563337B0082A911 /* TestRedirectionWebPage.html */,
+				0305234F25829B2D00013D4A /* TestRaceConditionWebPage.html */,
 				034FE9EC2552779300E4C40C /* TestBedUIInstallOpenTest.m */,
 				034FE9F92552863A00E4C40C /* TestBedUIDeepLinkDataTest.m */,
 				034FEA022555F6BD00E4C40C /* TestBedUISetIdentityTest.m */,
@@ -391,6 +394,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0305235025829B2D00013D4A /* TestRaceConditionWebPage.html in Resources */,
 				039714C1254418D400C75895 /* TestWebPage.html in Resources */,
 				03B3932C2563337B0082A911 /* TestRedirectionWebPage.html in Resources */,
 			);
