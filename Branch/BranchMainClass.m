@@ -130,10 +130,13 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return string?:@"";
 }
 
+
 + (NSString *)kitDisplayVersion {
-    NSString*_Nullable string =
-        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    return string?:@"";
+    // This code does not work with Swift Package Manager or Cocoapods. Adding a quick fix for now
+//    NSString*_Nullable string =
+//        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//    return string?:@"";
+    return @"1.2.5";
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
