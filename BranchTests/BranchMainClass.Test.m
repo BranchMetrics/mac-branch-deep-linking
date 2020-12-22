@@ -103,6 +103,61 @@
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
 }
 
+
+- (void) testShortLinksWithoutBUONillParams {
+    
+    NSDictionary *params = nil;
+    NSString *channel = nil;
+    NSString *feature = nil;
+    NSArray *tags = nil;
+    NSString *alias =  nil;
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinksWithoutBUO"];
+    [self.branch branchShortUrlWithParams:( NSDictionary * _Nullable )params andChannel:( NSString * _Nullable )channel andFeature:(NSString * _Nullable)feature andTags:(NSArray * _Nullable)tags andAlias:(NSString * _Nullable)alias andCallback:^ (NSURL * _Nullable shortURL, NSError * _Nullable error) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(shortURL);
+        XCTAssertTrue([shortURL.absoluteString hasPrefix:@"https://testbed-mac.app.link/"]);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+}
+
+- (void) testShortLinksWithoutBUO1 {
+    
+    NSDictionary *params = nil;
+    NSString *channel = @"facebook";
+    NSString *feature = @"sharing";
+    NSArray *tags = @[ @"t1", @"t2" ];
+    NSString *alias =  @"testAlias";
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinksWithoutBUO"];
+    [self.branch branchShortUrlWithParams:( NSDictionary * _Nullable )params andChannel:( NSString * _Nullable )channel andFeature:(NSString * _Nullable)feature andTags:(NSArray * _Nullable)tags andAlias:(NSString * _Nullable)alias andCallback:^ (NSURL * _Nullable shortURL, NSError * _Nullable error) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(shortURL);
+        XCTAssertTrue([shortURL.absoluteString isEqualToString:@"https://testbed-mac.app.link/testAlias"]);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+}
+
+- (void) testShortLinksWithoutBUO2 {
+    
+    NSDictionary *params = @{ @"foo-param": @"bar-value" };
+    NSString *channel = @"facebook";
+    NSString *feature = @"sharing";
+    NSArray *tags = @[ @"t1", @"t2" ];
+    NSString *alias =  @"testAlias";
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinksWithoutBUO"];
+    [self.branch branchShortUrlWithParams:( NSDictionary * _Nullable )params andChannel:( NSString * _Nullable )channel andFeature:(NSString * _Nullable)feature andTags:(NSArray * _Nullable)tags andAlias:(NSString * _Nullable)alias andCallback:^ (NSURL * _Nullable shortURL, NSError * _Nullable error) {
+        XCTAssertNil(error);
+        XCTAssertNotNil(shortURL);
+        XCTAssertTrue([shortURL.absoluteString isEqualToString:@"https://testbed-mac.app.link/testAlias"]);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+}
+
 - (void) testLongLinks {
     BranchLinkProperties*lp = [BranchLinkProperties new];
     lp.tags = @[ @"t1", @"t2" ];

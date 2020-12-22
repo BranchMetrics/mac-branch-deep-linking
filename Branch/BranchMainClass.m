@@ -683,6 +683,33 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         }];
 }
 
+- (void) branchShortUrlWithParams:(nullable NSDictionary *)params andChannel:(nullable NSString *)channel andFeature:(nullable NSString *)feature andTags:(nullable NSArray *)tags andAlias:(nullable NSString *)alias andCallback:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error)) callback{
+    
+    NSMutableDictionary* dictionary = [NSMutableDictionary new];
+    
+    [dictionary addEntriesFromDictionary:params];
+    dictionary[@"channel"] =  channel;
+    dictionary[@"feature"] =  feature;
+    dictionary[@"tags"] =  tags;
+    dictionary[@"alias"] =  alias;
+    
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService postOperationForAPIServiceName:@"v1/url"
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
+            BNCPerformBlockOnMainThreadAsync(^{
+                if (operation.error) {
+                    if (callback) callback(nil, operation.error);
+                    return;
+                }
+                NSError*error = nil;
+                NSURL*url = BNCURLFromWireFormat(operation.session.data[@"url"]);
+                if (!url) error = [NSError branchErrorWithCode:BNCBadRequestError];
+                if (callback) callback(url, error);
+            });
+        }];
+}
+
 - (NSURL*) branchLongLinkWithContent:(BranchUniversalObject*)content
                       linkProperties:(BranchLinkProperties*)linkProperties {
 

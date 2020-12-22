@@ -182,7 +182,20 @@ so that Branch can handle the passed URL.
 - (void) branchShortLinkWithContent:(BranchUniversalObject*)content
                      linkProperties:(BranchLinkProperties*)linkProperties
                          completion:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error))completion;
+/**
+ Generates a Branch short URL.
 
+ A short link will not be able to be generated if networking is not available. In that case create a long
+ link, which is guaranteed to succeed, but can be very long.
+
+ @param params      Dictionary of parameters to include in the link.
+ @param channel     The channel for the link.Examples could be Facebook, Twitter, SMS, etc, depending on where it will                     be shared.
+ @param feature     The feature this is utilizing. Examples could be Sharing, Referring, Inviting, etc.
+ @param tags        An array of tags to associate with this link, useful for tracking.
+ @param alias       The alias for link.
+ @param callback    The callback that receives the short URL or an NSError if the operation fails.
+*/
+- (void) branchShortUrlWithParams:(nullable NSDictionary *)params andChannel:(nullable NSString *)channel andFeature:(nullable NSString *)feature andTags:(nullable NSArray *)tags andAlias:(nullable NSString *)alias andCallback:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error)) callback;
 /**
  Generates a Branch long URL. This method is guaranteed to succeed and is synchronous.
 
