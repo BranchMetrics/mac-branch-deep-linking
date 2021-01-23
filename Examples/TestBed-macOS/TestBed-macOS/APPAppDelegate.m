@@ -89,14 +89,18 @@ restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObje
 }
 
 - (void) processLogMessage:(NSString *)message {
-    if ([self string:message matchesRegex:
-            @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network start"]) {
+    if (([self string:message matchesRegex:
+            @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network start"])&&
+        ([message containsString:@"https://cdn.branch.io/sdk/uriskiplist_v0.json"] == NO)) {
         BNCPerformBlockOnMainThreadAsync(^{
+            
+            NSLog(@"---------------\n%@\n--------------", message);
             self.viewController.requestTextView.string = message;
         });
     } else
-    if ([self string:message matchesRegex:
-            @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network finish"]) {
+    if (([self string:message matchesRegex:
+            @"^\\[branch\\.io\\] BNCNetworkService\\.m\\([0-9]+\\) Debug: Network finish"])&&
+        ([message containsString:@"https://cdn.branch.io/sdk/uriskiplist_v0.json"] == NO)) {
         BNCPerformBlockOnMainThreadAsync(^{
             self.viewController.responseTextView.string = message;
         });
@@ -116,9 +120,17 @@ restorationHandler:(void(^)(NSArray<id<NSUserActivityRestoring>> *restorableObje
     self.viewController.stateField.stringValue = notification.name;
     self.viewController.urlField.stringValue   = notification.userInfo[BranchURLKey] ?: @"";
     self.viewController.errorField.stringValue = notification.userInfo[BranchErrorKey] ?: @"";
-    BranchSession*session = notification.userInfo[BranchSessionKey];
+    BranchSession *session = notification.userInfo[BranchSessionKey];
+    
     NSString*data = (session && session.data) ? session.data.description : @"";
     self.viewController.dataTextView.string = data;
+    NSString *tmpFile = @"/tmp/deepLinkData.txt";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/tmp/deepLinkData.txt"] == YES)
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:tmpFile error:nil];
+    }
+    
+    [[data dataUsingEncoding:NSUTF8StringEncoding] writeToFile:tmpFile atomically:YES];
 }
 
 - (void) branchOpenedURLNotification:(NSNotification*)notification {

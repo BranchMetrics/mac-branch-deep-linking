@@ -1,0 +1,42 @@
+{
+  "configurations" : [
+    {
+      "id" : "733BCF4B-C794-434C-9A91-D0889364C340",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/Branch.xcodeproj",
+        "identifier" : "5F78ED8E249C317400E313B9",
+        "name" : "BranchTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "BranchSDKUITestCase",
+        "OpenURL_macOSUITests",
+        "SafariOpenLink",
+        "SafariOpenLinkUITests",
+        "TestBedUIDeepLinkDataTest\/testDeepLink",
+        "TestBedUISafariTest\/test1OpenURLInSafariInNewTab",
+        "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
+        "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow",
+        "TestBedUITest"
+      ],
+      "target" : {
+        "containerPath" : "container:TestBed-macOS.xcodeproj",
+        "identifier" : "0310053A253A4BE500E135E0",
+        "name" : "TestBed-macOSUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

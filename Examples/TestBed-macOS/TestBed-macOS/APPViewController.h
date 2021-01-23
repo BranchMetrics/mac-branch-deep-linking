@@ -21,4 +21,6 @@
 @property (nonatomic, strong) IBOutlet NSWindow* window;
 
 - (void) clearUIFields;
+- (NSArray *) v2Events;
+
 @end
