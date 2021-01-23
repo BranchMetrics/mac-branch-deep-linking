@@ -12,6 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BNCNetworkOperationProtocol_h
+#define BNCNetworkOperationProtocol_h
+
 #pragma mark BNCNetworkOperationProtocol
 
 /**
@@ -92,5 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion;
 
 @end
+
+#endif
 
 NS_ASSUME_NONNULL_END

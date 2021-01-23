@@ -8,7 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import <Branch/BranchMainClass.h>
+#import "BranchMainClass.h"
 @class BNCNetworkAPIService, BNCSettings;
 
 NS_ASSUME_NONNULL_BEGIN

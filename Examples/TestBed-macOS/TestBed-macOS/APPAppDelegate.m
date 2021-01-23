@@ -10,7 +10,7 @@
 #import "APPViewController.h"
 #import <Branch/Branch.h>
 #import <Branch/BNCLog.h>
-#import "../../../Branch/BNCThreads.h"
+#import <Branch/BNCThreads.h>
 
 static APPAppDelegate* appDelegate = nil;
 static BNCLogOutputFunctionPtr originalLogHook = NULL;

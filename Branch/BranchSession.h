@@ -14,6 +14,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BranchSession_h
+#define BranchSession_h
 /**
     Branch session parameters.
 */
@@ -35,5 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) BranchLinkProperties*_Nullable linkProperties;
 @property (nonatomic, strong) NSDictionary*_Nullable data;
 @end
+
+#endif
 
 NS_ASSUME_NONNULL_END

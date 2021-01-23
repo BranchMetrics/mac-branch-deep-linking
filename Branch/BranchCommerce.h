@@ -12,6 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+#ifndef BNCProductCategory_h
+#define BNCProductCategory_h
+
 #pragma mark BNCProductCategory
 
 /// String enumeration type for Branch product categories.
@@ -242,5 +246,7 @@ FOUNDATION_EXPORT  BNCCurrency _Nonnull BNCCurrencyZMW;
 
 /// Returns an array of all Branch BNCCurrency currencies.
 FOUNDATION_EXPORT NSArray<BNCCurrency>* BNCCurrencyAllCurrencies(void);
+
+#endif
 
 NS_ASSUME_NONNULL_END

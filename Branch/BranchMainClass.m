@@ -130,10 +130,13 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return string?:@"";
 }
 
+
 + (NSString *)kitDisplayVersion {
-    NSString*_Nullable string =
-        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    return string?:@"";
+    // This code does not work with Swift Package Manager or Cocoapods. Adding a quick fix for now
+//    NSString*_Nullable string =
+//        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//    return string?:@"";
+    return @"1.2.5";
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
@@ -679,6 +682,33 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
                 NSURL*url = BNCURLFromWireFormat(operation.session.data[@"url"]);
                 if (!url) error = [NSError branchErrorWithCode:BNCBadRequestError];
                 if (completion) completion(url, error);
+            });
+        }];
+}
+
+- (void) branchShortUrlWithParams:(nullable NSDictionary *)params andChannel:(nullable NSString *)channel andFeature:(nullable NSString *)feature andTags:(nullable NSArray *)tags andAlias:(nullable NSString *)alias andCallback:(void (^)(NSURL*_Nullable shortURL, NSError*_Nullable error)) callback{
+    
+    NSMutableDictionary* dictionary = [NSMutableDictionary new];
+    
+    [dictionary addEntriesFromDictionary:params];
+    dictionary[@"channel"] =  channel;
+    dictionary[@"feature"] =  feature;
+    dictionary[@"tags"] =  tags;
+    dictionary[@"alias"] =  alias;
+    
+    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
+    [self.networkAPIService postOperationForAPIServiceName:@"v1/url"
+        dictionary:dictionary
+        completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
+            BNCPerformBlockOnMainThreadAsync(^{
+                if (operation.error) {
+                    if (callback) callback(nil, operation.error);
+                    return;
+                }
+                NSError*error = nil;
+                NSURL*url = BNCURLFromWireFormat(operation.session.data[@"url"]);
+                if (!url) error = [NSError branchErrorWithCode:BNCBadRequestError];
+                if (callback) callback(url, error);
             });
         }];
 }
