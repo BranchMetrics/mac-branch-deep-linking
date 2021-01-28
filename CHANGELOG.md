@@ -1,5 +1,12 @@
 Branch Mac SDK Change Log
 
+## v1.3.0 - Jan 28, 2021
+
+CORE-1303
+Improve integration options for the macOS SDK by adding support for Swift Package Manager, Carthage and Cocoapods. See the Branch docs site for more details.
+
+Improve test coverage and test automation. This may impact you if you are importing the Branch macOS SDK as source.
+
 ## v1.2.5 - Oct 8, 2020
 * Allow short link generation when tracking is disabled
 
