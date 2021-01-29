@@ -68,3 +68,6 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# ignore release build product. this is attached to the github release page
+Branch.zip

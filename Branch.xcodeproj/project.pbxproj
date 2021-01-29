@@ -6,6 +6,20 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		5F93791125C3A107002AB515 /* Branch-framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 5F93791525C3A107002AB515 /* Build configuration list for PBXAggregateTarget "Branch-framework" */;
+			buildPhases = (
+				5F93791A25C3A10D002AB515 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Branch-framework";
+			productName = "Branch-framework";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		03E6ADC82538DAEA005EBAEB /* BranchV2Event.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E6ADC72538DAEA005EBAEB /* BranchV2Event.Test.m */; };
 		2B073C1020C97F44005D16D2 /* BNCURLBlackList.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B073C0D20C97F44005D16D2 /* BNCURLBlackList.h */; };
@@ -548,6 +562,10 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5F2FDA32249D3CBF0061D571;
 					};
+					5F93791125C3A107002AB515 = {
+						CreatedOnToolsVersion = 12.3;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 4D54C06F20A6560400C76496 /* Build configuration list for PBXProject "Branch" */;
@@ -566,6 +584,7 @@
 				4D54C07420A6560400C76496 /* Branch-macOS */,
 				5F78ED8E249C317400E313B9 /* BranchTests */,
 				5F2FDA32249D3CBF0061D571 /* BranchTestHost */,
+				5F93791125C3A107002AB515 /* Branch-framework */,
 			);
 		};
 /* End PBXProject section */
@@ -608,6 +627,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "set -eu\n# ditto ${TARGET_BUILD_DIR}/Branch.framework ${PROJECT_DIR}/Frameworks/macOS/Branch.framework\n# ditto ${TARGET_BUILD_DIR}/Branch.framework.dSYM ${PROJECT_DIR}/Frameworks/macOS/Branch.framework.dSYM\n";
+		};
+		5F93791A25C3A10D002AB515 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "ARCHIVE_PATH=\"./build/Branch.xcarchive\"\n\n# delete previous build\nrm -rf \"./build\"\n\n# build iOS framework\nxcodebuild archive \\\n    -scheme Branch-macOS \\\n    -archivePath \"${ARCHIVE_PATH}\" \\\n    -sdk macosx \\\n    SKIP_INSTALL=NO\n\n# move framework out\nmv \"${ARCHIVE_PATH}/Products/Library/Frameworks/Branch.framework\" \"./build/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1108,6 +1144,33 @@
 			};
 			name = Release;
 		};
+		5F93791225C3A107002AB515 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5F93791325C3A107002AB515 /* UnitTests */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = UnitTests;
+		};
+		5F93791425C3A107002AB515 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R63EM248DP;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1147,6 +1210,16 @@
 				5F78ED98249C317400E313B9 /* Debug */,
 				5F78ED99249C317400E313B9 /* UnitTests */,
 				5F78ED9A249C317400E313B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F93791525C3A107002AB515 /* Build configuration list for PBXAggregateTarget "Branch-framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F93791225C3A107002AB515 /* Debug */,
+				5F93791325C3A107002AB515 /* UnitTests */,
+				5F93791425C3A107002AB515 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

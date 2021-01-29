@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+
+# deploy-checksum  -  The zip & checksum the framework.
+#
+# Edward Smith, December 2016
+
+scriptname=$(basename "${BASH_SOURCE[0]}")
+scriptpath="${BASH_SOURCE[0]}"
+scriptpath=$(cd "$(dirname "${scriptpath}")" && pwd)
+cd ${scriptpath}/../build
+
+# Zip the SDK files
+echo "Zipping frameworks"
+zip -rqy Branch.zip Branch.framework/
+
+# Checksum the zip files
+echo "Creating checksums"
+checksum_file=checksum
+
+echo '#checksum for Branch.zip on Github' > "$checksum_file"
+shasum Branch.zip >> $checksum_file
+
+# remove source frameworks
+mv Branch.zip ..
+mv checksum ..
+echo "Cleaning up"
+rm -rf Branch.framework
+
