@@ -26,6 +26,8 @@
         "SafariOpenLink",
         "SafariOpenLinkUITests",
         "TestBedUIDeepLinkDataTest\/testDeepLink",
+        "TestBedUIRaceCondTest\/testChromeAllowAppLaunch",
+        "TestBedUIRaceCondTest\/testChromeCancelAppLaunch",
         "TestBedUISafariTest\/test1OpenURLInSafariInNewTab",
         "TestBedUISafariTest\/testOpenURLInSafariInNewWindow",
         "TestBedUISafariTest\/testOpenURLInSafariInPrivateWindow",
