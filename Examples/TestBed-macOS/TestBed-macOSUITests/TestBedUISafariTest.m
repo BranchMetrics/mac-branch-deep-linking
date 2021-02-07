@@ -445,13 +445,14 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         modifierFlags:XCUIKeyModifierNone];
     [element2 typeKey:XCUIKeyboardKeyEnter
         modifierFlags:XCUIKeyModifierOption];
-    
+          
+    [self takeScreenShot];
     sleep(3);
     [self takeScreenShot];
           
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
           [self takeScreenShot];
-    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
+    if ([toggleElement waitForExistenceWithTimeout:3] != NO) {
         [toggleElement click];
         [self takeScreenShot];
     }
