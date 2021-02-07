@@ -447,13 +447,17 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         modifierFlags:XCUIKeyModifierOption];
     
     sleep(3);
-    
+    [self takeScreenShot];
+          
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
+          [self takeScreenShot];
     if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
         [toggleElement click];
+        [self takeScreenShot];
     }
-    
+    [self takeScreenShot];
     if ([[[XCUIApplication alloc] init] waitForExistenceWithTimeout:15] != NO) {
+        [self takeScreenShot];
         self.appLaunched = TRUE;
         [self validateDeepLinkDataForRedirectionEnabled:enabled];
         [safariApp activate];

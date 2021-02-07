@@ -36,7 +36,7 @@
 -(void) terminateTestBed;
 -(NSString *) webPageURLWithRedirection:(BOOL)enabled;
 - (void) validateDeepLinkDataForRedirectionEnabled:(bool)enabled;
-
+- (void) takeScreenShot;
 @end
 
 #endif /* TestBedUITest_h */

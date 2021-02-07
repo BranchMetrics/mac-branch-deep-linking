@@ -232,4 +232,15 @@
     }
 }
 
+- (void) takeScreenShot {
+    
+    XCUIElement *testbedMacWindow = [[XCUIApplication alloc] init].windows[@"TestBed-Mac"];
+   
+    XCUIScreenshot *screenShot = testbedMacWindow.screenshot;
+    XCTAttachment *attachment =[XCTAttachment attachmentWithScreenshot:screenShot];
+    attachment.lifetime = XCTAttachmentLifetimeKeepAlways;
+    attachment.name = @"For Debugging";
+    [self addAttachment:attachment];
+    
+}
 @end
