@@ -447,8 +447,6 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
         modifierFlags:XCUIKeyModifierOption];
           
     [self takeScreenShot];
-    sleep(3);
-    [self takeScreenShot];
           
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
           [self takeScreenShot];
