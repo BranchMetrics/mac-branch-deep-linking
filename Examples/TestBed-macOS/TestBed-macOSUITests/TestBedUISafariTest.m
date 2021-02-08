@@ -96,10 +96,10 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     XCUIElement *testBedLink = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     
     [testBedLink click];
-    sleep(SLEEP_TIME_CLICK_BIG);
+    sleep(SLEEP_TIME_CLICK_SMALL);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
+    if ([toggleElement waitForExistenceWithTimeout:SLEEP_TIME_CLICK_BIG] != NO) {
         [toggleElement click];
     }
     else {
@@ -215,7 +215,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     sleep(SLEEP_TIME_CLICK_SMALL);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
+    if ([toggleElement waitForExistenceWithTimeout:SLEEP_TIME_CLICK_BIG] != NO) {
         [toggleElement click];
     }
     
@@ -333,7 +333,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
     sleep(1);
     
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
-    if ([toggleElement waitForExistenceWithTimeout:12] != NO) {
+    if ([toggleElement waitForExistenceWithTimeout:SLEEP_TIME_CLICK_BIG] != NO) {
         [toggleElement click];
     }
     
@@ -450,7 +450,7 @@ void *kSafariKVOContext = (void*)&kSafariKVOContext;
           
     XCUIElement *toggleElement = [[safariApp descendantsMatchingType:XCUIElementTypeToggle] elementBoundByIndex:1 ];
           [self takeScreenShot];
-    if ([toggleElement waitForExistenceWithTimeout:3] != NO) {
+    if ([toggleElement waitForExistenceWithTimeout:SLEEP_TIME_CLICK_BIG] != NO) {
         [toggleElement click];
         [self takeScreenShot];
     }
