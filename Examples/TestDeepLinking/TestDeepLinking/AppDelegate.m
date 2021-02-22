@@ -53,7 +53,7 @@ void APPLogHookFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_
         name:BranchDidOpenURLWithSessionNotification
         object:nil];
 
-    BranchConfiguration *configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_ait5BYsDbZKRajyPlkzzTancDAp41guC"];
+    BranchConfiguration *configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_jcZkwmLUm17zGqCXKyh6QjdiAyjDodHI"];
 
     configuration.branchAPIServiceURL = @"https://api.branch.io";
     configuration.key = @"key_live_jcZkwmLUm17zGqCXKyh6QjdiAyjDodHI";
