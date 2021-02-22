@@ -179,8 +179,7 @@ int inf(FILE *source, FILE *dest)
 
 - (void)testDeferredLinking {
     
-    XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"io.branch.TestDeepLinking"];
-    [app terminate];
+
     //Delete app if present
     NSString *appPath = @"/var/tmp/TestDeepLinking.app";
     if ([[NSFileManager defaultManager] fileExistsAtPath:appPath] == YES) {
@@ -194,8 +193,6 @@ int inf(FILE *source, FILE *dest)
     XCUIElement *testBedLink = [[safariApp.webViews descendantsMatchingType:XCUIElementTypeLink] elementBoundByIndex:0];
     [testBedLink click];
     sleep(3);
-    
-  
 
     // Unzip Test App
     
