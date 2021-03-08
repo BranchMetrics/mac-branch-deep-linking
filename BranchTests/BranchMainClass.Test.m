@@ -194,27 +194,4 @@
     self.branch.userTrackingDisabled = NO;
 }
 
-- (void) testSendClose {
-    Branch*branch = [Branch new];
-    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
-    configuration.networkServiceClass = BNCTestNetworkService.class;
-
-    XCTestExpectation *expectation = [self expectationWithDescription:@"testSendClose"];
-    BNCTestNetworkService.requestHandler =
-        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
-            if ([request.URL.path isEqualToString:@"/v1/close"]) {
-                NSDictionary*test = [BNCTestNetworkService mutableDictionaryFromRequest:request];
-                XCTAssertGreaterThan(test.count, 1);
-                [expectation fulfill];
-            }
-            BNCTestNetworkOperation*operation = [BNCTestNetworkService operationWithRequest:request response:@"{}"];
-            return operation;
-        };
-
-    [branch startWithConfiguration:configuration];
-    BNCSleepForTimeInterval(1.0); // TODO: Fix Sleep: open should happen without sleep.
-    [branch endSession];
-    [self awaitExpectations];
-}
-
 @end

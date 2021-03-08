@@ -112,6 +112,19 @@ NSURL*_Nonnull BNCURLForBranchDataDirectory() {
     if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES) {
         [[NSFileManager defaultManager] removeItemAtPath:settingsFolder error:nil];
     }
+    
+    // Delete files from container - if its sandboxed.
+       
+    NSString *strPath = [@"~/Library/Containers/io.branch.sdk.TestBed-Mac/Data/Library/Application Support/io.branch/io.branch.sdk.TestBed-Mac/"  stringByExpandingTildeInPath];
+    url = [NSURL fileURLWithPath:strPath];
+    url = [url URLByAppendingPathComponent:@"io.branch.sdk.settings" isDirectory:NO];
+       
+    settingsFolder = [NSString stringWithFormat:@"%@" , [url path]];
+       
+    //Delete all settings files
+    if ([[NSFileManager defaultManager] fileExistsAtPath:settingsFolder] == YES) {
+        [[NSFileManager defaultManager] removeItemAtPath:settingsFolder error:nil];
+    }
 }
 
 @end

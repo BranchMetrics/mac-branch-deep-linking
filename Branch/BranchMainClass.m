@@ -633,11 +633,6 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     dictionary[@"identity_id"] = self.settings.identityID;
     dictionary[@"session_id"] = self.settings.sessionID;
     dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
-    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
-    self.sessionState = BNCSessionStateUninitialized;
-    [self.networkAPIService postOperationForAPIServiceName:@"v1/close"
-        dictionary:dictionary
-        completion:nil];
 }
 
 - (NSMutableDictionary*_Nonnull) requestMetadataDictionary {
