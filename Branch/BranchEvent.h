@@ -55,6 +55,12 @@ FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventInvite;
 FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventLogin;
 FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventReserve;
 
+///@name OTT Events
+
+FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventInitiateStream;
+FOUNDATION_EXPORT BranchStandardEvent _Nonnull BranchStandardEventCompleteStream;
+
+
 typedef NS_ENUM(NSInteger, BranchEventAdType) {
     BranchEventAdTypeNone,
     BranchEventAdTypeBanner,
