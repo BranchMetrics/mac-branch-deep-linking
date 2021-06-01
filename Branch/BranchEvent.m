@@ -51,6 +51,11 @@ BranchStandardEvent BranchStandardEventInvite                 = @"INVITE";
 BranchStandardEvent BranchStandardEventLogin                  = @"LOGIN";
 BranchStandardEvent BranchStandardEventReserve                = @"RESERVE";
 
+// OTT Events
+
+BranchStandardEvent BranchStandardEventInitiateStream   = @"INITIATE_STREAM";
+BranchStandardEvent BranchStandardEventCompleteStream = @"COMPLETE_STREAM";
+
 #pragma mark - BranchEvent
 
 @interface BranchEvent () {
@@ -188,6 +193,8 @@ BranchStandardEvent BranchStandardEventReserve                = @"RESERVE";
         BranchStandardEventStartTrial,
         BranchStandardEventClickAd,
         BranchStandardEventViewAd,
+        BranchStandardEventInitiateStream,
+        BranchStandardEventCompleteStream
     ];
 }
 

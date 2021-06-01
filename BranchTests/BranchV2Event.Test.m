@@ -278,4 +278,36 @@
 
 }
 
+- (void)testStandardInitiateStreamEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventInitiateStream];
+    event.adType = BranchEventAdTypeBanner;
+    event.contentItems = contentItems;
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testStandardInitiateStreamEvent"];
+       [branch logEvent:event completion:
+           ^(NSError * _Nullable error) {
+                XCTAssertNil(error);
+                [expectation fulfill];
+           }
+       ];
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+
+}
+
+- (void)testStandardCompleteStreamEvent {
+    BranchEvent *event = [BranchEvent standardEvent:BranchStandardEventCompleteStream];
+    event.adType = BranchEventAdTypeBanner;
+    event.contentItems = contentItems;
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testStandardCompleteStreamEvent"];
+       [branch logEvent:event completion:
+           ^(NSError * _Nullable error) {
+                XCTAssertNil(error);
+                [expectation fulfill];
+           }
+       ];
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+
+}
+
 @end
