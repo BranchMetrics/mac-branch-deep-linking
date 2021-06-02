@@ -86,6 +86,27 @@
     XCTAssertFalse(branch.userIdentityIsSet);
 }
 
+- (void)testGetUserIdentityNil {
+    Branch *branch = self.branch;
+    XCTAssertNil([branch getUserIdentity]);
+    XCTAssertFalse(branch.userIdentityIsSet);
+}
+
+- (void)testGetUserIdentityEmail {
+    NSString *userIdentity = @"sdk@branch.io";
+    Branch *branch = self.branch;
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testSetIdentity"];
+    [branch setUserIdentity:userIdentity completion:^ (BranchSession * _Nullable session, NSError * _Nullable error) {
+        XCTAssertNil(error);
+        XCTAssertEqualObjects(session.userIdentityForDeveloper, userIdentity);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    XCTAssertTrue(branch.userIdentityIsSet);
+    XCTAssertTrue([userIdentity isEqualToString:[branch getUserIdentity]]);
+}
+
 - (void) testShortLinks {
     BranchUniversalObject*buo = [[BranchUniversalObject alloc] initWithCanonicalIdentifier:@"id-123"];
     buo.title = @"Test link";

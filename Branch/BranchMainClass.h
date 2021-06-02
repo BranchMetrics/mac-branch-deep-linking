@@ -151,6 +151,13 @@ so that Branch can handle the passed URL.
          completion:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))completion;
 
 /**
+ Retrieve the user identity set via setUserIdentity
+ 
+ @return Returns the user identity or nil
+ */
+- (nullable NSString *)getUserIdentity;
+
+/**
  Indicates whether or not this user has a custom identity specified for them. Note that this is *independent
  of installs*. If you call setIdentity, this device will have that identity associated with this user until
  `logoutWithCompletion` is called. This includes persisting through uninstalls, as we track device id.
