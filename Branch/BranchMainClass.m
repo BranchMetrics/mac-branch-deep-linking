@@ -596,6 +596,10 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     ];
 }
 
+- (nullable NSString *)getUserIdentity {
+    return self.settings.userIdentityForDeveloper;
+}
+
 - (BOOL)userIdentityIsSet {
     return self.settings.userIdentityForDeveloper != nil;
 }
