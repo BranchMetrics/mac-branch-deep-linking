@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "BranchMacOS"
-  spec.version      = "1.3.0"
+  spec.version      = "1.3.1"
   spec.summary      = "Create an HTTP URL for any piece of content in your MacOS app"
   spec.description  = <<-DESC
   - Want the highest possible conversions on your sharing feature?

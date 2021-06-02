@@ -1,5 +1,15 @@
 Branch Mac SDK Change Log
 
+## v1.3.1 - Jun 2, 2021
+
+CORE-1989
+Add getUserIdentity to the public API
+
+CORE-1659
+Add INITIATE_STREAM and COMPLETE_STREAM to standard events
+
+Test coverage improvements
+
 ## v1.3.0 - Jan 28, 2021
 
 CORE-1303
