@@ -215,4 +215,50 @@
     self.branch.userTrackingDisabled = NO;
 }
 
+- (void) testSetIdentityAndTrackingDisabled {
+    /*
+     This test case is for issue -
+     https://branch.atlassian.net/browse/CORE-2084
+     https://branch.atlassian.net/browse/CORE-2171
+     */
+    
+    // Tracking enabled, Set User Id
+    NSString *user1 = @"User1";
+    NSString *user2 = @"User2";
+    XCTestExpectation *expectUserIdSet = [self expectationWithDescription:@"expectUserIdSet"];
+    self.branch.userTrackingDisabled = NO;
+    [self.branch setUserIdentity:user1 completion:^(BranchSession * _Nullable session, NSError * _Nullable error) {
+        [expectUserIdSet fulfill];
+    }];
+    [self awaitExpectations];
+    // Check if ID is set
+    XCTAssertTrue([user1 isEqualToString:[self.branch getUserIdentity]]);
+    
+    // Disable Tracking and now try to set User Id.
+    self.branch.userTrackingDisabled = YES;
+    XCTAssertNil([self.branch getUserIdentity]);
+    XCTestExpectation *expectUserIdNil = [self expectationWithDescription:@"expectUserIdNil"];
+    [self.branch setUserIdentity:user2 completion:^(BranchSession * _Nullable session, NSError * _Nullable error) {
+        XCTAssertEqualObjects(error.domain, BNCErrorDomain);
+        XCTAssertEqual(error.code, BNCTrackingDisabledError);
+        [expectUserIdNil fulfill];
+    }];
+    [self awaitExpectations];
+    // User Id shoudl be nil.
+    XCTAssertNil([self.branch getUserIdentity]);
+    
+    // Enable Tracking and re-open session, then set User Id
+    self.branch.userTrackingDisabled = NO;
+    self.branch = [[Branch alloc] init];
+    [self.branch startWithConfiguration:[[BranchConfiguration alloc] initWithKey:BNCTestBranchKey]];
+    BNCSleepForTimeInterval(2.0);
+    XCTestExpectation *expectUserIdSetAgain = [self expectationWithDescription:@"expectUserIdSetAgain"];
+    [self.branch setUserIdentity:user2 completion:^(BranchSession * _Nullable session, NSError * _Nullable error) {
+        [expectUserIdSetAgain fulfill];
+    }];
+    [self awaitExpectations];
+    // Assert if User Id is set?
+    XCTAssertTrue([user2 isEqualToString:[self.branch getUserIdentity]]);
+}
+
 @end

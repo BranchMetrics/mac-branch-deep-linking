@@ -209,11 +209,12 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 - (void) clearUserIdentifyingInformation {
     @synchronized(self) {
         /* Don't clear these:
-        self.deviceFingerprintID = nil;
-        self.userIdentity = nil;
-        self.identityID = nil;
         self.installParams = nil;
         */
+        
+        self.deviceFingerprintID = nil;
+        self.userIdentityForDeveloper = nil;
+        self.identityID = nil;
         self.sessionID = nil;
         self.requestMetadataDictionary = nil;
         [self setNeedsSave];
