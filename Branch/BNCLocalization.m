@@ -143,10 +143,6 @@ NSString* _Nonnull BNCLocalizedFormattedString(NSString* _Nonnull const format, 
     @"The underlying network service does not conform to the BNCNetworkOperationProtocol.":
     @"The underlying network service does not conform to the BNCNetworkOperationProtocol.",
 
-    // BNCInvalidNetworkPublicKeyError
-    @"Public key is not an SecKeyRef type.":
-    @"Public key is not an SecKeyRef type.",
-
     // BNCContentIdentifierError
     @"A canonical identifier or title are required to uniquely identify content.":
     @"A canonical identifier or title are required to uniquely identify content.",
@@ -234,10 +230,6 @@ NSString* _Nonnull BNCLocalizedFormattedString(NSString* _Nonnull const format, 
     // BNCNetworkServiceInterfaceError
     @"The underlying network service does not conform to the BNCNetworkOperationProtocol.":
     @"Используемый сетевой сервис не соблюдает протокол BNCNetworkOperationProtocol.",
-
-    // BNCInvalidNetworkPublicKeyError
-    @"Public key is not an SecKeyRef type.":
-    @"Публичный ключ неверного типа. Ожидаемый тип: SecKeyRef.",
 
     // BNCContentIdentifierError
     @"A canonical identifier or title are required to uniquely identify content.":

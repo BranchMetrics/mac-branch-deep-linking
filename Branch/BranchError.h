@@ -29,14 +29,13 @@ typedef NS_ENUM(NSInteger, BNCErrorCode) {
     BNCNilLogError                  = 1005, //!< Not used at the moment.
     BNCVersionError                 = 1006, //!< Not used at the moment.
     BNCNetworkServiceInterfaceError = 1007,
-    BNCInvalidNetworkPublicKeyError = 1008,
-    BNCContentIdentifierError       = 1009,
-    BNCSpotlightNotAvailableError   = 1010,
-    BNCSpotlightTitleError          = 1011,
-    BNCRedeemZeroCreditsError       = 1012,
-    BNCSpotlightIdentifierError     = 1013,
-    BNCSpotlightPublicIndexError    = 1014,
-    BNCTrackingDisabledError        = 1015,
+    BNCContentIdentifierError       = 1008,
+    BNCSpotlightNotAvailableError   = 1009,
+    BNCSpotlightTitleError          = 1010,
+    BNCRedeemZeroCreditsError       = 1011,
+    BNCSpotlightIdentifierError     = 1012,
+    BNCSpotlightPublicIndexError    = 1013,
+    BNCTrackingDisabledError        = 1014,
     BNCHighestError,
 };
 
