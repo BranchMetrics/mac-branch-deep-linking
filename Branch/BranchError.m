@@ -49,9 +49,6 @@ __attribute__((constructor)) void BNCForceNSErrorCategoryToLoad() {
         // BNCNetworkServiceInterfaceError
         @"The underlying network service does not conform to the BNCNetworkOperationProtocol.",
 
-        // BNCInvalidNetworkPublicKeyError
-        @"Public key is not an SecKeyRef type.",
-
         // BNCContentIdentifierError
         @"A canonical identifier or title are required to uniquely identify content.",
 

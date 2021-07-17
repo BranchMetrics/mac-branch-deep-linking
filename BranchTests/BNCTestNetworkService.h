@@ -35,8 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (id<BNCNetworkOperationProtocol>) networkOperationWithURLRequest:(NSMutableURLRequest*)request
                 completion:(void (^)(id<BNCNetworkOperationProtocol>operation))completion;
 
-- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*_Nullable)publicKeys;
-
 //@property (atomic, strong) NSDictionary*_Nullable userInfo;
 
 // Properties and methods for mocking tests:
