@@ -396,8 +396,8 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 
-    dictionary[@"device_fingerprint_id"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
-    dictionary[@"identity_id"] = BNCWireFormatFromString(self.settings.identityID);
+    dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.randomizedDeviceToken);
+    dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.randomizedBundleToken);
     dictionary[@"ios_bundle_id"] = BNCWireFormatFromString(application.bundleID);
     dictionary[@"ios_team_id"] = BNCWireFormatFromString(application.teamID);
     dictionary[@"app_version"] = BNCWireFormatFromString(application.displayVersionString);
@@ -437,7 +437,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
     dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
-    NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
+    NSString*service = (self.settings.randomizedBundleToken.length > 0) ? @"v1/open" : @"v1/install";
 
     BNCPerformBlockOnMainThreadAsync(^ {
         [self notifyWillStartSessionWithURL:openURL];
@@ -578,9 +578,9 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     // [self initSessionIfNeededAndNotInProgress];
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     dictionary[@"identity"] = userID;
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
     dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
         dictionary:dictionary
@@ -608,9 +608,9 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 - (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
     dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     [self.networkAPIService postOperationForAPIServiceName:@"v1/logout"
         dictionary:dictionary
@@ -634,9 +634,9 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 - (void) sendClose {
     if (self.userTrackingIsDisabled) return;
     NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
-    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
     dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
 }
 
 - (NSMutableDictionary*_Nonnull) requestMetadataDictionary {
@@ -753,7 +753,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         baseURL = [[NSMutableString alloc] initWithFormat:@"https://bnc.lt/a/%@", self.configuration.key];
 
     if (self.userTrackingIsDisabled) {
-        NSString *id_string = [NSString stringWithFormat:@"%%24identity_id=%@", self.settings.identityID];
+        NSString *id_string = [NSString stringWithFormat:@"%%24randomized_bundle_token=%@", self.settings.randomizedBundleToken];
         NSRange range = [baseURL rangeOfString:id_string];
         if (range.location != NSNotFound) {
             NSMutableString*baseURL_ = [baseURL mutableCopy];

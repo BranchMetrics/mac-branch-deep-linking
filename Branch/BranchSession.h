@@ -30,9 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) BOOL matchGuaranteed;
 @property (nonatomic, strong, readonly) NSDate* clickTimestamp;
 @property (nonatomic, strong) NSURL*_Nullable referringURL;
-@property (nonatomic, strong) NSString*_Nullable identityID;
+@property (nonatomic, strong) NSString*_Nullable randomizedBundleToken;
 @property (nonatomic, strong) NSString*_Nullable userIdentityForDeveloper;
-@property (nonatomic, strong) NSString*_Nullable deviceFingerprintID;
+@property (nonatomic, strong) NSString*_Nullable randomizedDeviceToken;
 @property (nonatomic, strong) NSString*_Nullable linkCreationURL;
 @property (nonatomic, strong) BranchUniversalObject*_Nullable linkContent;
 @property (nonatomic, strong) BranchLinkProperties*_Nullable linkProperties;

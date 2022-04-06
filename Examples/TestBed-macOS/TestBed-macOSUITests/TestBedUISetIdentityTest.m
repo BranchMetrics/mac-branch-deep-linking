@@ -41,7 +41,7 @@
         XCTAssertTrue([[self serverRequestString] containsString:@"/v1/profile"]);
         
         NSDictionary *serverRequest = [TestBedUIUtils dictionaryFromString:[self serverRequestString]];
-        XCTAssertNotNil([serverRequest valueForKey:@"identity_id"]);
+        XCTAssertNotNil([serverRequest valueForKey:@"randomized_bundle_token"]);
         XCTAssertNotNil([serverRequest valueForKey:@"identity"]);
     
         XCTAssertTrue([[self getErrorString] isEqualToString:@"< None >"]);
