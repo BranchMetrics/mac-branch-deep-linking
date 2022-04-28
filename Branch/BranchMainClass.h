@@ -218,6 +218,15 @@ so that Branch can handle the passed URL.
 @property (atomic,strong,null_resettable) NSMutableDictionary<NSString*, NSString*>*requestMetadataDictionary;
 
 /**
+ Adds key - value pair to the metaData dictionary which is sent with all requests.
+ 
+ @param key       String to be included in request metadata
+ @param value   Object to be included in request metadata
+
+ */
+- (void) setRequestMetaDataKey:(NSString *)key Value:(NSString *)value;
+
+/**
  Disables the Branch SDK from tracking the user. This is useful for GDPR privacy compliance.
 
  When tracking is disabled, the Branch SDK will clear the Branch defaults of user identifying
