@@ -15,7 +15,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
 #ifndef BranchEvent_h
 #define BranchEvent_h
 

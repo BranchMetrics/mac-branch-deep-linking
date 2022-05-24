@@ -604,6 +604,11 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return self.settings.userIdentityForDeveloper != nil;
 }
 
+- (nullable NSString *)getKey {
+    return self.configuration.key;
+}
+
+
 #pragma mark - Logout
 
 - (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
