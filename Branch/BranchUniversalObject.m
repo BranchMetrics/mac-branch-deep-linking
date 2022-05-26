@@ -169,6 +169,7 @@ BranchCondition _Nonnull BranchConditionRefurbished   = @"REFURBISHED";
 - (instancetype)initWithCanonicalIdentifier:(NSString *)canonicalIdentifier {
     if ((self = [super init])) {
         self.canonicalIdentifier = canonicalIdentifier;
+        self.creationDate = [NSDate date];
     }
     return self;
 }
@@ -176,6 +177,7 @@ BranchCondition _Nonnull BranchConditionRefurbished   = @"REFURBISHED";
 - (instancetype)initWithTitle:(NSString *)title {
     if ((self = [super init])) {
         self.title = title;
+        self.creationDate = [NSDate date];
     }
     return self;
 }

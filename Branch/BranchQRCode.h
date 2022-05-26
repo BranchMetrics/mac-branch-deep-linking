@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, BranchQRCodeImageFormat){
 @property (nonatomic, assign, readwrite) BranchQRCodeImageFormat imageFormat;
 
 /**
-Creates a Branch QR Code image. Returns the QR code as a UIImage.
+Creates a Branch QR Code image. Returns the QR code as a CIImage.
 
 @param buo  The Branch Universal Object the will be shared.
 @param lp   The link properties that the link will have.
@@ -57,21 +57,7 @@ Creates a Branch QR Code image. Returns the QR code as NSData.
     linkProperties:(BranchLinkProperties*_Nullable)lp
               completion:(void(^_Nonnull)(NSData * _Nullable qrCode, NSError * _Nullable error))completion;
 
-/**
-Creates a Branch QR Code image and displays it in a share sheet.
 
-@param buo  The Branch Universal Object the will be shared.
-@param lp   The link properties that the link will have.
-@param completion   Completion handler containing any potential error.
- 
- */
-/*
-- (void) showShareSheetWithQRCodeFromViewController:(UIViewController*_Nullable)viewController
-                                             anchor:(id _Nullable)anchorViewOrButtonItem
-                                    universalObject:(BranchUniversalObject*_Nullable)buo
-                                     linkProperties:(BranchLinkProperties*_Nullable)lp
-                                         completion:(void(^)(NSError * _Nullable error))completion;
-*/
 @end
 
 

@@ -124,7 +124,9 @@ CIImage *qrCodeImage;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
     [request setHTTPBody:postData];
     
-    BNCLogDebug(@"Network start POST to v1/qr-code: %@", params);
+    NSString *requestString = [self.class formattedStringWithData:request.HTTPBody];
+    BNCLogDebug(@"Network start POST to v1/qr-code: %@", requestString);
+    NSDate *startDate = [NSDate date];
     
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
@@ -137,6 +139,12 @@ CIImage *qrCodeImage;
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
         if (httpResponse.statusCode == 200) {
+            
+            BNCLogDebug(@"Network finish operation %@ %1.3fs. Status %ld.",
+                        request.URL.absoluteString,
+                        - [startDate timeIntervalSinceNow],
+                        (long)httpResponse.statusCode);
+            
             completion(data, nil);
         } else {
             
@@ -151,82 +159,6 @@ CIImage *qrCodeImage;
     [postDataTask resume];
 }
 
-/*
-- (void)showShareSheetWithQRCodeFromViewController:(UIViewController *)viewController
-                                            anchor:(id _Nullable)anchorViewOrButtonItem
-                                   universalObject:(BranchUniversalObject *)buo
-                                    linkProperties:(BranchLinkProperties *)lp
-                                        completion:(void (^)(NSError * _Nonnull))completion {
-    
-    [self getQRCodeAsImage:buo linkProperties:lp completion:^(UIImage * _Nonnull qrCode, NSError * _Nonnull error) {
-        if (completion != nil) {
-            if (qrCode) {
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    
-                    buoTitle = buo.title;
-                    qrCodeImage = qrCode;
-                    
-                    NSArray *items = @[qrCode, self];
-                    UIActivityViewController *activityViewController = [[UIActivityViewController new] initWithActivityItems:items applicationActivities:nil];
-                    
-                    UIViewController *presentingViewController = nil;
-                    if ([viewController respondsToSelector:@selector(presentViewController:animated:completion:)]) {
-                        presentingViewController = viewController;
-                    } else {
-                        UIViewController *rootController = [UIViewController bnc_currentViewController];
-                        if ([rootController respondsToSelector:@selector(presentViewController:animated:completion:)]) {
-                            presentingViewController = rootController;
-                        }
-                    }
-
-                    if (!presentingViewController) {
-                        BNCLogError(@"No view controller is present to show the share sheet. Not showing sheet.");
-                        return;
-                    }
-
-                    // Required for iPad/Universal apps on iOS 8+
-                    if ([presentingViewController respondsToSelector:@selector(popoverPresentationController)]) {
-                        if ([anchorViewOrButtonItem isKindOfClass:UIBarButtonItem.class]) {
-                            UIBarButtonItem *anchor = (UIBarButtonItem*) anchorViewOrButtonItem;
-                            activityViewController.popoverPresentationController.barButtonItem = anchor;
-                        } else
-                        if ([anchorViewOrButtonItem isKindOfClass:UIView.class]) {
-                            UIView *anchor = (UIView*) anchorViewOrButtonItem;
-                            activityViewController.popoverPresentationController.sourceView = anchor;
-                            activityViewController.popoverPresentationController.sourceRect = anchor.bounds;
-                        } else {
-                            activityViewController.popoverPresentationController.sourceView = presentingViewController.view;
-                            activityViewController.popoverPresentationController.sourceRect = CGRectMake(0.0, 0.0, 40.0, 40.0);
-                        }
-                    }
-                    [presentingViewController presentViewController:activityViewController animated:YES completion:nil];
-                    
-                    completion(error);
-                });
-            } else {
-                completion(error);
-            }
-        }
-    }];
-}
-
-// Helper Functions
-- (LPLinkMetadata *)activityViewControllerLinkMetadata:(UIActivityViewController *)activityViewController API_AVAILABLE(ios(13.0)) {
-    LPLinkMetadata * metaData = [[LPLinkMetadata alloc] init];
-    metaData.title = buoTitle;
-    
-    BNCPreferenceHelper *preferenceHelper = [BNCPreferenceHelper sharedInstance];
-    NSString *userURL = preferenceHelper.userUrl;
-    metaData.originalURL = [NSURL URLWithString:userURL];
-    metaData.URL = [NSURL URLWithString:userURL];
-    
-    NSItemProvider * imageProvider = [[NSItemProvider alloc] initWithObject:qrCodeImage];
-    metaData.iconProvider = imageProvider;
-    metaData.imageProvider = imageProvider;
-    
-    return metaData;
-}
-*/
 - (BOOL)isValidUrl:(NSString *)urlString{
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     return [NSURLConnection canHandleRequest:request];
@@ -254,6 +186,26 @@ CIImage *qrCodeImage;
             lroundf(g * 255),
             lroundf(b * 255)
     ];
+}
+
++ (NSString*) formattedStringWithData:(NSData*)data {
+    if (!data) return nil;
+    NSString*responseString = nil;
+    @try {
+        NSDictionary*dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (dictionary) {
+            NSData*formattedData = [NSJSONSerialization dataWithJSONObject:dictionary options:3 error:nil];
+            if (formattedData)
+                responseString = [[NSString alloc] initWithData:formattedData encoding:NSUTF8StringEncoding];
+        }
+        if (!responseString)
+            responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if (!responseString)
+            responseString = data.description;
+    }
+    @catch(id error) {
+    }
+    return responseString;
 }
 
 @end
