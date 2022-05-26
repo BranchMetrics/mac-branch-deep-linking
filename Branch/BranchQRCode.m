@@ -43,7 +43,7 @@ CIImage *qrCodeImage;
 - (void) getQRCodeAsData:(BranchUniversalObject*_Nullable)buo
           linkProperties:(BranchLinkProperties*_Nullable)lp
               completion:(void(^)(NSData * _Nullable qrCode, NSError * _Nullable error))completion {
-
+    
     NSMutableDictionary *settings = [NSMutableDictionary new];
     
     if (self.codeColor) { settings[@"code_color"] = [self hexStringForColor:self.codeColor]; }
@@ -73,8 +73,8 @@ CIImage *qrCodeImage;
     
     parameters[@"qr_code_settings"] = settings;
     parameters[@"data"] = [buo dictionary];
-    parameters[@"branch_key"] = [[Branch sharedInstance] getKey];
-    
+    parameters[@"branch_key"] = [Branch.sharedInstance getKey];
+        
     NSData *cachedQRCode = [[BNCQRCodeCache sharedInstance] checkQRCodeCache:parameters];
     if (cachedQRCode) {
         completion(cachedQRCode, nil);
@@ -123,6 +123,8 @@ CIImage *qrCodeImage;
 
     NSData *postData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
     [request setHTTPBody:postData];
+    
+    BNCLogDebug(@"Network start POST to v1/qr-code: %@", params);
     
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         

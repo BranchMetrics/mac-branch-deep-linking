@@ -10,14 +10,36 @@
 */
 
 #import <XCTest/XCTest.h>
+#import "BNCTestCase.h"
+#import "BranchMainClass.h"
 #import "Branch.h"
 #import "BNCQRCodeCache.h"
 
-@interface BranchQRCodeTest : XCTestCase
-
+@interface BranchQRCodeTest : XCTestCase {
+    BranchUniversalObject *buo;
+    BranchLinkProperties *lp;
+    Branch *branch;
+}
 @end
 
 @implementation BranchQRCodeTest
+
+- (void)setUp {
+    
+    buo = [BranchUniversalObject new];
+    buo.canonicalIdentifier = @"item/12345";
+    buo.canonicalUrl        = @"https://branch.io/deepviews";
+    buo.title               = @"My Content Title";
+    buo.contentDescription  = @"my_product_description1";
+    
+    lp = [BranchLinkProperties new];
+
+    if (!branch) {
+        branch = Branch.sharedInstance ;
+        BranchConfiguration*configuration = [[BranchConfiguration new] initWithKey:BNCTestBranchKey];
+        [branch startWithConfiguration:configuration];
+    }
+}
 
 - (void)testNormalQRCodeDataWithAllSettings {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetching QR Code"];
@@ -29,10 +51,7 @@
     qrCode.backgroundColor = NSColor.whiteColor;
     qrCode.centerLogo = @"https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg";
     qrCode.imageFormat = BranchQRCodeImageFormatPNG;
-    
-    BranchUniversalObject *buo = [BranchUniversalObject new];
-    BranchLinkProperties *lp = [BranchLinkProperties new];
-    
+
     [qrCode getQRCodeAsData:buo linkProperties:lp completion:^(NSData * _Nonnull qrCode, NSError * _Nonnull error) {
         XCTAssertNil(error);
         XCTAssertNotNil(qrCode);
@@ -51,9 +70,6 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetching QR Code"];
 
     BranchQRCode *qrCode = [BranchQRCode new];
-    
-    BranchUniversalObject *buo = [BranchUniversalObject new];
-    BranchLinkProperties *lp = [BranchLinkProperties new];
     
     [qrCode getQRCodeAsData:buo linkProperties:lp completion:^(NSData * _Nonnull qrCode, NSError * _Nonnull error) {
         XCTAssertNil(error);
@@ -74,10 +90,7 @@
 
     BranchQRCode *qrCode = [BranchQRCode new];
     qrCode.centerLogo = @"https://branch.branch/notARealImageURL.jpg";
-    
-    BranchUniversalObject *buo = [BranchUniversalObject new];
-    BranchLinkProperties *lp = [BranchLinkProperties new];
-    
+
     [qrCode getQRCodeAsData:buo linkProperties:lp completion:^(NSData * _Nonnull qrCode, NSError * _Nonnull error) {
         XCTAssertNil(error);
         XCTAssertNotNil(qrCode);
@@ -97,9 +110,6 @@
 
     BranchQRCode *qrCode = [BranchQRCode new];
     
-    BranchUniversalObject *buo = [BranchUniversalObject new];
-    BranchLinkProperties *lp = [BranchLinkProperties new];
-    
     [qrCode getQRCodeAsImage:buo linkProperties:lp completion:^(CIImage * _Nonnull qrCode, NSError * _Nonnull error) {
         XCTAssertNil(error);
         XCTAssertNotNil(qrCode);
@@ -118,9 +128,7 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"Fetching QR Code"];
     
     BranchQRCode *myQRCode = [BranchQRCode new];
-    BranchUniversalObject *buo = [BranchUniversalObject new];
-    BranchLinkProperties *lp = [BranchLinkProperties new];
-    
+
     [myQRCode getQRCodeAsData:buo linkProperties:lp completion:^(NSData * _Nonnull qrCode, NSError * _Nonnull error) {
         
         XCTAssertNil(error);
@@ -132,9 +140,9 @@
         settings[@"image_format"] = @"PNG";
         
         parameters[@"qr_code_settings"] = settings;
-        parameters[@"data"] = [NSMutableDictionary new];
-        parameters[@"branch_key"] = [[Branch sharedInstance] getKey];
-        
+        parameters[@"data"] = [self->buo dictionary];
+        parameters[@"branch_key"] = [self->branch getKey];
+
         NSData *cachedQRCode = [[BNCQRCodeCache sharedInstance] checkQRCodeCache:parameters];
        
         XCTAssertEqual(cachedQRCode, qrCode);
