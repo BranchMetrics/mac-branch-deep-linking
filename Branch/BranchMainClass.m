@@ -643,6 +643,18 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return self.settings.requestMetadataDictionary;
 }
 
+- (void) setRequestMetaDataKey:(NSString *)key Value:(NSString *)value {
+    if (!key) {
+        return;
+    }
+    if ([self.settings.requestMetadataDictionary objectForKey:key] && !value) {
+        [self.settings.requestMetadataDictionary removeObjectForKey:key];
+    }
+    else if (value) {
+        [self.settings.requestMetadataDictionary setObject:value forKey:key];
+    }
+}
+
 - (void) setRequestMetadataDictionary:(NSDictionary*_Nullable)dictionary {
     [self.settings.requestMetadataDictionary setDictionary:dictionary];
 }

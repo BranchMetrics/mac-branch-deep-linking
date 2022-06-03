@@ -234,6 +234,55 @@
     XCTAssertEqual(requestCount, 2);
 }
 
+- (void) testRequestMetadataKeyValue{
+    Branch*branch = [Branch new];
+    [branch clearAllSettings];
+    BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:@"key_live_foo"];
+    configuration.networkServiceClass = BNCTestNetworkService.class;
+
+    __block long requestCount = 0;
+    __block BOOL foundMetadata = YES;
+    BNCTestNetworkService.requestHandler =
+        ^ id<BNCNetworkOperationProtocol> _Nonnull(NSMutableURLRequest * _Nonnull request) {
+            @synchronized(self) {
+                if ([request.HTTPMethod isEqualToString:@"POST"]) {
+                    requestCount++;
+                    NSLog(@"WTF: %ld request: %@.", requestCount, request.URL.path);
+                    NSDictionary*metadata = @{
+                        @"key1": @"value1",
+                        @"key2": @"value2",
+                        @"key3": @"value3"
+                    };
+                    NSMutableDictionary*dictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
+                    NSLog(@"%@", dictionary);
+                    if (![dictionary[@"metadata"] isEqualToDictionary:metadata])
+                        foundMetadata = NO;
+                }
+                return [BNCTestNetworkService operationWithRequest:request response:@"{}"];
+            }
+        };
+
+    // Set metadata and start branch:
+    
+    [branch setRequestMetaDataKey:@"key1" Value:@"value1"];
+    [branch setRequestMetaDataKey:@"key2" Value:@"value2"];
+    [branch setRequestMetaDataKey:@"key3" Value:@"value3"];
+    
+    [branch startWithConfiguration:configuration];
+
+    BNCSleepForTimeInterval(1.0); // TODO: Fix! Make sure open happens first before event.
+    XCTestExpectation *expectation = [self expectationWithDescription:@"testRequestMetadata"];
+    [branch logEvent:[BranchEvent standardEvent:BranchStandardEventSearch]
+        completion: ^ (NSError * _Nullable error) {
+            XCTAssertNil(error);
+            [expectation fulfill];
+        }
+    ];
+    [self waitForExpectationsWithTimeout:3.0 handler:nil];
+    XCTAssertEqual(foundMetadata, YES);
+    XCTAssertEqual(requestCount, 2);
+}
+
 - (void) testInstrumentation {
     Branch*branch = [Branch new];
     [branch clearAllSettings];
