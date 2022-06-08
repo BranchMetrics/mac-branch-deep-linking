@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (atomic, copy)   void (^_Nullable settingsSavedBlock)(BNCSettings*settings, NSError*_Nullable error);
 @property (atomic, copy)   NSString*_Nullable   randomizedDeviceToken;
 @property (atomic, copy)   NSString*_Nullable   randomizedBundleToken;
+@property (atomic, copy)   NSString*_Nullable   deviceFingerprintID;
+@property (atomic, copy)   NSString*_Nullable   identityID;
 @property (atomic, copy)   NSString*_Nullable   userIdentityForDeveloper;
 @property (atomic, copy)   NSString*_Nullable   sessionID;
 @property (atomic, copy)   NSString*_Nullable   linkCreationURL;

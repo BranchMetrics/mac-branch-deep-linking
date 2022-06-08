@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 //    NSString*_Nullable string =
 //        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 //    return string?:@"";
-    return @"1.3.1";
+    return @"1.4.0";
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
@@ -395,9 +395,14 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     self.sessionState = BNCSessionStateInitializing;
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-
-    dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.randomizedDeviceToken);
-    dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.randomizedBundleToken);
+    
+    if (self.settings.randomizedBundleToken.length && self.settings.randomizedDeviceToken.length) {
+        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.randomizedDeviceToken);
+        dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.randomizedBundleToken);
+    } else {
+        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
+        dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.identityID);
+    }
     dictionary[@"ios_bundle_id"] = BNCWireFormatFromString(application.bundleID);
     dictionary[@"ios_team_id"] = BNCWireFormatFromString(application.teamID);
     dictionary[@"app_version"] = BNCWireFormatFromString(application.displayVersionString);
@@ -437,8 +442,15 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
     dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
-    NSString*service = (self.settings.randomizedBundleToken.length > 0) ? @"v1/open" : @"v1/install";
-
+    
+    NSString*service;
+    
+    if (self.settings.randomizedBundleToken.length > 0 || self.settings.identityID.length > 0) {
+        service = @"v1/open";
+    } else {
+        service = @"v1/install";
+    }
+    
     BNCPerformBlockOnMainThreadAsync(^ {
         [self notifyWillStartSessionWithURL:openURL];
     });

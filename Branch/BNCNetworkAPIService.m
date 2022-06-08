@@ -618,16 +618,25 @@ exit:
 
     if (self.session.linkCreationURL.length)
         self.settings.linkCreationURL = self.session.linkCreationURL;
-    if (self.session.randomizedDeviceToken.length)
-        self.settings.randomizedDeviceToken = self.session.randomizedDeviceToken;
     if (self.session.userIdentityForDeveloper.length)
         self.settings.userIdentityForDeveloper = self.session.userIdentityForDeveloper;
     if (self.session.sessionID.length)
         self.settings.sessionID = self.session.sessionID;
-    if (self.session.randomizedBundleToken.length)
-        self.settings.randomizedBundleToken = self.session.randomizedBundleToken;
+       
+    if (self.session.randomizedDeviceToken.length) {
+        self.settings.randomizedDeviceToken = self.session.randomizedDeviceToken;
+    } else if (self.session.deviceFingerprintID.length) {
+        //Check for deprecated value of randomizedDeviceToken
+        self.settings.randomizedDeviceToken = self.session.deviceFingerprintID;
     }
 
+    if (self.session.randomizedBundleToken.length) {
+        self.settings.randomizedBundleToken = self.session.randomizedBundleToken;
+    } else if (self.session.identityID.length) {
+        //Check for deprecated value of randomizedBundleToken
+        self.settings.randomizedBundleToken = self.session.identityID;
+    }
+}
 exit:
     self.error = error;
     if (self.completion)
