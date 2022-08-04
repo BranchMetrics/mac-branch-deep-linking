@@ -396,13 +396,18 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     
-    if (self.settings.randomizedBundleToken.length && self.settings.randomizedDeviceToken.length) {
-        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.randomizedDeviceToken);
+    if (self.settings.randomizedBundleToken.length) {
         dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.randomizedBundleToken);
     } else {
-        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
         dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.identityID);
     }
+    
+    if (self.settings.randomizedDeviceToken.length) {
+        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.randomizedDeviceToken);
+    } else {
+        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
+    }
+
     dictionary[@"ios_bundle_id"] = BNCWireFormatFromString(application.bundleID);
     dictionary[@"ios_team_id"] = BNCWireFormatFromString(application.teamID);
     dictionary[@"app_version"] = BNCWireFormatFromString(application.displayVersionString);
