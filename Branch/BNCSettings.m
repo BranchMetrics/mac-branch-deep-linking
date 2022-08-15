@@ -210,12 +210,12 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
     @synchronized(self) {
         /* Don't clear these:
         self.deviceFingerprintID = nil;
-        self.userIdentity = nil;
         self.identityID = nil;
         self.installParams = nil;
         */
         self.sessionID = nil;
         self.requestMetadataDictionary = nil;
+        self.userIdentityForDeveloper  = nil;
         [self setNeedsSave];
     }
 }
