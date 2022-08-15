@@ -23,7 +23,7 @@ CIImage *qrCodeImage;
     }
     if (margin.intValue < 1) {
         margin = @(0);
-        BNCLogWarning(@"Margin was increased to the minimum of 0.");
+        BNCLogWarning(@"Margin was increased to the minimum of 1.");
     }
     _margin = margin;
 }
@@ -35,7 +35,7 @@ CIImage *qrCodeImage;
     }
     if (width.intValue < 300) {
         width = @(500);
-        BNCLogWarning(@"Width was increased to the minimum of 500.");
+        BNCLogWarning(@"Width was increased to the minimum of 300.");
     }
     _width = width;
 }
