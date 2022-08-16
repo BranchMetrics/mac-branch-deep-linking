@@ -165,6 +165,13 @@ so that Branch can handle the passed URL.
 @property (atomic, assign, readonly) BOOL userIdentityIsSet;
 
 /**
+ Retrieve the API key set via BranchConfiguration.
+ 
+ @return Returns the API key or nil.
+ */
+- (nullable NSString *)getKey;
+
+/**
  Clear all of the current user's session items.
 
  @param completion An optional completion block that is called by Branch with the success or failure

@@ -26,6 +26,7 @@ FOUNDATION_EXPORT const unsigned char BranchVersionString[];
 #import "BranchMutableDictionary.h"
 #import "BranchSession.h"
 #import "BranchUniversalObject.h"
+#import "BranchQRCode.h"
 
 // Exposed private headers:
 #import "BNCLog.h"
