@@ -1,5 +1,22 @@
 Branch Mac SDK Change Log
 
+## v1.4.0 - Aug 16, 2022
+
+SDK-1405
+Branch QR codes functionality added.
+
+SDK-1205 
+Fixed Set Identity Issue.  
+
+SDK-1373, SDK-1374 
+Renamed device_fingerprint_id and identity_id to better reflect functionality. Fingerprinting was removed long ago. 
+
+SDK-1346
+Exposed setRequestMetadata API. 
+
+SDK-1530
+Developer id added in v1/open requests.
+
 ## v1.3.1 - Jun 2, 2021
 
 CORE-1989
