@@ -48,8 +48,8 @@ CIImage *qrCodeImage;
     
     if (self.codeColor) { settings[@"code_color"] = [self hexStringForColor:self.codeColor]; }
     if (self.backgroundColor) { settings[@"background_color"] = [self hexStringForColor:self.backgroundColor]; }
-    if (self.margin) { settings[@"margin"] = self.margin; }
-    if (self.width) { settings[@"width"] = self.width; }
+    if ([self.margin intValue]) { settings[@"margin"] = self.margin; }
+    if ([self.width intValue]) { settings[@"width"] = self.width; }
     
     settings[@"image_format"] = (self.imageFormat == BranchQRCodeImageFormatJPEG) ? @"JPEG" : @"PNG";
     
@@ -95,7 +95,7 @@ CIImage *qrCodeImage;
           linkProperties:(BranchLinkProperties *)lp
               completion:(void (^)(CIImage * _Nonnull, NSError * _Nonnull))completion {
     
-    [self getQRCodeAsData:buo linkProperties:lp completion:^(NSData * _Nonnull qrCode, NSError * _Nonnull error) {
+    [self getQRCodeAsData:buo linkProperties:lp completion:^(NSData * _Nonnull qrCode, NSError * _Nullable error) {
         if (completion != nil) {
             if (error) {
                 CIImage *img = [CIImage new];
