@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "BranchMacOS"
-  spec.version      = "1.3.1"
+  spec.version      = "1.4.0"
   spec.summary      = "Create an HTTP URL for any piece of content in your MacOS app"
   spec.description  = <<-DESC
   - Want the highest possible conversions on your sharing feature?
@@ -15,7 +15,7 @@ Use the Branch SDK (branch.io) to create and power the links that point back to 
   spec.license      = "MIT"
   spec.author       = { "Branch" => "support@branch.io" }
   spec.source       = { git: "https://github.com/BranchMetrics/mac-branch-deep-linking.git", tag: spec.version.to_s  }
-  spec.osx.deployment_target   = "10.10"
+  spec.osx.deployment_target   = "10.15"
   spec.source_files = "Branch/*.{h,m}"
   spec.frameworks = "WebKit" , "AdSupport"
   spec.header_dir   = 'Branch'

@@ -202,10 +202,10 @@
             expectedRequest[@"custom_data"] = nil;
             expectedRequest[@"event_data"] = nil;
             NSMutableDictionary*er_ud = [expectedRequest[@"user_data"] mutableCopy];
-            er_ud[@"device_fingerprint_id"] = nil;
+            er_ud[@"randomized_device_token"] = nil;
             expectedRequest[@"user_data"] = er_ud;
             NSMutableDictionary*rd_ud = [expectedRequest[@"user_data"] mutableCopy];
-            rd_ud[@"device_fingerprint_id"] = nil;
+            rd_ud[@"randomized_device_token"] = nil;
             requestDictionary[@"user_data"] = rd_ud;
             requestDictionary[@"instrumentation"] = nil;
 

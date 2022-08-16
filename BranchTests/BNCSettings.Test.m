@@ -25,7 +25,7 @@
         XCTAssertNotNil(settings);
         XCTAssertNil(error);
         XCTAssertEqual(settings.limitFacebookTracking, NO);
-        XCTAssertEqualObjects(settings.identityID, nil);
+        XCTAssertEqualObjects(settings.randomizedBundleToken, nil);
         [expectationClear fulfill];
     };
     [settings clearAllSettings];
@@ -37,11 +37,11 @@
         XCTAssertNotNil(settings);
         XCTAssertNil(error);
         XCTAssertEqual(settings.limitFacebookTracking, YES);
-        XCTAssertEqualObjects(settings.identityID, @"12345");
+        XCTAssertEqualObjects(settings.randomizedBundleToken, @"12345");
         [expectationSave fulfill];
     };
     settings.limitFacebookTracking = YES;
-    settings.identityID = @"12345";
+    settings.randomizedBundleToken = @"12345";
     [self awaitExpectations];
     settings.settingsSavedBlock = nil;
 }
@@ -63,7 +63,7 @@
 
 - (void) testSettingsSaveAndLoad {
     BNCSettings*s = [[BNCSettings alloc] init];
-    s.deviceFingerprintID = @"fid";
+    s.randomizedDeviceToken = @"fid";
     s.linkCreationURL = @"lcu";
     s.limitFacebookTracking = YES;
     s.instrumentationDictionary[@"key"] = @"value";
@@ -71,7 +71,7 @@
 
     BNCSettings*t = [BNCSettings loadSettings];
     XCTAssertTrue([t isKindOfClass:[BNCSettings class]]);
-    XCTAssertEqualObjects(s.deviceFingerprintID, t.deviceFingerprintID);
+    XCTAssertEqualObjects(s.randomizedDeviceToken, t.randomizedDeviceToken);
     XCTAssertEqualObjects(s.linkCreationURL, t.linkCreationURL);
     XCTAssertEqual(s.limitFacebookTracking, t.limitFacebookTracking);
     XCTAssertEqualObjects(s.instrumentationDictionary, t.instrumentationDictionary);
