@@ -1,6 +1,6 @@
 Branch Mac SDK Change Log
 
-## v1.4.0 - Aug 16, 2022
+## 1.4.0 - Aug 16, 2022
 
 SDK-1405
 Branch QR codes functionality added.

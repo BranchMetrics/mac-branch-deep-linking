@@ -32,6 +32,7 @@
         void* ivarPtr = nil;
         if (class == instance) {
             //  instance is a class, so there aren't any ivar values.
+            continue;
         } else if (encoding[0] == '@' || encoding[0] == '#') {
             ivarPtr = (__bridge void*) object_getIvar(instance, ivars[i]);
         } else {
