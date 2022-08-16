@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 //    NSString*_Nullable string =
 //        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 //    return string?:@"";
-    return @"1.3.1";
+    return @"1.4.0";
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
@@ -395,9 +395,19 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     self.sessionState = BNCSessionStateInitializing;
     BNCApplication*application = [BNCApplication currentApplication];
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    
+    if (self.settings.randomizedBundleToken.length) {
+        dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.randomizedBundleToken);
+    } else {
+        dictionary[@"randomized_bundle_token"] = BNCWireFormatFromString(self.settings.identityID);
+    }
+    
+    if (self.settings.randomizedDeviceToken.length) {
+        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.randomizedDeviceToken);
+    } else {
+        dictionary[@"randomized_device_token"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
+    }
 
-    dictionary[@"device_fingerprint_id"] = BNCWireFormatFromString(self.settings.deviceFingerprintID);
-    dictionary[@"identity_id"] = BNCWireFormatFromString(self.settings.identityID);
     dictionary[@"ios_bundle_id"] = BNCWireFormatFromString(application.bundleID);
     dictionary[@"ios_team_id"] = BNCWireFormatFromString(application.teamID);
     dictionary[@"app_version"] = BNCWireFormatFromString(application.displayVersionString);
@@ -437,8 +447,15 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     dictionary[@"first_install_time"] = BNCWireFormatFromDate(application.firstInstallDate);
     dictionary[@"update"] = BNCWireFormatFromInteger(application.updateState);
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
-    NSString*service = (self.settings.identityID.length > 0) ? @"v1/open" : @"v1/install";
-
+    
+    NSString*service;
+    
+    if (self.settings.randomizedBundleToken.length > 0 || self.settings.identityID.length > 0) {
+        service = @"v1/open";
+    } else {
+        service = @"v1/install";
+    }
+    
     BNCPerformBlockOnMainThreadAsync(^ {
         [self notifyWillStartSessionWithURL:openURL];
     });
@@ -578,9 +595,9 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     // [self initSessionIfNeededAndNotInProgress];
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     dictionary[@"identity"] = userID;
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
     dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
         dictionary:dictionary
@@ -604,13 +621,18 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return self.settings.userIdentityForDeveloper != nil;
 }
 
+- (nullable NSString *)getKey {
+    return self.configuration.key;
+}
+
+
 #pragma mark - Logout
 
 - (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
     dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
     [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
     [self.networkAPIService postOperationForAPIServiceName:@"v1/logout"
         dictionary:dictionary
@@ -634,13 +656,25 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 - (void) sendClose {
     if (self.userTrackingIsDisabled) return;
     NSMutableDictionary*dictionary = [[NSMutableDictionary alloc] init];
-    dictionary[@"identity_id"] = self.settings.identityID;
+    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
     dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
 }
 
 - (NSMutableDictionary*_Nonnull) requestMetadataDictionary {
     return self.settings.requestMetadataDictionary;
+}
+
+- (void) setRequestMetaDataKey:(NSString *)key Value:(NSString *)value {
+    if (!key) {
+        return;
+    }
+    if ([self.settings.requestMetadataDictionary objectForKey:key] && !value) {
+        [self.settings.requestMetadataDictionary removeObjectForKey:key];
+    }
+    else if (value) {
+        [self.settings.requestMetadataDictionary setObject:value forKey:key];
+    }
 }
 
 - (void) setRequestMetadataDictionary:(NSDictionary*_Nullable)dictionary {
@@ -753,7 +787,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         baseURL = [[NSMutableString alloc] initWithFormat:@"https://bnc.lt/a/%@", self.configuration.key];
 
     if (self.userTrackingIsDisabled) {
-        NSString *id_string = [NSString stringWithFormat:@"%%24identity_id=%@", self.settings.identityID];
+        NSString *id_string = [NSString stringWithFormat:@"%%24randomized_bundle_token=%@", self.settings.randomizedBundleToken];
         NSRange range = [baseURL rangeOfString:id_string];
         if (range.location != NSNotFound) {
             NSMutableString*baseURL_ = [baseURL mutableCopy];

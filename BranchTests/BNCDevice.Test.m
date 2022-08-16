@@ -32,8 +32,8 @@
     XCTAssertTrue(device.hardwareID.length > 0);
 
     XCTAssertTrue(
-        device.systemVersion.doubleValue > 8.0 &&
-        device.systemVersion.doubleValue <= 12.0
+        device.systemVersion.doubleValue > 10.15 &&
+        device.systemVersion.doubleValue <= 13
     );
     XCTAssertTrue(BNCTestStringMatchesRegex(device.systemBuildVersion, @"^[0-9A-Za-z]+$"));
     XCTAssertTrue(

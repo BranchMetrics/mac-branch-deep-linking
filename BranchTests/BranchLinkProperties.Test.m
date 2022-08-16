@@ -37,7 +37,7 @@
         @"$creation_timestamp": @1527379945531,
         @"$currency": @"$",
         @"$desktop_url": @"http://branch.io",
-        @"$identity_id": @529056271991951584,
+        @"$randomized_bundle_token": @529056271991951584,
         @"$ios_url":@"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/",
         @"$match_duration": @12,
         @"$og_description": @"My Content Description",

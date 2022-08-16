@@ -47,7 +47,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
         [invocation invoke];
         NSString* selectorName = NSStringFromSelector(invocation.selector);
         // NSLog(@"Proxy trigger '%@'.", selectorName);
-        // if ([selectorName isEqualToString:@"setIdentityID:"])
+        // if ([selectorName isEqualToString:@"setRandomizedBundleToken:"])
         //    NSLog(@"%@", selectorName);
         if ([selectorName hasPrefix:@"set"] &&
             !([selectorName isEqualToString:@"setNeedsSave"] ||
@@ -209,12 +209,13 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
 - (void) clearUserIdentifyingInformation {
     @synchronized(self) {
         /* Don't clear these:
+        self.randomizedDeviceToken = nil;
+        self.userIdentity = nil;
+        self.randomizedBundleToken = nil;
         self.installParams = nil;
         */
-        
-        self.deviceFingerprintID = nil;
+       
         self.userIdentityForDeveloper = nil;
-        self.identityID = nil;
         self.sessionID = nil;
         self.requestMetadataDictionary = nil;
         [self setNeedsSave];

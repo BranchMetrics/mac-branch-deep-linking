@@ -129,6 +129,8 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         [metadata addEntriesFromDictionary:self.configuration.settings.requestMetadataDictionary];
         if (metadata.count) dictionary[@"metadata"] = metadata;
         dictionary[@"branch_key"] = self.configuration.key;
+        
+        
     }
 }
 
@@ -140,7 +142,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         NSMutableDictionary*userData = [NSMutableDictionary new];
         [userData addEntriesFromDictionary:[BNCDevice currentDevice].v2dictionary];
         userData[@"app_version"] = application.displayVersionString;
-        userData[@"device_fingerprint_id"] = self.settings.deviceFingerprintID;
+        userData[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
         userData[@"environment"] = application.branchExtensionType;
         userData[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
         userData[@"sdk"] = @"mac";
@@ -186,8 +188,8 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
               dictionary[@"hardware_id"] = nil;
               dictionary[@"hardware_id_type"] = nil;
               dictionary[@"is_hardware_id_real"] = nil;
-              dictionary[@"device_fingerprint_id"] = nil;
-              dictionary[@"identity_id"] = nil;
+              dictionary[@"randomized_device_token"] = nil;
+              dictionary[@"randomized_bundle_token"] = nil;
               dictionary[@"identity"] = nil;
               dictionary[@"update"] = nil;
 
@@ -199,6 +201,11 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
             BNCLogError(@"Network service error: %@.", operation.error);
             if (completion) completion(operation);
             return;
+        }
+    } else {
+        NSString *endpoint = url.path;
+        if ([endpoint isEqualToString:@"/v1/open"]) {
+            dictionary[@"identity"] = self.settings.userIdentityForDeveloper;
         }
     }
 
@@ -409,16 +416,25 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 
     if (self.session.linkCreationURL.length)
         self.settings.linkCreationURL = self.session.linkCreationURL;
-    if (self.session.deviceFingerprintID.length)
-        self.settings.deviceFingerprintID = self.session.deviceFingerprintID;
     if (self.session.userIdentityForDeveloper.length)
         self.settings.userIdentityForDeveloper = self.session.userIdentityForDeveloper;
     if (self.session.sessionID.length)
         self.settings.sessionID = self.session.sessionID;
-    if (self.session.identityID.length)
-        self.settings.identityID = self.session.identityID;
+       
+    if (self.session.randomizedDeviceToken.length) {
+        self.settings.randomizedDeviceToken = self.session.randomizedDeviceToken;
+    } else if (self.session.deviceFingerprintID.length) {
+        //Check for deprecated value of randomizedDeviceToken
+        self.settings.randomizedDeviceToken = self.session.deviceFingerprintID;
     }
 
+    if (self.session.randomizedBundleToken.length) {
+        self.settings.randomizedBundleToken = self.session.randomizedBundleToken;
+    } else if (self.session.identityID.length) {
+        //Check for deprecated value of randomizedBundleToken
+        self.settings.randomizedBundleToken = self.session.identityID;
+    }
+}
 exit:
     self.error = error;
     if (self.completion)

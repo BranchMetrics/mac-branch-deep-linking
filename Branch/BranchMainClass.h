@@ -165,6 +165,13 @@ so that Branch can handle the passed URL.
 @property (atomic, assign, readonly) BOOL userIdentityIsSet;
 
 /**
+ Retrieve the API key set via BranchConfiguration.
+ 
+ @return Returns the API key or nil.
+ */
+- (nullable NSString *)getKey;
+
+/**
  Clear all of the current user's session items.
 
  @param completion An optional completion block that is called by Branch with the success or failure
@@ -216,6 +223,15 @@ so that Branch can handle the passed URL.
 
 /** Key-value pairs to be included in the metadata on every request. */
 @property (atomic,strong,null_resettable) NSMutableDictionary<NSString*, NSString*>*requestMetadataDictionary;
+
+/**
+ Adds key - value pair to the metaData dictionary which is sent with all requests.
+ 
+ @param key       String to be included in request metadata
+ @param value   Object to be included in request metadata
+
+ */
+- (void) setRequestMetaDataKey:(NSString *)key Value:(NSString *)value;
 
 /**
  Disables the Branch SDK from tracking the user. This is useful for GDPR privacy compliance.
