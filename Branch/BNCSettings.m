@@ -214,9 +214,10 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
         self.randomizedBundleToken = nil;
         self.installParams = nil;
         */
+       
+        self.userIdentityForDeveloper = nil;
         self.sessionID = nil;
         self.requestMetadataDictionary = nil;
-        self.userIdentityForDeveloper  = nil;
         [self setNeedsSave];
     }
 }

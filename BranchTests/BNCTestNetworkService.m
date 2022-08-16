@@ -85,10 +85,6 @@ static id<BNCNetworkOperationProtocol>(^_requestHandler)(NSMutableURLRequest*req
     return operation;
 }
 
-- (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*_Nullable)publicKeys {
-    return nil;
-}
-
 - (void) startOperation:(BNCTestNetworkOperation*)operation {
     operation.networkService = self;
 //    operation.startDate = [NSDate date];
