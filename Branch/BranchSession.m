@@ -26,8 +26,8 @@
 
     addString(sessionID,            session_id);
     addString(userIdentityForDeveloper, identity);
-    addString(deviceFingerprintID,  device_fingerprint_id);
-    addString(identityID,           identity_id);
+    addString(randomizedDeviceToken,  randomized_device_token);
+    addString(randomizedBundleToken,           randomized_bundle_token);
     addString(linkCreationURL,      link);
     
     NSString*dataString = dictionary[@"data"];
@@ -64,7 +64,7 @@
             BNCStringFromBool(self.isBranchURL),
             self.sessionID,
             self.referringURL,
-            self.identityID,
+            self.randomizedBundleToken,
             self.linkContent,
             self.linkProperties,
             self.data];

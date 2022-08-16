@@ -119,6 +119,11 @@
 		5F790AFD252E73C000C82E83 /* BranchUserTrackingDisabled.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F790AFC252E73C000C82E83 /* BranchUserTrackingDisabled.m */; };
 		5F7BD69D23341EB00067E5DA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F7BD69C23341EB00067E5DA /* WebKit.framework */; };
 		5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA17908232702F00012B500 /* BNCUserAgentCollector.m */; };
+		C110BA1A283D601B007D9F60 /* BranchQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = C110BA18283D601B007D9F60 /* BranchQRCode.m */; };
+		C1EA057B283D87DF003F17CF /* BranchQRCode.h in Headers */ = {isa = PBXBuildFile; fileRef = C1EA0579283D87A9003F17CF /* BranchQRCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1EA0583283D93B6003F17CF /* BNCQRCodeCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EA0582283D93B6003F17CF /* BNCQRCodeCache.m */; };
+		C1EA0585283D93D6003F17CF /* BNCQRCodeCache.h in Headers */ = {isa = PBXBuildFile; fileRef = C1EA0584283D93D6003F17CF /* BNCQRCodeCache.h */; };
+		C1EA0587283D978A003F17CF /* BranchQRCodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C1EA0586283D978A003F17CF /* BranchQRCodeTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,6 +258,11 @@
 		5F7BD69C23341EB00067E5DA /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5FA17907232702F00012B500 /* BNCUserAgentCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCUserAgentCollector.h; sourceTree = "<group>"; };
 		5FA17908232702F00012B500 /* BNCUserAgentCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCUserAgentCollector.m; sourceTree = "<group>"; };
+		C110BA18283D601B007D9F60 /* BranchQRCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchQRCode.m; sourceTree = "<group>"; };
+		C1EA0579283D87A9003F17CF /* BranchQRCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchQRCode.h; sourceTree = "<group>"; };
+		C1EA0582283D93B6003F17CF /* BNCQRCodeCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCQRCodeCache.m; sourceTree = "<group>"; };
+		C1EA0584283D93D6003F17CF /* BNCQRCodeCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCQRCodeCache.h; sourceTree = "<group>"; };
+		C1EA0586283D978A003F17CF /* BranchQRCodeTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchQRCodeTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +318,10 @@
 		4D54C07720A6560400C76496 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
+				C1EA0584283D93D6003F17CF /* BNCQRCodeCache.h */,
+				C1EA0582283D93B6003F17CF /* BNCQRCodeCache.m */,
+				C1EA0579283D87A9003F17CF /* BranchQRCode.h */,
+				C110BA18283D601B007D9F60 /* BranchQRCode.m */,
 				4D9C163C20ACBEF6002BF211 /* BNCApplication.h */,
 				4D9C163D20ACBEF6002BF211 /* BNCApplication.m */,
 				4D9C165C20ACD625002BF211 /* BNCDevice.h */,
@@ -400,6 +414,7 @@
 		5F78ED90249C317400E313B9 /* BranchTests */ = {
 			isa = PBXGroup;
 			children = (
+				C1EA0586283D978A003F17CF /* BranchQRCodeTest.m */,
 				5F790AFC252E73C000C82E83 /* BranchUserTrackingDisabled.m */,
 				5F78EDB4249C31F800E313B9 /* BNCApplication.Test.m */,
 				5F78EDAB249C31F700E313B9 /* BNCDevice.Test.m */,
@@ -463,6 +478,8 @@
 				4DF818B020AE1A9200441881 /* BranchHeader.h in Headers */,
 				4D54C08620A6560400C76496 /* Branch.h in Headers */,
 				4D9C164220ACC86F002BF211 /* BNCNetworkService.h in Headers */,
+				C1EA057B283D87DF003F17CF /* BranchQRCode.h in Headers */,
+				C1EA0585283D93D6003F17CF /* BNCQRCodeCache.h in Headers */,
 				4D046E9220C8AD3A0073262B /* NSData+Branch.h in Headers */,
 				4D9C166120ACDB59002BF211 /* BNCWireFormat.h in Headers */,
 				4DF818A720ADE1BB00441881 /* BranchCommerce.h in Headers */,
@@ -652,6 +669,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1EA0583283D93B6003F17CF /* BNCQRCodeCache.m in Sources */,
+				C110BA1A283D601B007D9F60 /* BranchQRCode.m in Sources */,
 				5FA313A22327107B007BAA6A /* BNCUserAgentCollector.m in Sources */,
 				4DF8189B20ADDC5000441881 /* BranchUniversalObject.m in Sources */,
 				4DF818A620ADE1BB00441881 /* BranchCommerce.m in Sources */,
@@ -728,6 +747,7 @@
 				5F78EDC6249C31FA00E313B9 /* BNCTestCase.Test.m in Sources */,
 				5F78EDDC249C31FA00E313B9 /* BNCEncoder.Test.m in Sources */,
 				5F78EDDA249C31FA00E313B9 /* BNCPersistence.Test.m in Sources */,
+				C1EA0587283D978A003F17CF /* BranchQRCodeTest.m in Sources */,
 				5F78EDCD249C31FA00E313B9 /* BranchUniversalObject.Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -821,7 +841,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -891,7 +911,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
@@ -912,7 +932,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
-				MARKETING_VERSION = 1.3.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -925,7 +946,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
-				MARKETING_VERSION = 1.3.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -994,7 +1016,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MODULEMAP_FILE = Branch/Branch.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1014,7 +1036,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
-				MARKETING_VERSION = 1.3.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_BUNDLE_IDENTIFIER = io.branch.sdk.mac;
 				PROVISIONING_PROFILE_SPECIFIER = "";

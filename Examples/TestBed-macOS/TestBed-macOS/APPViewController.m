@@ -75,6 +75,10 @@
             @"title":       @"Open Last Link",
             @"detail":      @"Open the link the was just created.",
             @"selector":    @"openLink:",
+        },@{
+            @"title":       @"Create QR Code",
+            @"detail":      @"Generate a new QR code.",
+            @"selector":    @"getQRCode:",
         },
     ];
     NSNib*nib = [[NSNib alloc] initWithNibNamed:@"APPActionItemView" bundle:[NSBundle mainBundle]];
@@ -480,6 +484,31 @@ static NSURL*lastCreatedLink = nil;
 
 - (IBAction) openLink:(id)sender {
     [[Branch sharedInstance] openURL:lastCreatedLink];
+}
+
+- (IBAction) getQRCode:(id)sender {
+    BranchLinkProperties *linkProperties = [self createLinkProperties];
+    BranchUniversalObject *buo = [self createUniversalObject];
+    BranchQRCode *qrCode = [BranchQRCode new];
+    qrCode.codeColor = NSColor.blueColor;
+    qrCode.width = @300;
+    
+    [qrCode getQRCodeAsImage:buo linkProperties:linkProperties completion:^(CIImage * _Nullable qrCodeImage, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.errorField.stringValue = [self errorMessage:error];
+            self.dataTextView.string = @"";
+            
+            NSCIImageRep *rep = [NSCIImageRep imageRepWithCIImage:qrCodeImage];
+            NSImage *nsImage = [[NSImage alloc] initWithSize:rep.size];
+            [nsImage addRepresentation:rep];
+        
+            NSTextAttachment *attachment = [NSTextAttachment new];
+            attachment.image = nsImage;
+            NSAttributedString *imageString = [NSAttributedString attributedStringWithAttachment:attachment];
+            [self.dataTextView.textStorage insertAttributedString:imageString atIndex:0];
+ 
+        });
+    }];
 }
 
 - (IBAction)trackingDisabledAction:(id)sender {

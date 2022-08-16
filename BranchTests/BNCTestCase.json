@@ -1,9 +1,9 @@
 {
     "BranchOpenResponse": {
-        "data": "{\"$og_title\":\"Content Title\",\"$identity_id\":529056271991951584,\"~stage\":\"stage four\",\"~feature\":\"Sharing Feature\",\"$desktop_url\":\"http://branch.io\",\"$canonical_identifier\":\"item/12345\",\"~id\":529076716434584246,\"~campaign\":\"some campaign\",\"+is_first_session\":false,\"~channel\":\"Distribution Channel\",\"$ios_url\":\"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/\",\"$creation_timestamp\":1527379945531,\"$currency\":\"$\",\"~creation_source\":3,\"$og_description\":\"My Content Description\",\"+click_timestamp\":1527379949,\"$content_schema\":\"some type\",\"$price\":1000,\"$match_duration\":12,\"$og_image_url\":\"http://a57.foxnews.com/images.foxnews.com/content/fox-news/science/2018/03/20/first-day-spring-arrives-5-things-to-know-about-vernal-equinox/_jcr_content/par/featured_image/media-0.img.jpg/1862/1048/1521552912093.jpg?ve=1&tl=1\",\"$og_type\":\"website\",\"+match_guaranteed\":true,\"~tags\":[\"tag1\",\"tag2\"],\"+clicked_branch_link\":true,\"deeplink_text\":\"This text was embedded as data in a Branch link with the following characteristics:\\n\\ncanonicalUrl: https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\\n  title: Content Title\\n  contentDescription: My Content Description\\n  imageUrl: http://a57.foxnews.com/images.foxnews.com/content/fox-news/science/2018/03/20/first-day-spring-arrives-5-things-to-know-about-vernal-equinox/_jcr_content/par/featured_image/media-0.img.jpg/1862/1048/1521552912093.jpg?ve=1&tl=1\\n\",\"$one_time_use\":false,\"$canonical_url\":\"https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\",\"~referring_link\":\"https://branch-uitestbed.app.link/cmTT6r8kfN\"}",
-        "device_fingerprint_id": "529056271983353081",
-        "identity_id": "529056271991951584",
-        "link": "https://branch-uitestbed.app.link?%24identity_id=529056271991951584",
+        "data": "{\"$og_title\":\"Content Title\",\"$randomized_bundle_token\":529056271991951584,\"~stage\":\"stage four\",\"~feature\":\"Sharing Feature\",\"$desktop_url\":\"http://branch.io\",\"$canonical_identifier\":\"item/12345\",\"~id\":529076716434584246,\"~campaign\":\"some campaign\",\"+is_first_session\":false,\"~channel\":\"Distribution Channel\",\"$ios_url\":\"https://dev.branch.io/getting-started/sdk-integration-guide/guide/ios/\",\"$creation_timestamp\":1527379945531,\"$currency\":\"$\",\"~creation_source\":3,\"$og_description\":\"My Content Description\",\"+click_timestamp\":1527379949,\"$content_schema\":\"some type\",\"$price\":1000,\"$match_duration\":12,\"$og_image_url\":\"http://a57.foxnews.com/images.foxnews.com/content/fox-news/science/2018/03/20/first-day-spring-arrives-5-things-to-know-about-vernal-equinox/_jcr_content/par/featured_image/media-0.img.jpg/1862/1048/1521552912093.jpg?ve=1&tl=1\",\"$og_type\":\"website\",\"+match_guaranteed\":true,\"~tags\":[\"tag1\",\"tag2\"],\"+clicked_branch_link\":true,\"deeplink_text\":\"This text was embedded as data in a Branch link with the following characteristics:\\n\\ncanonicalUrl: https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\\n  title: Content Title\\n  contentDescription: My Content Description\\n  imageUrl: http://a57.foxnews.com/images.foxnews.com/content/fox-news/science/2018/03/20/first-day-spring-arrives-5-things-to-know-about-vernal-equinox/_jcr_content/par/featured_image/media-0.img.jpg/1862/1048/1521552912093.jpg?ve=1&tl=1\\n\",\"$one_time_use\":false,\"$canonical_url\":\"https://dev.branch.io/getting-started/deep-link-routing/guide/ios/\",\"~referring_link\":\"https://branch-uitestbed.app.link/cmTT6r8kfN\"}",
+        "randomized_device_token": "529056271983353081",
+        "randomized_bundle_token": "529056271991951584",
+        "link": "https://branch-uitestbed.app.link?%24randomized_bundle_token=529056271991951584",
         "session_id": "529076731286688977"
     },
     "BranchUniversalObjectJSON": {
@@ -134,10 +134,10 @@
         "branch_key" : "key_live_glvYEcNtDkb7wNgLWwni2jofEwpCeQ3N",
         "brand" : "Apple",
         "country" : "US",
-        "device_fingerprint_id" : "526117323216942979",
+        "randomized_device_token" : "526117323216942979",
         "hardware_id" : "0b18c003-7a77-4211-ed86-853a7a8778f9",
         "hardware_id_type" : "vendor_id",
-        "identity_id" : "533693351791327815",
+        "randomized_bundle_token" : "533693351791327815",
         "instrumentation" : {
             "\/v1\/open-brtt" : "111"
         },
@@ -155,8 +155,8 @@
         "user_agent" : "\"Mozilla\/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit\/604.1.38 (KHTML, like Gecko) Version\/11.0 Mobile\/15A372 Safari\/604.1\""
         },
     "logoutResponse": {
-        "identity_id" : "533693409806978587",
-        "link" : "https:\/\/testbed-mac.app.link\/?%24identity_id=533693409806978587",
+        "randomized_bundle_token" : "533693409806978587",
+        "link" : "https:\/\/testbed-mac.app.link\/?%24randomized_bundle_token=533693409806978587",
         "session_id" : "533693409829565758"
     },
     "BranchInstallRequestMac": {
@@ -190,10 +190,10 @@
     },
     "BranchOpenResponseMac": {
         "data" : "{\"$og_title\":\"Moof!\",\"$marketing_title\":\"First MacSDK Link\",\"~creation_source\":1,\"$og_description\":\"Hello Mac SDK!\",\"+click_timestamp\":1528641760,\"message\":\"Hello MacSDK\",\"$og_image_url\":\"https:\/\/i2.wp.com\/512pixels.net\/wp-content\/uploads\/2016\/01\/dogcow.png?w=500&ssl=1\",\"~feature\":\"marketing\",\"+match_guaranteed\":true,\"$desktop_deepview\":\"branch_default\",\"~marketing\":true,\"+clicked_branch_link\":true,\"$one_time_use\":false,\"~id\":\"525055150134625462\",\"~campaign\":\"MacSDK\",\"+is_first_session\":false,\"~referring_link\":\"https:\/\/testbed-mac.app.link\/ODYeswaVWM\",\"~channel\":\"QuickLink\",\"$ios_deepview\":\"branch_default\"}",
-        "device_fingerprint_id" : "526117323216942979",
+        "randomized_device_token" : "526117323216942979",
         "identity" : "Bob",
-        "identity_id" : "530077985169155272",
-        "link" : "https:\/\/testbed-mac.app.link?%24identity_id=530077985169155272",
+        "randomized_bundle_token" : "530077985169155272",
+        "link" : "https:\/\/testbed-mac.app.link?%24randomized_bundle_token=530077985169155272",
         "session_id" : "534369161321890489"
     }
 }
