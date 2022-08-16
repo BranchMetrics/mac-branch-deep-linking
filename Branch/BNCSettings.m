@@ -216,6 +216,7 @@ static NSString*const _Nonnull BNCSettingsPersistenceName = @"io.branch.sdk.sett
         */
         self.sessionID = nil;
         self.requestMetadataDictionary = nil;
+        self.userIdentityForDeveloper  = nil;
         [self setNeedsSave];
     }
 }

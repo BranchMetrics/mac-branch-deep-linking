@@ -129,6 +129,8 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         [metadata addEntriesFromDictionary:self.configuration.settings.requestMetadataDictionary];
         if (metadata.count) dictionary[@"metadata"] = metadata;
         dictionary[@"branch_key"] = self.configuration.key;
+        
+        
     }
 }
 
@@ -199,6 +201,11 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
             BNCLogError(@"Network service error: %@.", operation.error);
             if (completion) completion(operation);
             return;
+        }
+    } else {
+        NSString *endpoint = url.path;
+        if ([endpoint isEqualToString:@"/v1/open"]) {
+            dictionary[@"identity"] = self.settings.userIdentityForDeveloper;
         }
     }
 
