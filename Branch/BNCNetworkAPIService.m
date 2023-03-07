@@ -147,6 +147,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         userData[@"limit_facebook_tracking"] = BNCWireFormatFromBool(self.settings.limitFacebookTracking);
         userData[@"sdk"] = @"mac";
         userData[@"sdk_version"] = Branch.kitDisplayVersion;
+        userData[@"identity"] = self.settings.userIdentityForDeveloper;
         dictionary[@"user_data"] = userData;
 
         // Add metadata:
@@ -207,12 +208,6 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         if ([endpoint isEqualToString:@"/v1/open"]) {
             dictionary[@"identity"] = self.settings.userIdentityForDeveloper;
         }
-        
-        if ([endpoint isEqualToString:@"/v2/event/standard"] ||
-            [endpoint isEqualToString:@"/v2/event/custom"]) {
-            dictionary[@"user_data"][@"identity"] = self.settings.userIdentityForDeveloper;
-        }
-        
     }
 
     __weak __typeof(self) weakSelf = self;
