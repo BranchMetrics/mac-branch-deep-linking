@@ -112,7 +112,7 @@ CIImage *qrCodeImage;
             completion:(void(^)(NSData * _Nullable qrCode, NSError * _Nullable error))completion {
     
     NSError *error;
-    NSString *branchAPIURL = [[BranchConfiguration init] branchAPIServiceURL];
+    NSString *branchAPIURL = [[[BranchConfiguration alloc] initWithKey:@""] branchAPIServiceURL];
     NSString *urlString = [NSString stringWithFormat: @"%@/v1/qr-code", branchAPIURL];
     NSURL *url = [NSURL URLWithString: urlString];
     NSURLSession *session = [NSURLSession sharedSession];
