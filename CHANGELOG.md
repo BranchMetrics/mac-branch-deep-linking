@@ -1,6 +1,6 @@
 Branch Mac SDK Change Log
 
-## 1.4.1 - Aug 16, 2022
+## 1.4.1 - May 9, 2023
 
 SDK-1905
 Fix for build issue with Xcode 14.3 and Swift 5.8
