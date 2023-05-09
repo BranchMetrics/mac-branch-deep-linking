@@ -36,7 +36,7 @@
 
     if (!branch) {
         branch = Branch.sharedInstance ;
-        BranchConfiguration*configuration = [[BranchConfiguration new] initWithKey:BNCTestBranchKey];
+        BranchConfiguration*configuration = [[BranchConfiguration alloc] initWithKey:BNCTestBranchKey];
         [branch startWithConfiguration:configuration];
     }
 }
