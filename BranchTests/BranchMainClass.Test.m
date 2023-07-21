@@ -73,7 +73,7 @@
             [expectation fulfill];
         }
     ];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    [self waitForExpectationsWithTimeout:0.1 handler:nil];
     XCTAssertTrue(branch.userIdentityIsSet);
 
     [self resetExpectations];
@@ -82,7 +82,7 @@
         XCTAssertNil(error);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    [self waitForExpectationsWithTimeout:0.1 handler:nil];
     XCTAssertFalse(branch.userIdentityIsSet);
 }
 
@@ -102,7 +102,7 @@
         XCTAssertEqualObjects(session.userIdentityForDeveloper, userIdentity);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    [self waitForExpectationsWithTimeout:0.1 handler:nil];
     XCTAssertTrue(branch.userIdentityIsSet);
     XCTAssertTrue([userIdentity isEqualToString:[branch getUserIdentity]]);
 }

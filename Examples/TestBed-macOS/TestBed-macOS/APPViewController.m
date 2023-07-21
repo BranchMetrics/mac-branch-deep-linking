@@ -162,7 +162,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     [self clearUIFields];
     [[Branch sharedInstance] setUserIdentity:@"Bob" completion:^ (BranchSession*session, NSError*error) {
         self.stateField.stringValue =
-            [NSString stringWithFormat:@"Set Identity: '%@'", session.userIdentityForDeveloper];
+            [NSString stringWithFormat:@"Set Identity: '%@'", [Branch sharedInstance].getUserIdentity];
         self.errorField.stringValue = [self errorMessage:error];
     }];
 }
@@ -171,7 +171,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     BNCLogMethodName();
     [self clearUIFields];
     [[Branch sharedInstance] logoutWithCompletion:^ (NSError*error) {
-        self.stateField.stringValue = @"Log User Out";
+        self.stateField.stringValue = [NSString stringWithFormat:@"Logged User Out: '%@'", [Branch sharedInstance].getUserIdentity];
         self.errorField.stringValue = [self errorMessage:error];
     }];
 }
