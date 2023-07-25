@@ -586,6 +586,10 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 #pragma mark - User Identity
 
+- (void)setUserIdentity:(NSString*)userID {
+    [self setUserIdentity:userID completion:nil];
+}
+
 - (void)setUserIdentity:(NSString*)userID
              completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
     if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
@@ -623,6 +627,10 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 
 #pragma mark - Logout
+
+- (void)logout {
+    [self logoutWithCompletion:nil];
+}
 
 - (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
 
