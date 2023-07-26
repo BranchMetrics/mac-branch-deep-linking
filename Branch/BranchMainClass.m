@@ -608,6 +608,8 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     }
     
     session.userIdentityForDeveloper = userID;
+    session.sessionID = self.settings.sessionID;
+    
     self.settings.userIdentityForDeveloper = userID;
     
     if (completion) completion(session, nil);
