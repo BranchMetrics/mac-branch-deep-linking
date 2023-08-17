@@ -592,6 +592,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 - (void)setUserIdentity:(NSString*)userID
              completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
+    
     if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
         if (completion) completion(nil, nil);   // TODO: fix the session.
         return;
@@ -607,10 +608,12 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         return;
     }
     
-    session.userIdentityForDeveloper = userID;
-    session.sessionID = self.settings.sessionID;
-    
-    self.settings.userIdentityForDeveloper = userID;
+    BNCPerformBlockOnMainThreadAsync(^{
+        session.userIdentityForDeveloper = userID;
+        session.sessionID = self.settings.sessionID;
+        
+        self.settings.userIdentityForDeveloper = userID;
+    });
     
     if (completion) completion(session, nil);
 }
@@ -627,7 +630,6 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return self.configuration.key;
 }
 
-
 #pragma mark - Logout
 
 - (void)logout {
@@ -636,9 +638,11 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 - (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
 
+    BNCPerformBlockOnMainThreadAsync(^{
         self.settings.userIdentityForDeveloper = nil;
-        
-        if (completion) completion(nil);
+    });
+    
+    if (completion) completion(nil);
 }
 
 #pragma mark - Miscellaneous

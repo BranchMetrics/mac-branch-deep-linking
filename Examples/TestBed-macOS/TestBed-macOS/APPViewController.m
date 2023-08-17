@@ -160,7 +160,7 @@ didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
 
 - (IBAction) setIdentity:(id)sender {
     [self clearUIFields];
-    [[Branch sharedInstance] setUserIdentity:@"Bob" completion:^ (BranchSession*session, NSError*error) {
+    [[Branch sharedInstance] setUserIdentity:@"BranchUser123" completion:^ (BranchSession*session, NSError*error) {
         self.stateField.stringValue =
             [NSString stringWithFormat:@"Set Identity: '%@'", [Branch sharedInstance].getUserIdentity];
         self.errorField.stringValue = [self errorMessage:error];
