@@ -613,9 +613,10 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
         session.sessionID = self.settings.sessionID;
         
         self.settings.userIdentityForDeveloper = userID;
+        
+        if (completion) completion(session, nil);
     });
-    
-    if (completion) completion(session, nil);
+
 }
 
 - (nullable NSString *)getUserIdentity {
@@ -640,9 +641,9 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
     BNCPerformBlockOnMainThreadAsync(^{
         self.settings.userIdentityForDeveloper = nil;
+        
+        if (completion) completion(nil);
     });
-    
-    if (completion) completion(nil);
 }
 
 #pragma mark - Miscellaneous

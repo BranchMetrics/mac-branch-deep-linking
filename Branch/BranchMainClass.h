@@ -137,18 +137,26 @@ so that Branch can handle the passed URL.
 
 /**
  Set the user's identity to an ID used by your system, so that it is identifiable by you elsewhere. Receive
- a completion callback, notifying you whether it succeeded or failed.
+ a completion callback.
 
  @param   userId      The ID Branch should use to identify this user.
- @param   completion  The callback to be called once the request has completed (success or failure).
+ @param   completion  The callback to be called once the identity has been set.
 
  @warning If you use the same ID between users on different sessions / devices, their actions will be merged.
- @warning This request is not removed from the queue upon failure -- it will be retried until it succeeds.
-          The callback will only ever be called once, though.
  @warning You should call `logout` before calling `setIdentity:` a second time.
 */
 - (void)setUserIdentity:(NSString*)userId
          completion:(void (^_Nullable)(BranchSession*_Nullable session, NSError*_Nullable error))completion;
+
+/**
+ Set the user's identity to an ID used by your system, so that it is identifiable by you elsewhere.
+
+ @param   userId      The ID Branch should use to identify this user.
+
+ @warning If you use the same ID between users on different sessions / devices, their actions will be merged.
+ @warning You should call `logout` before calling `setIdentity:` a second time.
+*/
+- (void)setUserIdentity:(NSString*)userId;
 
 /**
  Retrieve the user identity set via setUserIdentity
@@ -180,6 +188,12 @@ so that Branch can handle the passed URL.
  @warning If the request to logout fails, the session items will not be cleared.
  */
 - (void) logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable error))completion;
+
+/**
+ Clear all of the current user's session items.
+ 
+ */
+- (void) logout;
 
 /**
  Generates a Branch short URL that describes the content described in the Branch Universal Object and
