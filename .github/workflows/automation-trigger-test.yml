@@ -15,7 +15,7 @@ jobs:
   # 5.Runs SaaS SDK Automation tests on Browserstack
   # 6.Prints and uploads output result as an artifact.
   
-  build-and-run-automation-tests-onBrowserstack:
+  build-and-run-automation-tests-onGitHubRunner:
     runs-on: macos-latest
     steps:
       - name: Check out code
