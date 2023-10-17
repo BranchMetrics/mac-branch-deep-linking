@@ -606,7 +606,7 @@
 				CODE_SIGN_ENTITLEMENTS = SaaS_SDK_TestBed_MacOS/SaaS_SDK_TestBed_MacOS.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application";
-				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -646,7 +646,7 @@
 				CODE_SIGN_ENTITLEMENTS = SaaS_SDK_TestBed_MacOS/SaaS_SDK_TestBed_MacOS.entitlements;
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "3rd Party Mac Developer Application";
-				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
