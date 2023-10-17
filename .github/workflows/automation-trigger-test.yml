@@ -1,0 +1,53 @@
+name: SaaS SDK Automation Tests
+
+on:
+ workflow_dispatch:
+ pull_request:
+ 
+jobs:
+            
+  # This job
+  # 1.Installs Certificates and Provisioning profile for signing App and creating IPA.
+  # 2.Creates Branch SDK framework for DeeplinkDemo app.
+  # 3.Compiles DeepLinkDemo and creates its IPA.
+  # 4.Uploads IPA to browserstack and app_url returned is set as envirnoment variable
+  # 5.Runs SaaS SDK Automation tests on Browserstack
+  # 6.Prints and uploads output result as an artifact.
+  
+  build-and-run-automation-tests-onBrowserstack:
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Create and export DeepLinkDemo IPA file
+        run: |
+          cd ./SaaS_SDK_TestBed_MacOS
+          pod install
+          xcodebuild -workspace SaaS_SDK_TestBed_MacOS.xcworkspace -scheme SaaS_SDK_TestBed_MacOS
+      - name: Cheout Automation Code
+        uses: actions/checkout@v3
+        with:
+          repository: BranchMetrics/qentelli-saas-sdk-mac-os-testing-automation
+          token: ${{ secrets.BRANCHLET_ACCESS_TOKEN_PUBLIC }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+      - name: Build with Maven
+        id: build_maven
+        run: |
+            mvn clean test -DsuiteXMLFile=testng.xml -e -DInputFormat="json" -DInputFilePath=“./testdata/DriverScriptInput.json”  --log-file output.txt -X
+      - name: Print output
+        if: always()        # run this step even if previous step failed
+        run: cat ${{ github.workspace }}/output.txt
+      - name: Publishing test report
+        if: always()        # run this step even if previous step failed
+        uses: actions/upload-artifact@v3  # upload test results
+        with:
+          name: test-results
+          path: ${{ github.workspace }}/output.txt
+
