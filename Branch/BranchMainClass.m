@@ -586,31 +586,37 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 
 #pragma mark - User Identity
 
+- (void)setUserIdentity:(NSString*)userID {
+    [self setUserIdentity:userID completion:nil];
+}
+
 - (void)setUserIdentity:(NSString*)userID
-         completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
+             completion:(void (^_Nullable)(BranchSession*session, NSError*_Nullable error))completion {
+    
     if (!userID || [self.settings.userIdentityForDeveloper isEqualToString:userID]) {
         if (completion) completion(nil, nil);   // TODO: fix the session.
         return;
     }
-    // [self initSessionIfNeededAndNotInProgress];
-    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    dictionary[@"identity"] = userID;
-    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
-    dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
-    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
-    [self.networkAPIService postOperationForAPIServiceName:@"v1/profile"
-        dictionary:dictionary
-        completion:^(BNCNetworkAPIOperation*_Nonnull operation) {
-            BNCPerformBlockOnMainThreadAsync(^{
-                if (!operation.error) {
-                    self.settings.userIdentityForDeveloper = userID;
-                    operation.session.userIdentityForDeveloper = userID;
-                }
-                if (completion) completion(operation.session, operation.error);
-            });
-        }
-    ];
+    
+    BranchSession *session = [BranchSession new];
+    
+    if (self.settings.userTrackingDisabled) {
+        [self.settings clearUserIdentifyingInformation];
+        NSError *error = [NSError branchErrorWithCode:BNCTrackingDisabledError];
+        BNCLogError(@"Branch error: %@.", error);
+        if (completion) completion(session, error);
+        return;
+    }
+    
+    BNCPerformBlockOnMainThreadAsync(^{
+        session.userIdentityForDeveloper = userID;
+        session.sessionID = self.settings.sessionID;
+        
+        self.settings.userIdentityForDeveloper = userID;
+        
+        if (completion) completion(session, nil);
+    });
+
 }
 
 - (nullable NSString *)getUserIdentity {
@@ -625,22 +631,19 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
     return self.configuration.key;
 }
 
-
 #pragma mark - Logout
 
+- (void)logout {
+    [self logoutWithCompletion:nil];
+}
+
 - (void)logoutWithCompletion:(void (^_Nullable)(NSError*_Nullable))completion {
-    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    dictionary[@"randomized_device_token"] = self.settings.randomizedDeviceToken;
-    dictionary[@"session_id"] = self.settings.sessionID;
-    dictionary[@"randomized_bundle_token"] = self.settings.randomizedBundleToken;
-    [self.networkAPIService appendV1APIParametersWithDictionary:dictionary];
-    [self.networkAPIService postOperationForAPIServiceName:@"v1/logout"
-        dictionary:dictionary
-        completion:^(BNCNetworkAPIOperation * _Nonnull operation) {
-            if (!operation.error)
-                self.settings.userIdentityForDeveloper = nil;
-            BNCPerformBlockOnMainThreadAsync(^{ if (completion) completion(operation.error); });
-        }];
+
+    BNCPerformBlockOnMainThreadAsync(^{
+        self.settings.userIdentityForDeveloper = nil;
+        
+        if (completion) completion(nil);
+    });
 }
 
 #pragma mark - Miscellaneous

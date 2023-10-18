@@ -205,7 +205,7 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
         }
     } else {
         NSString *endpoint = url.path;
-        if ([endpoint isEqualToString:@"/v1/open"]) {
+        if ([endpoint isEqualToString:@"/v1/open"] || [endpoint isEqualToString:@"/v1/install"]) {
             dictionary[@"identity"] = self.settings.userIdentityForDeveloper;
         }
     }
@@ -417,8 +417,6 @@ static NSString*_Nonnull BNCNetworkQueueFilename =  @"io.branch.sdk.network_queu
 
     if (self.session.linkCreationURL.length)
         self.settings.linkCreationURL = self.session.linkCreationURL;
-    if (self.session.userIdentityForDeveloper.length)
-        self.settings.userIdentityForDeveloper = self.session.userIdentityForDeveloper;
     if (self.session.sessionID.length)
         self.settings.sessionID = self.session.sessionID;
        

@@ -66,14 +66,13 @@
     NSString*const kUserIdentity = @"Nada";
     Branch*branch = self.branch;
     XCTestExpectation *expectation = [self expectationWithDescription:@"testSetIdentity"];
-    [branch setUserIdentity:kUserIdentity
-        completion:^ (BranchSession * _Nullable session, NSError * _Nullable error) {
+    [branch setUserIdentity:kUserIdentity completion:^ (BranchSession * _Nullable session, NSError * _Nullable error) {
             XCTAssertNil(error);
             XCTAssertEqualObjects(session.userIdentityForDeveloper, kUserIdentity);
             [expectation fulfill];
         }
     ];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    [self waitForExpectationsWithTimeout:0.1 handler:nil];
     XCTAssertTrue(branch.userIdentityIsSet);
 
     [self resetExpectations];
@@ -82,7 +81,7 @@
         XCTAssertNil(error);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    [self waitForExpectationsWithTimeout:0.1 handler:nil];
     XCTAssertFalse(branch.userIdentityIsSet);
 }
 
@@ -102,7 +101,7 @@
         XCTAssertEqualObjects(session.userIdentityForDeveloper, userIdentity);
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:5.0 handler:nil];
+    [self waitForExpectationsWithTimeout:0.1 handler:nil];
     XCTAssertTrue(branch.userIdentityIsSet);
     XCTAssertTrue([userIdentity isEqualToString:[branch getUserIdentity]]);
 }
@@ -149,13 +148,14 @@
     NSString *channel = @"facebook";
     NSString *feature = @"sharing";
     NSArray *tags = @[ @"t1", @"t2" ];
-    NSString *alias =  @"testAlias";
-    
+    NSString *alias = [NSString stringWithFormat:@"testAlias_%@", [NSUUID UUID].UUIDString];
+
     XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinksWithoutBUO"];
     [self.branch branchShortUrlWithParams:( NSDictionary * _Nullable )params andChannel:( NSString * _Nullable )channel andFeature:(NSString * _Nullable)feature andTags:(NSArray * _Nullable)tags andAlias:(NSString * _Nullable)alias andCallback:^ (NSURL * _Nullable shortURL, NSError * _Nullable error) {
         XCTAssertNil(error);
         XCTAssertNotNil(shortURL);
-        XCTAssertTrue([shortURL.absoluteString isEqualToString:@"https://testbed-mac.app.link/testAlias"]);
+        NSString *expectedURL = [NSString stringWithFormat:@"https://testbed-mac.app.link/%@", alias];
+        XCTAssertTrue([shortURL.absoluteString isEqualToString:expectedURL]);
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
@@ -167,13 +167,14 @@
     NSString *channel = @"facebook";
     NSString *feature = @"sharing";
     NSArray *tags = @[ @"t1", @"t2" ];
-    NSString *alias =  @"testAlias";
-    
+    NSString *alias = [NSString stringWithFormat:@"testAlias_%@", [NSUUID UUID].UUIDString];
+
     XCTestExpectation *expectation = [self expectationWithDescription:@"testShortLinksWithoutBUO"];
     [self.branch branchShortUrlWithParams:( NSDictionary * _Nullable )params andChannel:( NSString * _Nullable )channel andFeature:(NSString * _Nullable)feature andTags:(NSArray * _Nullable)tags andAlias:(NSString * _Nullable)alias andCallback:^ (NSURL * _Nullable shortURL, NSError * _Nullable error) {
         XCTAssertNil(error);
         XCTAssertNotNil(shortURL);
-        XCTAssertTrue([shortURL.absoluteString isEqualToString:@"https://testbed-mac.app.link/testAlias"]);
+        NSString *expectedURL = [NSString stringWithFormat:@"https://testbed-mac.app.link/%@", alias];
+        XCTAssertTrue([shortURL.absoluteString isEqualToString:expectedURL]);
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:5.0 handler:nil];

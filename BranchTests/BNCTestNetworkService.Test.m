@@ -26,24 +26,17 @@
     XCTestExpectation*requestExpectation = [self expectationWithDescription:@"testTheTestService-1"];
     BNCTestNetworkService.requestHandler = ^ id<BNCNetworkOperationProtocol> (NSMutableURLRequest*request) {
         XCTAssertEqualObjects(request.HTTPMethod, @"POST");
-        XCTAssertEqualObjects(request.URL.path, @"/v1/logout");
-        NSMutableDictionary*truthDictionary = [self mutableDictionaryFromBundleJSONWithKey:@"logoutRequest"];
+        XCTAssertEqualObjects(request.URL.path, @"/v1/install");
+        NSMutableDictionary*truthDictionary = [self mutableDictionaryFromBundleJSONWithKey:@"BranchInstallRequestMac"];
         NSMutableDictionary*requestDictionary = [BNCTestNetworkService mutableDictionaryFromRequest:request];
         XCTAssertNotNil(truthDictionary);
         XCTAssertNotNil(requestDictionary);
 
         [requestExpectation fulfill];
-        NSString*responseString = [self stringFromBundleJSONWithKey:@"logoutResponse"];
+        NSString*responseString = [self stringFromBundleJSONWithKey:@"BranchOpenResponseMac"];
         return [BNCTestNetworkService operationWithRequest:request response:responseString];
     };
-
-    [branch.networkAPIService clearNetworkQueue];
-    XCTestExpectation*expectation = [self expectationWithDescription:@"testTheTestService-2"];
-    [branch logoutWithCompletion:^(NSError * _Nullable error) {
-        XCTAssertNil(error);
-        [expectation fulfill];
-    }];
-
+    
     [self waitForExpectationsWithTimeout:5.0 handler:nil];
 }
 
