@@ -70,6 +70,7 @@ jobs:
       - name: Build with Maven
         id: build_maven
         run: |
+            appium  -p 4723 --base-path /wd/hub/ &
             mvn clean test -DsuiteXMLFile=testng.xml -e -DInputFormat="json" -DInputFilePath=“./testdata/DriverScriptInput.json”  --log-file output.txt -X
       - name: Print output
         if: always()        # run this step even if previous step failed
