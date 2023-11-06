@@ -67,10 +67,12 @@ jobs:
           cache: maven
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.6.0
+      - name: Run Appium
+        run: |
+            appium  -p 4723 --base-path /wd/hub/
       - name: Build with Maven
         id: build_maven
         run: |
-            appium  -p 4723 --base-path /wd/hub/ &
             mvn clean test -DsuiteXMLFile=testng.xml -e -DInputFormat="json" -DInputFilePath=“./testdata/DriverScriptInput.json”  --log-file output.txt -X
       - name: Print output
         if: always()        # run this step even if previous step failed
