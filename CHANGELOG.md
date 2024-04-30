@@ -1,5 +1,9 @@
 Branch Mac SDK Change Log
 
+## 1.5.0 - April 30, 2024
+- Removed v1/profile and v1/logout requests.
+- Create new versions of logout() and setUserIdentity() without callbacks.
+
 ## 1.4.1 - May 9, 2023
 
 SDK-1905
