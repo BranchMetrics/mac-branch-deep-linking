@@ -136,7 +136,7 @@ typedef NS_ENUM(NSInteger, BNCSessionState) {
 //    NSString*_Nullable string =
 //        [[[NSBundle bundleForClass:self] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 //    return string?:@"";
-    return @"1.4.1";
+    return @"1.5.0";
 }
 
 - (Branch*) startWithConfiguration:(BranchConfiguration*)configuration {
